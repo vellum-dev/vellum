@@ -1,0 +1,52 @@
+# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+pkgname=tripletap
+pkgver=0.3.0
+pkgrel=0
+_author="rmitchellscott"
+_author_url="https://github.com/rmitchellscott"
+pkgdesc="Start xovi by triple-pressing the power button"
+url="https://github.com/rmitchellscott/xovi-tripletap"
+arch="aarch64 armv7"
+license="MIT"
+depends="xovi"
+install="$pkgname.post-install $pkgname.pre-deinstall"
+source="$pkgname-$pkgver.tar.gz::https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz"
+builddir="$srcdir/xovi-tripletap-$pkgver"
+options="!check !fhs !strip !tracedeps"
+sha512sums="
+ef498dac965860be8c4dd17c3d51ac47cb3dbaaf1b6bb6e483fb7aa5dfcdc7fac25f391188d75a250ee2ffc6f41f8087391d1bf2ae9cff974cdb32a614e1d337  tripletap-0.3.0.tar.gz
+"
+
+package() {
+    cd "$builddir"
+
+    local install_dir="$pkgdir/home/root/xovi-tripletap"
+    mkdir -p "$install_dir"
+    mkdir -p "$pkgdir/etc/systemd/system"
+
+    # Install architecture-specific evtest
+    case "$CARCH" in
+        aarch64)
+            install -Dm755 evtest.arm64 "$install_dir/evtest"
+            ;;
+        armv7|armhf)
+            install -Dm755 evtest.arm32 "$install_dir/evtest"
+            ;;
+    esac
+
+    # Install scripts
+    install -Dm755 main.sh "$install_dir/main.sh"
+    install -Dm755 enable.sh "$install_dir/enable.sh"
+    install -Dm755 uninstall.sh "$install_dir/uninstall.sh"
+    install -Dm755 version-switcher.sh "$install_dir/version-switcher.sh"
+    install -Dm755 init-version-switching.sh "$install_dir/init-version-switching.sh"
+    install -Dm755 prepare-new-version.sh "$install_dir/prepare-new-version.sh"
+    install -Dm755 disable-version-switching.sh "$install_dir/disable-version-switching.sh"
+    install -Dm755 press-and-hold.sh "$install_dir/press-and-hold.sh"
+
+    # Install systemd service
+    install -Dm644 xovi-tripletap.service "$pkgdir/etc/systemd/system/xovi-tripletap.service"
+
+    # Write version file
+    echo "$pkgver" > "$install_dir/version.txt"
+}

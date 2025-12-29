@@ -1,0 +1,21 @@
+# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+pkgname=gestures
+pkgver=1.0.0
+pkgrel=0
+_author="rmitchellscott"
+_author_url="https://github.com/rmitchellscott"
+pkgdesc="Custom gestures for reMarkable"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="xovi-qt-resource-rebuilder remarkable-os>=3.24"
+source="gestures.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/gestures.qmd"
+options="!check !fhs"
+sha512sums="
+cb4670bb95bc96bd62fd696648921356695a5a17ca95f74b5f20585b6c7435331ab863aa99eceff8e46825a6ff941615a721e0389f567dce7d195a8682d4c4c5  gestures.qmd
+"
+
+package() {
+    install -Dm644 "$srcdir/gestures.qmd" \
+        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestures.qmd"
+}

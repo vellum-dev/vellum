@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Stop and disable service before removal
+systemctl disable xovi-tripletap --now 2>/dev/null || true
+
+echo "tripletap service disabled"

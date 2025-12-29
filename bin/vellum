@@ -1,0 +1,86 @@
+#!/bin/sh
+set -e
+
+VELLUM_ROOT="/home/root/.vellum"
+
+get_os_version() {
+    ver=$(grep RELEASE_VERSION /usr/share/remarkable/update.conf 2>/dev/null | cut -d= -f2 | tr -d '"')
+    [ -z "$ver" ] && ver=$(grep IMG_VERSION /etc/os-release 2>/dev/null | cut -d= -f2 | tr -d '"')
+    echo "$ver"
+}
+
+get_apk_arch() {
+    case "$(uname -m)" in
+        aarch64) echo "aarch64" ;;
+        armv7l)  echo "armv7" ;;
+        *)       echo "noarch" ;;
+    esac
+}
+
+generate_remarkable_os_package() {
+    VERSION="$1"
+    APK_ARCH=$(get_apk_arch)
+    PKG_DIR=$(mktemp -d)
+    REPO_DIR="$VELLUM_ROOT/local-repo/$APK_ARCH"
+
+    mkdir -p "$REPO_DIR"
+
+    cat > "$PKG_DIR/.PKGINFO" <<EOF
+pkgname = remarkable-os
+pkgver = $VERSION-r0
+pkgdesc = Virtual package representing reMarkable OS version
+url = https://github.com/rmitchellscott/vellum
+arch = noarch
+license = MIT
+provides = remarkable-os=$VERSION
+EOF
+
+    mkdir -p "$PKG_DIR/empty"
+    tar -czf "$PKG_DIR/data.tar.gz" -C "$PKG_DIR/empty" .
+
+    cd "$PKG_DIR"
+    tar -czf "$REPO_DIR/remarkable-os-$VERSION-r0.apk" .PKGINFO data.tar.gz
+
+    rm -rf "$PKG_DIR"
+}
+
+update_local_index() {
+    APK_ARCH=$(get_apk_arch)
+    REPO_DIR="$VELLUM_ROOT/local-repo/$APK_ARCH"
+    INDEX_DIR=$(mktemp -d)
+
+    for apk in "$REPO_DIR/"*.apk; do
+        [ -f "$apk" ] || continue
+        tar -xzf "$apk" -O .PKGINFO >> "$INDEX_DIR/APKINDEX"
+        echo "" >> "$INDEX_DIR/APKINDEX"
+    done
+
+    cd "$INDEX_DIR"
+    tar -czf "$REPO_DIR/APKINDEX.tar.gz" APKINDEX
+
+    rm -rf "$INDEX_DIR"
+}
+
+ensure_remarkable_os() {
+    CUR_VER=$(get_os_version)
+    PREV_VER=$(cat "$VELLUM_ROOT/state/osver" 2>/dev/null || true)
+    APK_ARCH=$(get_apk_arch)
+    REPO_DIR="$VELLUM_ROOT/local-repo/$APK_ARCH"
+
+    if [ "$CUR_VER" != "$PREV_VER" ]; then
+        mkdir -p "$REPO_DIR" "$VELLUM_ROOT/state"
+        rm -f "$REPO_DIR/remarkable-os-"*.apk
+        generate_remarkable_os_package "$CUR_VER"
+        update_local_index
+        echo "$CUR_VER" > "$VELLUM_ROOT/state/osver"
+    fi
+}
+
+ensure_remarkable_os
+
+exec "$VELLUM_ROOT/bin/apk.static" \
+    --root "$VELLUM_ROOT" \
+    --keys-dir "$VELLUM_ROOT/etc/apk/keys" \
+    --repositories-file "$VELLUM_ROOT/etc/apk/repositories" \
+    --cache-dir "$VELLUM_ROOT/cache" \
+    "$@"

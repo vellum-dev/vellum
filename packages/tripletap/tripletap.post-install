@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Handle reMarkable Paper Pro read-only filesystem
+if grep -qE "reMarkable (Ferrari|Chiappa)" /proc/device-tree/model 2>/dev/null; then
+    mount -o remount,rw / 2>/dev/null || true
+    umount -R /etc 2>/dev/null || true
+fi
+
+# Reload systemd and enable service
+systemctl daemon-reload
+systemctl enable xovi-tripletap --now
+
+echo "tripletap installed and enabled"

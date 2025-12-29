@@ -1,0 +1,21 @@
+# Build output
+dist/
+*.apk
+
+# Keys (keep public, ignore private)
+keys/*.rsa
+!keys/*.rsa.pub
+
+# abuild artifacts
+*/src/
+*/pkg/
+*/.PKGINFO
+*/.SIGN.*
+
+# Editor
+.vscode/
+*.swp
+*~
+
+# macOS
+.DS_Store

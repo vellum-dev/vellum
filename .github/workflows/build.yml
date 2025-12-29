@@ -1,0 +1,129 @@
+name: Build Packages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [aarch64, armv7]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up signing key
+        run: |
+          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
+            echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+
+      - name: Build packages for ${{ matrix.arch }}
+        run: |
+          for pkg in packages/*/; do
+            pkgname=$(basename "$pkg")
+            echo "=== Building $pkgname for ${{ matrix.arch }} ==="
+
+            # Check if package supports this architecture
+            ARCH_LINE=$(grep '^arch=' "$pkg/APKBUILD" || echo 'arch="all"')
+            if echo "$ARCH_LINE" | grep -q 'noarch'; then
+              if [ "${{ matrix.arch }}" = "armv7" ]; then
+                echo "Skipping $pkgname (noarch, only build once)"
+                continue
+              fi
+            fi
+
+            ./scripts/build-package.sh "$pkgname" "${{ matrix.arch }}"
+          done
+
+      - name: List built packages
+        run: |
+          find dist -type f -name "*.apk" 2>/dev/null || echo "No .apk files found"
+          ls -laR dist/ 2>/dev/null || true
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages-${{ matrix.arch }}
+          path: dist/
+          if-no-files-found: warn
+
+  index:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all packages
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+          merge-multiple: true
+
+      - name: Flatten package structure
+        run: |
+          mkdir -p dist/aarch64 dist/armv7
+          find dist -name "*.apk" -path "*/aarch64/*" -exec mv {} dist/aarch64/ \;
+          find dist -name "*.apk" -path "*/armv7/*" -exec mv {} dist/armv7/ \;
+          rm -rf dist/packages
+
+      - name: Set up signing key
+        run: |
+          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
+            echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+
+      - name: Generate and sign APKINDEX
+        run: |
+          for arch in aarch64 armv7; do
+            ARCH_DIR="dist/$arch"
+            if [ -d "$ARCH_DIR" ] && ls "$ARCH_DIR"/*.apk >/dev/null 2>&1; then
+              echo "Generating APKINDEX for $arch..."
+              docker run --rm \
+                -v "$PWD/$ARCH_DIR:/packages:Z" \
+                -v "$PWD/keys:/keys:ro" \
+                -w /packages \
+                alpine:edge \
+                sh -c "
+                  apk add --no-cache apk-tools abuild
+                  cp /keys/packages.rsa.pub /etc/apk/keys/
+                  apk index -o APKINDEX.tar.gz *.apk
+                  abuild-sign -k /keys/packages.rsa APKINDEX.tar.gz
+                  chown $(id -u):$(id -g) APKINDEX.tar.gz
+                "
+            fi
+          done
+
+      - name: Upload repository
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository
+          path: dist/
+
+  deploy:
+    needs: index
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Download repository
+        uses: actions/download-artifact@v4
+        with:
+          name: repository
+          path: dist/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync dist/ s3://packages.vellum.delivery/ --delete
