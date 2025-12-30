@@ -26,7 +26,6 @@ package() {
 
     local install_dir="$pkgdir/home/root/xovi-tripletap"
     mkdir -p "$install_dir"
-    mkdir -p "$pkgdir/etc/systemd/system"
 
     # Install architecture-specific evtest
     case "$CARCH" in
@@ -48,8 +47,8 @@ package() {
     install -Dm755 disable-version-switching.sh "$install_dir/disable-version-switching.sh"
     install -Dm755 press-and-hold.sh "$install_dir/press-and-hold.sh"
 
-    # Install systemd service
-    install -Dm644 xovi-tripletap.service "$pkgdir/etc/systemd/system/xovi-tripletap.service"
+    # Install systemd service (enable.sh will copy it to /etc/systemd/system/)
+    install -Dm644 xovi-tripletap.service "$install_dir/xovi-tripletap.service"
 
     # Write version file
     echo "$pkgver" > "$install_dir/version.txt"
