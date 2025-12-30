@@ -1,0 +1,89 @@
+name: Build Static apk-tools
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-apk-tools:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [aarch64, armv7]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Build static apk for ${{ matrix.arch }}
+        run: |
+          PLATFORM="linux/arm64"
+          if [ "${{ matrix.arch }}" = "armv7" ]; then
+            PLATFORM="linux/arm/v7"
+          fi
+
+          docker run --rm --platform "$PLATFORM" \
+            -v "$PWD:/output:Z" \
+            alpine:edge \
+            sh -c '
+              set -ex
+
+              apk add --no-cache \
+                git \
+                meson \
+                gcc \
+                musl-dev \
+                linux-headers \
+                make \
+                openssl-dev \
+                openssl-libs-static \
+                zlib-dev \
+                zlib-static \
+                zstd-dev \
+                zstd-static \
+                lua5.3-dev \
+                lua5.3-libs
+
+              git clone --depth 1 https://gitlab.alpinelinux.org/alpine/apk-tools.git /src
+              cd /src
+
+              meson setup build \
+                --prefix=/home/root/.vellum \
+                --sbindir=sbin \
+                --libdir=lib \
+                --sysconfdir=etc \
+                --mandir=share/man \
+                --includedir=include \
+                -Ddefault_library=static \
+                -Dprefer_static=true \
+                "-Dc_link_args=-static" \
+                -Dhelp=enabled \
+                -Dlua=disabled \
+                -Dlua_version=5.3 \
+                -Dzstd=enabled \
+                -Ddocs=disabled \
+                -Dtests=disabled \
+                --auto-features=disabled
+
+              meson compile -C build
+
+              strip build/src/apk
+              cp build/src/apk /output/apk-${{ matrix.arch }}
+            '
+
+      - name: Verify static binary
+        run: |
+          file apk-${{ matrix.arch }}
+
+      - name: Upload apk binary with license
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-tools-${{ matrix.arch }}
+          path: |
+            apk-${{ matrix.arch }}
+            licenses/apk-tools-GPL-2.0.txt
