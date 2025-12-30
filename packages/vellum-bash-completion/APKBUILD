@@ -1,0 +1,31 @@
+# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+pkgname=vellum-bash-completion
+pkgver=3.0.3
+pkgrel=0
+pkgdesc="Bash completion for vellum package manager"
+url="https://gitlab.alpinelinux.org/alpine/apk-tools"
+arch="noarch"
+license="GPL-2.0-only"
+source="
+https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/apk-tools-bash-completion-$pkgver-r1.apk
+"
+options="!check !fhs"
+sha512sums="
+1a5e0c73d85c0907fa136c7382c2559d72901e2afcaa2f0425f110a4ef7932c992523529c23bc98edbd81dde759aea11bec407de628d68cc5fd981f4ec7db8b3  apk-tools-bash-completion-$pkgver-r1.apk
+"
+
+unpack() {
+    mkdir -p "$srcdir"
+    tar -xzf "$srcdir/apk-tools-bash-completion-$pkgver-r1.apk" -C "$srcdir"
+}
+
+package() {
+    sed -e 's/__apk_/__vellum_/g' \
+        -e 's/apk query/vellum query/g' \
+        -e 's/_comp_cmd_apk/_comp_cmd_vellum/g' \
+        -e 's/complete -F _comp_cmd_vellum apk$/complete -F _comp_cmd_vellum vellum/' \
+        "$srcdir/usr/share/bash-completion/completions/_apk" > "$srcdir/vellum"
+
+    install -Dm644 "$srcdir/vellum" \
+        "$pkgdir/home/root/.vellum/share/bash-completion/completions/vellum"
+}

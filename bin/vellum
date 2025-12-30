@@ -3,24 +3,6 @@ set -e
 
 VELLUM_ROOT="/home/root/.vellum"
 
-ensure_etc_apk_mount() {
-    if ! mountpoint -q /etc/apk 2>/dev/null; then
-        rm -rf /etc/apk
-        mkdir -p /etc/apk
-        mount --bind "$VELLUM_ROOT/etc/apk" /etc/apk
-    fi
-}
-
-ensure_lib_apk_mount() {
-    if ! mountpoint -q /usr/lib 2>/dev/null; then
-        mkdir -p "$VELLUM_ROOT/lib-overlay/upper" "$VELLUM_ROOT/lib-overlay/work"
-        mount -t overlay overlay \
-            -o "lowerdir=/usr/lib,upperdir=$VELLUM_ROOT/lib-overlay/upper,workdir=$VELLUM_ROOT/lib-overlay/work" \
-            /usr/lib
-    fi
-    mkdir -p /lib/apk/db
-}
-
 get_os_version() {
     ver=$(grep RELEASE_VERSION /usr/share/remarkable/update.conf 2>/dev/null | cut -d= -f2 | tr -d '"')
     [ -z "$ver" ] && ver=$(grep IMG_VERSION /etc/os-release 2>/dev/null | cut -d= -f2 | tr -d '"')
@@ -172,8 +154,9 @@ ensure_device_package() {
         update_local_index
         echo "$DEVICE" > "$STATE_FILE"
 
-        "$VELLUM_ROOT/bin/apk.static" \
-            --cache-dir "$VELLUM_ROOT/cache" \
+        "$VELLUM_ROOT/bin/apk.vellum" \
+            --root "$VELLUM_ROOT" \
+            --dest / \
             --no-logfile \
             add "$DEVICE" >/dev/null 2>&1 || true
     fi
@@ -192,19 +175,21 @@ ensure_remarkable_os() {
         update_local_index
         echo "$CUR_VER" > "$VELLUM_ROOT/state/osver"
 
-        "$VELLUM_ROOT/bin/apk.static" \
-            --cache-dir "$VELLUM_ROOT/cache" \
+        "$VELLUM_ROOT/bin/apk.vellum" \
+            --root "$VELLUM_ROOT" \
+            --dest / \
             --no-logfile \
             add remarkable-os >/dev/null 2>&1 || true
     fi
 }
 
-ensure_etc_apk_mount
-ensure_lib_apk_mount
 ensure_remarkable_os
 ensure_device_package
 
-exec "$VELLUM_ROOT/bin/apk.static" \
-    --cache-dir "$VELLUM_ROOT/cache" \
+export APK_CONFIG="$VELLUM_ROOT/etc/apk/config"
+
+exec "$VELLUM_ROOT/bin/apk.vellum" \
+    --root "$VELLUM_ROOT" \
+    --dest / \
     --no-logfile \
     "$@"
