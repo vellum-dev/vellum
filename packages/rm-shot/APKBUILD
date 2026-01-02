@@ -1,9 +1,8 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
 pkgver=1.0.2
 pkgrel=0
-_author="rmitchellscott"
-_author_url="https://github.com/rmitchellscott"
+_upstream_author="rmitchellscott"
 pkgdesc="Screenshot extension for xovi framework"
 url="https://github.com/rmitchellscott/rm-shot"
 arch="aarch64 armv7"
@@ -22,22 +21,22 @@ b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595
 "
 
 package() {
-    local so_file
-    case "$CARCH" in
-        aarch64)
-            so_file="rm-shot-aarch64.so"
-            ;;
-        armv7|armhf)
-            so_file="rm-shot-armv7.so"
-            ;;
-    esac
+	local so_file
+	case "$CARCH" in
+		aarch64)
+			so_file="rm-shot-aarch64.so"
+			;;
+		armv7|armhf)
+			so_file="rm-shot-armv7.so"
+			;;
+	esac
 
-    install -Dm755 "$srcdir/$so_file" \
-        "$pkgdir/home/root/xovi/extensions.d/rm-shot.so"
+	install -Dm755 "$srcdir/$so_file" \
+		"$pkgdir/home/root/xovi/extensions.d/rm-shot.so"
 
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/rmitchellscott/rm-shot/archive/refs/tags/v$pkgver.tar.gz" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/rm-shot/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }

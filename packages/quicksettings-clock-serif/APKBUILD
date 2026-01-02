@@ -1,26 +1,26 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
-pkgname=extend-list-title-width
+pkgname=quicksettings-clock-serif
 pkgver=1.0.0
 pkgrel=0
 _upstream_author="rmitchellscott"
-pkgdesc="Removes extra right margin for titles in list view to fill more of the available space."
+pkgdesc="Adds a clock to the quick settings menu in serif font"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="xovi-qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 source="
-extendListTitleWidth.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/extendListTitleWidth.qmd
+quickSettingsClockSerif.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/quickSettingsClockSerif.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
 sha512sums="
-59caedc54696e821da87f69a7ad0d11f6179b9ef1c3abd7f5ba05e417ed958ec5a02d6e6e017db65b95cbd6cd8eacf24f08166ad730cb92a9e46e5e8c4f9fc0b  extendListTitleWidth.qmd
+21a74101392337c5fe890fb10a7e324aa0e53613de1fa7017a5bba9023fa0f042425f1c87d03d6242aeb8484fb23821f550237b7136d9db3769afa764b37510d  quickSettingsClockSerif.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
 "
 
 package() {
-	install -Dm644 "$srcdir/extendListTitleWidth.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/extendListTitleWidth.qmd"
+	install -Dm644 "$srcdir/quickSettingsClockSerif.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/quickSettingsClockSerif.qmd"
 
 	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \

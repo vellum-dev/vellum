@@ -1,0 +1,30 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=hide-document-close
+pkgver=1.0.0
+pkgrel=0
+_upstream_author="NohamR"
+pkgdesc="Hides the close button in the document toolbar to prevent accidental exits."
+url="https://github.com/NohamR/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="xovi-qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
+source="
+hideDocumentClose.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/3.23.0.64/hideDocumentClose.qmd
+LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/LICENSE
+"
+options="!check !fhs"
+sha512sums="
+2eb9b91a11201a4488989016b21cf7c3d885edbc1b3848eac6e2fcf5aeeecd50a4e03a043d44a0f4c22dfe957b8ac1dae7328ebae0c1d3e8aca989e4307f025c  hideDocumentClose.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"
+
+package() {
+	install -Dm644 "$srcdir/hideDocumentClose.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/hideDocumentClose.qmd"
+
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}

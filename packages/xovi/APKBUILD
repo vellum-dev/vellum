@@ -1,25 +1,24 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
 pkgver=16.0.0
 pkgrel=0
-_author="asivery"
-_author_url="https://github.com/asivery"
+_upstream_author="asivery"
 pkgdesc="Base xovi framework for reMarkable tablets"
 url="https://github.com/asivery/rm-xovi-extensions"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="remarkable-os>=3.20"
+depends="remarkable-os>=3.20 remarkable-os<3.25"
 install="$pkgname.post-install $pkgname.pre-deinstall"
 options="!check !fhs !strip !tracedeps"
 
 subpackages="
-    $pkgname-qt-resource-rebuilder:qt_resource_rebuilder
-    $pkgname-webserver-remote:webserver_remote
-    $pkgname-message-broker:message_broker
-    $pkgname-command-executor:command_executor
-    $pkgname-fileman:fileman
-    $pkgname-framebuffer-spy:framebuffer_spy
-    $pkgname-random-suspend:random_suspend
+	$pkgname-qt-resource-rebuilder:qt_resource_rebuilder
+	$pkgname-webserver-remote:webserver_remote
+	$pkgname-message-broker:message_broker
+	$pkgname-command-executor:command_executor
+	$pkgname-fileman:fileman
+	$pkgname-framebuffer-spy:framebuffer_spy
+	$pkgname-random-suspend:random_suspend
 "
 
 _release="v16-14112025"
@@ -37,79 +36,80 @@ d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8
 "
 
 prepare() {
-    cd "$srcdir"
-    case "$CARCH" in
-        aarch64) unzip -o extensions-aarch64.zip ;;
-        armv7|armhf) unzip -o extensions-armv7.zip ;;
-    esac
+	default_prepare
+	cd "$srcdir"
+	case "$CARCH" in
+		aarch64) unzip -o extensions-aarch64.zip ;;
+		armv7|armhf) unzip -o extensions-armv7.zip ;;
+	esac
 }
 
 package() {
-    install -Dm755 "$srcdir/install-xovi-for-rm" \
-        "$pkgdir/home/root/.local/bin/install-xovi-for-rm"
-    mkdir -p "$pkgdir/home/root/xovi/extensions.d"
+	install -Dm755 "$srcdir/install-xovi-for-rm" \
+		"$pkgdir/home/root/.local/bin/install-xovi-for-rm"
+	mkdir -p "$pkgdir/home/root/xovi/extensions.d"
 
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 qt_resource_rebuilder() {
-    pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files, images, etc"
-    depends="xovi"
-    install="$subpkgname.post-install"
+	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files, images, etc"
+	depends="xovi"
+	install="$subpkgname.post-install"
 
-    install -Dm755 "$srcdir/qt-resource-rebuilder.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/qt-resource-rebuilder.so"
-    mkdir -p "$subpkgdir/home/root/xovi/exthome/qt-resource-rebuilder"
+	install -Dm755 "$srcdir/qt-resource-rebuilder.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/qt-resource-rebuilder.so"
+	mkdir -p "$subpkgdir/home/root/xovi/exthome/qt-resource-rebuilder"
 }
 
 webserver_remote() {
-    pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-    depends="xovi-qt-resource-rebuilder xovi-message-broker"
+	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
+	depends="xovi-qt-resource-rebuilder xovi-message-broker"
 
-    install -Dm755 "$srcdir/webserver-remote.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/webserver-remote.so"
+	install -Dm755 "$srcdir/webserver-remote.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/webserver-remote.so"
 }
 
 message_broker() {
-    pkgdesc="IPC messaging between xovi extensions"
-    depends="xovi"
+	pkgdesc="IPC messaging between xovi extensions"
+	depends="xovi"
 
-    install -Dm755 "$srcdir/xovi-message-broker.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/xovi-message-broker.so"
+	install -Dm755 "$srcdir/xovi-message-broker.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/xovi-message-broker.so"
 }
 
 command_executor() {
-    pkgdesc="Injects a QT module to execute shell commands from QML"
-    depends="xovi"
+	pkgdesc="Injects a QT module to execute shell commands from QML"
+	depends="xovi"
 
-    install -Dm755 "$srcdir/qt-command-executor.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/qt-command-executor.so"
+	install -Dm755 "$srcdir/qt-command-executor.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/qt-command-executor.so"
 }
 
 fileman() {
-    pkgdesc="Module for managing filesystem redirections"
-    depends="xovi"
+	pkgdesc="Module for managing filesystem redirections"
+	depends="xovi"
 
-    install -Dm755 "$srcdir/fileman.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/fileman.so"
+	install -Dm755 "$srcdir/fileman.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/fileman.so"
 }
 
 framebuffer_spy() {
-    pkgdesc="Module for exposing the address of the system framebuffer"
-    depends="xovi"
+	pkgdesc="Module for exposing the address of the system framebuffer"
+	depends="xovi"
 
-    install -Dm755 "$srcdir/framebuffer-spy.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/framebuffer-spy.so"
+	install -Dm755 "$srcdir/framebuffer-spy.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/framebuffer-spy.so"
 }
 
 random_suspend() {
-    pkgdesc="Randomize your reMarkable tablet's suspend screens"
-    depends="xovi-fileman"
+	pkgdesc="Randomize your reMarkable tablet's suspend screens"
+	depends="xovi-fileman"
 
-    install -Dm755 "$srcdir/random-suspend-screen.so" \
-        "$subpkgdir/home/root/xovi/extensions.d/random-suspend-screen.so"
+	install -Dm755 "$srcdir/random-suspend-screen.so" \
+		"$subpkgdir/home/root/xovi/extensions.d/random-suspend-screen.so"
 }

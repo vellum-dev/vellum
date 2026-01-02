@@ -1,15 +1,14 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
 pkgver=0.3.0
 pkgrel=0
-_author="rmitchellscott"
-_author_url="https://github.com/rmitchellscott"
+_upstream_author="rmitchellscott"
 pkgdesc="Start xovi by triple-pressing the power button"
 url="https://github.com/rmitchellscott/xovi-tripletap"
 arch="aarch64 armv7"
 license="MIT"
 depends="xovi"
-install="$pkgname.post-install $pkgname.pre-deinstall"
+install="$pkgname.post-install $pkgname.post-upgrade $pkgname.pre-deinstall"
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/main/LICENSE
@@ -22,40 +21,34 @@ b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595
 "
 
 package() {
-    cd "$builddir"
+	local install_dir="$pkgdir/home/root/xovi-tripletap"
+	mkdir -p "$install_dir"
 
-    local install_dir="$pkgdir/home/root/xovi-tripletap"
-    mkdir -p "$install_dir"
+	case "$CARCH" in
+		aarch64)
+			install -Dm755 evtest.arm64 "$install_dir/evtest"
+			;;
+		armv7|armhf)
+			install -Dm755 evtest.arm32 "$install_dir/evtest"
+			;;
+	esac
 
-    # Install architecture-specific evtest
-    case "$CARCH" in
-        aarch64)
-            install -Dm755 evtest.arm64 "$install_dir/evtest"
-            ;;
-        armv7|armhf)
-            install -Dm755 evtest.arm32 "$install_dir/evtest"
-            ;;
-    esac
+	install -Dm755 main.sh "$install_dir/main.sh"
+	install -Dm755 enable.sh "$install_dir/enable.sh"
+	install -Dm755 uninstall.sh "$install_dir/uninstall.sh"
+	install -Dm755 version-switcher.sh "$install_dir/version-switcher.sh"
+	install -Dm755 init-version-switching.sh "$install_dir/init-version-switching.sh"
+	install -Dm755 prepare-new-version.sh "$install_dir/prepare-new-version.sh"
+	install -Dm755 disable-version-switching.sh "$install_dir/disable-version-switching.sh"
+	install -Dm755 press-and-hold.sh "$install_dir/press-and-hold.sh"
 
-    # Install scripts
-    install -Dm755 main.sh "$install_dir/main.sh"
-    install -Dm755 enable.sh "$install_dir/enable.sh"
-    install -Dm755 uninstall.sh "$install_dir/uninstall.sh"
-    install -Dm755 version-switcher.sh "$install_dir/version-switcher.sh"
-    install -Dm755 init-version-switching.sh "$install_dir/init-version-switching.sh"
-    install -Dm755 prepare-new-version.sh "$install_dir/prepare-new-version.sh"
-    install -Dm755 disable-version-switching.sh "$install_dir/disable-version-switching.sh"
-    install -Dm755 press-and-hold.sh "$install_dir/press-and-hold.sh"
+	install -Dm644 xovi-tripletap.service "$install_dir/xovi-tripletap.service"
 
-    # Install systemd service (enable.sh will copy it to /etc/systemd/system/)
-    install -Dm644 xovi-tripletap.service "$install_dir/xovi-tripletap.service"
+	echo "$pkgver" > "$install_dir/version.txt"
 
-    # Write version file
-    echo "$pkgver" > "$install_dir/version.txt"
-
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }

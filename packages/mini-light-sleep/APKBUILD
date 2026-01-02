@@ -1,31 +1,30 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=mini-light-sleep
 pkgver=1.0.0
 pkgrel=0
-_author="rmitchellscott"
-_author_url="https://github.com/rmitchellscott"
+_upstream_author="rmitchellscott"
 pkgdesc="Replaces the light sleep banner with text saying "Sleeping" at the top right of the screen"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="xovi-qt-resource-rebuilder remarkable-os>=3.24"
+depends="xovi-qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 source="
 miniLightSleep.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/miniLightSleep.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
 sha512sums="
-bab6025c5ecef3089d9a6e795dca7edd6e002b4faf892449c576194013939439d070ac6d1a9a0c8709be703d93cabfaa7ffacd5b9cb27add7d6e5d81a1d9ef50  miniLightSleep.qmd
+6f2ef5994fd6f63d82c27fc12f67c367e85741d2458166325f71815347e55fdda84be204eeb9c4ad441d12b38136cb1cde0ad8c093e5a1f074cc112d2cf34718  miniLightSleep.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
 "
 
 package() {
-    install -Dm644 "$srcdir/miniLightSleep.qmd" \
-        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/miniLightSleep.qmd"
+	install -Dm644 "$srcdir/miniLightSleep.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/miniLightSleep.qmd"
 
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }

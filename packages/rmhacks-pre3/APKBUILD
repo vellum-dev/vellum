@@ -1,10 +1,9 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmhacks
 pkgver=0.0.11_pre3
 pkgrel=0
 _commit=a5a921cda5b0db3fa9a93fd016187a8928abfe9b
-_author="asivery"
-_author_url="https://github.com/asivery"
+_upstream_author="asivery"
 pkgdesc="reMarkable hacks in QMD format"
 url="https://github.com/asivery/rm-hacks-qmd"
 arch="noarch"
@@ -20,18 +19,16 @@ d6973052554f3a452a1b2a64e51339804beef9212a779430c73faba6fd1a338376f0770ddd9f9c88
 builddir="$srcdir/rm-hacks-qmd-$_commit/0.0.11-pre3"
 
 package() {
-    cd "$builddir"
+	install -Dm644 zz_rmhacks.qmd \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/zz_rmhacks.qmd"
 
-    install -Dm644 zz_rmhacks.qmd \
-        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/zz_rmhacks.qmd"
+	mkdir -p "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks"
+	cp -r rmHacks/* \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks/"
 
-    mkdir -p "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks"
-    cp -r rmHacks/* \
-        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks/"
-
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/rm-hacks-qmd-$_commit/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/rm-hacks-qmd-$_commit/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }

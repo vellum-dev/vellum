@@ -1,14 +1,13 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-battery-indicator
 pkgver=1.0.0
 pkgrel=0
-_author="rmitchellscott"
-_author_url="https://github.com/rmitchellscott"
+_upstream_author="rmitchellscott"
 pkgdesc="Fixes battery icon not updating after charging while device is asleep"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="xovi-qt-resource-rebuilder remarkable-os>=3.24"
+depends="xovi-qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 source="
 fixBatteryIndicator.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/fixBatteryIndicator.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
@@ -20,12 +19,12 @@ b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595
 "
 
 package() {
-    install -Dm644 "$srcdir/fixBatteryIndicator.qmd" \
-        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/fixBatteryIndicator.qmd"
+	install -Dm644 "$srcdir/fixBatteryIndicator.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/fixBatteryIndicator.qmd"
 
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }

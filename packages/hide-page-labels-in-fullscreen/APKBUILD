@@ -1,31 +1,30 @@
-# Maintainer: Mitchell Scott <mitchell@scottlabs.io>
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-page-labels-in-fullscreen
 pkgver=1.0.0
 pkgrel=0
-_author="rmitchellscott"
-_author_url="https://github.com/rmitchellscott"
+_upstream_author="rmitchellscott"
 pkgdesc="Hides the page numbers at the bottom of the screen when the toolbar is hidden."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="xovi-qt-resource-rebuilder remarkable-os>=3.24"
+depends="xovi-qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 source="
 hidePageLabelsInFullscreen.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/hidePageLabelsInFullscreen.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
 sha512sums="
-4278f1cafb59f4bfa2d303e5576b26357a36cfa2f7712c485582c1f566182268fb1fcc72b3d014e5322b084863ea473231ce308a889894849c3bf65dcf120281  hidePageLabelsInFullscreen.qmd
+e00fc1ec2255ea772269bd5c4b15992635220da553f633b6ca4c7ea9f33fc2a576a68842f1f83ef822651536c2205d445275f7b6d1fe63f4e8f2acdd230496fe  hidePageLabelsInFullscreen.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
 "
 
 package() {
-    install -Dm644 "$srcdir/hidePageLabelsInFullscreen.qmd" \
-        "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/hidePageLabelsInFullscreen.qmd"
+	install -Dm644 "$srcdir/hidePageLabelsInFullscreen.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/hidePageLabelsInFullscreen.qmd"
 
-    mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
