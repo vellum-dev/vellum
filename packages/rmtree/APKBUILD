@@ -1,0 +1,48 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rmtree
+pkgver=1.0.0
+pkgrel=0
+_upstream_author="rmitchellscott"
+_category="utilities"
+pkgdesc="Display reMarkable document hierarchy in tree format"
+url="https://github.com/rmitchellscott/rmtree"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+
+source="
+$pkgname-$pkgver-aarch64.tar.gz::https://github.com/rmitchellscott/rmtree/releases/download/v$pkgver/rmtree-aarch64.tar.gz
+$pkgname-$pkgver-armv7.tar.gz::https://github.com/rmitchellscott/rmtree/releases/download/v$pkgver/rmtree-armv7.tar.gz
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/rmtree/main/LICENSE
+"
+
+prepare() {
+	default_prepare
+	cd "$srcdir"
+	case "$CARCH" in
+		aarch64) tar -xzf "$pkgname-$pkgver-aarch64.tar.gz" ;;
+		armv7|armhf) tar -xzf "$pkgname-$pkgver-armv7.tar.gz" ;;
+	esac
+}
+
+package() {
+	local bin_file
+	case "$CARCH" in
+		aarch64) bin_file="rmtree-aarch64" ;;
+		armv7|armhf) bin_file="rmtree-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir/$bin_file" \
+		"$pkgdir/home/root/.vellum/bin/rmtree"
+
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/rmtree/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+96ce1c20003b90ee2f0f3ce318fca6e93b1061c9b3aa4b2bd4fdf13b66a95f54a6d8ffd5d27aa6042f06711e78912391775c214163a01164ed1ec4551a0059a2  rmtree-1.0.0-aarch64.tar.gz
+930a7316cfc31487069bb2d3710537c27f17f2dc9997749ef4afe11a42de9261b178ac3c8a229552851fe4b1dea760613971ac4d5d62abad3ec7b72b61b20885  rmtree-1.0.0-armv7.tar.gz
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"
