@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# On Paper Pro (aarch64), RLE compression is not supported
+if [ "$(uname -m)" = "aarch64" ]; then
+    export RLE_COMPRESSION=false
+fi
+
+exec /home/root/.vellum/lib/gomarkablestream/goMarkableStream "$@"

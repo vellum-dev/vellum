@@ -1,0 +1,54 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=gomarkablestream
+pkgver=0.21
+pkgrel=0
+_upstream_author="owulveryck"
+_category="utilities"
+pkgdesc="Stream your reMarkable screen to a web browser"
+url="https://github.com/owulveryck/goMarkableStream"
+arch="aarch64 armv7"
+license="MIT"
+depends="!rmppm !rm1"
+options="!check !fhs !strip !tracedeps"
+
+source="
+$pkgname-$pkgver-aarch64.tar.gz::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/goMarkableStream_linux_arm64.tar.gz
+$pkgname-$pkgver-armv7.tar.gz::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/goMarkableStream_linux_arm.tar.gz
+LICENSE::https://raw.githubusercontent.com/$_upstream_author/goMarkableStream/master/LICENSE
+gomarkablestream-wrapper
+"
+
+prepare() {
+	default_prepare
+	cd "$srcdir"
+	case "$CARCH" in
+		aarch64) tar -xzf "$pkgname-$pkgver-aarch64.tar.gz" ;;
+		armv7|armhf) tar -xzf "$pkgname-$pkgver-armv7.tar.gz" ;;
+	esac
+}
+
+package() {
+	local src_dir
+	case "$CARCH" in
+		aarch64) src_dir="goMarkableStream_linux_arm64" ;;
+		armv7|armhf) src_dir="goMarkableStream_linux_arm" ;;
+	esac
+
+	install -Dm755 "$srcdir/$src_dir/goMarkableStream" \
+		"$pkgdir/home/root/.vellum/lib/gomarkablestream/goMarkableStream"
+
+	install -Dm755 "$startdir/gomarkablestream-wrapper" \
+		"$pkgdir/home/root/.vellum/bin/goMarkableStream"
+
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$_upstream_author/goMarkableStream/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+e8a205c1742490531aef270890cd4c564ca1805d4b5e9f7fc9f65d627c903ef3a475d80a46b20395d3320eb31aa45ac30f01742342e890ff0ac1bb4b01ad6d8f  gomarkablestream-0.21-aarch64.tar.gz
+5301927cfd0c0a80d25e65da66059ec4df92e281d14614451f426aeda37e8a9ff406f0c95aa5a04af5945e20525cf3c6015353e6a7b2ead9b906926834569ca7  gomarkablestream-0.21-armv7.tar.gz
+814f7ff90e542338425c7e6740ff7cd151143ee5ae32b40ea492d99e9498ac85ec5e42b33108fd065d03bf7d453866487054652a8a6f11339c6855e34be635ac  LICENSE
+705667b437d7724b8f9e00a7790002e4a123ee2a88e29200b9f515b62b5b2616b254373479902b4ea7acf4b5c16bf79a4645124eaa7d618a1d7c6a6e2cd21e9a  gomarkablestream-wrapper
+"
