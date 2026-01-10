@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="GPL-3.0"
 depends="xovi"
 options="!check !fhs !strip !tracedeps"
+install="qt-resource-rebuilder.post-install"
 
 subpackages="
 	qt-resource-rebuilder:qt_resource_rebuilder
@@ -53,7 +54,6 @@ package() {
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="xovi"
-	install="qt-resource-rebuilder.post-install"
 
 	install -Dm755 "$srcdir/qt-resource-rebuilder.so" \
 		"$subpkgdir/home/root/xovi/extensions.d/qt-resource-rebuilder.so"

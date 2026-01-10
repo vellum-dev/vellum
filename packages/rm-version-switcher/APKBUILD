@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-version-switcher
-pkgver=0.4.0
+pkgver=1.0.0
 pkgrel=0
 _upstream_author="rmitchellscott"
 _category="utilities"
@@ -16,11 +16,6 @@ $pkgname-$pkgver-armv7.tar.gz::https://github.com/rmitchellscott/rm-version-swit
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/rm-version-switcher/main/LICENSE
 "
 
-sha512sums="
-483528661acf6155ecf3fbd82776a122b3e0a399ff11d1f16434fb8cb3e5f8e3bf89d2f89569e4a1f01c286d7dc2ff8b93b72936a8d12e6b1c87c1133b3229cd  rm-version-switcher-0.4.0-aarch64.tar.gz
-dc819f8f99d8c520b849d60174d88bed8e5bba82a5e9f5037be82289cd8ef9e61a02ce1e92fadb2d99346b0523b4ecc7b5b202f0dc650e338b647f8d4db0283c  rm-version-switcher-0.4.0-armv7.tar.gz
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
 
 prepare() {
 	default_prepare
@@ -51,3 +46,8 @@ package() {
 	echo "https://github.com/rmitchellscott/rm-version-switcher/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+0d83e941ab2b53d9a7b128a515d1392f6f3c40b06a109f10999eb507f9c2267d9ed796f8fb954e9c17769c34824de6fcdd17a6c426c14d348de0a9d198d7a313  rm-version-switcher-1.0.0-aarch64.tar.gz
+f7186a5e804a76799b09c7f825fabbbec91e51357720f6b889e5bec6e32d872fc05825a9d2b4ee1eda28e78d567152f43f220329f8c56617f8006d3f13dea27b  rm-version-switcher-1.0.0-armv7.tar.gz
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"
