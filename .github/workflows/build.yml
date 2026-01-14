@@ -11,10 +11,6 @@ on:
         description: 'Rebuild all packages (ignore change detection)'
         type: boolean
         default: false
-      purge_s3:
-        description: 'Delete ALL packages from S3 before deploy (DANGEROUS - use for testing only)'
-        type: boolean
-        default: false
 
 jobs:
   setup:
@@ -238,15 +234,6 @@ jobs:
             echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
             chmod 600 keys/packages.rsa
           fi
-
-      - name: Purge S3 bucket (if requested)
-        if: github.event.inputs.purge_s3 == 'true'
-        run: |
-          echo "PURGING ALL PACKAGES FROM S3"
-          for arch in aarch64 armv7; do
-            aws s3 rm s3://packages.vellum.delivery/$arch/ --recursive
-          done
-          echo "S3 bucket purged"
 
       - name: Regenerate APKINDEX from S3
         run: |
