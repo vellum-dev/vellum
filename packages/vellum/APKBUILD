@@ -1,0 +1,56 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=vellum
+pkgver=0.1.1
+pkgrel=0
+_apk_ver=3.0.3
+_upstream_author="vellum-dev"
+_category="utilities"
+pkgdesc="Package manager wrapper for reMarkable tablets"
+url="https://github.com/vellum-dev/vellum-cli"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+source="
+vellum-aarch64::https://github.com/$_upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-arm64
+vellum-armv7::https://github.com/$_upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-armv7
+apk-aarch64::https://github.com/$_upstream_author/apk-tools/releases/download/v$_apk_ver/apk-aarch64
+apk-armv7::https://github.com/$_upstream_author/apk-tools/releases/download/v$_apk_ver/apk-armv7
+LICENSE::https://raw.githubusercontent.com/$_upstream_author/vellum-cli/main/LICENSE
+"
+
+package() {
+	local vellum_file
+	case "$CARCH" in
+		aarch64) vellum_file="vellum-aarch64" ;;
+		armv7|armhf) vellum_file="vellum-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir/$vellum_file" \
+		"$pkgdir/home/root/.vellum/bin/vellum"
+
+	local apk_file
+	case "$CARCH" in
+		aarch64)
+			apk_file="apk-aarch64"
+			;;
+		armv7|armhf)
+			apk_file="apk-armv7"
+			;;
+	esac
+
+	install -Dm755 "$srcdir/$apk_file" \
+		"$pkgdir/home/root/.vellum/bin/apk.vellum"
+
+	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$_upstream_author/vellum-cli" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+583e111f4d720e24c007397cb8de8516417c8d24d65c9f421b6aa819e07157639e85eba26de3ee2a4379ee0682987a29a8e81ca2dc90d5c44e1c3ea5c21bc913  vellum-aarch64
+751dcf843ca9aa5948b9d2af10d605e38b5bf52a7e218a506a6e9b2b53e29f85fd9fcbe803c50e09b66b49c3399788795f5911a0ce2ddbf0a4e472dd1deca39e  vellum-armv7
+f0b8a14b22cc275178305b45f824a3e217182d768233ac0d770eb124a99dfea138535973a88e758556bf7f62b8e542006ea2aa8ec4d51e9cdd8c1994637eeb1a  apk-aarch64
+9c58e6f45b09455363e5ad18353a018a6a717d757b408f5f5e06bc055162177aed924bb72bb3958aeb5510a061b97171f3204c4d0f1671287f44d2a244dc9f8d  apk-armv7
+f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8  LICENSE
+"
