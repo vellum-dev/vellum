@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/root/.local/share/vellum-hosts/update-hosts.sh add
