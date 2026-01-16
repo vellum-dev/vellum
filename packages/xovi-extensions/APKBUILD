@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=17.0.0
-pkgrel=1
+pkgrel=2
 _upstream_author="asivery"
 _category="framework"
 pkgdesc="Extensions for xovi framework"
 url="https://github.com/asivery/rm-xovi-extensions"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="xovi"
+depends="xovi remarkable-os>=3.20 remarkable-os<3.25"
 options="!check !fhs !strip !tracedeps"
 install="qt-resource-rebuilder.post-install"
 
