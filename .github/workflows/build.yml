@@ -10,9 +10,14 @@ on:
         description: 'Rebuild all packages (ignore change detection)'
         type: boolean
         default: false
+      reindex_only:
+        description: 'Only regenerate APKINDEX from S3 (no builds)'
+        type: boolean
+        default: false
 
 jobs:
   setup:
+    if: ${{ github.event.inputs.reindex_only != 'true' }}
     runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.changed.outputs.packages }}
@@ -221,8 +226,10 @@ jobs:
       always() &&
       !failure() &&
       !cancelled() &&
-      github.ref == 'refs/heads/main' &&
-      github.event_name != 'pull_request'
+      (
+        github.event.inputs.reindex_only == 'true' ||
+        (github.ref == 'refs/heads/main' && github.event_name != 'pull_request')
+      )
     steps:
       - uses: actions/checkout@v4
 
