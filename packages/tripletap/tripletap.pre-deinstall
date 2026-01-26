@@ -1,2 +1,7 @@
 #!/bin/sh
-/home/root/xovi-tripletap/uninstall.sh
+/home/root/.vellum/bin/mount-rw
+systemctl stop xovi-tripletap 2>/dev/null || true
+systemctl disable xovi-tripletap 2>/dev/null || true
+rm -f /etc/systemd/system/xovi-tripletap.service
+systemctl daemon-reload
+/home/root/.vellum/bin/mount-restore
