@@ -61,7 +61,7 @@ if [ "$pkgdesc_len" -ge 128 ]; then
 fi
 
 has_license_source=false
-if echo "$source" | grep -qE '(LICENSE|COPYING|\.tar\.gz|\.apk)'; then
+if echo "$source" | grep -qE '(LICENSE|COPYING|\.tar\.gz|\.tbz|\.apk)'; then
     has_license_source=true
 fi
 
@@ -69,7 +69,7 @@ if [ "$has_license_source" = false ]; then
     add_error "source does not include a LICENSE file (or archive containing one)"
 fi
 
-if ! echo "$source" | grep -q '\.tar\.gz'; then
+if ! echo "$source" | grep -qE '(\.tar\.gz|\.tbz)'; then
     if echo "$source" | grep -qE '(LICENSE::|COPYING::)'; then
         if ! echo "$sha512sums" | grep -qE '(LICENSE|COPYING)'; then
             add_error "sha512sums does not include LICENSE/COPYING checksum"
