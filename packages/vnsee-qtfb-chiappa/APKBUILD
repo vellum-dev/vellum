@@ -1,0 +1,46 @@
+maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
+_codename="chiappa"
+_name="vnsee-qtfb"
+pkgname="$_name-$_codename"
+pkgver=1.1.0
+pkgrel=0
+_upstream_author="khyryra"
+_category="apps"
+pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as a second screen"
+url="https://github.com/khyryra/vnsee-qtfb"
+arch="aarch64"
+license="GPL-3.0"
+install="$pkgname.post-install $pkgname.post-deinstall"
+options="!check !fhs !strip !tracedeps"
+depends="appload rmppm"
+provides="vnsee-qtfb"
+
+source="
+$pkgname-$pkgver.zip::https://github.com/khyryra/vnsee-qtfb/releases/download/v$pkgver/vnsee-$_codename.zip
+LICENSE.md::https://raw.githubusercontent.com/khyryra/vnsee-qtfb/master/LICENSE.md
+"
+
+prepare() {
+    default_prepare
+    cd "$srcdir"
+    unzip -o "$pkgname-$pkgver.zip"
+}
+
+package() {
+    mkdir -p "$pkgdir/home/root/xovi/exthome/appload"
+    cp -r "$srcdir/vnsee" "$pkgdir/home/root/xovi/exthome/appload/vnsee"
+    cp -r "$srcdir/vnsee-0" "$pkgdir/home/root/xovi/exthome/appload/vnsee-0"
+    cp -r "$srcdir/vnsee-1" "$pkgdir/home/root/xovi/exthome/appload/vnsee-1"
+    cp -r "$srcdir/vnsee-2" "$pkgdir/home/root/xovi/exthome/appload/vnsee-2"
+    cp -r "$srcdir/vnsee-3" "$pkgdir/home/root/xovi/exthome/appload/vnsee-3"
+
+    install -Dm644 "$srcdir/LICENSE.md" \
+        "$pkgdir/home/root/.vellum/licenses/$_name/LICENSE"
+    echo "https://github.com/khyryra/vnsee-qtfb/archive/v$pkgver.tar.gz" > \
+        "$pkgdir/home/root/.vellum/licenses/$_name/SOURCES"
+}
+
+sha512sums="
+bc4d83781d3b6d44d5a1350c1ebc48c5d46db2f6b7a1918891dedf7c6efe8c6d88f493a3ffac2e1052cdf3cad2d106d0d8868246bf09981ad2d806e0360a4937  vnsee-qtfb-chiappa-1.1.0.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE.md
+"
