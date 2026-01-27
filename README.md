@@ -10,7 +10,7 @@ Vellum provides an opinionated wrapper and static build of Alpine Package Keeper
 
 Please refer to the [vellum-cli](https://github.com/vellum-dev/vellum-cli) documentation for instructions on installation and usage.
 
-##  Why "Vellum"?
+## Why "Vellum"?
 
 The reMarkable tablet’s operating system is called Codex, meaning "bound book" in Latin.
 
@@ -185,11 +185,11 @@ Example for a package with a systemd service:
 ```sh
 # mypackage.post-install
 #!/bin/sh
-mount-rw
+/home/root/.vellum/bin/mount-rw
 cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now mypackage
-mount-restore
+/home/root/.vellum/bin/mount-restore
 
 # mypackage.post-upgrade
 #!/bin/sh
@@ -203,11 +203,11 @@ systemctl enable --now mypackage
 
 # mypackage.pre-deinstall
 #!/bin/sh
-mount-rw
+/home/root/.vellum/bin/mount-rw
 systemctl disable --now mypackage 2>/dev/null || true
 rm -f /etc/systemd/system/mypackage.service
 systemctl daemon-reload
-mount-restore
+/home/root/.vellum/bin/mount-restore
 ```
 
 ### Handling Purge
