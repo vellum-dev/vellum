@@ -39,7 +39,7 @@ for arch in aarch64 armv7; do
         if (pkg && ver) {
             gsub(/"/, "\\\"", desc)
             gsub(/"/, "\\\"", url)
-            print pkg "\t" ver "\t" desc "\t" url "\t" lic "\t" deps "\t" arch "\t" provides
+            print pkg "\t" ver "\t" desc "\t" url "\t" lic "\t" (deps ? deps : "_") "\t" arch "\t" (provides ? provides : "_")
         }
     }' "$INDEX_FILE" >> "$WORKDIR/all-packages.tsv"
 done
@@ -127,10 +127,10 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides; do
     conflicts=$(echo "$deps" | tr ' ' '\n' | grep '^!' | grep -vE '^!(rm1|rm2|rmpp|rmppm)$' | sed 's/!//' | jq -R . | jq -s . 2>/dev/null)
     [ -z "$conflicts" ] && conflicts="[]"
 
-    regular_deps=$(echo "$deps" | tr ' ' '\n' | grep -vE '^remarkable-os|^rm1$|^rm2$|^rmpp$|^rmppm$|^!|^aarch64$|^armv7$|^noarch$|^/bin/sh$' | grep -vE '^\|$' | grep -v '^$' | jq -R . | jq -s . 2>/dev/null)
+    regular_deps=$(echo "$deps" | tr ' ' '\n' | grep -vE '^remarkable-os|^rm1$|^rm2$|^rmpp$|^rmppm$|^!|^aarch64$|^armv7$|^noarch$|^/bin/sh$|^_$' | grep -vE '^\|$' | grep -v '^$' | jq -R . | jq -s . 2>/dev/null)
     [ -z "$regular_deps" ] && regular_deps="[]"
 
-    provides_arr=$(echo "$provides" | tr ' ' '\n' | grep -v '^$' | jq -R . | jq -s . 2>/dev/null)
+    provides_arr=$(echo "$provides" | tr ' ' '\n' | grep -vE '^$|^_$' | jq -R . | jq -s . 2>/dev/null)
     [ -z "$provides_arr" ] && provides_arr="[]"
 
     existing_arch=$(jq -r --arg pkg "$pkg" --arg ver "$ver" '.packages[$pkg][$ver].arch // []' "$METADATA_FILE")
