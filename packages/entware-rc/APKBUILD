@@ -28,6 +28,9 @@ package() {
 		"$srcdir"/entware-rc@.service
 	install -D -m 755 -t "$pkgdir"/home/root/.vellum/bin/ \
 		"$srcdir"/rcctl
+
+	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
+		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 sha512sums="
 cbe0f92c4dc2119859fab575e6d224efb1f3c6c775609ad933766346036f500f3c9d44d4787c010d6e21ed835a349c7c8da9964c073374598bbd1ece7f6a053f  entware-rc@.service
