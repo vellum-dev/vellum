@@ -1,6 +1,6 @@
 #!/bin/sh
 /home/root/.vellum/bin/mount-rw
-rcctl list | xargs -I {} systemctl disable --now entware-rc@{}
+/home/root/.vellum/bin/rcctl list | xargs -I {} systemctl disable --now entware-rc@{}
 rm -f /etc/systemd/system/entware-rc@.service
 systemctl daemon-reload
 /home/root/.vellum/bin/mount-restore
