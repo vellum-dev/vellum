@@ -45,48 +45,51 @@ mkdir -p "$REPO_ROOT/dist/$ARCH"
 # Get reproducible timestamp from git (last commit to this package)
 SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- "$PACKAGE_DIR")
 if [ -z "$SOURCE_DATE_EPOCH" ]; then
-    # Fallback to APKBUILD modification time if no git history
     SOURCE_DATE_EPOCH=$(stat -c %Y "$PACKAGE_DIR/APKBUILD" 2>/dev/null || stat -f %m "$PACKAGE_DIR/APKBUILD")
 fi
 echo "Using SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH for reproducible build"
 
 CARCH_ENV="-e CARCH=$ARCH -e SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
 
+if [ "$CONTAINER_CMD" = "podman" ]; then
+    SRC_MOUNT="-v $REPO_ROOT:/work:O"
+else
+    SRC_MOUNT="-v $REPO_ROOT:/work-src:Z,ro"
+fi
+
 $CONTAINER_CMD run --rm \
-    -v "$REPO_ROOT:/work:Z" \
-    -v "$REPO_ROOT/packages:/work/packages:O" \
-    -w "/work/packages/$PACKAGE" \
+    $SRC_MOUNT \
+    -v "$REPO_ROOT/dist:/work/dist:Z" \
     $CARCH_ENV \
-    alpine:edge \
+    alpine:3 \
     sh -c '
         set -e
 
-        apk add --no-cache alpine-sdk sudo
+        apk add --no-cache alpine-sdk
 
-        adduser -D builder
-        addgroup builder abuild
-        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        # Docker: copy source to writable /work
+        if [ -d /work-src ]; then
+            cp -a /work-src/packages /work/
+            cp -a /work-src/keys /work/
+        fi
 
         mkdir -p /work/dist/'$ARCH'
-        chown -R builder:builder /work/dist
+        cd /work/packages/'$PACKAGE'
 
-        # Set up signing key from repo
-        mkdir -p /home/builder/.abuild
-        cp /work/keys/packages.rsa /home/builder/.abuild/
-        cp /work/keys/packages.rsa.pub /home/builder/.abuild/
-        echo "PACKAGER_PRIVKEY=/home/builder/.abuild/packages.rsa" > /home/builder/.abuild/abuild.conf
-        chown -R builder:builder /home/builder/.abuild
-
-        # Install public key for index verification
+        # Set up signing key
+        mkdir -p /root/.abuild
+        cp /work/keys/packages.rsa /root/.abuild/
+        cp /work/keys/packages.rsa.pub /root/.abuild/
+        echo "PACKAGER_PRIVKEY=/root/.abuild/packages.rsa" > /root/.abuild/abuild.conf
         cp /work/keys/packages.rsa.pub /etc/apk/keys/
 
-        # Build package (-d skips dependency checking for custom deps not in Alpine repos)
-        chown -R builder:builder /work/packages
-        su builder -c "REPODEST=/work/dist abuild -d -r"
-
-        # Fix ownership for cleanup outside container
-        chown -R $(stat -c %u /work) /work/dist
+        REPODEST=/work/dist abuild -d -r -F
     '
+
+# Fix ownership for Docker
+if [ "$CONTAINER_CMD" = "docker" ]; then
+    chown -R "$(id -u):$(id -g)" "$REPO_ROOT/dist"
+fi
 
 # Move packages from nested structure to flat
 if [ -d "$REPO_ROOT/dist/packages/noarch" ]; then
