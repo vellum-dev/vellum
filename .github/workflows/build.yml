@@ -1,9 +1,11 @@
 name: Build Packages
 
 on:
-  push:
-  pull_request:
-    branches: [main]
+  push: &branches
+    branches:
+      - main
+      - testing
+  pull_request: *branches
   workflow_dispatch:
     inputs:
       rebuild_all:
@@ -160,6 +162,14 @@ jobs:
 
       - name: Build ${{ matrix.package }}
         run: ./scripts/build-package.sh "${{ matrix.package }}"
+
+      - name: Upload artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-noarch
+          path: dist/noarch/${{ matrix.package }}-*.apk
+          if-no-files-found: error
 
       - name: Upload to S3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
