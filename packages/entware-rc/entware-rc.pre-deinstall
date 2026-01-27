@@ -1,0 +1,6 @@
+#!/bin/sh
+mount-rw
+rcctl list | xargs -I {} systemctl disable --now entware-rc@{}
+rm -f /etc/systemd/system/entware-rc@.service
+systemctl daemon-reload
+mount-restore
