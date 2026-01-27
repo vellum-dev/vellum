@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       rebuild_all:
-        description: 'Rebuild all packages (ignore change detection)'
+        description: "Rebuild all packages (ignore change detection)"
         type: boolean
         default: false
       reindex_only:
-        description: 'Only regenerate APKINDEX from S3 (no builds)'
+        description: "Only regenerate APKINDEX from S3 (no builds)"
         type: boolean
         default: false
 
@@ -203,6 +203,14 @@ jobs:
 
       - name: Build ${{ matrix.package }} for ${{ matrix.arch }}
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
+
+      - name: Upload artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.package }}-${{ matrix.arch }}
+          path: dist/${{ matrix.arch }}/${{ matrix.package }}-*.apk
+          if-no-files-found: error
 
       - name: Upload to S3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
