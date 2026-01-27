@@ -1,7 +1,7 @@
 #!/bin/sh
-mount-rw
-cp /home/root/.vellum/share/entware-rc/entware-rc.service /etc/systemd/system/
+/home/root/.vellum/bin/mount-rwmount-rw
+cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
 systemctl daemon-reload
-mount-restore
+/home/root/.vellum/bin/mount-restore
 echo ""
 echo "You can use rcctl to manage services installed by entware"
