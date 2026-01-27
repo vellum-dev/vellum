@@ -1,5 +1,5 @@
 #!/bin/sh
-/home/root/.vellum/bin/mount-rwmount-rw
+/home/root/.vellum/bin/mount-rw
 cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
 systemctl daemon-reload
 /home/root/.vellum/bin/mount-restore
