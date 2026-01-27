@@ -23,7 +23,6 @@ package() {
 	install -Dm644 "$srcdir/enableShortcuts.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/enableShortcuts.qmd"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \

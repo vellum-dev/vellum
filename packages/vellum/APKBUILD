@@ -41,7 +41,6 @@ package() {
 	install -Dm755 "$srcdir/$apk_file" \
 		"$pkgdir/home/root/.vellum/bin/apk.vellum"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$_upstream_author/vellum-cli" > \

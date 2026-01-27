@@ -83,7 +83,6 @@ package() {
 	install -Dm644 "$srcdir/betterToc.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/myextension.qmd"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://raw.githubusercontent.com/you/repo" > \

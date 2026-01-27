@@ -39,7 +39,6 @@ prepare() {
 }
 
 package() {
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \

@@ -37,7 +37,6 @@ package() {
 	mkdir -p "$pkgdir/home/root/xovi/exthome/appload"
 	cp -r "$srcdir/koreader" "$pkgdir/home/root/xovi/exthome/appload/"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/COPYING" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYING"
 	echo "https://github.com/koreader/koreader/archive/v$pkgver.tar.gz" > \

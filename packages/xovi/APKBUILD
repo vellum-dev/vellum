@@ -62,7 +62,6 @@ package() {
 	chmod 755 "$pkgdir/home/root/xovi/start"
 	chmod 755 "$pkgdir/home/root/xovi/stock"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/asivery/xovi/archive/refs/tags/v$pkgver.tar.gz" > \

@@ -24,7 +24,6 @@ package() {
 	cp -r rmHacks/* \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks/"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/rm-hacks-qmd-$_commit/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \

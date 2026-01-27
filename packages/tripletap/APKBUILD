@@ -46,7 +46,6 @@ package() {
 
 	echo "$pkgver" > "$install_dir/version.txt"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz" > \

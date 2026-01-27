@@ -30,7 +30,6 @@ package() {
 	install -Dm755 "$srcdir/$so_file" \
 		"$pkgdir/home/root/xovi/extensions.d/rm-shot.so"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/rmitchellscott/rm-shot/archive/refs/tags/v$pkgver.tar.gz" > \

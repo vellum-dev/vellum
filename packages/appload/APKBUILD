@@ -42,7 +42,6 @@ package() {
 	install -Dm755 "$srcdir/qtfb-shim-32bit.so" \
 		"$pkgdir/home/root/shims/qtfb-shim-32bit.so"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/asivery/rm-appload/archive/v$pkgver.tar.gz" > \

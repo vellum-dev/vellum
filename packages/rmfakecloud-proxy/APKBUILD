@@ -27,7 +27,6 @@ package() {
 			;;
 	esac
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$_upstream_author/rmfakecloud-proxy" > "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 

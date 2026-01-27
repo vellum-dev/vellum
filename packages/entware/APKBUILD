@@ -57,7 +57,6 @@ package() {
 			;;
 	esac
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/COPYING" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYING"
 	echo "https://github.com/$_upstream_author/Entware" > \

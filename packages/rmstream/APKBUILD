@@ -40,7 +40,6 @@ package() {
 		armv7|armhf) cp -r "$srcdir/rmstream-arm32" "$pkgdir/home/root/xovi/exthome/appload/rmstream" ;;
 	esac
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/asivery/appload-rmstream/archive/v$pkgver.tar.gz" > \

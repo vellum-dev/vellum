@@ -35,7 +35,6 @@ package() {
 	install -Dm755 "$srcdir/$bin_file" \
 		"$pkgdir/home/root/.vellum/bin/rmtree"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/rmitchellscott/rmtree/archive/refs/tags/v$pkgver.tar.gz" > \

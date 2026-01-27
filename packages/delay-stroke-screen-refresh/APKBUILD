@@ -23,7 +23,6 @@ package() {
 	install -Dm644 "$srcdir/delayStrokeScreenRefresh.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/delayStrokeScreenRefresh.qmd"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \

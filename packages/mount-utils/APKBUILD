@@ -22,7 +22,6 @@ package() {
 	install -Dm755 "$srcdir/mount-restore" \
 		"$pkgdir/home/root/.vellum/bin/mount-restore"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$_upstream_author/vellum" > \

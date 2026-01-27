@@ -29,7 +29,6 @@ package() {
 	install -Dm755 "$srcdir/$_so" \
 		"$pkgdir/home/root/xovi/extensions.d/$pkgname.so"
 
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
 	install -Dm644 "$srcdir/COPYING" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYING"
 	echo "https://github.com/asivery/rm-literm/archive/$_release.tar.gz" > \
