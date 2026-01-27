@@ -54,6 +54,7 @@ CARCH_ENV="-e CARCH=$ARCH -e SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
 
 $CONTAINER_CMD run --rm \
     -v "$REPO_ROOT:/work:Z" \
+    -v "$REPO_ROOT/packages:/work/packages:O" \
     -w "/work/packages/$PACKAGE" \
     $CARCH_ENV \
     alpine:edge \
