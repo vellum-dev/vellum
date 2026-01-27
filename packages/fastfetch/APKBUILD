@@ -9,6 +9,7 @@ url="https://github.com/fastfetch-cli/fastfetch"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
+install="$pkgname.post-deinstall"
 
 source="
 $pkgname-$pkgver-linux-aarch64.tar.gz::https://github.com/fastfetch-cli/fastfetch/releases/download/$pkgver/fastfetch-linux-aarch64.tar.gz
