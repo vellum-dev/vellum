@@ -13,8 +13,8 @@ options="!check !fhs !strip !tracedeps"
 _release="v$pkgver"
 
 source="
-$pkgname-$pkgver-armv7.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/$pkgname-$pkgver-linux-arm.tar.gz
-$pkgname-$pkgver-arm64.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/$pkgname-$pkgver-linux-arm64.tar.gz
+$pkgname-$pkgver-armv7.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/micro-$pkgver-linux-arm.tar.gz
+$pkgname-$pkgver-arm64.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/micro-$pkgver-linux-arm64.tar.gz
 "
 
 unpack() {
@@ -27,11 +27,11 @@ unpack() {
 		;;
 	esac
 	mkdir -p "$srcdir"
-	tar -C "$srcdir" -zxf "$SRCDEST/$_tar" || return 1
+	tar -C "$srcdir" -zxf "$SRCDEST/$_tar"
 }
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver" || return 1
+	cd "$srcdir/$pkgname-$pkgver"
 	install -Dm644 LICENSE \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	install -Dm644 LICENSE-THIRD-PARTY \
