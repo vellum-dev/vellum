@@ -61,7 +61,7 @@ _device() {
 	local device="${subpkgname##*-}"
 	pkgdesc="$pkgdesc ($device)"
 	depends="appload $device"
-	provides="vnsee-qtfb"
+	install_if="$pkgname $device"
 
 	mkdir -p "$subpkgdir/home/root/xovi/exthome/appload"
 	cp -r "$srcdir/$device/vnsee" "$subpkgdir/home/root/xovi/exthome/appload/vnsee"
