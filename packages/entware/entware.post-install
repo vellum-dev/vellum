@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 /home/root/.local/share/entware/install-entware.sh
 
 BASHRC="/home/root/.bashrc"

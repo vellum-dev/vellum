@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 /home/root/.local/share/entware/reenable-entware.sh
 
 if [ -x /opt/bin/opkg ]; then
