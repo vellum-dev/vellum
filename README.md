@@ -267,8 +267,13 @@ When you modify source URLs or update package versions:
 # Build a noarch package (auto-detected from APKBUILD)
 ./scripts/build-package.sh mypackage
 ```
-
 Built packages are output to `dist/<arch>/`.
+
+#### Installing Packages
+
+```sh
+vellum add --allow-untrusted mypackage-1.0.0-r0.apk
+```
 
 ### Testing Repository
 

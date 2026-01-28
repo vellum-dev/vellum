@@ -42,6 +42,16 @@ echo "Building $PACKAGE for $ARCH using $CONTAINER_CMD..."
 
 mkdir -p "$REPO_ROOT/dist/$ARCH"
 
+KEY_NAME="vellum-dev"
+KEY_PATH="$REPO_ROOT/keys/$KEY_NAME.rsa"
+if [ ! -f "$KEY_PATH" ]; then
+    echo "Generating $KEY_NAME signing keypair..."
+    mkdir -p "$REPO_ROOT/keys"
+    openssl genrsa -out "$KEY_PATH" 4096 2>/dev/null
+    openssl rsa -in "$KEY_PATH" -pubout -out "$KEY_PATH.pub" 2>/dev/null
+    chmod 600 "$KEY_PATH"
+fi
+
 # Get reproducible timestamp from git (last commit to this package)
 SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- "$PACKAGE_DIR")
 if [ -z "$SOURCE_DATE_EPOCH" ]; then
@@ -69,8 +79,8 @@ $CONTAINER_CMD run --rm \
 
         # Docker: copy source to writable /work
         if [ -d /work-src ]; then
-            cp -a /work-src/packages /work/
-            cp -a /work-src/keys /work/
+            cp -r /work-src/packages /work/
+            cp -r /work-src/keys /work/
         fi
 
         mkdir -p /work/dist/'$ARCH'
@@ -78,17 +88,20 @@ $CONTAINER_CMD run --rm \
 
         # Set up signing key
         mkdir -p /root/.abuild
-        cp /work/keys/packages.rsa /root/.abuild/
-        cp /work/keys/packages.rsa.pub /root/.abuild/
-        echo "PACKAGER_PRIVKEY=/root/.abuild/packages.rsa" > /root/.abuild/abuild.conf
-        cp /work/keys/packages.rsa.pub /etc/apk/keys/
+        cp /work/keys/vellum-dev.rsa /root/.abuild/
+        cp /work/keys/vellum-dev.rsa.pub /root/.abuild/
+        echo "PACKAGER_PRIVKEY=/root/.abuild/vellum-dev.rsa" > /root/.abuild/abuild.conf
+        cp /work/keys/vellum-dev.rsa.pub /etc/apk/keys/
 
         REPODEST=/work/dist abuild -d -r -F
     '
 
-# Fix ownership for Docker
+# Docker: fix ownership so host user can access dist files
 if [ "$CONTAINER_CMD" = "docker" ]; then
-    chown -R "$(id -u):$(id -g)" "$REPO_ROOT/dist"
+    $CONTAINER_CMD run --rm \
+        -v "$REPO_ROOT/dist:/work/dist:Z" \
+        alpine:3 \
+        chown -R "$(id -u):$(id -g)" /work/dist
 fi
 
 # Move packages from nested structure to flat
