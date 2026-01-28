@@ -2,7 +2,7 @@
 
 echo ""
 echo "==============================================="
-echo "  NOTE: You must restart xovi to see changes"
-echo "  reflected in the tablet UI"
+echo "  NOTE: You must refresh AppLoad to see changes "
+echo "  reflected in the tablet UI "
 echo "==============================================="
 echo ""
