@@ -10,7 +10,6 @@ unset LD_LIBRARY_PATH LD_PRELOAD
 cleanup() {
     echo "Error occurred. Cleaning up..."
     cd /home/root
-    [ -d "$ENTWARE_DATA" ] && rm -rf "$ENTWARE_DATA"
     if mountpoint -q /opt 2>/dev/null; then
         umount /opt || true
     fi
@@ -34,32 +33,28 @@ linker_name() {
 install_entware() {
     trap cleanup ERR
 
-    if [ -d /opt ] && [ "$(ls -A /opt 2>/dev/null)" ]; then
-        echo "Error: /opt already exists and is not empty."
-        echo "Entware may already be installed."
-        exit 1
-    fi
-
-    if [ -d "$ENTWARE_DATA" ] && [ "$(ls -A "$ENTWARE_DATA" 2>/dev/null)" ]; then
-        echo "Error: $ENTWARE_DATA already exists and is not empty."
-        echo "Entware may already be installed, or previous data exists."
-        echo "Run 'vellum purge entware' to remove existing data first."
-        exit 1
-    fi
-
-    local available_mb
-    available_mb=$(df -Pm /home/root | tail -1 | awk '{print $4}')
-    if [ "$available_mb" -lt 50 ]; then
-        echo "Error: Not enough free space on /home/root."
-        echo "Available: ${available_mb}MB, Required: 50MB minimum."
-        exit 1
+    if ! [ -d "$ENTWARE_DATA" ]; then
+        local available_mb
+        available_mb=$(df -Pm /home/root | tail -1 | awk '{print $4}')
+        if [ "$available_mb" -lt 50 ]; then
+            echo "Error: Not enough free space on /home/root."
+            echo "Available: ${available_mb}MB, Required: 50MB minimum."
+            exit 1
+        fi
     fi
 
     "$VELLUM_BIN/mount-rw"
 
+    if [ -d "$ENTWARE_DATA" ] && [ "$(ls -A "$ENTWARE_DATA" 2>/dev/null)" ]; then
+        echo "Reinstalling Entware (existing packages will be preserved)..."
+    fi
+
     mkdir -p /opt
     mkdir -p "$ENTWARE_DATA"
-    mount --bind "$ENTWARE_DATA" /opt
+
+    if ! mountpoint -q /opt 2>/dev/null; then
+        mount --bind "$ENTWARE_DATA" /opt
+    fi
 
     cat > /etc/systemd/system/opt.mount << 'EOF'
 [Unit]

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=entware
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Entware software repository for reMarkable tablets"
 _upstream_author="Entware"
 _category="utilities"
@@ -66,7 +66,7 @@ package() {
 		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 sha512sums="
-0250a53df41afc120521bec337641319ea439871fde401cf9fa70fad228586a96ba8a4ed6d5293b0e4e013f19421dc152f3b5123d61bfa9104defb9401481ebe  install-entware.sh
+46d0c2c2487e074e48be2e7443df21aa14da0299f8591be4cb6efa5db6dc8062de0e71a440a31de1db7b1fe69347166493aaefd68f1e71e8a4e4ac8cdf6e879f  install-entware.sh
 26c1e0b37f7acce03213d5c5dff0aa7ff0d9311a0fe56f11fc6ee2507438f3adfc4be7904164e4416eda1453897bd469e954332460283aaabb2fd7b9297fd061  reenable-entware.sh
 0d3e8dbc7f61ae54bbdfd0a793b530d65747b51a954fba25c91f91390f4909d9c39d925af6827f82ee14aea8d9611eb9e0ab96e3d74cff2410a1955de3d0585e  COPYING
 7aec21488b31e74b91ebedb832f57ac1f31496670f130010475d50a91b1cf7d8e5ff39ae8980c763630af6b6d14e7b5c70c99d00455b7b0e105bbc8c6177036a  opkg.aarch64

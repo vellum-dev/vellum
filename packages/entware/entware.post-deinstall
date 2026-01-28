@@ -17,7 +17,7 @@ else
 
   To fully remove all data:
 
-    vellum purge entware
+    rm -rf /home/root/.entware
 
   To reinstall and restore your packages:
 
