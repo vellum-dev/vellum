@@ -267,12 +267,14 @@ When you modify source URLs or update package versions:
 # Build a noarch package (auto-detected from APKBUILD)
 ./scripts/build-package.sh mypackage
 ```
-Built packages are output to `dist/<arch>/`.
+Built packages are output to `dist/<arch>/`.  
+Generated development keypair is output to `keys/vellum-dev.rsa(.pub)`
 
 #### Installing Packages
 
+Copy the `vellum-dev.rsa.pub` key to the reMarkable: `/home/root/.vellum/etc/apk/keys/`
 ```sh
-vellum add --allow-untrusted mypackage-1.0.0-r0.apk
+vellum add mypackage-1.0.0-r0.apk
 ```
 
 ### Testing Repository

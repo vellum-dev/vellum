@@ -2,9 +2,8 @@
 dist/
 *.apk
 
-# Keys (keep public, ignore private)
-keys/*.rsa
-!keys/*.rsa.pub
+# Keys
+keys/
 
 # abuild artifacts
 */src/
