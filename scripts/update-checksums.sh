@@ -30,17 +30,19 @@ for PACKAGE in "$@"; do
     echo "Updating checksums for $PACKAGE..."
 
     $CONTAINER_CMD run --rm \
-        -v "$REPO_ROOT:/work:Z" \
+        -v "$REPO_ROOT/packages:/work/packages:Z" \
         -w "/work/packages/$PACKAGE" \
-        alpine:edge \
-        sh -c '
-            apk add --no-cache abuild >/dev/null 2>&1
-            adduser -D builder
-            addgroup builder abuild
-            chown -R builder:builder /work/packages
-            su builder -c "abuild checksum"
-        '
+        alpine:3 \
+        sh -c 'apk add --no-cache abuild >/dev/null 2>&1 && abuild -F checksum'
 
     rm -rf "$PACKAGE_DIR/src"
     echo "Done: $PACKAGE"
 done
+
+# Docker: fix ownership so host user can access modified files
+if [ "$CONTAINER_CMD" = "docker" ]; then
+    $CONTAINER_CMD run --rm \
+        -v "$REPO_ROOT/packages:/work/packages:Z" \
+        alpine:3 \
+        chown -R "$(id -u):$(id -g)" /work/packages
+fi
