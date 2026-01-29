@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "reloading systemd daemon..."
+systemctl daemon-reload
+echo "restarting tailscaled service..."
+systemctl restart tailscaled.service

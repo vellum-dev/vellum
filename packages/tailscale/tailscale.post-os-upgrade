@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo " * re-installing tailscaled service..."
+cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
+echo " * reloading systemd daemon"
+systemctl daemon-reload
+echo " * run 'systemctl enable --now tailscaled' to start tailscaled"

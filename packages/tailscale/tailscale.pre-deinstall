@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "stopping tailscale..."
+systemctl disable --now tailscaled.service
+
+if [ "$VELLUM_PURGE" = "1" ]; then
+    echo "deleting tailscale config files..."
+    rm -rf /home/root/.local/var/lib/tailscale
+    rm -rf /home/root/.config/tailscale
+fi

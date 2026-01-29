@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "reloading systemd daemon..."
+systemctl daemon-reload
