@@ -16,10 +16,9 @@ case "$CARCH" in
 	armv7 | armhf) _arch="arm" ;;
 esac
 
-# Using my mirror because it is much faster than ziglang.org's
 source="
-https://zig.vvv.systems/zig/zig-arm-linux-$pkgver.tar.xz
-https://zig.vvv.systems/zig/zig-aarch64-linux-$pkgver.tar.xz
+https://ziglang.org/download/$pkgver/zig-arm-linux-$pkgver.tar.xz
+https://ziglang.org/download/$pkgver/zig-aarch64-linux-$pkgver.tar.xz
 "
 
 unpack() {
