@@ -1,0 +1,11 @@
+Author: Interloper <45214659+0xdeb7ef@users.noreply.github.com>
+Summary: Enables user-space networking by default.
+----
+--- a/systemd/tailscaled.defaults.orig	2026-01-28 21:08:07.208238949 -0800
++++ b/systemd/tailscaled.defaults	2026-01-28 21:08:15.415061137 -0800
+@@ -5,4 +5,4 @@
+ PORT="41641"
+ 
+ # Extra flags you might want to pass to tailscaled.
+-FLAGS=""
++FLAGS="--tun userspace-networking"

@@ -1,0 +1,18 @@
+Author: Interloper <45214659+0xdeb7ef@users.noreply.github.com>
+Summary: Patches the service file to use the appropriate paths.
+----
+--- a/systemd/tailscaled.service.orig	2026-01-28 21:22:00.964033235 -0800
++++ a/systemd/tailscaled.service	2026-01-28 21:22:31.017935774 -0800
+@@ -5,9 +5,9 @@ Wants=network-pre.target
+ After=network-pre.target NetworkManager.service systemd-resolved.service
+ 
+ [Service]
+-EnvironmentFile=/etc/default/tailscaled
+-ExecStart=/usr/sbin/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock --port=${PORT} $FLAGS
+-ExecStopPost=/usr/sbin/tailscaled --cleanup
++EnvironmentFile=/home/root/.vellum/etc/default/tailscaled
++ExecStart=/home/root/.vellum/bin/tailscaled --state=/home/root/.local/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock --port=${PORT} $FLAGS
++ExecStopPost=/home/root/.vellum/bin/tailscaled --cleanup
+ 
+ Restart=on-failure
+ 
