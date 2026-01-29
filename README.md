@@ -160,7 +160,12 @@ install="$pkgname.post-install $pkgname.post-upgrade $pkgname.pre-deinstall"
 | `pre-deinstall` | Before package removal |
 | `post-os-upgrade` | After reMarkable OS update (via `vellum reenable`) |
 
-The `post-os-upgrade` hook is installed to `/home/root/.vellum/hooks/post-os-upgrade/` and runs when users execute `vellum reenable` after an OS update. Use this for packages that need to restore system files wiped by OS updates.
+The `post-os-upgrade` hook runs when users execute `vellum reenable` after an OS update. Use this for packages that need to restore system files wiped by OS updates.  
+Unlike standard apk hooks, `post-os-upgrade` is a Vellum-specific hook and must be manually installed in your `package()` function:
+```sh
+install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
+    "$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
+```
 
 ### Packages with System Files
 
