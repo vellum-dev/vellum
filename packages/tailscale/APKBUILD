@@ -10,15 +10,12 @@ arch="aarch64 armv7"
 license="BSD-3-Clause"
 options="!check !fhs !strip !tracedeps"
 depends="mount-utils"
-install="$pkgname.pre-deinstall"
-triggers="$pkgname.trigger=/etc/systemd/system"
-
-case "$CARCH" in
-	aarch64) _arch="arm64" ;;
-	armv7 | armhf) _arch="arm" ;;
-esac
-
-builddir="$srcdir/tailscale_${pkgver}_$_arch"
+builddir="$srcdir/tailscale"
+install="
+$pkgname.post-install
+$pkgname.post-upgrade
+$pkgname.pre-deinstall
+"
 
 source="
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
@@ -35,33 +32,34 @@ unpack() {
 		initdcheck
 	fi
 
+	case "$CARCH" in
+		aarch64) _arch="arm64" ;;
+		armv7 | armhf) _arch="arm" ;;
+	esac
+
 	mkdir -p "$srcdir"
 	_tar="$SRCDEST/tailscale_${pkgver}_$_arch.tgz"
 
 	msg "Unpacking $_tar..."
 	tar -C "$srcdir" -zxf "$_tar"
+	mv "$srcdir/tailscale_${pkgver}_$_arch" "$srcdir/tailscale"
 }
 
 package() {
-	cd "$srcdir"
-
-	install -Dm644 LICENSE \
-	    "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/tailscale/tailscale/tree/$pkgver/licenses" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSES-3RD-PARTY"
 
-	cd "tailscale_${pkgver}_$_arch"
+	cd "$srcdir/tailscale"
 
 	install -Dm744 tailscaled \
-	    "$pkgdir/home/root/.vellum/bin/tailscaled"
+		"$pkgdir/home/root/.vellum/bin/tailscaled"
 	install -Dm744 tailscale \
-	    "$pkgdir/home/root/.vellum/bin/tailscale"
+		"$pkgdir/home/root/.vellum/bin/tailscale"
 
 	install -Dm644 systemd/tailscaled.defaults \
 		"$pkgdir/home/root/.vellum/etc/default/tailscaled"
-
-	install -Dm644 systemd/tailscaled.service \
-		"$pkgdir/etc/systemd/system/tailscaled.service"
 
 	# install a backup .service file for use with post-os-upgrade
 	install -Dm644 systemd/tailscaled.service \
