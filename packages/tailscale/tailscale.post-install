@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo "reloading systemd daemon..."
-systemctl daemon-reload
-echo "run 'systemctl enable --now tailscaled' to start tailscaled"

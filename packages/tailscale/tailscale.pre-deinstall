@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "stopping tailscale..."
+echo "stopping tailscaled service..."
 systemctl disable --now tailscaled.service
 
 if [ "$VELLUM_PURGE" = "1" ]; then
