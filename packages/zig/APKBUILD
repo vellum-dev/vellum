@@ -21,26 +21,26 @@ https://ziglang.org/download/$pkgver/zig-arm-linux-$pkgver.tar.xz
 https://ziglang.org/download/$pkgver/zig-aarch64-linux-$pkgver.tar.xz
 "
 
-  unpack() {
-        if [ -z "$force" ]; then
-                verify
-                initdcheck
-        fi
+unpack() {
+	if [ -z "$force" ]; then
+			verify
+			initdcheck
+	fi
 
-        mkdir -p "$srcdir"
-        case "$CARCH" in
-                aarch64) _arch="aarch64" ;;
-                armv7 | armhf) _arch="arm" ;;
-        esac
-        _tar="$SRCDEST/zig-$_arch-linux-$pkgver.tar.xz"
+	mkdir -p "$srcdir"
+	case "$CARCH" in
+			aarch64) _arch="aarch64" ;;
+			armv7 | armhf) _arch="arm" ;;
+	esac
+	_tar="$SRCDEST/zig-$_arch-linux-$pkgver.tar.xz"
 
-        msg "Unpacking $_tar..."
-        unxz -c "$_tar" | tar -C "$srcdir" -x
-        mv "$srcdir/zig-$_arch-linux-$pkgver" "$srcdir/zig"
-  }
+	msg "Unpacking $_tar..."
+	unxz -c "$_tar" | tar -C "$srcdir" -x
+	mv "$srcdir/zig-$_arch-linux-$pkgver" "$srcdir/zig"
+}
 
 package() {
-        cd "$srcdir/zig"
+	cd "$srcdir/zig"
 
 	install -Dm644 LICENSE \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -55,7 +55,7 @@ package() {
 }
 
 doc() {
-        cd "$srcdir/zig"
+	cd "$srcdir/zig"
 
 	mkdir -p "$subpkgdir/home/root/.vellum/share/doc"
 	cp -r "doc" "$subpkgdir/home/root/.vellum/share/doc/$pkgname"
