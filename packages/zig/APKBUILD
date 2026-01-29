@@ -11,11 +11,6 @@ license="MIT"
 options="!check !fhs !strip !tracedeps"
 subpackages="$pkgname-doc"
 
-case "$CARCH" in
-	aarch64) _arch="aarch64" ;;
-	armv7 | armhf) _arch="arm" ;;
-esac
-
 source="
 https://ziglang.org/download/$pkgver/zig-arm-linux-$pkgver.tar.xz
 https://ziglang.org/download/$pkgver/zig-aarch64-linux-$pkgver.tar.xz
