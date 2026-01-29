@@ -5,6 +5,7 @@ set -e
 
 BASHRC="/home/root/.bashrc"
 PATH_LINE='export PATH=/opt/bin:/opt/sbin:$PATH'
+BASHRC_CHANGED=false
 
 if [ -f "$BASHRC" ] && grep -qF "/opt/bin" "$BASHRC"; then
     echo "Entware PATH already configured in $BASHRC"
@@ -12,6 +13,7 @@ else
     echo "" >> "$BASHRC"
     echo "$PATH_LINE" >> "$BASHRC"
     echo "Added Entware to PATH in $BASHRC"
+    BASHRC_CHANGED=true
 fi
 
 cat << 'EOF'
@@ -33,5 +35,9 @@ cat << 'EOF'
     /home/root/.local/share/entware/reenable-entware.sh
 
 ======================================================
-
 EOF
+
+if [ "$BASHRC_CHANGED" = true ]; then
+    echo "Run 'exec bash --login' to use Entware."
+    echo ""
+fi
