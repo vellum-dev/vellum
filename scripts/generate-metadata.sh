@@ -6,6 +6,8 @@
 set -e
 
 S3_BUCKET="${S3_BUCKET:-packages.vellum.delivery}"
+S3_PREFIX="${S3_PREFIX:-}"
+PREFIX_PATH="${S3_PREFIX:+$S3_PREFIX/}"
 METADATA_FILE="packages-metadata.json"
 WORKDIR=$(mktemp -d)
 trap "rm -rf $WORKDIR" EXIT
@@ -13,7 +15,7 @@ trap "rm -rf $WORKDIR" EXIT
 echo '{"packages":{}}' > "$METADATA_FILE"
 
 for arch in aarch64 armv7; do
-    INDEX_URL="https://$S3_BUCKET/$arch/APKINDEX.tar.gz"
+    INDEX_URL="https://$S3_BUCKET/${PREFIX_PATH}$arch/APKINDEX.tar.gz"
     INDEX_FILE="$WORKDIR/APKINDEX-$arch"
 
     echo "Fetching APKINDEX for $arch..."

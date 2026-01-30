@@ -1,0 +1,95 @@
+name: Cleanup Testing Repo
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Detect packages from this PR
+        id: detect
+        run: |
+          changed=$(git diff --name-only ${{ github.event.pull_request.base.sha }}...HEAD -- packages/ || true)
+          packages=$(echo "$changed" | grep -E '^packages/[^/]+/' | cut -d'/' -f2 | sort -u | tr '\n' ' ' || true)
+          echo "packages=$packages" >> $GITHUB_OUTPUT
+
+      - name: Set up signing key
+        if: steps.detect.outputs.packages != ''
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+      - name: Configure AWS credentials
+        if: steps.detect.outputs.packages != ''
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Remove packages from S3
+        if: steps.detect.outputs.packages != ''
+        run: |
+          for pkg in ${{ steps.detect.outputs.packages }}; do
+            for arch in aarch64 armv7; do
+              echo "Removing ${pkg} from $arch..."
+              aws s3 rm "s3://packages.vellum.delivery/testing/$arch/" \
+                --recursive --exclude "*" --include "${pkg}-*.apk" || true
+            done
+          done
+
+      - name: Regenerate APKINDEX
+        if: steps.detect.outputs.packages != ''
+        run: |
+          for arch in aarch64 armv7; do
+            echo "Processing $arch..."
+            mkdir -p s3-packages/$arch
+
+            aws s3 cp s3://packages.vellum.delivery/testing/$arch/ s3-packages/$arch/ \
+              --recursive --exclude "APKINDEX.tar.gz" || true
+
+            if ls s3-packages/$arch/*.apk >/dev/null 2>&1; then
+              echo "Regenerating APKINDEX for $arch with $(ls s3-packages/$arch/*.apk | wc -l) packages..."
+
+              if [ -f "keys/packages.rsa" ]; then
+                docker run --rm \
+                  -v "$PWD/s3-packages/$arch:/packages:Z" \
+                  -v "$PWD/keys:/keys:ro" \
+                  -w /packages \
+                  alpine:edge \
+                  sh -c "
+                    apk add --no-cache apk-tools abuild
+                    cp /keys/packages.rsa.pub /etc/apk/keys/
+                    apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
+                    abuild-sign -k /keys/packages.rsa APKINDEX.tar.gz
+                  "
+              else
+                echo "No signing key available, generating unsigned index"
+                docker run --rm \
+                  -v "$PWD/s3-packages/$arch:/packages:Z" \
+                  -w /packages \
+                  alpine:edge \
+                  sh -c "
+                    apk add --no-cache apk-tools
+                    apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
+                  "
+              fi
+
+              aws s3 cp s3-packages/$arch/APKINDEX.tar.gz \
+                s3://packages.vellum.delivery/testing/$arch/APKINDEX.tar.gz
+            else
+              echo "No packages in $arch, removing index..."
+              aws s3 rm s3://packages.vellum.delivery/testing/$arch/APKINDEX.tar.gz || true
+            fi
+          done

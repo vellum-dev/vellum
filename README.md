@@ -243,16 +243,13 @@ Requires Docker or Podman.
 
 ```sh
 # Lint all packages
-./scripts/lint-packages.sh
+./scripts/lint-packages.sh --apkbuild-lint
 
 # Lint specific packages
-./scripts/lint-packages.sh mypackage
+./scripts/lint-packages.sh mypackage --apkbuild-lint
 
 # Lint only packages changed since main
-./scripts/lint-packages.sh --changed
-
-# Include Alpine's apkbuild-lint (slower)
-./scripts/lint-packages.sh --apkbuild-lint
+./scripts/lint-packages.sh --changed --apkbuild-lint
 ```
 
 #### Updating Checksums
@@ -284,17 +281,18 @@ vellum add mypackage-1.0.0-r0.apk
 
 ### Testing Repository
 
-Vellum maintains a separate testing repository for packages that need validation before release. This is useful for testing package changes on real devices before merging to main.
+Vellum maintains a separate testing repository for validation before release. This is useful for testing package changes on real devices before merging to main.
 
 #### For Package Developers
 
-1. PR package changes to the `testing` branch
-2. CI builds all packages and publishes to the testing repo
-3. Enable testing repo on your device: `vellum testing enable`
-4. Update and install: `vellum update && vellum add <package>@testing`
-5. Validate the package works correctly
-6. Open a PR to main when ready
-7. Disable testing repo: `vellum testing disable`
+1. PR package changes to the `main` branch. Generally, one package per PR is preferred
+2. CI automatically lints and builds changed packages
+3. Vellum maintainers will review the PR and publish to the testing repo after any feedback is addressed
+4. Enable testing repo on your device: `vellum testing enable`
+5. Update and install: `vellum update && vellum add <package>@testing`
+6. Validate the package works correctly, if more commits are needed, the Vellum maintainers will need to republish for the package to be updated
+7. Once testing is complete, `@package-approvers` or re-request a review
+8. Disable testing repo on your device: `vellum testing disable`
 
 #### Testing Repo Commands
 

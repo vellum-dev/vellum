@@ -4,7 +4,6 @@ on:
   push: &branches
     branches:
       - main
-      - testing
   pull_request: *branches
   workflow_dispatch:
     inputs:
@@ -141,7 +140,6 @@ jobs:
   build-noarch:
     needs: [lint, setup]
     if: |
-      github.ref != 'refs/heads/testing' &&
       needs.setup.outputs.has_packages == 'true' &&
       fromJson(needs.setup.outputs.noarch)[0] != null
     runs-on: ubuntu-latest
@@ -191,7 +189,6 @@ jobs:
   build-multi-arch:
     needs: [lint, setup]
     if: |
-      github.ref != 'refs/heads/testing' &&
       needs.setup.outputs.has_packages == 'true' &&
       fromJson(needs.setup.outputs.multiarch)[0] != null
     runs-on: ubuntu-latest
@@ -358,84 +355,3 @@ jobs:
             echo "Metadata committed and pushed to vellum-site"
           fi
 
-  build-testing:
-    needs: lint
-    if: github.ref == 'refs/heads/testing'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Detect packages changed from main
-        id: changed
-        run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | \
-            grep '^packages/' | cut -d/ -f2 | sort -u | tr '\n' ' ' || echo "")
-
-          if [ -z "$CHANGED" ]; then
-            echo "No packages changed from main"
-            echo "packages=" >> $GITHUB_OUTPUT
-          else
-            echo "Changed packages: $CHANGED"
-            echo "packages=$CHANGED" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Set up signing key
-        if: steps.changed.outputs.packages != ''
-        run: |
-          echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
-          chmod 600 keys/packages.rsa
-
-      - name: Build changed packages
-        if: steps.changed.outputs.packages != ''
-        run: |
-          mkdir -p dist/aarch64 dist/armv7 dist/noarch
-          failed=""
-          for pkgname in ${{ steps.changed.outputs.packages }}; do
-            pkg="packages/$pkgname/APKBUILD"
-            if [ -f "$pkg" ]; then
-              if grep -q '^arch="noarch"' "$pkg"; then
-                ./scripts/build-package.sh "$pkgname" || failed="$failed $pkgname"
-              else
-                ./scripts/build-package.sh "$pkgname" aarch64 || failed="$failed $pkgname(aarch64)"
-                ./scripts/build-package.sh "$pkgname" armv7 || failed="$failed $pkgname(armv7)"
-              fi
-            fi
-          done
-          if [ -n "$failed" ]; then
-            echo "::error::Build failed for:$failed"
-            exit 1
-          fi
-
-      - name: Configure AWS credentials
-        if: steps.changed.outputs.packages != ''
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-
-      - name: Sync to testing S3
-        if: steps.changed.outputs.packages != ''
-        run: |
-          for arch in aarch64 armv7; do
-            if [ -d dist/noarch ]; then
-              cp dist/noarch/*.apk dist/$arch/ 2>/dev/null || true
-            fi
-
-            if ls dist/$arch/*.apk >/dev/null 2>&1; then
-              docker run --rm \
-                -v "$PWD/dist/$arch:/packages:Z" \
-                -v "$PWD/keys:/keys:ro" \
-                alpine:edge sh -c "
-                  apk add --no-cache apk-tools abuild
-                  cp /keys/packages.rsa.pub /etc/apk/keys/
-                  cd /packages
-                  apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
-                  abuild-sign -k /keys/packages.rsa APKINDEX.tar.gz
-                "
-
-              aws s3 sync dist/$arch/ s3://packages.vellum.delivery/testing/$arch/ --delete
-            fi
-          done

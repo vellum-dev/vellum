@@ -1,0 +1,388 @@
+name: Testing Repo Commands
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  check-command:
+    if: |
+      github.event.issue.pull_request &&
+      (contains(github.event.comment.body, '/publish-testing') ||
+       contains(github.event.comment.body, '/unpublish-testing'))
+    runs-on: ubuntu-latest
+    outputs:
+      command: ${{ steps.parse.outputs.command }}
+      authorized: ${{ steps.auth.outputs.authorized }}
+      pr_sha: ${{ steps.pr.outputs.sha }}
+      pr_number: ${{ steps.pr.outputs.number }}
+    steps:
+      - name: Parse command
+        id: parse
+        run: |
+          COMMENT="${{ github.event.comment.body }}"
+          if [[ "$COMMENT" == *"/publish-testing"* ]]; then
+            echo "command=publish" >> $GITHUB_OUTPUT
+          elif [[ "$COMMENT" == *"/unpublish-testing"* ]]; then
+            echo "command=unpublish" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check team membership
+        id: team-check
+        uses: tspascoal/get-user-teams-membership@v3
+        with:
+          username: ${{ github.event.comment.user.login }}
+          organization: vellum-dev
+          team: package-approvers
+          GITHUB_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+
+      - name: Set authorization
+        id: auth
+        run: |
+          if [ "${{ steps.team-check.outputs.isTeamMember }}" == "true" ]; then
+            echo "authorized=true" >> $GITHUB_OUTPUT
+          else
+            echo "::warning::User ${{ github.event.comment.user.login }} is not a member of package-approvers"
+            echo "authorized=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get PR details
+        id: pr
+        if: steps.auth.outputs.authorized == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            core.setOutput('sha', pr.head.sha);
+            core.setOutput('number', context.issue.number);
+
+      - name: React to command
+        if: steps.auth.outputs.authorized == 'true'
+        uses: actions/github-script@v7
+        env:
+          COMMAND: ${{ steps.parse.outputs.command }}
+        with:
+          script: |
+            const reaction = process.env.COMMAND === 'publish' ? 'rocket' : 'eyes';
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: reaction
+            });
+
+  detect-changes:
+    needs: check-command
+    if: needs.check-command.outputs.authorized == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      noarch_packages: ${{ steps.detect.outputs.noarch_packages }}
+      multiarch_packages: ${{ steps.detect.outputs.multiarch_packages }}
+      packages_list: ${{ steps.detect.outputs.packages_list }}
+      has_packages: ${{ steps.detect.outputs.has_packages }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.check-command.outputs.pr_sha }}
+          fetch-depth: 0
+
+      - name: Detect changed packages
+        id: detect
+        run: |
+          changed=$(git diff --name-only origin/main...HEAD -- packages/ || true)
+
+          if [[ -z "$changed" ]]; then
+            echo "noarch_packages=[]" >> $GITHUB_OUTPUT
+            echo "multiarch_packages=[]" >> $GITHUB_OUTPUT
+            echo "packages_list=" >> $GITHUB_OUTPUT
+            echo "has_packages=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          packages=$(echo "$changed" | grep -E '^packages/[^/]+/' | cut -d'/' -f2 | sort -u | tr '\n' ' ' || true)
+          echo "packages_list=$packages" >> $GITHUB_OUTPUT
+
+          noarch_packages="[]"
+          multiarch_packages="[]"
+
+          for pkg in $packages; do
+            apkbuild="packages/$pkg/APKBUILD"
+            if [[ -f "$apkbuild" ]]; then
+              arch=$(grep '^arch=' "$apkbuild" | cut -d'"' -f2)
+              if [[ "$arch" == "noarch" ]]; then
+                noarch_packages=$(echo "$noarch_packages" | jq -c ". + [\"$pkg\"]")
+              else
+                multiarch_packages=$(echo "$multiarch_packages" | jq -c ". + [\"$pkg\"]")
+              fi
+            fi
+          done
+
+          echo "noarch_packages=$noarch_packages" >> $GITHUB_OUTPUT
+          echo "multiarch_packages=$multiarch_packages" >> $GITHUB_OUTPUT
+
+          has_packages="false"
+          if [[ "$noarch_packages" != "[]" || "$multiarch_packages" != "[]" ]]; then
+            has_packages="true"
+          fi
+          echo "has_packages=$has_packages" >> $GITHUB_OUTPUT
+
+  build-noarch:
+    needs: [check-command, detect-changes]
+    if: |
+      needs.check-command.outputs.command == 'publish' &&
+      needs.detect-changes.outputs.noarch_packages != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.detect-changes.outputs.noarch_packages) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.check-command.outputs.pr_sha }}
+
+      - name: Set up signing key
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+      - name: Build ${{ matrix.package }}
+        run: ./scripts/build-package.sh "${{ matrix.package }}"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Upload to S3
+        run: |
+          for arch in aarch64 armv7; do
+            aws s3 cp dist/noarch/ s3://packages.vellum.delivery/testing/$arch/ \
+              --recursive --exclude "APKINDEX.tar.gz"
+          done
+
+  build-multiarch:
+    needs: [check-command, detect-changes]
+    if: |
+      needs.check-command.outputs.command == 'publish' &&
+      needs.detect-changes.outputs.multiarch_packages != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.detect-changes.outputs.multiarch_packages) }}
+        arch: [aarch64, armv7]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.check-command.outputs.pr_sha }}
+
+      - name: Set up signing key
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+      - name: Build ${{ matrix.package }} (${{ matrix.arch }})
+        run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/testing/${{ matrix.arch }}/ \
+            --recursive --exclude "APKINDEX.tar.gz"
+
+  remove-packages:
+    needs: [check-command, detect-changes]
+    if: |
+      needs.check-command.outputs.command == 'unpublish' &&
+      needs.detect-changes.outputs.has_packages == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Remove packages from S3
+        env:
+          PACKAGES: ${{ needs.detect-changes.outputs.packages_list }}
+        run: |
+          for pkg in $PACKAGES; do
+            for arch in aarch64 armv7; do
+              echo "Removing ${pkg} from $arch..."
+              aws s3 rm "s3://packages.vellum.delivery/testing/$arch/" \
+                --recursive --exclude "*" --include "${pkg}-*.apk" || true
+            done
+          done
+
+  reindex:
+    needs: [check-command, detect-changes, build-noarch, build-multiarch, remove-packages]
+    if: |
+      always() &&
+      needs.check-command.outputs.authorized == 'true' &&
+      needs.detect-changes.outputs.has_packages == 'true' &&
+      (needs.build-noarch.result == 'success' ||
+       needs.build-noarch.result == 'skipped' ||
+       needs.build-multiarch.result == 'success' ||
+       needs.build-multiarch.result == 'skipped' ||
+       needs.remove-packages.result == 'success') &&
+      !(needs.build-noarch.result == 'failure' ||
+        needs.build-multiarch.result == 'failure' ||
+        needs.remove-packages.result == 'failure')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up signing key
+        run: |
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" > keys/packages.rsa
+            chmod 600 keys/packages.rsa
+          fi
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Regenerate APKINDEX
+        run: |
+          for arch in aarch64 armv7; do
+            echo "Processing $arch..."
+            mkdir -p s3-packages/$arch
+
+            aws s3 cp s3://packages.vellum.delivery/testing/$arch/ s3-packages/$arch/ \
+              --recursive --exclude "APKINDEX.tar.gz" || true
+
+            if ls s3-packages/$arch/*.apk >/dev/null 2>&1; then
+              echo "Regenerating APKINDEX for $arch with $(ls s3-packages/$arch/*.apk | wc -l) packages..."
+
+              if [ -f "keys/packages.rsa" ]; then
+                docker run --rm \
+                  -v "$PWD/s3-packages/$arch:/packages:Z" \
+                  -v "$PWD/keys:/keys:ro" \
+                  -w /packages \
+                  alpine:edge \
+                  sh -c "
+                    apk add --no-cache apk-tools abuild
+                    cp /keys/packages.rsa.pub /etc/apk/keys/
+                    apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
+                    abuild-sign -k /keys/packages.rsa APKINDEX.tar.gz
+                  "
+              else
+                echo "No signing key available, generating unsigned index"
+                docker run --rm \
+                  -v "$PWD/s3-packages/$arch:/packages:Z" \
+                  -w /packages \
+                  alpine:edge \
+                  sh -c "
+                    apk add --no-cache apk-tools
+                    apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
+                  "
+              fi
+
+              aws s3 cp s3-packages/$arch/APKINDEX.tar.gz \
+                s3://packages.vellum.delivery/testing/$arch/APKINDEX.tar.gz
+            else
+              echo "No packages in $arch, removing index..."
+              aws s3 rm s3://packages.vellum.delivery/testing/$arch/APKINDEX.tar.gz || true
+            fi
+          done
+
+      - name: Generate and upload package metadata
+        run: |
+          S3_BUCKET=packages.vellum.delivery S3_PREFIX=testing ./scripts/generate-metadata.sh
+          aws s3 cp packages-metadata.json s3://packages.vellum.delivery/testing/packages-metadata.json \
+            --content-type "application/json" \
+            --cache-control "max-age=300"
+          echo "Testing metadata uploaded to S3"
+
+  report:
+    needs: [check-command, detect-changes, build-noarch, build-multiarch, remove-packages, reindex]
+    if: always() && needs.check-command.outputs.authorized == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        env:
+          COMMAND: ${{ needs.check-command.outputs.command }}
+          NOARCH_PACKAGES: ${{ needs.detect-changes.outputs.noarch_packages || '[]' }}
+          MULTIARCH_PACKAGES: ${{ needs.detect-changes.outputs.multiarch_packages || '[]' }}
+          PR_NUMBER: ${{ needs.check-command.outputs.pr_number }}
+          BUILD_NOARCH_RESULT: ${{ needs.build-noarch.result }}
+          BUILD_MULTIARCH_RESULT: ${{ needs.build-multiarch.result }}
+          REMOVE_RESULT: ${{ needs.remove-packages.result }}
+          REINDEX_RESULT: ${{ needs.reindex.result }}
+        with:
+          script: |
+            const command = process.env.COMMAND;
+            const noarch = JSON.parse(process.env.NOARCH_PACKAGES);
+            const multiarch = JSON.parse(process.env.MULTIARCH_PACKAGES);
+            const packages = [...noarch, ...multiarch];
+            const prNumber = parseInt(process.env.PR_NUMBER) || context.issue.number;
+
+            const buildNoarchResult = process.env.BUILD_NOARCH_RESULT;
+            const buildMultiarchResult = process.env.BUILD_MULTIARCH_RESULT;
+            const removeResult = process.env.REMOVE_RESULT;
+            const reindexResult = process.env.REINDEX_RESULT;
+
+            let body;
+            if (packages.length === 0) {
+              body = 'No package changes detected in this PR.';
+            } else if (command === 'publish') {
+              const failed = buildNoarchResult === 'failure' || buildMultiarchResult === 'failure';
+              if (failed) {
+                body = `**Build failed for some packages.**\n\nCheck the workflow logs for details.`;
+              } else if (reindexResult !== 'success') {
+                body = `**Packages built but reindex failed.**\n\nCheck the workflow logs for details.`;
+              } else {
+                body = `**Packages published to testing repo:**\n${packages.map(p => '- \`' + p + '\`').join('\n')}\n\n` +
+                       `Install with:\n\`\`\`\n${packages.map(p => 'vellum add ' + p + '@testing').join('\n')}\n\`\`\``;
+              }
+            } else if (command === 'unpublish') {
+              if (removeResult === 'failure') {
+                body = `**Failed to remove packages.**\n\nCheck the workflow logs for details.`;
+              } else {
+                body = `**Packages removed from testing repo:**\n${packages.map(p => '- \`' + p + '\`').join('\n')}`;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: body
+            });
