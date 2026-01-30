@@ -50,6 +50,7 @@ package() {
 }
 
 doc() {
+	pkgdesc="Zig documentation (language reference)"
 	cd "$srcdir/zig"
 
 	mkdir -p "$subpkgdir/home/root/.vellum/share/doc"
