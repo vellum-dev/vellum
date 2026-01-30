@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=floating-toolbar
-pkgver=1.0.7
+pkgver=1.0.8
 pkgrel=0
 _upstream_author="FouzR"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.25 remarkable-os<3.26"
 source="
-floating.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.24/floating.qmd
+floating.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.25/floating.qmd
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-4c95e4dbe22767a3ac19ce3319fc74a389b350c0c94751e4c1a8dc623097986f5647f11ae3a676a4b93b6c2a0772eb90db5615eff781b9ffee8aaf3f5acaa215  floating.qmd
-48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/floating.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/FouzR/xovi-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+3e0238089b8453e45c8426a5a3e9d4db4df25cfc6deba6384c7d88c3c57c986c5935dd8902c60d920132c623cc5ca00692b9df886d8c5637d8af6e29ee0a6f8b  floating.qmd
+48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
+"

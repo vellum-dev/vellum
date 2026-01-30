@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=toolbar-icon
-pkgver=1.0.6
+pkgver=1.0.7
 pkgrel=0
 _upstream_author="FouzR"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Adds an icon with current tool, thickness, and colour in place of the t
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-toolbar_icon.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.24/toolbar_icon.qmd
+toolbar_icon.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.25/toolbar_icon.qmd
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-05a9b7cfe63c63b2a636b170c55ffcd97267f35502e0986c85dbe9c9546d7a6014fc3f80d675890df20af8029f69eb19155b61795c07529826e064e483a6a4c8  toolbar_icon.qmd
-48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/toolbar_icon.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/FouzR/xovi-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+d2006e888e4f15a973fb93682bb6f7d3c49f14e0a50df67df698d32608f9a37f6e586450ed110b541065b2e39d2cdef964daf461fa7ab8f7a773d4942391e87b  toolbar_icon.qmd
+48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
+"

@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gestures-fouzr
-pkgver=1.0.6
+pkgver=1.0.7
 pkgrel=0
 _upstream_author="FouzR"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Adds four-finger document drawer, and multiple swipe gestures to contro
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-gestures.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.24/gestures.qmd
+gestures.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.25/gestures.qmd
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-5ef5531a483a4b872b7dc59ff80fe0af02c05ca1c2eaaeb7c30b3b8b3a1b2a1c06d1323a1b1e85a6fe3dc37196a87251d8cb09ceb2bc06255bc77cce069626e4  gestures.qmd
-48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/gestures.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/FouzR/xovi-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+c0ed7823446c16a42032c9a2541e40a1e03064efd0d6e1e489f5a5f642ecf69a2a561e80e801836df4a346d0373b4aaa94db2b964cb22e7e2a68daaa96e6c8ea  gestures.qmd
+48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
+"

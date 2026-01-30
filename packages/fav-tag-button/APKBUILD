@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fav-tag-button
-pkgver=1.0.4
+pkgver=1.0.5
 pkgrel=0
 _upstream_author="FouzR"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Adds buttons to the navigator search/new note button that lets you open
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-favTagButton.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.24/favTagButton.qmd
+favTagButton.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.25/favTagButton.qmd
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-dfaf78daff95b73b7565f35b701f7014ae83733e67c3254a32ffe5e7e1351a35b96efd8f0e61eb124c808ab52cba9bc6c4df8505115254e6a55d405a7209c904  favTagButton.qmd
-48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/favTagButton.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/FouzR/xovi-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+7b1c7651d8bd2408a182c1c85108bdab8d07eb3053112b8a3456601bd8bc47850192c2f5e79ee5b0b277fc54e2cfdef7904a590c919604f6361e0d25a6fdd601  favTagButton.qmd
+48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
+"
