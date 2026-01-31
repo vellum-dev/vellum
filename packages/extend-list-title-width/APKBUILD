@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=extend-list-title-width
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 _upstream_author="rmitchellscott"
 _category="ui"
 pkgdesc="Removes extra right margin for titles in list view to fill more of the available space."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 source="
 extendListTitleWidth.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/extendListTitleWidth.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE

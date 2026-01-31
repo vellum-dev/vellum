@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-all-colors
 pkgver=1.0.2
-pkgrel=0
+pkgrel=1
 _upstream_author="ingatellent"
 _category="ui"
 pkgdesc="Enables full color selection on rM1 and rM2."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rmpp !rmppm remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder !rmpp !rmppm remarkable-os>=3.24 remarkable-os<3.26"
 source="
 enableAllColors.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.24/enableAllColors.qmd
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md

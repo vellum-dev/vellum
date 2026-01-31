@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksettings-clock-serif
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=0
 _upstream_author="rmitchellscott"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Adds a clock to the quick settings menu in serif font"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-quickSettingsClockSerif.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/quickSettingsClockSerif.qmd
+quickSettingsClockSerif.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.25/quickSettingsClockSerif.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-7eead75eef1d8d1c60ed43183aae0c86623778c5be011a1bcca944a14aeab281b48235d8e9e1ce940cd4add0796d3846186bd898ddcbc0f62071ac6a6cfbbe00  quickSettingsClockSerif.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/quickSettingsClockSerif.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+35d84d92082db4e7dcabbbefa1eb06ac3acf6873c0798d285ed31ba73120ccb0f137e1ca5c8ae1f6ba82ceac11916f20776b84e8922672672489fa0b8a71ee68  quickSettingsClockSerif.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

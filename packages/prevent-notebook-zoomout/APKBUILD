@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=prevent-notebook-zoomout
 pkgver=1.0.2
-pkgrel=0
+pkgrel=1
 _upstream_author="rmitchellscott"
 _category="ui"
 pkgdesc="Forces notebook pages to start at 1x zoom with optional horizontal offset in portrait mode"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 source="
 preventNotebookZoomOut.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/preventNotebookZoomOut.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
