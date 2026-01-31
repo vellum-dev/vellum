@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-battery-indicator
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 _upstream_author="rmitchellscott"
 _category="fixes ui"
 pkgdesc="Fixes battery icon not updating after charging while device is asleep"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 source="
 fixBatteryIndicator.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/fixBatteryIndicator.qmd
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
