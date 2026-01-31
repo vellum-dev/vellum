@@ -9,8 +9,8 @@ IP1="172.67.203.137"
 IP2="104.21.77.19"
 
 remove_entries() {
-    if grep -q "$HOSTNAME" "$HOSTS_FILE" 2>/dev/null; then
-        sed -i "/$HOSTNAME/d" "$HOSTS_FILE"
+    if grep -q "$MARKER" "$HOSTS_FILE" 2>/dev/null; then
+        sed -i "/$MARKER/d" "$HOSTS_FILE"
     fi
 }
 
