@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.6
-pkgrel=0
+pkgrel=1
 _upstream_author="asivery"
 _category="apps"
 pkgdesc="Terminal emulator for reMarkable Paper Pro using QtQuick"
 url="https://github.com/asivery/rm-literm"
 arch="aarch64 armv7"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 options="!check !fhs !strip !tracedeps"
 
 _release="v$pkgver"
