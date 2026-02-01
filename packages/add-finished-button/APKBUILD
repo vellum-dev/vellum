@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-finished-button
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=0
 _upstream_author="ingatellent"
 _category="ui"
@@ -8,9 +8,9 @@ pkgdesc="Adds a Finished button when selecting documents, moving them to the fir
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-addFinishedButton.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.24/addFinishedButton.qmd
+addFinishedButton.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.25/addFinishedButton.qmd
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md
 "
 options="!check !fhs"
@@ -25,6 +25,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-c02f7660bdd96ebc694ad76d0192a693fb7c58523a3904504bef976bfc4ccfdff53aa8772d594cd2f3d1c69694235b0e521db96e8243e018e2bdfa9507cf1eb0  addFinishedButton.qmd
+68bb60c827b35caadf01d5f068745ea5f8f5ec278d383e47fbbcc2930badb372d9f669b7e373e3f23eadd35c5823cb81a396a6d2c9689590043c70e92aa6f212  addFinishedButton.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
 "

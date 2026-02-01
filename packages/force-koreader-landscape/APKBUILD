@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=force-koreader-landscape
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 _upstream_author="ingatellent"
 _category="ui"
 pkgdesc="Keeps the KOReader appload app in the same aspect ratio as the screen"
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 source="
 forceKoreaderLandscape.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.24/forceKoreaderLandscape.qmd
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md

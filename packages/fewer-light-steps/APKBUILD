@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fewer-light-steps
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 _upstream_author="ingatellent"
 _category="ui"
-pkgdesc="Changes 5-level light slider to 4-level (RMPP/RMPPM only)."
+pkgdesc="Changes 5-level light slider to 4-level."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rm1 !rm2 remarkable-os>=3.23 remarkable-os<3.25"
+depends="qt-resource-rebuilder !more-light-settings !rm1 !rm2 remarkable-os>=3.23 remarkable-os<3.26"
 source="
 feverLightSteps.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.23/feverLightSteps.qmd
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md

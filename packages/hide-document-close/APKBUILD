@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-document-close
-pkgver=1.0.4
+pkgver=1.0.5
 pkgrel=0
 _upstream_author="ingatellent"
 _category="ui"
@@ -8,16 +8,12 @@ pkgdesc="Hides close button, use slide-down from top instead."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 source="
-hideDocumentClose.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.24/hideDocumentClose.qmd
+hideDocumentClose.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.25/hideDocumentClose.qmd
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md
 "
 options="!check !fhs"
-sha512sums="
-5224284d06cce41c0eb78d278ae8a46d44029f47422c1d5218d2eb1716f096fb63788e5fc2d1392b6afcdc229ce27fcc82a6048a36e6c66ca3456f9e4d09e386  hideDocumentClose.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/hideDocumentClose.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+d6b5b66ab4534113d9ba341aa3fba0fa9228506bbc6336ec5d26f88997c55402547302d26215a33d8a9cc3533319ced4862d85bc826db050dc79b2c3d10c16c1  hideDocumentClose.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
+"
