@@ -1,6 +1,6 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=fastfetch
-pkgver=2.58.0
+pkgver=2.58.0_git11
 pkgrel=0
 _upstream_author="fastfetch-cli"
 _category="utilities"
@@ -12,34 +12,37 @@ options="!check !fhs !strip !tracedeps"
 install="$pkgname.post-deinstall"
 
 source="
-$pkgname-$pkgver-linux-aarch64.tar.gz::https://github.com/fastfetch-cli/fastfetch/releases/download/$pkgver/fastfetch-linux-aarch64.tar.gz
-$pkgname-$pkgver-linux-armv7l.tar.gz::https://github.com/fastfetch-cli/fastfetch/releases/download/$pkgver/fastfetch-linux-armv7l.tar.gz
+$pkgname-aarch64.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/fastfetch-aarch64.tar.gz
+$pkgname-arm32.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/fastfetch-arm32.tar.gz
 "
 
 prepare() {
 	default_prepare
 	cd "$srcdir"
 	case "$CARCH" in
-		aarch64) tar --strip-components=1 -xzf "$pkgname-$pkgver-linux-aarch64.tar.gz";;
-		armv7|armhf) tar --strip-components=1 -xzf "$pkgname-$pkgver-linux-armv7l.tar.gz" ;;
+		aarch64) tar -xzf "$pkgname-aarch64.tar.gz";;
+		armv7|armhf) tar -xzf "$pkgname-arm32.tar.gz" ;;
 	esac
 }
 
 package() {
-	install -Dm755 "$srcdir/usr/bin/fastfetch" "$pkgdir/home/root/.vellum/bin/fastfetch"
+	install -Dm755 "$srcdir/fastfetch" "$pkgdir/home/root/.vellum/bin/fastfetch"
 
-	install -Dm644 "$srcdir/usr/share/licenses/$pkgname/LICENSE" \
+	install -Dm644 "$srcdir/fastfetch.bash" \
+		"$pkgdir/home/root/.vellum/share/bash-completion/completions/fastfetch"
+
+	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/$pkgver.tar.gz" > \
+	install -Dm644 "$srcdir/SOURCES" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 	
 	install -d "$pkgdir/home/root/.local/share/$pkgname/presets/examples"
-	install -m644 "$srcdir/usr/share/$pkgname/presets/"*.jsonc \
+	install -m644 "$srcdir/presets/"*.jsonc \
 		"$pkgdir/home/root/.local/share/$pkgname/presets/"
-	install -m644 "$srcdir/usr/share/$pkgname/presets/examples/"*.jsonc \
+	install -m644 "$srcdir/presets/examples/"*.jsonc \
 		"$pkgdir/home/root/.local/share/$pkgname/presets/examples/"
 }
 sha512sums="
-159387e0c35357880d8b0b6e96429c51a4bf1cd37b5176e4e3e196b36c847cb438e75c41d5840024134eb0db360a28f2bef22d199dd4d4917bee0e394abb4902  fastfetch-2.58.0-linux-aarch64.tar.gz
-50b249f498886ba3e7a208227960035a1018630f8114e4583d2dd1a5c029f94acbfe451751e6fc70132bc596b9c0b85a56242c48ebf1fc8d6aab06a43f3ad933  fastfetch-2.58.0-linux-armv7l.tar.gz
+182245634ef31782a68f051ae1a479c2cf891258336286c8786cf590aa7bae3a340496da5be15dcc0067294f64ba48c3713f0fba3bd4c745b9f28637ecf08fd7  fastfetch-aarch64.tar.gz
+f6848c39be972ad1280fc97cc911c8a7b37069defbc3d8d8cbd8271fb0e31e00456b3b0a05059fea30c0402bd62e50a37f9895246238c6a86905b1d332478f08  fastfetch-arm32.tar.gz
 "
