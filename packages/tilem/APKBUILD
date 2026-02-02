@@ -13,32 +13,30 @@ options="!check !fhs !strip !tracedeps"
 install="$pkgname.post-install $pkgname.post-deinstall"
 
 source="
-$pkgname-aarch64.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-aarch64.tar.gz
-$pkgname-arm32.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.tar.gz
+$pkgname-aarch64.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/$pkgname-aarch64.tar.gz
+$pkgname-arm32.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/$pkgname-arm32.tar.gz
 "
 
-prepare() {
-	default_prepare
-	cd "$srcdir"
+unpack() {
 	case "$CARCH" in
-		aarch64) tar -xzf "$pkgname-aarch64.tar.gz";;
-		armv7|armhf) tar -xzf "$pkgname-arm32.tar.gz" ;;
+		aarch64)  tar -xzf "$srcdir"/$pkgname-aarch64.tar.gz -C "$srcdir" ;;
+		armv7|armhf)  tar -xzf "$srcdir"/$pkgname-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
-	install -Dm755 "$srcdir/tilem" \
-		"$pkgdir/home/root/xovi/exthome/appload/tilem/tilem"
+	install -Dm755 "$srcdir"/tilem \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/tilem
 
-	install -Dm644 "$srcdir/external.manifest.json" \
-		"$pkgdir/home/root/xovi/exthome/appload/tilem/external.manifest.json"
-	install -Dm644 "$srcdir/icon.png" \
-		"$pkgdir/home/root/xovi/exthome/appload/tilem/icon.png"
+	install -Dm644 "$srcdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/external.manifest.json
+	install -Dm644 "$srcdir"/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/icon.png
 	
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	install -Dm644 "$srcdir/SOURCES" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 462a21c0f440cc789fc383461f219cb8ccea968de03b278d1ef501eddad8995823febad468a5b7133ff2f97f3d7da08edac6787f496bdff554558f92e5e9a470  tilem-aarch64.tar.gz
