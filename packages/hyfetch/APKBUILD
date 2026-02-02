@@ -16,26 +16,24 @@ $pkgname-aarch64.tar.gz::https://github.com/notfrants/vellum-builds/releases/dow
 $pkgname-arm32.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
 "
 
-prepare() {
-	default_prepare
-	cd "$srcdir"
+unpack() {
 	case "$CARCH" in
-		aarch64) tar -xzf "$pkgname-aarch64.tar.gz";;
-		armv7|armhf) tar -xzf "$pkgname-arm32.tar.gz" ;;
+		aarch64)  tar -xzf "$srcdir/"$pkgname-aarch64.tar.gz -C "$srcdir" ;;
+		armv7|armhf)  tar -xzf "$srcdir"/$pkgname-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
-	install -Dm755 "$srcdir/hyfetch" \
-		"$pkgdir/home/root/.vellum/bin/hyfetch"
+	install -Dm755 "$srcdir"/hyfetch \
+		"$pkgdir"/home/root/.vellum/bin/hyfetch
 	
-	install -Dm644 "$srcdir/hyfetch.bash" \
-		"$pkgdir/home/root/.vellum/share/bash-completion/completions/hyfetch"
+	install -Dm644 "$srcdir"/hyfetch.bash \
+		"$pkgdir"/home/root/.vellum/share/bash-completion/completions/hyfetch
 	
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	install -Dm644 "$srcdir/SOURCES" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 284d923ee90d62039f5e2f8a0725cee4418adf9ffca622a5fb3e806bc2fc746e13a634ce5a7e7680ef695b2234e01186a3b2d3d36fba5216905eb3d2f5b43a26  hyfetch-aarch64.tar.gz
