@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "NOTE: Eraser swapping gestures require the floating-toolbar package"

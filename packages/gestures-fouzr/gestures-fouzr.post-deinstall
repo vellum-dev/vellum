@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ "$VELLUM_PURGE" = "1" ]; then
+    rm -f /home/root/colorSet.json
+fi
