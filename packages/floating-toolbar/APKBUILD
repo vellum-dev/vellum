@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=floating-toolbar
 pkgver=1.0.8
-pkgrel=0
+pkgrel=1
 _upstream_author="FouzR"
 _category="ui"
 pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and layers."
@@ -14,6 +14,7 @@ floating.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/3.25/
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/main/LICENSE
 "
 options="!check !fhs"
+install="$pkgname.post-deinstall"
 
 package() {
 	install -Dm644 "$srcdir/floating.qmd" \
