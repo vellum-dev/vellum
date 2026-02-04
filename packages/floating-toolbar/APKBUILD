@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=floating-toolbar
-pkgver=1.0.8
-pkgrel=1
+pkgver=1.0.9
+pkgrel=0
 _upstream_author="FouzR"
 _category="ui"
 pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and layers."
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-3e0238089b8453e45c8426a5a3e9d4db4df25cfc6deba6384c7d88c3c57c986c5935dd8902c60d920132c623cc5ca00692b9df886d8c5637d8af6e29ee0a6f8b  floating.qmd
+361fa1f216a22c8444d9c785b21cb74abca1c6b7faf66e7e4c45f561a4e189b2619e0d9131b21ae31e0e28b65790f50a7ca6e6778e173941cd223be57c97d6ce  floating.qmd
 48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
 "
