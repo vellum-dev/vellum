@@ -1,0 +1,39 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rm-pokemon
+pkgver=0.1.0
+pkgrel=0
+_upstream_author="rmitchellscott"
+_category="utilities"
+pkgdesc="Display the Pokemon sprite matching your reMarkable firmware codename"
+url="https://github.com/rmitchellscott/rm-pokemon"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/rmitchellscott/rm-pokemon/releases/download/v$pkgver/rm-pokemon-aarch64
+https://github.com/rmitchellscott/rm-pokemon/releases/download/v$pkgver/rm-pokemon-armv7
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/rm-pokemon/main/LICENSE
+"
+
+package() {
+	local bin_file
+	case "$CARCH" in
+		aarch64) bin_file="rm-pokemon-aarch64" ;;
+		armv7|armhf) bin_file="rm-pokemon-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir/$bin_file" \
+		"$pkgdir/home/root/.vellum/bin/rm-pokemon"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/rm-pokemon/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+
+sha512sums="
+6e5bd2ad2fb48b691016a3100fb2ecd7b1c0fc3c90f58a176dd522f5681f0632027a90b8bda7eae0931d73842e4d9935bdc8f845a45769c2225a1a81bc38ca1d  rm-pokemon-aarch64
+3910d480399296c1ae6a8d14c66fb4f385782aa3db0e40b2d8b90c01df6edd1101c242705e5e1b0951e9526bb874c494b27c86adc828c02b2c31d6c41d5dc8ec  rm-pokemon-armv7
+a98d166205ae9704b204bf56410b5da40c6e0481b26f8f9a6c0d79cdbc900881551871c3f29d7991be4debf76ec6450c399057ec3a9369d98fa2d6151276aeb3  LICENSE
+"
