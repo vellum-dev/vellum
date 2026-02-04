@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=tilem
 pkgver=0.1.3_git6
-pkgrel=0
+pkgrel=1
 _upstream_author="timower"
 _category="apps"
 pkgdesc="A TI-84+ calculator emulator for the remarkable."
@@ -13,14 +13,14 @@ options="!check !fhs !strip !tracedeps"
 install="$pkgname.post-install $pkgname.post-deinstall"
 
 source="
-$pkgname-aarch64.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-aarch64.tar.gz
-$pkgname-arm32.tar.gz::https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.tar.gz
 "
 
 unpack() {
 	case "$CARCH" in
-		aarch64)  tar -xzf "$srcdir"/$pkgname-aarch64.tar.gz -C "$srcdir" ;;
-		armv7|armhf)  tar -xzf "$srcdir"/$pkgname-arm32.tar.gz -C "$srcdir" ;;
+		aarch64)  tar -xzf "$srcdir"/tilem-aarch64.tar.gz -C "$srcdir" ;;
+		armv7|armhf)  tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 

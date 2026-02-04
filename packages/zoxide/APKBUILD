@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=zoxide
 pkgver=0.9.9
-pkgrel=0
+pkgrel=1
 _upstream_author="ajeetdsouza"
 _category="utilities"
 pkgdesc="A smarter cd command."
@@ -12,8 +12,8 @@ options="!check !fhs !strip !tracedeps"
 install="$pkgname.post-deinstall"
 
 source="
-https://github.com/ajeetdsouza/zoxide/releases/download/v$pkgver/zoxide-$pkgver-armv7-unknown-linux-musleabihf.tar.gz
 https://github.com/ajeetdsouza/zoxide/releases/download/v$pkgver/zoxide-$pkgver-aarch64-unknown-linux-musl.tar.gz
+https://github.com/ajeetdsouza/zoxide/releases/download/v$pkgver/zoxide-$pkgver-armv7-unknown-linux-musleabihf.tar.gz
 "
 
 unpack() {
@@ -36,6 +36,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-04891076a270cbb0ffbbe4e7aeeb2450563302e58302ffb7b567627f732d04a0f1bb7116c5a21d800e55fe55883d14d2ca1d8dd1a76a6f8bea214bb1f6f3790c  zoxide-0.9.9-armv7-unknown-linux-musleabihf.tar.gz
 6643bbb7d714d662a3b8405d841f1a3dc64d38b3ed4f5a7f941b9dcb7ad7973aea4adb473e86c5908a94f10df70df924cc18735438a3e2c0d030a2329594c189  zoxide-0.9.9-aarch64-unknown-linux-musl.tar.gz
+04891076a270cbb0ffbbe4e7aeeb2450563302e58302ffb7b567627f732d04a0f1bb7116c5a21d800e55fe55883d14d2ca1d8dd1a76a6f8bea214bb1f6f3790c  zoxide-0.9.9-armv7-unknown-linux-musleabihf.tar.gz
 "

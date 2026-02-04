@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=lsd
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 _upstream_author="lsd-rs"
 _category="utilities"
 pkgdesc="The next gen ls command"
@@ -24,16 +24,16 @@ unpack() {
 }
 
 package() {
-	install -Dm755 "$srcdir/lsd" \
-		"$pkgdir/home/root/.vellum/bin/lsd"
+	install -Dm755 "$srcdir"/lsd \
+		"$pkgdir"/home/root/.vellum/bin/lsd
 
-	install -Dm644 "$srcdir/autocomplete/lsd.bash-completion" \
-		"$pkgdir/home/root/.vellum/share/bash-completion/completions/lsd"
+	install -Dm644 "$srcdir"/autocomplete/lsd.bash-completion \
+		"$pkgdir"/home/root/.vellum/share/bash-completion/completions/lsd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/lsd-rs/lsd/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 505fc47e120f0c4fa5c3dc94e2c3e489f4927e8077fa43ab3c7c8e008e635c3e1ba6d6c7929318e373153ac935cdaf4e226e73bdd2ec6baccaab64b8fccb140b  lsd-v1.2.0-arm-unknown-linux-gnueabihf.tar.gz
