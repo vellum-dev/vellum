@@ -161,12 +161,18 @@ jobs:
       - name: Build ${{ matrix.package }}
         run: ./scripts/build-package.sh "${{ matrix.package }}"
 
+      - name: Get package name from APKBUILD
+        id: pkgname
+        run: |
+          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/APKBUILD | cut -d= -f2)
+          echo "name=$pkgname" >> $GITHUB_OUTPUT
+
       - name: Upload artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.package }}-noarch
-          path: dist/noarch/${{ matrix.package }}-*.apk
+          path: dist/noarch/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: error
 
       - name: Upload to S3
@@ -211,12 +217,18 @@ jobs:
       - name: Build ${{ matrix.package }} for ${{ matrix.arch }}
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
 
+      - name: Get package name from APKBUILD
+        id: pkgname
+        run: |
+          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/APKBUILD | cut -d= -f2)
+          echo "name=$pkgname" >> $GITHUB_OUTPUT
+
       - name: Upload artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}
-          path: dist/${{ matrix.arch }}/${{ matrix.package }}-*.apk
+          path: dist/${{ matrix.arch }}/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: error
 
       - name: Upload to S3
