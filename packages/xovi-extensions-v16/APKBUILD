@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=16.0.0
-pkgrel=1
+pkgrel=2
 _upstream_author="asivery"
 _category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -23,43 +23,35 @@ subpackages="
 _release="v16-14112025"
 
 source="
-extensions-aarch64.zip::https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-aarch64.zip
-extensions-armv7.zip::https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-arm32-testing.zip
-LICENSE::https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-aarch64.zip
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-arm32-testing.zip
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
 "
 
-sha512sums="
-2688a21c3f2e01f0b08fde3cb3a455907aa5f8ad9cd62599d0db21a5d533b7e60ad57a0755819879369c873966c25a53546fbf87d533150a44c2c6e0249fb532  extensions-aarch64.zip
-e2b0231ef9e00859c9d094af2150031664d6ed414db05b0c6d9d0291273acb013fdd054b9f920f8f8974bb2c5402c85726c22e3af7af963637d76cace38fcb8c  extensions-armv7.zip
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-"
 
-prepare() {
-	default_prepare
-	cd "$srcdir"
+unpack() {
 	case "$CARCH" in
-		aarch64) unzip -o extensions-aarch64.zip ;;
-		armv7|armhf) unzip -o extensions-armv7.zip ;;
+		aarch64) unzip -o "$srcdir"/extensions-aarch64.zip -d "$srcdir" ;;
+		armv7|armhf) unzip -o "$srcdir"/extensions-arm32-testing.zip -d "$srcdir" ;;
 	esac
 }
 
 package() {
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="xovi"
 
-	install -Dm755 "$srcdir/qt-resource-rebuilder.so" \
-		"$subpkgdir/home/root/xovi/extensions.d/qt-resource-rebuilder.so"
-	mkdir -p "$subpkgdir/home/root/xovi/exthome/qt-resource-rebuilder"
+	install -Dm755 "$srcdir"/qt-resource-rebuilder.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
+	install -d "$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder
 
-	cat > "$subpkgdir/home/root/xovi/rebuild_hashtable" <<-'EOFSCRIPT'
+	cat > "$subpkgdir"/home/root/xovi/rebuild_hashtable <<-'EOFSCRIPT'
 	#!/bin/bash
 
 	if [[ ! -e '/home/root/xovi/extensions.d/qt-resource-rebuilder.so' ]]; then
@@ -98,37 +90,42 @@ qt_resource_rebuilder() {
 	systemctl start xochitl.service
 	EOFSCRIPT
 
-	chmod 755 "$subpkgdir/home/root/xovi/rebuild_hashtable"
+	chmod 755 "$subpkgdir"/home/root/xovi/rebuild_hashtable
 }
 
 qt_command_executor() {
 	pkgdesc="Injects a QT module to execute shell commands from QML"
 	depends="xovi"
 
-	install -Dm755 "$srcdir/qt-command-executor.so" \
-		"$subpkgdir/home/root/xovi/extensions.d/qt-command-executor.so"
+	install -Dm755 "$srcdir"/qt-command-executor.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
 }
 
 message_broker() {
 	pkgdesc="IPC messaging between xovi extensions"
 	depends="xovi"
 
-	install -Dm755 "$srcdir/xovi-message-broker.so" \
-		"$subpkgdir/home/root/xovi/extensions.d/xovi-message-broker.so"
+	install -Dm755 "$srcdir"/xovi-message-broker.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
 }
 
 framebuffer_spy() {
 	pkgdesc="Module for exposing the address of the system framebuffer"
 	depends="xovi !rm1"
 
-	install -Dm755 "$srcdir/framebuffer-spy.so" \
-		"$subpkgdir/home/root/xovi/extensions.d/framebuffer-spy.so"
+	install -Dm755 "$srcdir"/framebuffer-spy.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/framebuffer-spy.so
 }
 
 webserver_remote() {
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
 	depends="qt-resource-rebuilder xovi-message-broker"
 
-	install -Dm755 "$srcdir/webserver-remote.so" \
-		"$subpkgdir/home/root/xovi/extensions.d/webserver-remote.so"
+	install -Dm755 "$srcdir"/webserver-remote.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
 }
+sha512sums="
+2688a21c3f2e01f0b08fde3cb3a455907aa5f8ad9cd62599d0db21a5d533b7e60ad57a0755819879369c873966c25a53546fbf87d533150a44c2c6e0249fb532  extensions-aarch64.zip
+e2b0231ef9e00859c9d094af2150031664d6ed414db05b0c6d9d0291273acb013fdd054b9f920f8f8974bb2c5402c85726c22e3af7af963637d76cace38fcb8c  extensions-arm32-testing.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"
