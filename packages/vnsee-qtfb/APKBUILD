@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=vnsee-qtfb
 pkgver=1.1.0
-pkgrel=1
+pkgrel=2
 _upstream_author="khyryra"
 _category="apps"
 pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as a second screen"
