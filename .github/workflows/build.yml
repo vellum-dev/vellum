@@ -276,13 +276,13 @@ jobs:
               declare -A latest
               for f in s3-packages/$arch/*.apk; do
                 b=$(basename "$f")
-                [[ $b =~ ^(.+-[0-9]+\.[0-9]+\.[0-9]+)-r([0-9]+)\.apk$ ]] || continue
+                [[ $b =~ ^(.*)-r([0-9]+)\.apk$ ]] || continue
                 k="${BASH_REMATCH[1]}"; r="${BASH_REMATCH[2]}"
                 [[ -z "${latest[$k]}" || "$r" -gt "${latest[$k]}" ]] && latest[$k]="$r"
               done
               for f in s3-packages/$arch/*.apk; do
                 b=$(basename "$f")
-                [[ $b =~ ^(.+-[0-9]+\.[0-9]+\.[0-9]+)-r([0-9]+)\.apk$ ]] || continue
+                [[ $b =~ ^(.*)-r([0-9]+)\.apk$ ]] || continue
                 k="${BASH_REMATCH[1]}"; r="${BASH_REMATCH[2]}"
                 if [[ "$r" -lt "${latest[$k]}" ]]; then
                   echo "Removing old pkgrel: $b"
