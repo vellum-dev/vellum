@@ -33,9 +33,7 @@ for PACKAGE in "$@"; do
         -v "$REPO_ROOT/packages:/work/packages:Z" \
         -w "/work/packages/$PACKAGE" \
         alpine:3 \
-        sh -c 'apk add --no-cache abuild >/dev/null 2>&1 && abuild -F checksum'
-
-    rm -rf "$PACKAGE_DIR/src"
+        sh -c 'apk add --no-cache abuild >/dev/null 2>&1 && abuild -F checksum && rm -rf src'
     echo "Done: $PACKAGE"
 done
 
