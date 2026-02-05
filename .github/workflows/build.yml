@@ -229,7 +229,7 @@ jobs:
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}
           path: dist/${{ matrix.arch }}/${{ steps.pkgname.outputs.name }}-*.apk
-          if-no-files-found: error
+          if-no-files-found: warn
 
       - name: Upload to S3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

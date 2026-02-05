@@ -213,8 +213,10 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/testing/${{ matrix.arch }}/ \
-            --recursive --exclude "APKINDEX.tar.gz"
+          if [ -d "dist/${{ matrix.arch }}" ] && ls dist/${{ matrix.arch }}/*.apk >/dev/null 2>&1; then
+            aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/testing/${{ matrix.arch }}/ \
+              --recursive --exclude "APKINDEX.tar.gz"
+          fi
 
   remove-packages:
     needs: [check-command, detect-changes]

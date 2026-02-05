@@ -38,6 +38,13 @@ if [ -z "$ARCH" ]; then
     fi
 fi
 
+# Skip if the requested arch isn't supported by this package
+PKG_ARCH=$(grep '^arch=' "$PACKAGE_DIR/APKBUILD" | sed 's/arch="\(.*\)"/\1/')
+if [ "$PKG_ARCH" != "noarch" ] && ! echo "$PKG_ARCH" | grep -qw "$ARCH"; then
+    echo "Skipping $PACKAGE: arch $ARCH not in supported architectures ($PKG_ARCH)"
+    exit 0
+fi
+
 echo "Building $PACKAGE for $ARCH using $CONTAINER_CMD..."
 
 mkdir -p "$REPO_ROOT/dist/$ARCH"
