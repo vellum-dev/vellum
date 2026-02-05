@@ -1,0 +1,30 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=stylus-button-erase
+pkgver=1.0.0
+pkgrel=0
+_upstream_author="rmitchellscott"
+_category="ui"
+pkgdesc="Erases when stylus side button is held."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder rm-stylus !rmpp !rmppm remarkable-os>=3.25 remarkable-os<3.26"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.25/stylusButtonEraser.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/stylusButtonEraser.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/stylusButtonEraser.qmd
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+f7d2630ae94670bb3b9a9796d42e85f7f993a283c3d92a26475542520d7e91e674a87e13e4e99f2e224c063164d3c77f785456e16537403cba1d01bdfd04f244  stylusButtonEraser.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"
