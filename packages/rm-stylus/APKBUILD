@@ -1,0 +1,30 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rm-stylus
+pkgver=0.1.0
+pkgrel=0
+_upstream_author="rmitchellscott"
+_category="utilities"
+pkgdesc="Xovi extension that adds support for LAMY button"
+url="https://github.com/rmitchellscott/rm-stylus"
+arch="armv7"
+license="MIT"
+depends="xovi !rmpp !rmppm"
+options="!check !fhs !strip !tracedeps"
+source="
+https://github.com/rmitchellscott/rm-stylus/releases/download/v"$pkgver"/rm-stylus.so
+https://raw.githubusercontent.com/rmitchellscott/rm-stylus/main/LICENSE
+"
+
+package() {
+	install -Dm755 "$srcdir"/rm-stylus.so \
+		"$pkgdir"/home/root/xovi/extensions.d/rm-stylus.so
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
+	echo "https://github.com/rmitchellscott/rm-stylus/archive/refs/tags/v"$pkgver".tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/SOURCES
+}
+sha512sums="
+ef7b86fb7579ecc316f5ed921bcdb43738e9d1fd287d9ddfbc18e17807f87b8650bd9cea763fd4911f15dc64599011e6fc9ca48dfcc103c94225c49834759653  rm-stylus.so
+f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8  LICENSE
+"
