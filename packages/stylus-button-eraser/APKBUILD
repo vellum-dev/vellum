@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-button-erase
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 _upstream_author="rmitchellscott"
 _category="ui"
 pkgdesc="Erases when stylus side button is held."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder rm-stylus !rmpp !rmppm remarkable-os>=3.25 remarkable-os<3.26"
+depends="qt-resource-rebuilder rm-stylus !shortcuts-to-choose-eraser !rmpp !rmppm remarkable-os>=3.25 remarkable-os<3.26"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.25/stylusButtonEraser.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
