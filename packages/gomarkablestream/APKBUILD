@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gomarkablestream
-pkgver=0.30.1
+pkgver=0.50.0
 pkgrel=0
 _upstream_author="owulveryck"
 _category="utilities"
@@ -12,30 +12,13 @@ depends="!rmppm !rm1"
 options="!check !fhs !strip !tracedeps"
 
 source="
-$pkgname-$pkgver-aarch64.tar.gz::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/goMarkableStream_linux_arm64.tar.gz
-$pkgname-$pkgver-armv7.tar.gz::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/goMarkableStream_linux_arm.tar.gz
+$pkgname-$pkgver-aarch64::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RMPRO
+$pkgname-$pkgver-armv7::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RM2
 LICENSE::https://raw.githubusercontent.com/$_upstream_author/goMarkableStream/master/LICENSE
-gomarkablestream-wrapper
 "
 
-unpack() {
-	case "$CARCH" in
-		aarch64) tar -xzf "$srcdir/$pkgname-$pkgver-aarch64.tar.gz" -C "$srcdir" ;;
-		armv7|armhf) tar -xzf "$srcdir/$pkgname-$pkgver-armv7.tar.gz" -C "$srcdir" ;;
-	esac
-}
-
 package() {
-	local src_dir
-	case "$CARCH" in
-		aarch64) src_dir="goMarkableStream_linux_arm64" ;;
-		armv7|armhf) src_dir="goMarkableStream_linux_arm" ;;
-	esac
-
-	install -Dm755 "$srcdir/$src_dir/goMarkableStream" \
-		"$pkgdir/home/root/.vellum/lib/gomarkablestream/goMarkableStream"
-
-	install -Dm755 "$startdir/gomarkablestream-wrapper" \
+	install -Dm755 "$srcdir/$pkgname-$pkgver-$CARCH" \
 		"$pkgdir/home/root/.vellum/bin/goMarkableStream"
 
 	install -Dm644 "$srcdir/LICENSE" \
@@ -44,8 +27,7 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-ef8347f0b55ec002a0ff9c8d1c4655ff2e79b892ba9218558a7946faae038e5981ab3235a334f96df0ba9137359fc98934be41c953c604236e4f95fbc41280fd  gomarkablestream-0.30.1-aarch64.tar.gz
-e0e44ab5a5d278f8f64e5333050569b9c5481d6ff12eb1346763c646572bc75bb5d9703e69294d5fa0dfa9371cf343d9d1f81065a46458f1c5c0a29b89de21ab  gomarkablestream-0.30.1-armv7.tar.gz
+9691a037982e7e21b4b0f546a1fe86b6b85c49a6e48985d155daf3dca6bef3504b9bcd44af4f5ed2d9407f6bb484b45ef99f7b879e57ba57460ed4f924993534  gomarkablestream-0.50.0-aarch64
+3e12b3a66f835c35c946ef6d1d4cc296803841ef7dfd4b69a827d18ca4bbdc17769477560bd1d9756613153f6e0cef56ebc96b99c3f6d4d74329c01d78aa1d21  gomarkablestream-0.50.0-armv7
 814f7ff90e542338425c7e6740ff7cd151143ee5ae32b40ea492d99e9498ac85ec5e42b33108fd065d03bf7d453866487054652a8a6f11339c6855e34be635ac  LICENSE
-705667b437d7724b8f9e00a7790002e4a123ee2a88e29200b9f515b62b5b2616b254373479902b4ea7acf4b5c16bf79a4645124eaa7d618a1d7c6a6e2cd21e9a  gomarkablestream-wrapper
 "
