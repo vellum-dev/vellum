@@ -1,30 +1,42 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-stylus
-pkgver=0.2.0
+pkgver=0.3.0
 pkgrel=0
 _upstream_author="rmitchellscott"
 _category="utilities"
 pkgdesc="Xovi extension that adds support for LAMY button"
 url="https://github.com/rmitchellscott/rm-stylus"
-arch="armv7"
+arch="aarch64 armv7"
 license="MIT"
-depends="xovi !rmpp !rmppm"
+depends="xovi"
 options="!check !fhs !strip !tracedeps"
 source="
-https://github.com/rmitchellscott/rm-stylus/releases/download/v"$pkgver"/rm-stylus.so
+https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-aarch64.so
+https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-armv7.so
 https://raw.githubusercontent.com/rmitchellscott/rm-stylus/main/LICENSE
 "
 
 package() {
-	install -Dm755 "$srcdir"/rm-stylus.so \
+	local so_file
+	case "$CARCH" in
+		aarch64)
+			so_file="rm-stylus-aarch64.so"
+			;;
+		armv7|armhf)
+			so_file="rm-stylus-armv7.so"
+			;;
+	esac
+
+	install -Dm755 "$srcdir/$so_file" \
 		"$pkgdir"/home/root/xovi/extensions.d/rm-stylus.so
 
-	install -Dm644 "$srcdir"/LICENSE \
+	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
-	echo "https://github.com/rmitchellscott/rm-stylus/archive/refs/tags/v"$pkgver".tar.gz" > \
+	echo "https://github.com/rmitchellscott/"$pkgname"/archive/refs/tags/v"$pkgver".tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/SOURCES
 }
 sha512sums="
-302f0aa55cb8cef8e1120a7838fe995b4edcb2f12a759bb1c565ab1603b237a63b000e4b86df740484a8b90e1a68cc7d9ed114ccf19efb872a2f72c0c4e9d07d  rm-stylus.so
+5208a5f9346f9e3ce203619268fe568113d03e09b96075eeaa259ad302daad0b7e53d3680bbe7e244a3d1343042471f3574ef35bd443be123dd8b65db418681f  rm-stylus-aarch64.so
+03497a7821395e4ee8305ab7028d25114a30efd9480acdd4912d905ec305e5fe54070229215fcd21dd4d40b5b3c5edc3f2631d8bcc515f46302c3971425ec469  rm-stylus-armv7.so
 f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8  LICENSE
 "
