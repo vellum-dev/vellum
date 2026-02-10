@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=btop
 pkgver=1.4.6
-pkgrel=1
+pkgrel=2
 _upstream_author="aristocratos"
 _category="utilities"
 pkgdesc="A monitor of resources"
