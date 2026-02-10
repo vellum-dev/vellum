@@ -117,7 +117,12 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     [ -z "$categories_json" ] || [ "$categories_json" = "[]" ] && categories_json='["other"]'
 
     os_min=$(echo "$deps" | grep -oE 'remarkable-os>=[0-9.]+' | sed 's/remarkable-os>=//' | head -1 || true)
-    os_max=$(echo "$deps" | grep -oE 'remarkable-os<[0-9.]+' | sed 's/remarkable-os<//' | head -1 || true)
+    os_max_raw=$(echo "$deps" | grep -oE 'remarkable-os<[0-9.]+' | sed 's/remarkable-os<//' | head -1 || true)
+    if [ -n "$os_max_raw" ]; then
+        os_max=$(echo "$os_max_raw" | awk -F. '{printf "%.2f", $1"."$2 - 0.01}')
+    else
+        os_max=""
+    fi
 
     all_devices='["rm1","rm2","rmpp","rmppm"]'
     device_names="rm1 rm2 rmpp rmppm"
