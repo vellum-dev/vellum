@@ -12,6 +12,16 @@ METADATA_FILE="packages-metadata.json"
 WORKDIR=$(mktemp -d)
 trap "rm -rf $WORKDIR" EXIT
 
+# Fetch existing metadata to preserve release timestamps
+OLD_METADATA_URL="https://$S3_BUCKET/${PREFIX_PATH}packages-metadata.json"
+echo "Fetching existing metadata for timestamp preservation..."
+if curl -sf "$OLD_METADATA_URL" -o "$WORKDIR/old-metadata.json" 2>/dev/null; then
+    echo "Found existing metadata"
+else
+    echo "No existing metadata found, starting fresh"
+    echo '{"packages":{}}' > "$WORKDIR/old-metadata.json"
+fi
+
 echo '{"packages":{}}' > "$METADATA_FILE"
 
 for arch in aarch64 armv7; do
@@ -185,6 +195,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
            --argjson modifies_system "$modifies_system" \
            --arg origin "${origin:-}" \
            --arg install_if_val "${install_if:-}" \
+           --arg now "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
            '.packages[$pkg][$ver] = {
              pkgdesc: $desc,
              upstream_author: $author,
@@ -201,6 +212,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
              arch: [$arch],
              modifies_system: $modifies_system,
              auto_install: (if $install_if_val == "" or $install_if_val == "_" then false else true end),
+             released: $now,
              _origin: (if $origin == "" or $origin == "_" then null else $origin end)
            }' "$METADATA_FILE" > tmp.json && mv tmp.json "$METADATA_FILE"
     fi
@@ -255,6 +267,21 @@ jq '
     )
   )
 ' "$METADATA_FILE" > tmp.json && mv tmp.json "$METADATA_FILE"
+
+# Preserve release timestamps from old metadata
+echo "Preserving release timestamps from previous metadata..."
+jq -s '
+  .[0] as $old | .[1] |
+  .packages |= with_entries(
+    .key as $pkg |
+    .value |= with_entries(
+      .key as $ver |
+      if $old.packages[$pkg][$ver].released then
+        .value.released = $old.packages[$pkg][$ver].released
+      else . end
+    )
+  )
+' "$WORKDIR/old-metadata.json" "$METADATA_FILE" > tmp.json && mv tmp.json "$METADATA_FILE"
 
 jq --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '.generated = $ts' "$METADATA_FILE" > tmp.json && mv tmp.json "$METADATA_FILE"
 

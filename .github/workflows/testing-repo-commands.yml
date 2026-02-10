@@ -108,7 +108,7 @@ jobs:
             exit 0
           fi
 
-          packages=$(echo "$changed" | grep -E '^packages/[^/]+/' | cut -d'/' -f2 | sort -u | tr '\n' ' ' || true)
+          packages=$(echo "$changed" | grep -E '^packages/[^/]+/' | cut -d'/' -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || true)
           echo "packages_list=$packages" >> $GITHUB_OUTPUT
 
           noarch_packages="[]"

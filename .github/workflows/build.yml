@@ -30,6 +30,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check if fork
+        if: github.event_name == 'pull_request'
+        run: |
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "::notice::Building from fork - signing disabled, artifacts only"
+          fi
+
       - name: Detect changed packages
         id: changed
         run: |
@@ -43,7 +50,7 @@ jobs:
               BEFORE="HEAD~1"
             fi
             CHANGED=$(git diff --name-only "$BEFORE" ${{ github.sha }} | \
-              grep '^packages/' | cut -d/ -f2 | sort -u | tr '\n' ' ' || echo "")
+              grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
             if [ -z "$CHANGED" ]; then
               echo "No package changes detected"
               echo "packages=" >> $GITHUB_OUTPUT
@@ -53,7 +60,7 @@ jobs:
             fi
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | \
-              grep '^packages/' | cut -d/ -f2 | sort -u | tr '\n' ' ' || echo "")
+              grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
             if [ -z "$CHANGED" ]; then
               echo "No package changes detected"
               echo "packages=" >> $GITHUB_OUTPUT
@@ -176,7 +183,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload to S3
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -184,7 +191,7 @@ jobs:
           aws-region: us-east-2
 
       - name: Upload packages to S3
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           for arch in aarch64 armv7; do
             if [ -d "dist/noarch" ] && ls dist/noarch/*.apk >/dev/null 2>&1; then
@@ -232,7 +239,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload to S3
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -240,7 +247,7 @@ jobs:
           aws-region: us-east-2
 
       - name: Upload packages to S3
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           if [ -d "dist/${{ matrix.arch }}" ] && ls dist/${{ matrix.arch }}/*.apk >/dev/null 2>&1; then
             aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/${{ matrix.arch }}/ --recursive --exclude "APKINDEX.tar.gz"
@@ -253,6 +260,7 @@ jobs:
       always() &&
       !failure() &&
       !cancelled() &&
+      github.repository == 'vellum-dev/vellum' &&
       (
         github.event.inputs.reindex_only == 'true' ||
         (github.ref == 'refs/heads/main' && github.event_name != 'pull_request')
@@ -335,35 +343,40 @@ jobs:
             --cache-control "max-age=300"
           echo "Metadata uploaded to S3"
 
-      - name: Commit metadata to vellum-site repository
+      - name: Generate RSS feeds
+        run: ./scripts/generate-rss.sh packages-metadata.json
+
+      - name: Commit metadata and feeds to vellum-index repository
         env:
           DEPLOY_KEY: ${{ secrets.VELLUM_SITE_DEPLOY_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "$DEPLOY_KEY" > ~/.ssh/vellum-site-key
-          chmod 600 ~/.ssh/vellum-site-key
+          echo "$DEPLOY_KEY" > ~/.ssh/vellum-index-key
+          chmod 600 ~/.ssh/vellum-index-key
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-          export GIT_SSH_COMMAND="ssh -i ~/.ssh/vellum-site-key -o IdentitiesOnly=yes"
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/vellum-index-key -o IdentitiesOnly=yes"
 
-          git clone git@github.com:vellum-dev/vellum-site.git /tmp/vellum-site
-          cd /tmp/vellum-site
+          git clone git@github.com:vellum-dev/vellum-index.git /tmp/vellum-index
+          cd /tmp/vellum-index
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           cp $GITHUB_WORKSPACE/packages-metadata.json src/data/packages-metadata.json
+          mkdir -p public/feeds
+          cp $GITHUB_WORKSPACE/feeds/*.rss public/feeds/
 
-          if git diff --quiet src/data/packages-metadata.json; then
-            echo "No changes to packages-metadata.json"
+          if git diff --quiet; then
+            echo "No changes to commit"
           else
-            git add src/data/packages-metadata.json
-            git commit -m "Update packages metadata from vellum build
+            git add src/data/packages-metadata.json public/feeds/
+            git commit -m "Update packages metadata and RSS feeds
 
           Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
           Source commit: $GITHUB_SHA"
 
             git push origin main
-            echo "Metadata committed and pushed to vellum-site"
+            echo "Changes committed and pushed to vellum-index"
           fi
 

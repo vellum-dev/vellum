@@ -1,7 +1,7 @@
 name: Cleanup Testing Repo
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 jobs:
@@ -9,16 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
 
-      - name: Detect packages from this PR
+      - name: Get changed packages via API
         id: detect
-        run: |
-          changed=$(git diff --name-only ${{ github.event.pull_request.base.sha }}...HEAD -- packages/ || true)
-          packages=$(echo "$changed" | grep -E '^packages/[^/]+/' | cut -d'/' -f2 | sort -u | tr '\n' ' ' || true)
-          echo "packages=$packages" >> $GITHUB_OUTPUT
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100
+            });
+            const packages = [...new Set(
+              files
+                .map(f => f.filename)
+                .filter(f => f.startsWith('packages/'))
+                .map(f => f.split('/')[1])
+                .filter(p => p && !/[*?\[\]]/.test(p))
+            )];
+            const result = packages.join(' ');
+            console.log(`Detected packages: ${result || '(none)'}`);
+            core.setOutput('packages', result);
 
       - name: Set up signing key
         if: steps.detect.outputs.packages != ''
@@ -40,8 +52,10 @@ jobs:
 
       - name: Remove packages from S3
         if: steps.detect.outputs.packages != ''
+        env:
+          PACKAGES: ${{ steps.detect.outputs.packages }}
         run: |
-          for pkg in ${{ steps.detect.outputs.packages }}; do
+          for pkg in $PACKAGES; do
             for arch in aarch64 armv7; do
               echo "Removing ${pkg} from $arch..."
               aws s3 rm "s3://packages.vellum.delivery/testing/$arch/" \
