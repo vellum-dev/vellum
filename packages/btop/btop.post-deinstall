@@ -2,4 +2,5 @@
 
 if [ "$VELLUM_PURGE" = "1" ]; then
     rm -rf /home/root/.config/btop
+    rm -f /home/root/.local/state/btop.log
 fi
