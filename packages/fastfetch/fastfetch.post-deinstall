@@ -2,4 +2,5 @@
 
 if [ "$VELLUM_PURGE" = "1" ]; then
     rm -rf /home/root/.config/fastfetch
+    rm -fr /home/root/.cache/fastfetch
 fi

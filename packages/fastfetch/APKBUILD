@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=fastfetch
 pkgver=2.58.0_git11
-pkgrel=1
+pkgrel=2
 _upstream_author="fastfetch-cli"
 _category="utilities"
 pkgdesc="A maintained, feature-rich and performance oriented, neofetch like system information tool."

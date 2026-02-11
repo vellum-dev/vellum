@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=hyfetch
 pkgver=2.0.5_git6
-pkgrel=2
+pkgrel=3
 _upstream_author="hykilpikonna"
 _category="utilities"
 pkgdesc="Neofetch with LGBTQ+ pride flags!"
