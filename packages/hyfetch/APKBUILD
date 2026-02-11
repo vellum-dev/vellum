@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=hyfetch
 pkgver=2.0.5_git6
-pkgrel=1
+pkgrel=2
 _upstream_author="hykilpikonna"
 _category="utilities"
 pkgdesc="Neofetch with LGBTQ+ pride flags!"
@@ -9,7 +9,7 @@ url="https://github.com/hykilpikonna/hyfetch"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
-install="$pkgname.post-deinstall"
+install="$pkgname.post-install $pkgname.post-upgrade $pkgname.post-deinstall"
 
 source="
 https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
@@ -26,9 +26,6 @@ unpack() {
 package() {
 	install -Dm755 "$srcdir"/hyfetch \
 		"$pkgdir"/home/root/.vellum/bin/hyfetch
-	
-	install -Dm644 "$srcdir"/hyfetch.bash \
-		"$pkgdir"/home/root/.vellum/share/bash-completion/completions/hyfetch
 	
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
