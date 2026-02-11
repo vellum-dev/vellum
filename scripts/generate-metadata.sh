@@ -129,6 +129,32 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     os_min=$(echo "$deps" | grep -oE 'remarkable-os>=[0-9.]+' | sed 's/remarkable-os>=//' | head -1 || true)
     os_max=$(echo "$deps" | grep -oE 'remarkable-os<[0-9.]+' | sed 's/remarkable-os<//' | head -1 || true)
 
+    os_constraints="[]"
+    for token in $deps; do
+        case "$token" in
+            remarkable-os\>=*)
+                version="${token#remarkable-os>=}"
+                os_constraints=$(echo "$os_constraints" | jq --arg v "$version" '. += [{"version": $v, "operator": ">="}]')
+                ;;
+            remarkable-os\<=*)
+                version="${token#remarkable-os<=}"
+                os_constraints=$(echo "$os_constraints" | jq --arg v "$version" '. += [{"version": $v, "operator": "<="}]')
+                ;;
+            remarkable-os\>*)
+                version="${token#remarkable-os>}"
+                os_constraints=$(echo "$os_constraints" | jq --arg v "$version" '. += [{"version": $v, "operator": ">"}]')
+                ;;
+            remarkable-os\<*)
+                version="${token#remarkable-os<}"
+                os_constraints=$(echo "$os_constraints" | jq --arg v "$version" '. += [{"version": $v, "operator": "<"}]')
+                ;;
+            remarkable-os=*)
+                version="${token#remarkable-os=}"
+                os_constraints=$(echo "$os_constraints" | jq --arg v "$version" '. += [{"version": $v, "operator": "="}]')
+                ;;
+        esac
+    done
+
     all_devices='["rm1","rm2","rmpp","rmppm"]'
     device_names="rm1 rm2 rmpp rmppm"
     pos_devices=""
@@ -187,6 +213,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
            --arg url "$url" \
            --arg os_min "${os_min:-}" \
            --arg os_max "${os_max:-}" \
+           --argjson os_constraints "$os_constraints" \
            --argjson devices "$devices" \
            --argjson conflicts "$conflicts" \
            --argjson deps "$regular_deps" \
@@ -205,6 +232,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
              url: $url,
              os_min: (if $os_min == "" then null else $os_min end),
              os_max: (if $os_max == "" then null else $os_max end),
+             os_constraints: (if $os_constraints == [] then null else $os_constraints end),
              devices: $devices,
              depends: $deps,
              conflicts: $conflicts,
