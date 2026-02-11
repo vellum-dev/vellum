@@ -1,33 +1,25 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum-bash-completion
 pkgver=3.0.3
-pkgrel=2
-_upstream_author="alpinelinux"
+pkgrel=3
+_upstream_author="vellum-dev"
 _category="utilities"
 pkgdesc="Bash completion for vellum package manager"
-url="https://gitlab.alpinelinux.org/alpine/apk-tools"
+url="https://github.com/vellum-dev/apk-tools"
 arch="noarch"
 license="GPL-2.0-only"
 # depends="vellum"
 source="
-https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/apk-tools-bash-completion-$pkgver-r1.apk
+https://github.com/vellum-dev/apk-tools/releases/download/v$pkgver/_apk
 "
 options="!check !fhs"
-sha512sums="
-1a5e0c73d85c0907fa136c7382c2559d72901e2afcaa2f0425f110a4ef7932c992523529c23bc98edbd81dde759aea11bec407de628d68cc5fd981f4ec7db8b3  apk-tools-bash-completion-$pkgver-r1.apk
-"
-
-unpack() {
-	mkdir -p "$srcdir"
-	tar -xzf "$srcdir/apk-tools-bash-completion-$pkgver-r1.apk" -C "$srcdir"
-}
 
 package() {
 	sed -e 's/__apk_/__vellum_/g' \
 		-e 's/apk query/vellum query/g' \
 		-e 's/_comp_cmd_apk/_comp_cmd_vellum_apk/g' \
 		-e 's/complete -F _comp_cmd_vellum_apk apk$//' \
-		"$srcdir/usr/share/bash-completion/completions/_apk" > "$srcdir/vellum"
+		"$srcdir/_apk" > "$srcdir/vellum"
 
 	cat >> "$srcdir/vellum" << 'EOF'
 
@@ -53,6 +45,10 @@ _comp_cmd_vellum() {
 		check-os|reenable)
 			return
 			;;
+		testing)
+			COMPREPLY=($(compgen -W "enable disable status" -- "$cur"))
+			return
+			;;
 	esac
 
 	# Translate aliases for argument completion
@@ -64,7 +60,7 @@ _comp_cmd_vellum() {
 
 	if [[ $COMP_CWORD -eq 1 ]]; then
 		_comp_cmd_vellum_apk
-		COMPREPLY+=($(compgen -W "self install remove purge show upgrade check-os reenable" -- "$cur"))
+		COMPREPLY+=($(compgen -W "self install remove purge show upgrade check-os reenable testing" -- "$cur"))
 	else
 		_comp_cmd_vellum_apk
 	fi
@@ -76,3 +72,6 @@ EOF
 	install -Dm644 "$srcdir/vellum" \
 		"$pkgdir/home/root/.vellum/share/bash-completion/completions/vellum"
 }
+sha512sums="
+c9ae7004ae2002250d7164ea2fa7daea1e95dd0ee0a56bd81eaa55bfb4b03b49d604b78e6f8abfc7c40bc0d46f71c2db5c26dbdbbdc4b6317ad4cd51506c3ea7  _apk
+"
