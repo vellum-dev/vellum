@@ -291,7 +291,7 @@ Vellum maintains a separate testing repository for validation before release. Th
 4. Enable testing repo on your device: `vellum testing enable`
 5. Update and install: `vellum update && vellum add <package>@testing`
 6. Validate the package works correctly, if more commits are needed, the Vellum maintainers will need to republish for the package to be updated
-7. Once testing is complete, `@package-approvers` or re-request a review
+7. Once testing is complete, comment `/ready-for-review` on the PR
 8. Disable testing repo on your device: `vellum testing disable`
 
 #### Testing Repo Commands

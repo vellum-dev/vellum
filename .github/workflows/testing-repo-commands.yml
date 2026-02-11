@@ -382,6 +382,47 @@ jobs:
               }
             }
 
+            const success = command === 'publish'
+              ? buildNoarchResult !== 'failure' && buildMultiarchResult !== 'failure' && reindexResult === 'success'
+              : removeResult !== 'failure';
+
+            if (success && packages.length > 0) {
+              const labelName = 'testing-repo';
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName
+                });
+              } catch {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                  color: '0075ca'
+                });
+              }
+
+              if (command === 'publish') {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  labels: [labelName]
+                });
+              } else {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: prNumber,
+                    name: labelName
+                  });
+                } catch {
+                }
+              }
+            }
+
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
