@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
-pkgver=1.1.0
-pkgrel=1
+pkgver=1.2.0
+pkgrel=0
 _upstream_author="rmitchellscott"
 _category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
@@ -10,21 +10,21 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.24 remarkable-os<3.26"
 source="
-betterToc.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.24/betterToc.qmd
-LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/3.25/betterToc.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/betterToc.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/betterToc.qmd"
+	install -Dm644 "$srcdir"/betterToc.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/betterToc.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/SOURCES
 }
 sha512sums="
-2cc4b9f89b69cbeaed488598810d8f232121a52f8ea9128f101142794ef81a2b4d27421a71676bbf035c1d70b65abfcc7a87aec1194fc6e314a871c424748ce4  betterToc.qmd
+ba4bb93e21a92cf98cc3f5d78886e2de71b86faf3528d702b85e825b9cc911767fd7e79e046c0f9863f94f3487340ee4ae74cf383c380be8c3b76be6228f3932  betterToc.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
 "
