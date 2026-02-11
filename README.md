@@ -55,9 +55,9 @@ These packages are auto-installed on every `vellum` command and allows extension
 ### Adding a new package
 
 1. Create a directory under `packages/` with the package name
-2. Add an `APKBUILD` file following Alpine's format
+2. Add an `APKBUILD` file following Alpine's format. See [APKBUILD Reference](https://wiki.alpinelinux.org/wiki/APKBUILD_Reference), [APKBUILD(5)](https://man.archlinux.org/man/APKBUILD.5.en), and [aports coding style](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/CODINGSTYLE.md)
 3. Test it
-3. Submit a PR
+4. Submit a PR
 
 ### APKBUILD template for QMD extensions
 
@@ -68,25 +68,25 @@ pkgver=1.0.0
 pkgrel=0
 _upstream_author="your-github-username"
 _category="ui"
-Description of your extension
-url="https://github.com/you/your-repo"
+pkgdesc="Description of your extension"
+url="https://github.com/you/repo"
 arch="noarch"
 license="SPDX License Identifier for your license"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 source="
-myextension.qmd::https://raw.githubusercontent.com/you/repo/main/myextension.qmd
-LICENSE::https://raw.githubusercontent.com/you/repo/main/LICENSE
+https://raw.githubusercontent.com/you/repo/main/myextension.qmd
+https://raw.githubusercontent.com/you/repo/main/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/betterToc.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/myextension.qmd"
+	install -Dm644 "$srcdir"/myextension.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/myextension.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://raw.githubusercontent.com/you/repo" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/you/repo" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 <checksum>  myextension.qmd
@@ -120,12 +120,12 @@ pkgrel=1    # fixed a dependency, same upstream version
 
 APK supports pre-release suffixes (underscore-prefixed):
 
-| Suffix | Meaning | Sorts |
-|--------|---------|-------|
-| `_alpha` | Alpha release | before base |
-| `_beta` | Beta release | before base |
-| `_pre` | Pre-release | before base |
-| `_rc` | Release candidate | before base |
+| Suffix   | Meaning           | Sorts       |
+|----------|-------------------|-------------|
+| `_alpha` | Alpha release     | before base |
+| `_beta`  | Beta release      | before base |
+| `_pre`   | Pre-release       | before base |
+| `_rc`    | Release candidate | before base |
 
 ```sh
 pkgver=1.2.0_rc1   # sorts before 1.2.0
@@ -153,18 +153,18 @@ Packages can include lifecycle scripts. Add them to your package directory and r
 install="$pkgname.post-install $pkgname.post-upgrade $pkgname.pre-deinstall"
 ```
 
-| Script | When it runs |
-|--------|--------------|
-| `post-install` | After fresh install |
-| `post-upgrade` | After upgrading to a new version |
-| `pre-deinstall` | Before package removal |
+| Script            | When it runs                                       |
+|-------------------|----------------------------------------------------|
+| `post-install`    | After fresh install                                |
+| `post-upgrade`    | After upgrading to a new version                   |
+| `pre-deinstall`   | Before package removal                             |
 | `post-os-upgrade` | After reMarkable OS update (via `vellum reenable`) |
 
 The `post-os-upgrade` hook runs when users execute `vellum reenable` after an OS update. Use this for packages that need to restore system files wiped by OS updates.  
 Unlike standard apk hooks, `post-os-upgrade` is a Vellum-specific hook and must be manually installed in your `package()` function:
 ```sh
-install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
-    "$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
+install -Dm755 "$startdir"/$pkgname.post-os-upgrade \
+    "$pkgdir"/home/root/.vellum/hooks/post-os-upgrade/$pkgname
 ```
 
 ### Packages with System Files
@@ -230,9 +230,9 @@ if [ "$VELLUM_PURGE" = "1" ]; then
 fi
 ```
 
-| Command | Behavior |
-|---------|----------|
-| `vellum del mypackage` | Removes package, keeps user config/data |
+| Command                  | Behavior                                |
+|--------------------------|-----------------------------------------|
+| `vellum del mypackage`   | Removes package, keeps user config/data |
 | `vellum purge mypackage` | Removes package and all associated data |
 
 ### Local Development
