@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum
 pkgver=0.1.9
-pkgrel=0
+pkgrel=1
 _apk_ver=3.0.3
 _upstream_author="vellum-dev"
 _category="utilities"
