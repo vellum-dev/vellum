@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/rmitchellscott/rm-version-switcher/main/LICENS
 unpack() {
 	case "$CARCH" in
 		aarch64) tar -xzf "$srcdir"/rm-version-switcher-aarch64.tar.gz -C "$srcdir" ;;
-		arm*) tar -xzf "$srcdir"/rm-version-switcher-armv7.tar.gz -C "$srcdir" ;;
+		armv7) tar -xzf "$srcdir"/rm-version-switcher-armv7.tar.gz -C "$srcdir" ;;
 	esac
 }
 
@@ -28,7 +28,7 @@ package() {
 	local bin_file
 	case "$CARCH" in
 		aarch64) bin_file="rm-version-switcher-aarch64"	;;
-		arm*) bin_file="rm-version-switcher-armv7" ;;
+		armv7) bin_file="rm-version-switcher-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir"/$bin_file \

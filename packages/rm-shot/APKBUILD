@@ -22,7 +22,7 @@ package() {
 		aarch64)
 			so_file="rm-shot-aarch64.so"
 			;;
-		arm*)
+		armv7)
 			so_file="rm-shot-armv7.so"
 			;;
 	esac

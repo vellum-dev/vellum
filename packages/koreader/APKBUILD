@@ -22,7 +22,7 @@ https://raw.githubusercontent.com/koreader/koreader/master/COPYING
 unpack() {
 	case "$CARCH" in
 		aarch64) unzip -o "$srcdir"/koreader-remarkable-aarch64-v$pkgver.zip -d "$srcdir" ;;
-		arm*) unzip -o "$srcdir"/koreader-remarkable-v$pkgver.zip -d "$srcdir" ;;
+		armv7) unzip -o "$srcdir"/koreader-remarkable-v$pkgver.zip -d "$srcdir" ;;
 	esac
 }
 
