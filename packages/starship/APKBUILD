@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/starship/starship/refs/heads/master/LICENSE
 unpack() {
 	case "$CARCH" in
 		aarch64)  tar -xzf "$srcdir"/starship-aarch64-unknown-linux-musl.tar.gz -C "$srcdir" ;;
-		armv7|armhf)  tar -xzf "$srcdir"/starship-arm-unknown-linux-musleabihf.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/starship-arm-unknown-linux-musleabihf.tar.gz -C "$srcdir" ;;
 	esac
 }
 

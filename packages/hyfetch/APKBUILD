@@ -19,7 +19,7 @@ https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-arm3
 unpack() {
 	case "$CARCH" in
 		aarch64)  tar -xzf "$srcdir"/hyfetch-aarch64.tar.gz -C "$srcdir" ;;
-		armv7|armhf)  tar -xzf "$srcdir"/hyfetch-arm32.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/hyfetch-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 

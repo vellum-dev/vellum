@@ -22,7 +22,7 @@ https://raw.githubusercontent.com/asivery/rm-appload/master/LICENSE
 unpack() {
 	case "$CARCH" in
 		aarch64) unzip -o "$srcdir"/appload-aarch64.zip -d "$srcdir" ;;
-		armv7|armhf) unzip -o "$srcdir"/appload-arm32.zip -d "$srcdir" ;;
+		armv7) unzip -o "$srcdir"/appload-arm32.zip -d "$srcdir" ;;
 	esac
 }
 

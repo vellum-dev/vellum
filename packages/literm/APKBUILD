@@ -24,7 +24,7 @@ package() {
 
 	case "$CARCH" in
 		aarch64) so_file=literm-aarch64.so ;;
-		armv7|armhf) so_file=literm-arm32.so ;;
+		armv7) so_file=literm-arm32.so ;;
 	esac
 
 	install -Dm755 "$srcdir"/$so_file \

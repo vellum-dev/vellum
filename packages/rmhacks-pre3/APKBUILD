@@ -14,9 +14,6 @@ options="!check !fhs"
 source="
 rm-hacks-qmd-$_commit.tar.gz::https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz
 "
-sha512sums="
-d6973052554f3a452a1b2a64e51339804beef9212a779430c73faba6fd1a338376f0770ddd9f9c885bc56d10fba329d20b8763915799de7c599ee005b1767811  rm-hacks-qmd-a5a921cda5b0db3fa9a93fd016187a8928abfe9b.tar.gz
-"
 builddir="$srcdir/rm-hacks-qmd-$_commit/0.0.11-pre3"
 
 package() {
@@ -32,3 +29,6 @@ package() {
 	echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+d6973052554f3a452a1b2a64e51339804beef9212a779430c73faba6fd1a338376f0770ddd9f9c885bc56d10fba329d20b8763915799de7c599ee005b1767811  rm-hacks-qmd-a5a921cda5b0db3fa9a93fd016187a8928abfe9b.tar.gz
+"

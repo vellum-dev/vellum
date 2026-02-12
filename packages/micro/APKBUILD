@@ -22,7 +22,7 @@ unpack() {
 	aarch64)
 		_tar=$pkgname-$pkgver-arm64.tar.gz
 		;;
-	armv7 | armhf)
+	armv7)
 		_tar=$pkgname-$pkgver-armv7.tar.gz
 		;;
 	esac

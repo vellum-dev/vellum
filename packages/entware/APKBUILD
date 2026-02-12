@@ -47,7 +47,7 @@ package() {
 			install -Dm755 "$srcdir/libgcc_s.so.1.aarch64" "$lib_dir/libgcc_s.so.1"
 			install -Dm755 "$srcdir/libpthread-2.27.so.aarch64" "$lib_dir/libpthread-2.27.so"
 			;;
-		armv7|armhf)
+		armv7)
 			install -Dm755 "$srcdir/opkg.armv7" "$bin_dir/opkg"
 			install -Dm644 "$srcdir/opkg.conf.armv7" "$install_dir/opkg.conf"
 			install -Dm755 "$srcdir/ld-2.27.so.armv7" "$lib_dir/ld-2.27.so"

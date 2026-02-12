@@ -19,7 +19,7 @@ https://raw.githubusercontent.com/rmitchellscott/rmtree/main/LICENSE
 unpack() {
 	case "$CARCH" in
 		aarch64) tar -xzf "$srcdir"/rmtree-aarch64.tar.gz -C "$srcdir" ;;
-		armv7|armhf) tar -xzf "$srcdir"/rmtree-armv7.tar.gz -C "$srcdir" ;;
+		armv7) tar -xzf "$srcdir"/rmtree-armv7.tar.gz -C "$srcdir" ;;
 	esac
 }
 
@@ -27,7 +27,7 @@ package() {
 	local bin_file
 	case "$CARCH" in
 		aarch64) bin_file="rmtree-aarch64" ;;
-		armv7|armhf) bin_file="rmtree-armv7" ;;
+		armv7) bin_file="rmtree-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir"/$bin_file \

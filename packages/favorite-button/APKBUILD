@@ -14,10 +14,6 @@ favoriteButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions
 LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-4e6ab572a44dabc9c47c4c2a1104dc2bcfab00b3bd2a9894b0c0e477c3b0ed242996ec42d97652e9a5c36d7ab596d2dbe59de13f671a93b6693395a3353c28dc  favoriteButton.qmd
-f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/favoriteButton.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+4e6ab572a44dabc9c47c4c2a1104dc2bcfab00b3bd2a9894b0c0e477c3b0ed242996ec42d97652e9a5c36d7ab596d2dbe59de13f671a93b6693395a3353c28dc  favoriteButton.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"

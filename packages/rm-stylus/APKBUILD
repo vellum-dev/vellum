@@ -22,7 +22,7 @@ package() {
 		aarch64)
 			so_file="rm-stylus-aarch64.so"
 			;;
-		armv7|armhf)
+		armv7)
 			so_file="rm-stylus-armv7.so"
 			;;
 	esac

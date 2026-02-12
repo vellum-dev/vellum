@@ -24,7 +24,7 @@ package() {
 
 	case "$CARCH" in
 		aarch64) _xovi_so="xovi-aarch64.so" ;;
-		armv7|armhf) _xovi_so="xovi-armv7.so" ;;
+		armv7) _xovi_so="xovi-armv7.so" ;;
 	esac
 
 	install -Dm755 "$srcdir/$_xovi_so" "$pkgdir/home/root/xovi/xovi.so"
