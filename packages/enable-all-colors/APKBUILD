@@ -14,10 +14,6 @@ enableAllColors.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-exte
 LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md
 "
 options="!check !fhs"
-sha512sums="
-092bd464dc95996accdf04395dced7fbcf9e95798c00b2ac3ac7eca9428a2ba1dd2b2a5bf28212c39db9baec95e36e6cbbdbf7bd96e867d99542395681a510ed  enableAllColors.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/enableAllColors.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+092bd464dc95996accdf04395dced7fbcf9e95798c00b2ac3ac7eca9428a2ba1dd2b2a5bf28212c39db9baec95e36e6cbbdbf7bd96e867d99542395681a510ed  enableAllColors.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
+"

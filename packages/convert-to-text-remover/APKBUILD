@@ -14,10 +14,6 @@ convertToText_remover.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-ext
 LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-892a77e03859a609617fea9483cdb657ae66b382aca4cebb1835cafdcb666b0735de9415ce9368f1a0c0269d58b6f7d54f5abec636fd77d604e0ebb3dd316b3d  convertToText_remover.qmd
-f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/convertToText_remover.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+892a77e03859a609617fea9483cdb657ae66b382aca4cebb1835cafdcb666b0735de9415ce9368f1a0c0269d58b6f7d54f5abec636fd77d604e0ebb3dd316b3d  convertToText_remover.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"

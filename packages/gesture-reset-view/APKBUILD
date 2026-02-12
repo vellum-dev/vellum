@@ -14,10 +14,6 @@ gestureResetView.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-bb55474221bb11631272eb9c6dc57c67d92447b9de622c54cb47cb157ae555acb0dedb705043f2b5d1cb0accfd43733abe1034fc300b2c8cb5d5897bcec93a32  gestureResetView.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/gestureResetView.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+bb55474221bb11631272eb9c6dc57c67d92447b9de622c54cb47cb157ae555acb0dedb705043f2b5d1cb0accfd43733abe1034fc300b2c8cb5d5897bcec93a32  gestureResetView.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

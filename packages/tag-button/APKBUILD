@@ -14,10 +14,6 @@ tagButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main
 LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/LICENSE
 "
 options="!check !fhs"
-sha512sums="
-63947d48c50e0ba35c6a6daac2ee4daa9c37e269177a2ece1cd15a9e7d0d24fbc518473c4ef64aaad9372214d901e0913930005c8fc758321ad3bbf82856e427  tagButton.qmd
-f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
-"
 
 package() {
 	install -Dm644 "$srcdir/tagButton.qmd" \
@@ -28,3 +24,7 @@ package() {
 	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+sha512sums="
+63947d48c50e0ba35c6a6daac2ee4daa9c37e269177a2ece1cd15a9e7d0d24fbc518473c4ef64aaad9372214d901e0913930005c8fc758321ad3bbf82856e427  tagButton.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"
