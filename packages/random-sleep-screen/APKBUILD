@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=random-sleep-screen
-pkgver=1.0.3
+pkgver=1.0.4
 pkgrel=0
 _upstream_author="ingatellent"
 _category="ui"
@@ -25,6 +25,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-7c7124b78bda30688d671f3e78449934f27d8e95e9b66e7a559640b22399d8a8e433f6594dd5da6085074e1a0aa5211b27b243fd504b94393f8080be4984401d  randomSleepScreen.qmd
+5f2c808faf78e5749dd3647013e43edb44cdb3c786a9b3a63d903c000297d6a4c157ccbedaa33ae0719660ef03d893d4e929d63fa2960532400e1971389ffa76  randomSleepScreen.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
 "
