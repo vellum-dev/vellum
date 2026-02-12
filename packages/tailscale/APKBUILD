@@ -34,7 +34,7 @@ unpack() {
 
 	case "$CARCH" in
 		aarch64) _arch="arm64" ;;
-		armv7 | armhf) _arch="arm" ;;
+		arm*) _arch="arm" ;;
 	esac
 
 	mkdir -p "$srcdir"

@@ -20,7 +20,7 @@ package() {
 	local bin_file
 	case "$CARCH" in
 		aarch64) bin_file="rm-pokemon-aarch64" ;;
-		armv7|armhf) bin_file="rm-pokemon-armv7" ;;
+		arm*) bin_file="rm-pokemon-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir/$bin_file" \

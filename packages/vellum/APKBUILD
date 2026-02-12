@@ -22,7 +22,7 @@ package() {
 	local vellum_file
 	case "$CARCH" in
 		aarch64) vellum_file="vellum-aarch64" ;;
-		armv7|armhf) vellum_file="vellum-armv7" ;;
+		arm*) vellum_file="vellum-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir/$vellum_file" \
@@ -33,7 +33,7 @@ package() {
 		aarch64)
 			apk_file="apk-aarch64"
 			;;
-		armv7|armhf)
+		arm*)
 			apk_file="apk-armv7"
 			;;
 	esac

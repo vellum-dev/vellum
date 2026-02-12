@@ -22,7 +22,7 @@ https://raw.githubusercontent.com/asivery/appload-rmstream/master/LICENSE
 unpack() {
 	case "$CARCH" in
 		aarch64) unzip -o "$srcdir"/rmstream-aarch64.zip -d "$srcdir" ;;
-		armv7|armhf) unzip -o "$srcdir"/rmstream-arm32.zip -d "$srcdir" ;;
+		arm*) unzip -o "$srcdir"/rmstream-arm32.zip -d "$srcdir" ;;
 	esac
 }
 
@@ -30,7 +30,7 @@ package() {
 	local folder
 	case "$CARCH" in
 		aarch64) folder="rmstream-aarch64" ;;
-		armv7|armhf) folder="rmstream-arm32" ;;
+		arm*) folder="rmstream-arm32" ;;
 	esac
 
 	install -d "$pkgdir"/home/root/xovi/exthome/appload

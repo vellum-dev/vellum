@@ -20,7 +20,7 @@ package() {
 	local bin_file
 	case "$CARCH" in
 		aarch64)  bin_file="jq-linux-arm64" ;;
-		armv7|armhf)  bin_file="jq-linux-armhf" ;;
+		arm*)  bin_file="jq-linux-armhf" ;;
 	esac
 
 	install -Dm755 "$srcdir"/$bin_file \

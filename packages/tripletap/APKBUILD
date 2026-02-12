@@ -25,7 +25,7 @@ package() {
 		aarch64)
 			install -Dm755 evtest.arm64 "$install_dir/evtest"
 			;;
-		armv7|armhf)
+		arm*)
 			install -Dm755 evtest.arm32 "$install_dir/evtest"
 			;;
 	esac

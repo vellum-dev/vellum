@@ -20,7 +20,7 @@ https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.
 unpack() {
 	case "$CARCH" in
 		aarch64)  tar -xzf "$srcdir"/tilem-aarch64.tar.gz -C "$srcdir" ;;
-		armv7|armhf)  tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
+		arm*)  tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 

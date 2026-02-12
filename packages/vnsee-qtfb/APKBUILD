@@ -21,7 +21,7 @@ https://raw.githubusercontent.com/khyryra/vnsee-qtfb/master/LICENSE.md
 
 unpack() {
 	case "$CARCH" in
-		armv7|armhf) unzip -o "$srcdir"/vnsee-rm2.zip -d "$srcdir" ;;
+		arm*) unzip -o "$srcdir"/vnsee-rm2.zip -d "$srcdir" ;;
 		aarch64) unzip -o "$srcdir"/vnsee-ferrari.zip -d "$srcdir" ;;
 	esac
 }
