@@ -1,6 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
-pkgver=0.3.2
+pkgver=0.3.2.1
+_upstream_pkgver=0.3.2
 pkgrel=0
 _upstream_author="asivery"
 _category="framework"
@@ -12,63 +13,60 @@ install="$pkgname.pre-deinstall"
 options="!check !fhs !strip !tracedeps"
 
 source="
-xovi-aarch64.so::https://github.com/asivery/xovi/releases/download/v$pkgver/xovi-aarch64.so
-xovi-armv7.so::https://github.com/asivery/xovi/releases/download/v$pkgver/xovi-arm32.so
-LICENSE::https://raw.githubusercontent.com/asivery/xovi/master/LICENSE
+https://github.com/asivery/xovi/releases/download/v$_upstream_pkgver/xovi-aarch64.so
+https://github.com/asivery/xovi/releases/download/v$_upstream_pkgver/xovi-arm32.so
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/refs/heads/master/xovi-setup/debug
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/refs/heads/master/xovi-setup/start
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/refs/heads/master/xovi-setup/stock
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/refs/heads/master/xovi-setup/scripts/debug/qt-resource-rebuilder.sh
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/refs/heads/master/xovi-setup/services/xochitl.service/qt-resource-rebuilder.conf
+https://raw.githubusercontent.com/asivery/xovi/master/LICENSE
 "
 
 
 package() {
-	mkdir -p "$pkgdir/home/root/xovi/extensions.d"
-	mkdir -p "$pkgdir/home/root/xovi/exthome"
+	local xovi_so
 
 	case "$CARCH" in
-		aarch64) _xovi_so="xovi-aarch64.so" ;;
-		armv7) _xovi_so="xovi-armv7.so" ;;
+		aarch64) xovi_so="xovi-aarch64.so" ;;
+		armv7) xovi_so="xovi-arm32.so" ;;
 	esac
 
-	install -Dm755 "$srcdir/$_xovi_so" "$pkgdir/home/root/xovi/xovi.so"
+	install -d "$pkgdir"/home/root/xovi
+	install -Dm644 "$srcdir"/$xovi_so "$pkgdir"/home/root/xovi/xovi.so
+	install -Dm755 "$srcdir"/debug "$pkgdir"/home/root/xovi/debug
+	install -Dm755 "$srcdir"/start "$pkgdir"/home/root/xovi/start
+	install -Dm755 "$srcdir"/stock "$pkgdir"/home/root/xovi/stock
 
-	cat > "$pkgdir/home/root/xovi/debug" <<-'EOF'
-	#!/bin/bash
-	systemctl stop xochitl
-	QML_DISABLE_DISK_CACHE=1 QML_XHR_ALLOW_FILE_READ=1 QML_XHR_ALLOW_FILE_WRITE=1 LD_PRELOAD=/home/root/xovi/xovi.so xochitl
-	EOF
+	install -d "$pkgdir"/home/root/xovi/extensions.d
+	install -d "$pkgdir"/home/root/xovi/exthome
 
-	cat > "$pkgdir/home/root/xovi/start" <<-'EOF'
-	#!/bin/bash
-	mkdir -p /etc/systemd/system/xochitl.service.d
-	mount -t tmpfs tmpfs /etc/systemd/system/xochitl.service.d
-	cat > /etc/systemd/system/xochitl.service.d/xovi.conf <<-END
-	[Service]
-	Environment="QML_DISABLE_DISK_CACHE=1"
-	Environment="QML_XHR_ALLOW_FILE_WRITE=1"
-	Environment="QML_XHR_ALLOW_FILE_READ=1"
-	Environment="LD_PRELOAD=/home/root/xovi/xovi.so"
-	END
+	install -d "$pkgdir"/home/root/xovi/scripts
+	install -d "$pkgdir"/home/root/xovi/scripts/debug
+	install -Dm755 "$srcdir"/qt-resource-rebuilder.sh "$pkgdir"/home/root/xovi/scripts/debug/qt-resource-rebuilder.sh
+	install -d "$pkgdir"/home/root/xovi/scripts/pre-start
+	install -d "$pkgdir"/home/root/xovi/scripts/post-start
+	install -d "$pkgdir"/home/root/xovi/scripts/pre-stock
+	install -d "$pkgdir"/home/root/xovi/scripts/post-stock
 
-	systemctl daemon-reload
-	systemctl restart xochitl
-	EOF
+	install -d "$pkgdir"/home/root/xovi/services
+	install -d "$pkgdir"/home/root/xovi/services/xochitl.service
+	ln -s /home/root/xovi/extensions.d "$pkgdir"/home/root/xovi/services/xochitl.service/extensions.d
+	ln -s /home/root/xovi/exthome "$pkgdir"/home/root/xovi/services/xochitl.service/exthome
+	install -Dm644 "$srcdir"/qt-resource-rebuilder.conf "$pkgdir"/home/root/xovi/services/xochitl.service/qt-resource-rebuilder.conf
 
-	cat > "$pkgdir/home/root/xovi/stock" <<-'EOF'
-	#!/bin/bash
-	rm -f /etc/systemd/system/xochitl.service.d/xovi.conf
-	systemctl daemon-reload
-	systemctl restart xochitl
-	EOF
-
-	chmod 755 "$pkgdir/home/root/xovi/debug"
-	chmod 755 "$pkgdir/home/root/xovi/start"
-	chmod 755 "$pkgdir/home/root/xovi/stock"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/asivery/xovi/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/asivery/xovi/archive/refs/tags/v$_upstream_pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 72570b63fcd072a20abba298715334d1b9ecce6f8ae02b53c09bfe4c61263f95eb78302b494d3337e173841d3eaf840c14fbb4b4d9c76292bbb5e9389ee8870c  xovi-aarch64.so
-6ad3b6db12ae486357d50aaaf2d8a257cdadec0d7a1ac7b27029db7357f6588962cba3309ae6a2298cfaebe2694d1f0264c2753c1252a6dd223fd138f6ee996d  xovi-armv7.so
+6ad3b6db12ae486357d50aaaf2d8a257cdadec0d7a1ac7b27029db7357f6588962cba3309ae6a2298cfaebe2694d1f0264c2753c1252a6dd223fd138f6ee996d  xovi-arm32.so
+f6209d7ab533c2deea8ab5f8d46a853bcd82c1fb3351e6229e693fe33bfccd4eb2454573c8ec26063d2243fbfcb991570e7c78dfce74dc273adcfd2cc222ed9a  debug
+09acd8e2a10329a1d2f1ce688a80d8edb443bdc87a5149be7ff2094bafc340268b0043bd4b599cccd6bd25c651d4a24af98b851acefd773964e8eedf60b1f142  start
+abc02ccdb7fdeb1ee255bab74d8c6e6e4d0a81f0362beb81b955b303573348e413066dcbd99d228e3c1cab8c6d4249db89ad48574d862b0e8f9918737c44a0c3  stock
+e560edc946d934f27fa1151780ce43e0ab57388778df938ffec65a86343c7ddf57f790b2e9ffa0929a8ad4dd26c841c11db569e83820f720f68c49dd926f0290  qt-resource-rebuilder.sh
+a98c41051c0e43aeada757d0000aa299ecb18c514b74710bab1a2b61caa04dbe90c9b1a21e383f407d1a5199f2291067293f38786a940bcfb43d0c7ef97cf106  qt-resource-rebuilder.conf
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 "
