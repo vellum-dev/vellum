@@ -6,6 +6,11 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+if [ "$VELLUM_REENABLE" = "1" ]; then
+    echo "Skipping mount-restore (managed by vellum reenable)"
+    exit 0
+fi
+
 uses_overlay() {
     [ -d /var/volatile/.etc-work ]
 }
