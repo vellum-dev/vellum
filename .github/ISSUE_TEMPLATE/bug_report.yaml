@@ -1,0 +1,76 @@
+name: Bug Report
+description: Report a packaging issue (install/uninstall failure, wrong files, dependency problem, script failure)
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This tracker is for packaging issues only.**
+
+        If you're experiencing a bug in the software itself (crashes, UI glitches, incorrect behavior unrelated to packaging), please report it to the upstream project. You can find the upstream URL in the package's `APKBUILD` file (the `url` field) or on the [Vellum Package Index](https://vellum.delivery).
+
+        Examples of in-scope issues:
+        - Package fails to install or uninstall
+        - Missing or incorrect files after installation
+        - Dependency resolution failures
+        - Pre/post-install script errors
+        - Wrong permissions on installed files
+
+  - type: input
+    id: package-name
+    attributes:
+      label: Package Name
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Package Version
+      placeholder: "e.g. 1.4.6-r2"
+      description: |
+        To print an installed package version: `vellum list --installed packagename`
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device-model
+    attributes:
+      label: reMarkable Device Model
+      options:
+        - reMarkable 1
+        - reMarkable 2
+        - reMarkable Paper Pro
+        - reMarkable Paper Pro Move
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: reMarkable OS Version
+      placeholder: "e.g. 3.24.0.142"
+      description: |
+        **reMarkable beta releases are not tested nor supported**
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Error Output
+      render: shell

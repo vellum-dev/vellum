@@ -1,0 +1,36 @@
+name: Outdated Package
+description: Flag a package that is behind its upstream version
+labels: ["outdated"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        PRs to bump package versions are welcome! See the [Contributing](https://github.com/vellum-dev/vellum#contributing) section in the README for details.
+
+  - type: input
+    id: package-name
+    attributes:
+      label: Package Name
+    validations:
+      required: true
+
+  - type: input
+    id: current-version
+    attributes:
+      label: Current Packaged Version
+    validations:
+      required: true
+
+  - type: input
+    id: latest-version
+    attributes:
+      label: Latest Upstream Version
+    validations:
+      required: true
+
+  - type: input
+    id: upstream-release-link
+    attributes:
+      label: Link to Upstream Release
+    validations:
+      required: true
