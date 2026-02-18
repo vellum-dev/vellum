@@ -22,7 +22,7 @@ package() {
 
 	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/PepikVaio/reMarkable_Xovi_Example" > \
+	echo "https://github.com/PepikVaio/reMarkable_Xovi_Extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
