@@ -20,9 +20,9 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/xovi_Settings_Main.qmd
 
 	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/PepikVaio/reMarkable_Xovi_Extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/SOURCES
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 sha512sums="
