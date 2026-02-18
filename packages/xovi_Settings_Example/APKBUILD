@@ -1,0 +1,32 @@
+maintainer="Wajsar Josef <Wajsar.Josef@hotmail.com>"
+pkgname=sidebar-example
+pkgver=1.0.0
+pkgrel=0
+_upstream_author="PepikVaio"
+_category="example"
+pkgdesc="Sample example SLOT for extension xovi_Settings_Main. These are sample files for the xovi extension."
+url="https://github.com/PepikVaio/reMarkable_Xovi_Extensions"
+arch="noarch"
+license="CC-BY-NC-ND-4.0"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+source="
+https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/main/xovi_Settings_Example/3.24.0.149/sidebar_Example.qmd
+https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/main/LICENSE.md
+"
+
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/sidebar_Example.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/sidebar_Example.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/PepikVaio/reMarkable_Xovi_Example" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums="
+946f75ecfa5ea5b099817839aa4bd116543997015c4d84556c03f42b05316cba16f9d4c628788faff52733281dcbf822185af32be6a50a50319e229a094bc40f  sidebar_Example.qmd
+e5e7d426c2f05d5f0748511bfd63f15bb946695bcb7f6ad7afaa412fb1c53e59cc6ba0d69c20fda9aed28c8695502dc2cec4d15428f9c56baa3da9de48574b4a  LICENSE.md
+"
