@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.4.1
-pkgrel=1
+pkgrel=2
 _upstream_author="asivery"
 _category="framework"
 pkgdesc="Xovi extension for windowed and fullscreen apps on reMarkable tablets"
@@ -27,12 +27,12 @@ unpack() {
 }
 
 package() {
-	install -Dm755 "$srcdir"/appload.so \
+	install -Dm644 "$srcdir"/appload.so \
 		"$pkgdir"/home/root/xovi/extensions.d/appload.so
 
-	install -Dm755 "$srcdir"/qtfb-shim.so \
+	install -Dm644 "$srcdir"/qtfb-shim.so \
 		"$pkgdir"/home/root/shims/qtfb-shim.so
-	install -Dm755 "$srcdir"/qtfb-shim-32bit.so \
+	install -Dm644 "$srcdir"/qtfb-shim-32bit.so \
 		"$pkgdir"/home/root/shims/qtfb-shim-32bit.so
 
 	install -Dm644 "$srcdir"/LICENSE \

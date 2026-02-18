@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.6
-pkgrel=2
+pkgrel=3
 _upstream_author="asivery"
 _category="apps"
 pkgdesc="A terminal emulator using QtQuick."
@@ -23,11 +23,11 @@ package() {
 	local so_file
 
 	case "$CARCH" in
-		aarch64) so_file=literm-aarch64.so ;;
-		armv7) so_file=literm-arm32.so ;;
+		aarch64) so_file="literm-aarch64.so" ;;
+		armv7) so_file="literm-arm32.so" ;;
 	esac
 
-	install -Dm755 "$srcdir"/$so_file \
+	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/$pkgname.so
 	
 	install -d "$pkgdir"/home/root/.config/$pkgname

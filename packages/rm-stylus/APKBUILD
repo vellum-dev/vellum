@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-stylus
 pkgver=0.3.0
-pkgrel=1
+pkgrel=2
 _upstream_author="rmitchellscott"
 _category="utilities"
 pkgdesc="Xovi extension that exposes stylus button events as a QML type."
@@ -19,21 +19,17 @@ https://raw.githubusercontent.com/rmitchellscott/rm-stylus/main/LICENSE
 package() {
 	local so_file
 	case "$CARCH" in
-		aarch64)
-			so_file="rm-stylus-aarch64.so"
-			;;
-		armv7)
-			so_file="rm-stylus-armv7.so"
-			;;
+		aarch64) so_file="rm-stylus-aarch64.so" ;;
+		armv7) so_file="rm-stylus-armv7.so" ;;
 	esac
 
-	install -Dm755 "$srcdir/$so_file" \
+	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/rm-stylus.so
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
-	echo "https://github.com/rmitchellscott/"$pkgname"/archive/refs/tags/v"$pkgver".tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/SOURCES
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/$pkgname/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 5208a5f9346f9e3ce203619268fe568113d03e09b96075eeaa259ad302daad0b7e53d3680bbe7e244a3d1343042471f3574ef35bd443be123dd8b65db418681f  rm-stylus-aarch64.so

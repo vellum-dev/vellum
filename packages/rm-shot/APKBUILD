@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
 pkgver=1.0.3
-pkgrel=0
+pkgrel=1
 _upstream_author="rmitchellscott"
 _category="utilities"
 pkgdesc="Screenshot extension for xovi framework"
@@ -11,29 +11,25 @@ license="MIT"
 depends="framebuffer-spy xovi-message-broker"
 options="!check !fhs !strip !tracedeps"
 source="
-rm-shot-aarch64.so::https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-aarch64.so
-rm-shot-armv7.so::https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-armv7.so
-LICENSE::https://raw.githubusercontent.com/rmitchellscott/rm-shot/main/LICENSE
+https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-aarch64.so
+https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-armv7.so
+https://raw.githubusercontent.com/rmitchellscott/rm-shot/main/LICENSE
 "
 
 package() {
 	local so_file
 	case "$CARCH" in
-		aarch64)
-			so_file="rm-shot-aarch64.so"
-			;;
-		armv7)
-			so_file="rm-shot-armv7.so"
-			;;
+		aarch64) so_file="rm-shot-aarch64.so" ;;
+		armv7) so_file="rm-shot-armv7.so" ;;
 	esac
 
-	install -Dm755 "$srcdir/$so_file" \
-		"$pkgdir/home/root/xovi/extensions.d/rm-shot.so"
+	install -Dm644 "$srcdir"/$so_file \
+		"$pkgdir"/home/root/xovi/extensions.d/rm-shot.so
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/rmitchellscott/rm-shot/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 2e26ba7ebdf09439f3c095f92fcc39517504c386319dbf1898b5b72788999aba7d7f64be20670b42e4c2bdf0265d9e882e4d074a0c9c3affb30f503f2fc0938b  rm-shot-aarch64.so
