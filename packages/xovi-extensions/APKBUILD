@@ -104,7 +104,7 @@ message_broker() {
 webserver_remote() {
 	_category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="xovi-message-broker qt-resource-rebuilder remarkable-os<3.26"
+	depends="xovi-message-broker qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.26"
 
 	install -Dm644 "$srcdir"/webserver-remote.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
