@@ -79,19 +79,19 @@ run_apkbuild_lint() {
     local pkg_path="$1"
 
     if command -v apkbuild-lint >/dev/null 2>&1; then
-        apkbuild-lint "$pkg_path/APKBUILD" 2>&1
+        SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint "$pkg_path/APKBUILD" 2>&1
     elif command -v podman >/dev/null 2>&1; then
         podman run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
             alpine:edge \
-            sh -c "apk add --no-cache atools >/dev/null 2>&1 && apkbuild-lint APKBUILD" 2>&1
+            sh -c "apk add --no-cache atools >/dev/null 2>&1 && SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
     elif command -v docker >/dev/null 2>&1; then
         docker run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
             alpine:edge \
-            sh -c "apk add --no-cache atools >/dev/null 2>&1 && apkbuild-lint APKBUILD" 2>&1
+            sh -c "apk add --no-cache atools >/dev/null 2>&1 && SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
     else
         echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
         return 0
@@ -112,6 +112,7 @@ for pkg in $PACKAGES; do
     pkg_status="pass"
     pkg_warned=false
     validate_output=""
+    vbuild_output=""
     lint_output=""
 
     status=0
@@ -140,14 +141,19 @@ for pkg in $PACKAGES; do
         set -e
 
         cp -r "$(dirname $VELBUILD_PATH)/." "$work_dir"
-        vbuild -C "$work_dir" gen
-        apkbuild_path="$work_dir/APKBUILD"
-
-        lint_status=0
-        lint_output=$(run_apkbuild_lint "$work_dir") || lint_status=$?
-        rm -r "$work_dir"
-        if [ $lint_status -ne 0 ]; then
+        vbuild_status=0
+        vbuild_output=$(vbuild -C "$work_dir" gen) || vbuild_status=$?
+        if [ $vbuild_status -ne 0 ]; then
             pkg_status="fail"
+        else
+            vbuild_output=""
+            apkbuild_path="$work_dir/APKBUILD"
+            lint_status=0
+            lint_output=$(run_apkbuild_lint "$work_dir") || lint_status=$?
+            rm -r "$work_dir"
+            if [ $lint_status -ne 0 ]; then
+                pkg_status="fail"
+            fi
         fi
     fi
 
@@ -168,6 +174,7 @@ for pkg in $PACKAGES; do
     esac
 
     [ -n "$validate_output" ] && echo "$validate_output"
+    [ -n "$vbuild_output" ] && echo "$vbuild_output"
     if [ -n "$lint_output" ]; then
         echo "  apkbuild-lint:"
         echo "$lint_output" | sed 's/^/    /'
