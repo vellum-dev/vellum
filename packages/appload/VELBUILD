@@ -39,9 +39,11 @@ package() {
 	echo "https://github.com/asivery/rm-appload/archive/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
+
 postdeinstall(){
 	rmdir /home/root/shims 2>/dev/null || true
 }
+
 sha512sums="
 aaa6a8a81eb68caab0f386e4c4b6c9db3840505d31c514989450a12e043593d43f5a06804a478b516175651f9ffb8a0e04132ea12c0f04e0a430c74dc987848c  appload-aarch64.zip
 fb30d4800d79a1bb6e820c9677c131e951dbf581074c97ad151ed27c001ff1e121c91a258f667e9500d8e75b33b12a17ede9ced7f634408465345d4207b4ebb1  appload-arm32.zip

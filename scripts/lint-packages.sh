@@ -77,46 +77,25 @@ fi
 
 run_apkbuild_lint() {
     local pkg_path="$1"
-    local pkg_name="$2"
-
-    if ! command -v vbuild >/dev/null 2>&1; then
-        echo "Error: vbuild not found"
-        exit 1
-    fi
-
-    set +e
-    work_dir=$(mktemp -d)
-    ret=$?
-    if [ $ret -ne 0 ]; then
-        echo "Failed to create working directory" 2>&1
-        exit $ret
-    fi
-    set -e
-
-    cp -r "$(dirname $pkg_path)/." "$work_dir"
-    vbuild -C "$work_dir" gen
-    apkbuild_path="$work_dir/APKBUILD"
 
     if command -v apkbuild-lint >/dev/null 2>&1; then
-        apkbuild-lint "$apkbuild_path" 2>&1
+        apkbuild-lint "$pkg_path/APKBUILD" 2>&1
     elif command -v podman >/dev/null 2>&1; then
         podman run --rm \
-            -v "$work_dir:/src:ro" \
+            -v "$pkg_path:/src:ro" \
             -w "/src" \
             alpine:edge \
             sh -c "apk add --no-cache atools >/dev/null 2>&1 && apkbuild-lint APKBUILD" 2>&1
     elif command -v docker >/dev/null 2>&1; then
         docker run --rm \
-            -v "$work_dir:/src:ro" \
+            -v "$pkg_path:/src:ro" \
             -w "/src" \
             alpine:edge \
             sh -c "apk add --no-cache atools >/dev/null 2>&1 && apkbuild-lint APKBUILD" 2>&1
     else
         echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
-        rm -r "$work_dir"
         return 0
     fi
-    rm -r "$work_dir"
 }
 
 echo "Linting packages..."
@@ -147,8 +126,26 @@ for pkg in $PACKAGES; do
     fi
 
     if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+        if ! command -v vbuild >/dev/null 2>&1; then
+            echo "Error: vbuild not found"
+            exit 1
+        fi
+        set +e
+        work_dir=$(mktemp -d)
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "Fatal Error: Failed to create working directory" 2>&1
+            exit $ret
+        fi
+        set -e
+
+        cp -r "$(dirname $VELBUILD_PATH)/." "$work_dir"
+        vbuild -C "$work_dir" gen
+        apkbuild_path="$work_dir/APKBUILD"
+
         lint_status=0
-        lint_output=$(run_apkbuild_lint "$VELBUILD_PATH" "$pkg") || lint_status=$?
+        lint_output=$(run_apkbuild_lint "$work_dir") || lint_status=$?
+        rm -r "$work_dir"
         if [ $lint_status -ne 0 ]; then
             pkg_status="fail"
         fi
