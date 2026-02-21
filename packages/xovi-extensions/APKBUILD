@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
-pkgver=17.0.0
-pkgrel=4
+pkgver=18.0.0
+pkgrel=0
 _upstream_author="asivery"
 _category="framework"
 pkgdesc="Extensions for xovi framework"
 url="https://github.com/asivery/rm-xovi-extensions"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="xovi remarkable-os>=3.20 remarkable-os<3.26"
+depends="xovi>=0.3.2-r1 remarkable-os>=3.20 !qt-resource-rebuilder<18.0.0"
 options="!check !fhs !strip !tracedeps"
 install="qt-resource-rebuilder.post-install"
 
@@ -16,26 +16,48 @@ subpackages="
 	qt-resource-rebuilder:qt_resource_rebuilder
 	qt-command-executor:qt_command_executor
 	xovi-message-broker:message_broker
+	framebuffer-spy:framebuffer_spy
 	webserver-remote:webserver_remote
 "
 
-_release="v17-14012026"
+_release="pre-v18-20022026"
 
 source="
-https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-aarch64.zip
-https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-arm32-testing.zip
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-aarch64.tar.gz
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-arm32.tar.gz
+rebuild_hashtable
 https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
 "
 
 
 unpack() {
 	case "$CARCH" in
-		aarch64) unzip -o "$srcdir"/extensions-aarch64.zip -d "$srcdir" ;;
-		armv7) unzip -o "$srcdir"/extensions-arm32-testing.zip -d "$srcdir" ;;
+		aarch64) tar -xzf "$srcdir"/xovi-aarch64.tar.gz -C "$srcdir" ;;
+		armv7) tar -xzf "$srcdir"/xovi-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
+	install -d "$pkgdir"/home/root/xovi
+	install -Dm755 "$srcdir"/xovi/debug "$pkgdir"/home/root/xovi/debug
+	install -Dm755 "$srcdir"/xovi/start "$pkgdir"/home/root/xovi/start
+	install -Dm755 "$srcdir"/xovi/stock "$pkgdir"/home/root/xovi/stock
+
+	install -d "$pkgdir"/home/root/xovi/extensions.d
+	install -d "$pkgdir"/home/root/xovi/exthome
+
+	install -d "$pkgdir"/home/root/xovi/scripts
+	install -d "$pkgdir"/home/root/xovi/scripts/debug
+	install -d "$pkgdir"/home/root/xovi/scripts/pre-start
+	install -d "$pkgdir"/home/root/xovi/scripts/post-start
+	install -d "$pkgdir"/home/root/xovi/scripts/pre-stock
+	install -d "$pkgdir"/home/root/xovi/scripts/post-stock
+
+	install -d "$pkgdir"/home/root/xovi/services
+	install -d "$pkgdir"/home/root/xovi/services/xochitl.service
+	ln -s /home/root/xovi/extensions.d "$pkgdir"/home/root/xovi/services/xochitl.service/extensions.d
+	ln -s /home/root/xovi/exthome "$pkgdir"/home/root/xovi/services/xochitl.service/exthome
+
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
@@ -46,57 +68,24 @@ qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="$pkgname"
 
-	install -Dm755 "$srcdir"/qt-resource-rebuilder.so \
+	install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
 	install -d "$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder
 
-	cat > "$subpkgdir"/home/root/xovi/rebuild_hashtable <<-'EOFSCRIPT'
-	#!/bin/bash
-
-	if [[ ! -e '/home/root/xovi/extensions.d/qt-resource-rebuilder.so' ]]; then
-	    echo "Please install qt-resource-rebuilder before updating the hashtable"
-	    exit 1
-	fi
-
-	systemctl stop xochitl.service
-
-	if pidof xochitl; then
-	  kill -15 $(pidof xochitl)
-	fi
-
-	mkdir -p /home/root/xovi/exthome/qt-resource-rebuilder
-	rm -f /home/root/xovi/exthome/qt-resource-rebuilder/hashtab
-
-	echo -e "#################################"
-	echo -e "Building new hashtable..."
-	echo -e "Please enter your password on the rM when prompted."
-	read -p "Press enter to continue:"
-
-	echo -e "\n\nOutput:"
-	sleep 3
-
-	QMLDIFF_HASHTAB_CREATE=/home/root/xovi/exthome/qt-resource-rebuilder/hashtab QML_DISABLE_DISK_CACHE=1 LD_PRELOAD=/home/root/xovi/xovi.so /usr/bin/xochitl 2>&1 | while IFS= read line; do
-	  echo -e "$line"
-	  if [[ "$line" == "[qmldiff]: Hashtab saved to /home/root/xovi/exthome/qt-resource-rebuilder/hashtab" ]]; then
-	    echo -e "\n##############"
-	    echo -e "Found expected output. Killing gui process and restarting systemd service."
-	    kill -15 $(pidof xochitl)
-	  fi
-	done
-
-	sleep 5
-	echo -e "Starting xochitl service..."
-	systemctl start xochitl.service
-	EOFSCRIPT
-
-	chmod 755 "$subpkgdir"/home/root/xovi/rebuild_hashtable
+	install -Dm755 "$srcdir"/xovi/scripts/debug/qt-resource-rebuilder.sh \
+		"$subpkgdir"/home/root/xovi/scripts/debug/qt-resource-rebuilder.sh
+	install -Dm644 "$srcdir"/xovi/services/xochitl.service/qt-resource-rebuilder.conf \
+		"$subpkgdir"/home/root/xovi/services/xochitl.service/qt-resource-rebuilder.conf
+	
+	install -Dm755 "$srcdir"/rebuild_hashtable \
+		"$subpkgdir"/home/root/xovi/rebuild_hashtable
 }
 
 qt_command_executor() {
 	pkgdesc="Injects a QT module to execute shell commands from QML"
 	depends="$pkgname"
 
-	install -Dm755 "$srcdir"/qt-command-executor.so \
+	install -Dm644 "$srcdir"/xovi/inactive-extensions/qt-command-executor.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
 }
 
@@ -104,20 +93,29 @@ message_broker() {
 	pkgdesc="IPC messaging between xovi extensions"
 	depends="$pkgname"
 
-	install -Dm755 "$srcdir"/xovi-message-broker.so \
+	install -Dm644 "$srcdir"/xovi/inactive-extensions/xovi-message-broker.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
+}
+
+framebuffer_spy() {
+	pkgdesc="Module for exposing the address of the system framebuffer"
+	depends="$pkgname"
+
+	install -Dm644 "$srcdir"/xovi/inactive-extensions/framebuffer-spy.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/framebuffer-spy.so
 }
 
 webserver_remote() {
 	_category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="qt-resource-rebuilder xovi-message-broker"
+	depends="xovi-message-broker qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.26"
 
-	install -Dm755 "$srcdir"/webserver-remote.so \
+	install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
 }
 sha512sums="
-bedd792ee72c0fc37246d292e7e030abd40fcebedc0ac99c1ee5d2df1e22920cefd4f09a4223bc547795ec33f4b1df97d190ac21dfbcac4c2c9d8b2ac087e68b  extensions-aarch64.zip
-69561e979048454de51d4205ba45b0dcb5117909a690cc978c049cc61dc46aa227c1e93b7f1e970c0a8846b5d470a2f48244beb4c85df5eca080ce9c55c54dc6  extensions-arm32-testing.zip
+47abf78c591fc386d4b7b79d8ab1686cc49b188665caca6b8e3c14bc644f92c38cd2da8f6f38dba1eec95b96d5109f805cda6c3160ad2a98c63cef42ac6f6995  xovi-aarch64.tar.gz
+f1638cbcd277e53060867c4672659bcd2517d97511f6973032a9a58625a7e799d722fc870b31fb22767068f4456536270d2131d1a607e5956ca7ae6eed89a0df  xovi-arm32.tar.gz
+872c0fdd95b1d8890fd8c1819a445225e2aafc81b22a7b09aad18962ad4700b4f1438290160828749372b904cc113efb69a33ddcadb06dfb58e5a74e2031d7de  rebuild_hashtable
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 "

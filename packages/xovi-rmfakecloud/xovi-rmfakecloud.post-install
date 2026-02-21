@@ -1,0 +1,27 @@
+#!/bin/sh
+
+cat << 'EOF'
+
+=============================================================
+                  xovi-rmfakecloud installed
+=============================================================
+
+  To complete the setup, run:
+
+    /home/root/xovi/exthome/rmfakecloud/setup.sh
+
+  You will be prompted for your rmfakecloud server hostname
+  and port number. You only need to do this once.
+
+  Alternatively, edit the config file at:
+
+    /home/root/xovi/exthome/rmfakecloud/config.conf
+  
+  To include your rmfakecloud server hostname and port:
+
+    host=<your domain>
+    port=443
+
+=============================================================
+
+EOF
