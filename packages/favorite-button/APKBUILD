@@ -9,9 +9,10 @@ url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
+_commit="17898d11afc96767842507cc2a9606a974ae5ec5"
 source="
-favoriteButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/3.23.0.64/favoriteButton.qmd
-LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/main/LICENSE
+favoriteButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/3.23.0.64/favoriteButton.qmd
+LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 

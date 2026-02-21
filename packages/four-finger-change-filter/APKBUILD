@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder !gestures-fouzr remarkable-os>=3.25 remarkable-os<3.26"
 replaces="gesture-contrast-toggle"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="
-fourFingerChangeFilter.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.25/fourFingerChangeFilter.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md
+fourFingerChangeFilter.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/fourFingerChangeFilter.qmd
+LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

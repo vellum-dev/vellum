@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
 install="$pkgname.post-install $pkgname.post-deinstall"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="
-scrollScreenUpOrDown.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/3.25/scrollScreenUpOrDown.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/main/LICENSE.md
+scrollScreenUpOrDown.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/scrollScreenUpOrDown.qmd
+LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
