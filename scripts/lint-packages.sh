@@ -98,6 +98,28 @@ run_apkbuild_lint() {
     fi
 }
 
+if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+    echo "Generating APKBUILD..."
+    echo ""
+    if ! command -v vbuild >/dev/null 2>&1; then
+        echo "Error: vbuild not found"
+        exit 1
+    fi
+    set +e
+    work_dir=$(mktemp -d)
+    ret=$?
+    if [ $ret -ne 0 ]; then
+        echo "Fatal Error: Failed to create working directory" 2>&1
+        exit $ret
+    fi
+    set -e
+    cpus=$(nproc)
+    echo "$PACKAGES" \
+    | xargs -n1 \
+    | xargs -P "$(( cpus * 2 ))" -I {} \
+        bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
+fi
+
 echo "Linting packages..."
 echo ""
 
@@ -112,7 +134,6 @@ for pkg in $PACKAGES; do
     pkg_status="pass"
     pkg_warned=false
     validate_output=""
-    vbuild_output=""
     lint_output=""
 
     status=0
@@ -127,33 +148,11 @@ for pkg in $PACKAGES; do
     fi
 
     if [ "$RUN_APKBUILD_LINT" = "true" ]; then
-        if ! command -v vbuild >/dev/null 2>&1; then
-            echo "Error: vbuild not found"
-            exit 1
-        fi
-        set +e
-        work_dir=$(mktemp -d)
-        ret=$?
-        if [ $ret -ne 0 ]; then
-            echo "Fatal Error: Failed to create working directory" 2>&1
-            exit $ret
-        fi
-        set -e
-
-        cp -r "$(dirname $VELBUILD_PATH)/." "$work_dir"
-        vbuild_status=0
-        vbuild_output=$(vbuild -C "$work_dir" gen) || vbuild_status=$?
-        if [ $vbuild_status -ne 0 ]; then
+        apkbuild_path="$work_dir/$pkg/APKBUILD"
+        lint_status=0
+        lint_output=$(run_apkbuild_lint "$work_dir/$pkg") || lint_status=$?
+        if [ $lint_status -ne 0 ]; then
             pkg_status="fail"
-        else
-            vbuild_output=""
-            apkbuild_path="$work_dir/APKBUILD"
-            lint_status=0
-            lint_output=$(run_apkbuild_lint "$work_dir") || lint_status=$?
-            rm -r "$work_dir"
-            if [ $lint_status -ne 0 ]; then
-                pkg_status="fail"
-            fi
         fi
     fi
 
@@ -174,7 +173,6 @@ for pkg in $PACKAGES; do
     esac
 
     [ -n "$validate_output" ] && echo "$validate_output"
-    [ -n "$vbuild_output" ] && echo "$vbuild_output"
     if [ -n "$lint_output" ]; then
         echo "  apkbuild-lint:"
         echo "$lint_output" | sed 's/^/    /'
@@ -183,6 +181,10 @@ done
 
 echo ""
 echo "Summary: $PASSED passed, $WARNED warnings, $FAILED failed"
+
+if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+    rm -r "$work_dir"
+fi
 
 if [ $FAILED -gt 0 ]; then
     exit 1
