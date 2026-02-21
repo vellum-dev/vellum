@@ -8,7 +8,7 @@ pkgdesc="Extensions for xovi framework"
 url="https://github.com/asivery/rm-xovi-extensions"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="xovi remarkable-os>=3.20 !qt-resource-rebuilder<18.0.0"
+depends="xovi>=0.3.2-r1 remarkable-os>=3.20 !qt-resource-rebuilder<18.0.0"
 options="!check !fhs !strip !tracedeps"
 install="qt-resource-rebuilder.post-install"
 

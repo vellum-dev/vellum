@@ -8,7 +8,7 @@ pkgdesc="xovi module for using a self hosted rM cloud with xochitl"
 url="https://github.com/asivery/xovi-rmfakecloud"
 arch="aarch64 armv7"
 license="MIT"
-depends="xovi>=0.3.2 xovi-extensions>=18.0.0"
+depends="xovi-extensions>=18.0.0"
 options="!check !fhs !strip !tracedeps"
 install="$pkgname.post-install $pkgname.post-deinstall"
 
