@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=tag-button
+pkgver=1.0.0
+pkgrel=0
+upstream_author="NohamR"
+category="ui"
+pkgdesc="Puts a Tag action next to other list controls to open the tag editor directly."
+url="https://github.com/NohamR/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
+_commit="17898d11afc96767842507cc2a9606a974ae5ec5"
+source="
+tagButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/3.23.0.64/tagButton.qmd
+LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/tagButton.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/tagButton.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+63947d48c50e0ba35c6a6daac2ee4daa9c37e269177a2ece1cd15a9e7d0d24fbc518473c4ef64aaad9372214d901e0913930005c8fc758321ad3bbf82856e427  tagButton.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"

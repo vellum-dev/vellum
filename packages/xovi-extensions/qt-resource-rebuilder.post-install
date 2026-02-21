@@ -1,7 +1,0 @@
-#!/bin/sh
-echo ""
-echo "==============================================="
-echo "  NOTE: Before using any QT modifications,"
-echo "  you must run: xovi/rebuild_hashtable"
-echo "==============================================="
-echo ""

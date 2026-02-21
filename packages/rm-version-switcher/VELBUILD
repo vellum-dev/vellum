@@ -1,0 +1,46 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rm-version-switcher
+pkgver=1.0.0
+pkgrel=1
+upstream_author="rmitchellscott"
+category="utilities"
+pkgdesc="Interactive CLI tool for switching between installed reMarkable OS versions"
+url="https://github.com/rmitchellscott/rm-version-switcher"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/rmitchellscott/rm-version-switcher/releases/download/v$pkgver/rm-version-switcher-aarch64.tar.gz
+https://github.com/rmitchellscott/rm-version-switcher/releases/download/v$pkgver/rm-version-switcher-armv7.tar.gz
+https://raw.githubusercontent.com/rmitchellscott/rm-version-switcher/main/LICENSE
+"
+
+
+unpack() {
+	case "$CARCH" in
+		aarch64) tar -xzf "$srcdir"/rm-version-switcher-aarch64.tar.gz -C "$srcdir" ;;
+		armv7) tar -xzf "$srcdir"/rm-version-switcher-armv7.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	local bin_file
+	case "$CARCH" in
+		aarch64) bin_file="rm-version-switcher-aarch64"	;;
+		armv7) bin_file="rm-version-switcher-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir"/$bin_file \
+		"$pkgdir"/home/root/.vellum/bin/rm-version-switcher
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/rm-version-switcher/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+0d83e941ab2b53d9a7b128a515d1392f6f3c40b06a109f10999eb507f9c2267d9ed796f8fb954e9c17769c34824de6fcdd17a6c426c14d348de0a9d198d7a313  rm-version-switcher-aarch64.tar.gz
+f7186a5e804a76799b09c7f825fabbbec91e51357720f6b889e5bec6e32d872fc05825a9d2b4ee1eda28e78d567152f43f220329f8c56617f8006d3f13dea27b  rm-version-switcher-armv7.tar.gz
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=gesture-contrast-toggle
+pkgver=1.0.0
+pkgrel=1
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Four-finger tap to toggle contrast filter between Off and Fullpage in PDF/EPUB documents"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+source="
+gestureContrastToggle.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/gestureContrastToggle.qmd
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/gestureContrastToggle.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestureContrastToggle.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+39c3963354a32f43df1a3627a296607f5e1d5cc97f908b8dcd34e23ebd430c8e65613dfe35970b5281697a975a23b9fd5a5455e356771e2b6e85457cdc553329  gestureContrastToggle.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

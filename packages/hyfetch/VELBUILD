@@ -1,0 +1,59 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=hyfetch
+pkgver=2.0.5_git6
+pkgrel=3
+upstream_author="hykilpikonna"
+category="utilities"
+pkgdesc="Neofetch with LGBTQ+ pride flags!"
+url="https://github.com/hykilpikonna/hyfetch"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/hyfetch-aarch64.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/hyfetch-arm32.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/hyfetch \
+		"$pkgdir"/home/root/.vellum/bin/hyfetch
+	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall(){
+	/home/root/.vellum/bin/hyfetch --bpaf-complete-style-bash > \
+		/home/root/.vellum/share/bash-completion/completions/hyfetch
+}
+
+postupgrade(){
+	/home/root/.vellum/bin/hyfetch --bpaf-complete-style-bash > \
+		/home/root/.vellum/share/bash-completion/completions/hyfetch
+}
+
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.config/hyfetch.json \
+			/home/root/.config/neofetch \
+			/home/root/.cache/hyfetch
+	fi
+
+	rm -f /home/root/.vellum/share/bash-completion/completions/hyfetch
+}
+
+sha512sums="
+284d923ee90d62039f5e2f8a0725cee4418adf9ffca622a5fb3e806bc2fc746e13a634ce5a7e7680ef695b2234e01186a3b2d3d36fba5216905eb3d2f5b43a26  hyfetch-aarch64.tar.gz
+0a8c6b1e7dda49052557fc7e97a48074a7a490e83f4b4154142bfe1c10d5a4c8343d2e31a586fa23b3396b51c4467660213518513227145cdef42a7fe08b52f1  hyfetch-arm32.tar.gz
+"

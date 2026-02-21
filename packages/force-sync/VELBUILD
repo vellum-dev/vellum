@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=force-sync
+pkgver=1.0.0
+pkgrel=0
+upstream_author="NohamR"
+category="ui"
+pkgdesc="Adds a cloud button in Quick Settings that forces a library sync when tapped."
+url="https://github.com/NohamR/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
+_commit="17898d11afc96767842507cc2a9606a974ae5ec5"
+source="
+forceSync.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/3.23.0.64/forceSync.qmd
+LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/forceSync.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/forceSync.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+beeb8deabc5857d7ee3ea5d0631d228da77bff1ad205f1e28c503c858010a972664f5dae5c87dd00d8163f9fe90426649572efdfb8288e804c8a2f3065d3fe16  forceSync.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"

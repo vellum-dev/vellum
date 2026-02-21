@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if [ "$VELLUM_PURGE" = "1" ]; then
-    rm -fr /home/root/.config/bat
-fi

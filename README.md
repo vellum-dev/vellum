@@ -55,27 +55,28 @@ These packages are auto-installed on every `vellum` command and allows extension
 ### Adding a new package
 
 1. Create a directory under `packages/` with the package name
-2. Add an `APKBUILD` file following Alpine's format. See [APKBUILD Reference](https://wiki.alpinelinux.org/wiki/APKBUILD_Reference), [APKBUILD(5)](https://man.archlinux.org/man/APKBUILD.5.en), and [aports coding style](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/CODINGSTYLE.md)
+2. Add an `VELBUILD` file following Alpine's format. See [VELBUILD Reference](https://github.com/Eeems/vbuild?tab=readme-ov-file#velbuild-reference), and [aports coding style](https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/CODINGSTYLE.md)
 3. Test it
 4. Submit a PR
 
-### APKBUILD template for QMD extensions
+### VELBUILD template for QMD extensions
 
 ```sh
 maintainer="Your Name <your@email.com>"
 pkgname=myextension
 pkgver=1.0.0
 pkgrel=0
-_upstream_author="your-github-username"
-_category="ui"
+upstream_author="your-github-username"
+category="ui"
 pkgdesc="Description of your extension"
 url="https://github.com/you/repo"
 arch="noarch"
 license="SPDX License Identifier for your license"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+_commit="1161639c9435372db1fb05024137407d20f6bb5e"
 source="
-https://raw.githubusercontent.com/you/repo/main/myextension.qmd
-https://raw.githubusercontent.com/you/repo/main/LICENSE
+https://raw.githubusercontent.com/you/repo/$_commit/myextension.qmd
+https://raw.githubusercontent.com/you/repo/$_commit/LICENSE
 "
 options="!check !fhs"
 
@@ -110,7 +111,7 @@ Use semantic versioning (`MAJOR.MINOR.PATCH`) for `pkgver`:
 - **MINOR**: new features, backward compatible
 - **PATCH**: bug fixes (including updating a QMD for compatibility with a new reMarkable software release)
 
-Use `pkgrel` for packaging changes that don't affect the upstream version (e.g., fixing the APKBUILD, changing dependencies). Reset `pkgrel` to `0` when bumping `pkgver`.
+Use `pkgrel` for packaging changes that don't affect the upstream version (e.g., fixing the VELBUILD, changing dependencies). Reset `pkgrel` to `0` when bumping `pkgver`.
 
 ```sh
 pkgver=1.2.0
@@ -147,18 +148,33 @@ mypackage-1.0.0  depends="!rm1 !rm2"     # Compatible with Paper Pro and Move on
 
 ### Package Scripts
 
-Packages can include lifecycle scripts. Add them to your package directory and reference in APKBUILD:
+Packages can include lifecycle scripts. These are added as functions in the VELBUILD:
 
 ```sh
-install="$pkgname.post-install $pkgname.post-upgrade $pkgname.pre-deinstall"
+postinstall(){
+	# Make changes
+}
+
+postupgrade(){
+	# Call postinstall
+	/home/root/.vellum/share/my-package/my-package.post-install
+}
+
+predeinstall(){
+	# Undo changes from postinstall
+}
+
 ```
 
 | Script            | When it runs                                       |
 |-------------------|----------------------------------------------------|
-| `post-install`    | After fresh install                                |
-| `post-upgrade`    | After upgrading to a new version                   |
-| `pre-deinstall`   | Before package removal                             |
-| `post-os-upgrade` | After reMarkable OS update (via `vellum reenable`) |
+| `preinstall`      | Before fresh install                               |
+| `postinstall`     | After fresh install                                |
+| `preupgrade`      | Before upgrading to a new version                  |
+| `postupgrade`     | After upgrading to a new version                   |
+| `predeinstall`    | Before package removal                             |
+| `postdeinstall`   | After package removal                              |
+| `postosupgrade`   | After reMarkable OS update (via `vellum reenable`) |
 
 The `post-os-upgrade` hook runs when users execute `vellum reenable` after an OS update. Use this for packages that need to restore system files wiped by OS updates.  
 Unlike standard apk hooks, `post-os-upgrade` is a Vellum-specific hook and must be manually installed in your `package()` function:
@@ -188,31 +204,32 @@ It automatically detects if mount changes are required by the device.
 Example for a package with a systemd service:
 
 ```sh
-# mypackage.post-install
-#!/bin/sh
-/home/root/.vellum/bin/mount-rw
-cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable --now mypackage
-/home/root/.vellum/bin/mount-restore
+postinstall(){
+	/home/root/.vellum/bin/mount-rw
+	cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
+	systemctl daemon-reload
+	systemctl enable --now mypackage
+	/home/root/.vellum/bin/mount-restore
+}
 
-# mypackage.post-upgrade
-#!/bin/sh
-/home/root/.vellum/share/mypackage/mypackage.post-install
+postupgrade(){
+	/home/root/.vellum/share/mypackage/mypackage.post-install
+}
 
-# mypackage.post-os-upgrade (mount-rw/mount-restore handled by vellum reenable)
-#!/bin/sh
-cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable --now mypackage
+postosupgrade(){
+	# mount-rw/mount-restore handled by vellum reenable
+	cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
+	systemctl daemon-reload
+	systemctl enable --now mypackage
+}
 
-# mypackage.pre-deinstall
-#!/bin/sh
-/home/root/.vellum/bin/mount-rw
-systemctl disable --now mypackage 2>/dev/null || true
-rm -f /etc/systemd/system/mypackage.service
-systemctl daemon-reload
-/home/root/.vellum/bin/mount-restore
+predeinstall(){
+	/home/root/.vellum/bin/mount-rw
+	systemctl disable --now mypackage 2>/dev/null || true
+	rm -f /etc/systemd/system/mypackage.service
+	systemctl daemon-reload
+	/home/root/.vellum/bin/mount-restore
+}
 ```
 
 ### Handling Purge
@@ -220,14 +237,13 @@ systemctl daemon-reload
 When users run `vellum purge` (vs `vellum del`), they expect all data to be removed. Vellum sets `VELLUM_PURGE=1` in the environment so your scripts can detect this:
 
 ```sh
-# mypackage.pre-deinstall
-#!/bin/sh
-
-# Only remove user data on purge
-if [ "$VELLUM_PURGE" = "1" ]; then
-    rm -rf /home/root/.config/mypackage
-    rm -rf /home/root/.local/share/mypackage
-fi
+predeinstall(){
+	# Only remove user data on purge
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.config/mypackage
+		rm -rf /home/root/.local/share/mypackage
+	fi
+}
 ```
 
 | Command                  | Behavior                                |
@@ -266,7 +282,7 @@ When you modify source URLs or update package versions:
 # Build a single package
 ./scripts/build-package.sh mypackage aarch64
 
-# Build a noarch package (auto-detected from APKBUILD)
+# Build a noarch package (auto-detected from VELBUILD)
 ./scripts/build-package.sh mypackage
 ```
 Built packages are output to `dist/<arch>/`.  

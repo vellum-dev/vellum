@@ -1,9 +1,0 @@
-#!/bin/sh
-LOADER="/home/root/xovi/exthome/qt-resource-rebuilder/_ingatellent.qmd"
-QMD_FILE="ingatellent/tapToChangeViewOrPage.qmd"
-
-touch "$LOADER"
-
-if ! grep -q "LOAD $QMD_FILE" "$LOADER"; then
-    echo "LOAD $QMD_FILE" >> "$LOADER"
-fi

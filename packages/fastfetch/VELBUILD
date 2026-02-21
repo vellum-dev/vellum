@@ -1,0 +1,54 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=fastfetch
+pkgver=2.58.0_git11
+pkgrel=2
+upstream_author="fastfetch-cli"
+category="utilities"
+pkgdesc="A maintained, feature-rich and performance oriented, neofetch like system information tool."
+url="https://github.com/fastfetch-cli/fastfetch"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/fastfetch-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/fastfetch-arm32.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/fastfetch-aarch64.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/fastfetch-arm32.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/fastfetch "$pkgdir"/home/root/.vellum/bin/fastfetch
+
+	install -Dm644 "$srcdir"/fastfetch.bash \
+		"$pkgdir"/home/root/.vellum/share/bash-completion/completions/fastfetch
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+	
+	install -d "$pkgdir"/home/root/.local/share/$pkgname/presets/examples
+	install -m644 "$srcdir"/presets/*.jsonc \
+		"$pkgdir"/home/root/.local/share/$pkgname/presets/
+	install -m644 "$srcdir"/presets/examples/*.jsonc \
+		"$pkgdir"/home/root/.local/share/$pkgname/presets/examples/
+}
+
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.config/fastfetch \
+			/home/root/.cache/fastfetch
+	fi
+}
+
+sha512sums="
+182245634ef31782a68f051ae1a479c2cf891258336286c8786cf590aa7bae3a340496da5be15dcc0067294f64ba48c3713f0fba3bd4c745b9f28637ecf08fd7  fastfetch-aarch64.tar.gz
+f6848c39be972ad1280fc97cc911c8a7b37069defbc3d8d8cbd8271fb0e31e00456b3b0a05059fea30c0402bd62e50a37f9895246238c6a86905b1d332478f08  fastfetch-arm32.tar.gz
+"

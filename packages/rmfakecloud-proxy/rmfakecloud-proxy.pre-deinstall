@@ -1,4 +1,0 @@
-#!/bin/sh
-if [ -x /home/root/rmfakecloud/install.sh ]; then
-    /home/root/rmfakecloud/install.sh uninstall || true
-fi

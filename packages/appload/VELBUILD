@@ -1,0 +1,51 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=appload
+pkgver=0.4.1
+pkgrel=2
+upstream_author="asivery"
+category="framework"
+pkgdesc="Xovi extension for windowed and fullscreen apps on reMarkable tablets"
+url="https://github.com/asivery/rm-appload"
+arch="aarch64 armv7"
+license="GPL-3.0"
+depends="qt-resource-rebuilder remarkable-os>=3.22"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/asivery/rm-appload/releases/download/v$pkgver/appload-aarch64.zip
+https://github.com/asivery/rm-appload/releases/download/v$pkgver/appload-arm32.zip
+https://raw.githubusercontent.com/asivery/rm-appload/master/LICENSE
+"
+
+
+unpack() {
+	case "$CARCH" in
+		aarch64) unzip -o "$srcdir"/appload-aarch64.zip -d "$srcdir" ;;
+		armv7) unzip -o "$srcdir"/appload-arm32.zip -d "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm644 "$srcdir"/appload.so \
+		"$pkgdir"/home/root/xovi/extensions.d/appload.so
+
+	install -Dm644 "$srcdir"/qtfb-shim.so \
+		"$pkgdir"/home/root/shims/qtfb-shim.so
+	install -Dm644 "$srcdir"/qtfb-shim-32bit.so \
+		"$pkgdir"/home/root/shims/qtfb-shim-32bit.so
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/asivery/rm-appload/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall(){
+	rmdir /home/root/shims 2>/dev/null || true
+}
+
+sha512sums="
+aaa6a8a81eb68caab0f386e4c4b6c9db3840505d31c514989450a12e043593d43f5a06804a478b516175651f9ffb8a0e04132ea12c0f04e0a430c74dc987848c  appload-aarch64.zip
+fb30d4800d79a1bb6e820c9677c131e951dbf581074c97ad151ed27c001ff1e121c91a258f667e9500d8e75b33b12a17ede9ced7f634408465345d4207b4ebb1  appload-arm32.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"

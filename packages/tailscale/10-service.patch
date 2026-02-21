@@ -1,8 +1,8 @@
 Author: Interloper <45214659+0xdeb7ef@users.noreply.github.com>
 Summary: Patches the service file to use the appropriate paths.
 ----
---- a/systemd/tailscaled.service.orig	2026-01-28 21:22:00.964033235 -0800
-+++ a/systemd/tailscaled.service	2026-01-28 21:22:31.017935774 -0800
+--- a/tailscale/systemd/tailscaled.service.orig	2026-01-28 21:22:00.964033235 -0800
++++ a/tailscale/systemd/tailscaled.service	2026-01-28 21:22:31.017935774 -0800
 @@ -5,9 +5,9 @@ Wants=network-pre.target
  After=network-pre.target NetworkManager.service systemd-resolved.service
  

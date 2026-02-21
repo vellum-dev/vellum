@@ -1,0 +1,50 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=literm
+pkgver=0.1.6
+pkgrel=3
+upstream_author="asivery"
+category="apps"
+pkgdesc="A terminal emulator using QtQuick."
+url="https://github.com/asivery/rm-literm"
+arch="aarch64 armv7"
+license="GPL-2.0"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-aarch64.so
+https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-arm32.so
+https://raw.githubusercontent.com/asivery/rm-literm/master/COPYING
+"
+
+
+package() {
+	local so_file
+
+	case "$CARCH" in
+		aarch64) so_file="literm-aarch64.so" ;;
+		armv7) so_file="literm-arm32.so" ;;
+	esac
+
+	install -Dm644 "$srcdir"/$so_file \
+		"$pkgdir"/home/root/xovi/extensions.d/$pkgname.so
+	
+	install -d "$pkgdir"/home/root/.config/$pkgname
+
+	install -Dm644 "$srcdir"/COPYING \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
+	echo "https://github.com/asivery/rm-literm/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.config/literm
+	fi
+}
+
+sha512sums="
+9d7bda5918da7a58005b0be1db4f1875b89964bdf69c905da9b1bd9bc32268d5fa7a2660d03af0f83b85aa0c5ba9a762efef95b44f0c99261e0615de4ffeb113  literm-aarch64.so
+f4ad1aaded1cb8bf2852200be6348ff8bf54d4be976bd52af540ec600801bf4294660c15fb5956590dbe1ab924281363721e5eb3aa30ff402bc9ecbd1e3b3d3a  literm-arm32.so
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  COPYING
+"

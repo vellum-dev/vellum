@@ -1,5 +1,0 @@
-#!/bin/sh
-VELLUM_BIN="${VELLUM_BIN:-/home/root/.vellum/bin}"
-"$VELLUM_BIN/mount-rw"
-/home/root/.local/share/vellum-hosts/update-hosts.sh remove
-"$VELLUM_BIN/mount-restore"

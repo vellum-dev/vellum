@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ "$VELLUM_PURGE" = "1" ]; then
-    rm -rf /home/root/xovi/exthome/appload/vnsee
-    rm -rf /home/root/xovi/exthome/appload/vnsee-0
-    rm -rf /home/root/xovi/exthome/appload/vnsee-1
-    rm -rf /home/root/xovi/exthome/appload/vnsee-2
-    rm -rf /home/root/xovi/exthome/appload/vnsee-3
-fi

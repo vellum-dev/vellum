@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ "$VELLUM_PURGE" = "1" ]; then
-    rm -f /home/root/.config/starship.toml
-    rm -rf /home/root/.cache/starship
-fi
-
-rm -f /home/root/.vellum/share/bash-completion/completions/starship

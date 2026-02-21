@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=hide-zoom-indicator
+pkgver=1.0.3
+pkgrel=1
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Auto-hides zoom indicator after 4 seconds"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+source="
+hideZoomIndicator.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/hideZoomIndicator.qmd
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/hideZoomIndicator.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/hideZoomIndicator.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+f8f503de4171b7d9769c9df46f9c155b5191d0c32bbef055a5f7266d30874b288827da7303a98c090dd69ac6f775d94321328dc2ed3cd11799f12bba387182e9  hideZoomIndicator.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

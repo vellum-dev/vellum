@@ -1,4 +1,0 @@
-#!/bin/sh
-set -e
-
-/home/root/.local/share/entware/reenable-entware.sh

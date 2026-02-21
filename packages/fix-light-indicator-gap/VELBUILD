@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=fix-light-indicator-gap
+pkgver=1.0.0
+pkgrel=1
+upstream_author="rmitchellscott"
+category="fixes ui"
+pkgdesc="Removes the gap reserved for the frontlight icon when the light is off on Paper Pro and Paper Pro Move."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26 !rm1 !rm2"
+_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+source="
+fixLightIndicatorGap.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/fixLightIndicatorGap.qmd
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/fixLightIndicatorGap.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/fixLightIndicatorGap.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+ac832d12c12dc51388315419fa86d9261afcf239c2c24ddb1fb7897c8ef9f36d250e8d34edcf0120a80a8231f51342550871f23061faf78194ed18b0a3686a0e  fixLightIndicatorGap.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

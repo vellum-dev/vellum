@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if [ "$VELLUM_PURGE" = "1" ]; then
-    rm -f /home/root/quickTool.json
-    rm -f /home/root/quickTool2.json
-    rm -f /home/root/quickTool3.json
-fi

@@ -1,0 +1,34 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=mount-utils
+pkgver=1.1.0
+pkgrel=0
+upstream_author="vellum-dev"
+category="utilities"
+pkgdesc="Commands to toggle reMarkable filesystem between read-write and read-only"
+url="https://github.com/vellum-dev/vellum"
+arch="noarch"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+source="
+mount-rw
+mount-restore
+LICENSE
+"
+
+package() {
+	install -Dm755 "$srcdir/mount-rw" \
+		"$pkgdir/home/root/.vellum/bin/mount-rw"
+
+	install -Dm755 "$srcdir/mount-restore" \
+		"$pkgdir/home/root/.vellum/bin/mount-restore"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/vellum" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+e4cad11cfe1d612188008bba4f8742ceec5dce45c8413deb838732048d81de4459c9835bd8ac55d0a27ef71917e0b7c098eaef1276c81c3f7c9c485f694b65cd  mount-rw
+909e1e17ab0a1aa19497da0b5ddc62138a943674b0f46990cf31b1aae1e314f149d538c987bbdc3db01be07cb2e67465d0313770038191d4f186a2459bd320a7  mount-restore
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

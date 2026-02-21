@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=random-sleep-screen
+pkgver=1.0.4
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Picks random sleep screen from ~/sleepScreens/ folder."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+source="
+randomSleepScreen.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/randomSleepScreen.qmd
+LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/randomSleepScreen.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/randomSleepScreen.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+5f2c808faf78e5749dd3647013e43edb44cdb3c786a9b3a63d903c000297d6a4c157ccbedaa33ae0719660ef03d893d4e929d63fa2960532400e1971389ffa76  randomSleepScreen.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
+"

@@ -1,0 +1,38 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=curl
+pkgver=8.11.0
+pkgrel=1
+upstream_author="curl"
+category="utilities"
+pkgdesc="URL retrival utility and library"
+url="https://curl.se/"
+arch="aarch64 armv7"
+license="curl"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/moparisthebest/static-curl/releases/download/v$pkgver/curl-aarch64
+https://github.com/moparisthebest/static-curl/releases/download/v$pkgver/curl-armv7
+https://raw.githubusercontent.com/curl/curl/refs/heads/master/COPYING
+"
+
+package() {
+	local bin_file
+	case "$CARCH" in
+		aarch64)  bin_file="curl-aarch64" ;;
+		armv7)  bin_file="curl-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir"/$bin_file \
+		"$pkgdir"/home/root/.vellum/bin/curl
+	
+	install -Dm644 "$srcdir"/COPYING \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
+	echo "https://curl.se/download/curl-$pkgver.tar.xz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+923485ee8b31cc69736d0504b6281819a337469b7398555139e2fdae830add2d24fe27d0aaf5a9b17e97cf25437d836bd484babd4a065c6d5d5656cb4234a990  curl-aarch64
+7f7aea62160d5eaebb3ff5a8a0bcdb627f87b1895c03c17bf34ee5271dc084a49694e7d75e3c6fe1186a77fa1765214784f2e09bbcc9ce65a18e42852b0cf593  curl-armv7
+0834cc079af07b669da32230ac156635295025e8873081f988f188ac73a4c1d788d8d0715b5d723d70cd7e643a5d7c6f32f692d12d67522658d5459564527e5b  COPYING
+"

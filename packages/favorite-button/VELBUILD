@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=favorite-button
+pkgver=1.0.0
+pkgrel=0
+upstream_author="NohamR"
+category="ui"
+pkgdesc="Restores a Favorite action in the document list header for faster pinning."
+url="https://github.com/NohamR/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
+_commit="17898d11afc96767842507cc2a9606a974ae5ec5"
+source="
+favoriteButton.qmd::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/3.23.0.64/favoriteButton.qmd
+LICENSE::https://raw.githubusercontent.com/NohamR/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/favoriteButton.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/favoriteButton.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+4e6ab572a44dabc9c47c4c2a1104dc2bcfab00b3bd2a9894b0c0e477c3b0ed242996ec42d97652e9a5c36d7ab596d2dbe59de13f671a93b6693395a3353c28dc  favoriteButton.qmd
+f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
+"
