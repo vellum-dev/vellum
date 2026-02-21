@@ -1,0 +1,43 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=bat
+pkgver=0.26.1
+pkgrel=0
+upstream_author="sharkdp"
+category="utilities"
+pkgdesc="A cat(1) clone with wings."
+url="https://github.com/sharkdp/bat"
+arch="aarch64 armv7"
+license="Apache-2.0 OR MIT"
+options="!check !fhs !strip !tracedeps"
+depends="less"
+
+source="
+https://github.com/sharkdp/bat/releases/download/v$pkgver/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz
+https://github.com/sharkdp/bat/releases/download/v$pkgver/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz -C "$srcdir" ;;
+		armv7)  tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/bat \
+		"$pkgdir"/home/root/.vellum/bin/bat
+	
+	install -Dm644 "$srcdir"/LICENSE-MIT \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/sharkdp/bat/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -fr /home/root/.config/bat
+	fi
+}
+sha512sums="
+fbc805f5f40146af84540d3db481b36c8ff556f423c332e998ddad743cb9fa77b21a623389b11f37eb88e034cca668ded5a790400e5860812ecfed568552bdd5  bat-v0.26.1-aarch64-unknown-linux-gnu.tar.gz
+112a84e2488f1d9770be1e4f32dc585771c71ea5139dc7f4fb261ff978b534e7f211e1d395d6d9d099fcffce3290442931587caacdc5f35bb7f8f8de60a04679  bat-v0.26.1-arm-unknown-linux-gnueabihf.tar.gz
+"

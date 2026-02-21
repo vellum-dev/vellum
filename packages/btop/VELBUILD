@@ -1,0 +1,48 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=btop
+pkgver=1.4.6
+pkgrel=2
+upstream_author="aristocratos"
+category="utilities"
+pkgdesc="A monitor of resources"
+url="https://github.com/aristocratos/btop"
+arch="aarch64 armv7"
+license="Apache-2.0"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/aristocratos/btop/releases/download/v$pkgver/btop-aarch64-unknown-linux-musl.tbz
+https://github.com/aristocratos/btop/releases/download/v$pkgver/btop-armv7-unknown-linux-musleabi.tbz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar --strip-components=2 -xjf "$srcdir"/btop-aarch64-unknown-linux-musl.tbz -C "$srcdir" ;;
+		armv7)  tar --strip-components=2 -xjf "$srcdir"/btop-armv7-unknown-linux-musleabi.tbz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/bin/btop \
+		"$pkgdir"/home/root/.vellum/bin/btop
+	
+	install -d "$pkgdir"/home/root/.vellum/share/$pkgname/themes
+	install -m644 "$srcdir"/themes/*.theme \
+		"$pkgdir"/home/root/.vellum/share/$pkgname/themes/
+	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/aristocratos/btop/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.config/btop \
+			/home/root/.local/state/btop.log
+	fi
+}
+sha512sums="
+ced22a6f147e99f3002f7916249b52999cae77d73795241a6fe0285c43c3bbe639731feeff581e128c8d337dea70493b023d321bfec14dd3d617696bb23703e1  btop-aarch64-unknown-linux-musl.tbz
+a717df7fa03c177350639fe91bcdeb701952ffa7574a058b86c23cb920aeb5a874a0aa5cf73e29d64180c42311167dc4bc7f37bb5dde535b8742e299407cbd38  btop-armv7-unknown-linux-musleabi.tbz
+"

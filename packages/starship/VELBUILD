@@ -1,0 +1,71 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=starship
+pkgver=1.24.2
+pkgrel=0
+upstream_author="starship"
+category="utilities"
+pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
+url="https://starship.rs/"
+arch="aarch64 armv7"
+license="ISC"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/starship/starship/releases/download/v$pkgver/starship-aarch64-unknown-linux-musl.tar.gz
+https://github.com/starship/starship/releases/download/v$pkgver/starship-arm-unknown-linux-musleabihf.tar.gz
+https://raw.githubusercontent.com/starship/starship/refs/heads/master/LICENSE
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/starship-aarch64-unknown-linux-musl.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/starship-arm-unknown-linux-musleabihf.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/starship \
+		"$pkgdir"/home/root/.vellum/bin/starship
+	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/starship/starship/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall(){
+	/home/root/.vellum/bin/starship completions bash > \
+		/home/root/.vellum/share/bash-completion/completions/starship
+
+	echo ""
+	echo "==========================================================================="
+	echo "  NOTE: To enable starship, you must add"
+	echo '  `eval "$(starship init bash)"`'
+	echo "  to the end of ~/.bashrc."
+	echo ""
+	echo "  See https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship"
+	echo "  for more information."
+	echo "==========================================================================="
+	echo ""
+}
+
+postupgrade(){
+	/home/root/.vellum/bin/starship completions bash > \
+		/home/root/.vellum/share/bash-completion/completions/starship
+}
+
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.config/starship.toml \
+			/home/root/.cache/starship
+	fi
+
+	rm -f /home/root/.vellum/share/bash-completion/completions/starship
+}
+
+sha512sums="
+053fbbb7c028ebc4eb4062a891d8b123bb00e228f3999a64a9e8632997d83d8a90da721a836f3206c3ea9955c14484d79bbfe72570cc453fc8ba989a32fdd23f  starship-aarch64-unknown-linux-musl.tar.gz
+e7ccebe96b23e7b896ab81fbe92fff021c0d71a30e44f41fd4f2102b6100914bc8ed407d07ef441073cc928f6b58b94cabb864998debc35ed51f0b8218e21fa4  starship-arm-unknown-linux-musleabihf.tar.gz
+f2015ed4bd4aa45d6a08f3a531782356487c58095431381707b4fb3141b2e5a31d8e9ac8fd27703eb9800ebf791df48493885524494c1c13018943485ac04884  LICENSE
+"

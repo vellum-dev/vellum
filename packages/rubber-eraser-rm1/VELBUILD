@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rubber-eraser-rm1
+pkgver=1.0.0
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Make the rubber eraser on a pen work as eraser on rM1."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shortcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.26"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+source="
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/rubberEraserForRm1.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/rubberEraserForRm1.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/rubberEraserForRm1.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+fbb65b37b7bcef0f37dd8703fe8b7368915338cbbae18ff0222dd44b1df45586d25f912310034a64c69364a54b0d0468bb59d28abcc9dccff3af7959b0cd5c7f  rubberEraserForRm1.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+"

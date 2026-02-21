@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=more-light-settings
+pkgver=1.0.0
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Provides additional light intensity settings beyond the default options."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder !fewer-light-steps !rm1 !rm2 !rmppm remarkable-os>=3.25 remarkable-os<3.26"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+source="
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/moreLightSettings.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/moreLightSettings.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/moreLightSettings.qmd"
+
+	install -Dm644 "$srcdir/LICENSE.md" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+0547ff14c17b85ce6202d38ab5aeb86a6a225fa0cf4ffde13f4310fbd646e53311a57155969807f48760e0e3fde6c31a6f7a700c2500d617bf5f6fb2325279da  moreLightSettings.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+"

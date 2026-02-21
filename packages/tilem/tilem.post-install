@@ -1,7 +1,0 @@
-#!/bin/sh
-
-echo ""
-echo "================================================"
-echo "  NOTE: To use TilEm, you must refresh AppLoad"
-echo "================================================"
-echo ""

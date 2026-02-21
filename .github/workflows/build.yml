@@ -79,14 +79,14 @@ jobs:
           CHANGED="${{ steps.changed.outputs.packages }}"
 
           # Get all noarch packages
-          all_noarch=$(for pkg in packages/*/APKBUILD; do
+          all_noarch=$(for pkg in packages/*/VELBUILD; do
             if grep -q '^arch="noarch"' "$pkg"; then
               basename $(dirname "$pkg")
             fi
           done)
 
           # Get all multiarch packages
-          all_multiarch=$(for pkg in packages/*/APKBUILD; do
+          all_multiarch=$(for pkg in packages/*/VELBUILD; do
             if grep -qE '^arch="(aarch64|armv7|aarch64 armv7)"' "$pkg"; then
               basename $(dirname "$pkg")
             fi
@@ -135,7 +135,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lint APKBUILD files
+      - &install-vbuild
+        name: Install vbuild
+        run: |
+          set -e
+          curl \
+            --location \
+            'https://github.com/Eeems/vbuild/releases/0.0.7/download/vbuild-vbuild-ubuntu' \
+            --output /usr/local/bin/vbuild
+          chmod +x /usr/local/bin/vbuild
+
+      - name: Lint VELBUILD files
         run: |
           PACKAGES="${{ needs.setup.outputs.packages }}"
           if [ "$PACKAGES" == "all" ] || [ -z "$PACKAGES" ]; then
@@ -158,6 +168,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - *install-vbuild
+
       - name: Set up signing key
         run: |
           if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
@@ -168,10 +180,10 @@ jobs:
       - name: Build ${{ matrix.package }}
         run: ./scripts/build-package.sh "${{ matrix.package }}"
 
-      - name: Get package name from APKBUILD
+      - name: Get package name from VELBUILD
         id: pkgname
         run: |
-          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/APKBUILD | cut -d= -f2)
+          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/VELBUILD | cut -d= -f2)
           echo "name=$pkgname" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
@@ -214,6 +226,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - *install-vbuild
+
       - name: Set up signing key
         run: |
           if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
@@ -224,10 +238,10 @@ jobs:
       - name: Build ${{ matrix.package }} for ${{ matrix.arch }}
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
 
-      - name: Get package name from APKBUILD
+      - name: Get package name from VELBUILD
         id: pkgname
         run: |
-          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/APKBUILD | cut -d= -f2)
+          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/VELBUILD | cut -d= -f2)
           echo "name=$pkgname" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
@@ -379,4 +393,3 @@ jobs:
             git push origin main
             echo "Changes committed and pushed to vellum-index"
           fi
-

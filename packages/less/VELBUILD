@@ -1,0 +1,37 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=less
+pkgver=692
+pkgrel=0
+upstream_author="gwsw"
+category="utilities"
+pkgdesc="File pager"
+url="https://greenwoodsoftware.com/less/"
+arch="aarch64 armv7"
+license="GPL-3.0-or-later OR BSD-2-Clause"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.2/less-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.2/less-arm32.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/less-aarch64.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/less-arm32.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/less \
+		"$pkgdir"/home/root/.vellum/bin/less
+	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+2d86c9a5e9e586a0aef6aaacb9343daa8db7874b8c006fa657914597e462505fed07a8bfb966c361e204301c3cd893bc27db9ff566f9cbc9d7f5fa0f03850e96  less-aarch64.tar.gz
+3418cae198e98337a7941c74233a7455bbb02f7593bcc6d3ec470a2b02988e8587d22332ce3acf04fddbcfd885d833c8e188f49f6f4e9055fb3f8a25fa543b95  less-arm32.tar.gz
+"

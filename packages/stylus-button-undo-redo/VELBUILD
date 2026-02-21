@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=stylus-button-undo-redo
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Double-click stylus button to undo, triple-click to redo."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shortcuts-to-choose-eraser !button-press-for-pen-change remarkable-os>=3.25 remarkable-os<3.26"
+_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/stylusButtonUndoRedo.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/stylusButtonUndoRedo.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/stylusButtonUndoRedo.qmd
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+38d5aa33c2a60a1e0c43818c7914603663f8b3a5dfe6a591f7e8208e5a4c15611c873a9a9c7138768c9e3012b5fee154c01d86084b1edf880de506a628270208  stylusButtonUndoRedo.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"
