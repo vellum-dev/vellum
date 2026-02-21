@@ -62,6 +62,7 @@ else
         chmod 600 "$KEY_PATH"
     fi
 fi
+mkdir -p ~/.config/vbuild
 cp "$KEY_PATH" ~/.config/vbuild/vbuild.rsa
 cp "$KEY_PATH.pub" ~/.config/vbuild/vbuild.rsa.pub
 
