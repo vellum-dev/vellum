@@ -20,7 +20,7 @@ LICENSE::https://raw.githubusercontent.com/toltec-dev/toltec/refs/heads/stable/L
 package() {
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$_upstream_author/toltec/tree/stable/package/entware-rc" > \
+	echo "https://github.com/$upstream_author/toltec/tree/stable/package/entware-rc" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
 	install -D -m 666 -t "$pkgdir"/home/root/.vellum/share/$pkgname/ \

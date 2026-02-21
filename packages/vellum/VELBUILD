@@ -11,11 +11,11 @@ arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
 source="
-vellum-aarch64::https://github.com/$_upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-arm64
-vellum-armv7::https://github.com/$_upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-armv7
-apk-aarch64::https://github.com/$_upstream_author/apk-tools/releases/download/v$_apk_ver/apk-aarch64
-apk-armv7::https://github.com/$_upstream_author/apk-tools/releases/download/v$_apk_ver/apk-armv7
-LICENSE::https://raw.githubusercontent.com/$_upstream_author/vellum-cli/main/LICENSE
+vellum-aarch64::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-arm64
+vellum-armv7::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-armv7
+apk-aarch64::https://github.com/$upstream_author/apk-tools/releases/download/v$_apk_ver/apk-aarch64
+apk-armv7::https://github.com/$upstream_author/apk-tools/releases/download/v$_apk_ver/apk-armv7
+LICENSE::https://github.com/vellum-dev/vellum-cli/raw/refs/tags/v$pkgver/LICENSE
 "
 
 package() {
@@ -43,7 +43,7 @@ package() {
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$_upstream_author/vellum-cli" > \
+	echo "https://github.com/$upstream_author/vellum-cli" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="

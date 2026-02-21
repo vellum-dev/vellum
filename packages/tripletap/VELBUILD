@@ -11,12 +11,12 @@ license="MIT"
 depends="xovi mount-utils"
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz
-LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/main/LICENSE
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/v$pkgver/LICENSE
 "
-builddir="$srcdir/xovi-tripletap-$pkgver"
 options="!check !fhs !strip !tracedeps"
 
 package() {
+	cd "$srcdir/xovi-tripletap-$pkgver"
 	local install_dir="$pkgdir/home/root/xovi-tripletap"
 	mkdir -p "$install_dir"
 
@@ -47,7 +47,7 @@ package() {
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz" > \
+	echo "https://github.com/$upstream_author/xovi-tripletap/archive/v$pkgver.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
 	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \

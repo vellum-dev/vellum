@@ -11,9 +11,9 @@ license="MIT"
 options="!check !fhs !strip !tracedeps"
 
 source="
-	installer-rmpro.sh::https://github.com/$_upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rmpro.sh
-	installer-rm12.sh::https://github.com/$_upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rm12.sh
-	LICENSE::https://raw.githubusercontent.com/$_upstream_author/rmfakecloud-proxy/master/LICENSE
+	installer-rmpro.sh::https://github.com/$upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rmpro.sh
+	installer-rm12.sh::https://github.com/$upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rm12.sh
+	LICENSE::https://raw.githubusercontent.com/$upstream_author/rmfakecloud-proxy/master/LICENSE
 "
 
 package() {
@@ -27,7 +27,7 @@ package() {
 	esac
 
 	install -Dm644 "$srcdir/LICENSE" "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$_upstream_author/rmfakecloud-proxy" > "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	echo "https://github.com/$upstream_author/rmfakecloud-proxy" > "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
 	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
 		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"

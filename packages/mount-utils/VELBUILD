@@ -24,7 +24,7 @@ package() {
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$_upstream_author/vellum" > \
+	echo "https://github.com/$upstream_author/vellum" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="

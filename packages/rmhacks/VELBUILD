@@ -17,6 +17,7 @@ rm-hacks-qmd-$_commit.tar.gz::https://github.com/asivery/rm-hacks-qmd/archive/$_
 builddir="$srcdir/rm-hacks-qmd-$_commit/0.0.11-pre4"
 
 package() {
+	_commit=1c617914af95e2d3b8f25c7c0fd71ef11e21b461
 	install -Dm644 zz_rmhacks.qmd \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/zz_rmhacks.qmd"
 

@@ -27,6 +27,17 @@ for PACKAGE in "$@"; do
     fi
 
     echo "Updating checksums for $PACKAGE..."
-    vbuild -C "$PACKAGE_DIR" checksum
+    set +e
+    work_dir=$(mktemp -d)
+    ret=$?
+    if [ $ret -ne 0 ]; then
+        echo "Fatal Error: Failed to create working directory" 2>&1
+        exit $ret
+    fi
+    set -e
+    cp -r "$PACKAGE_DIR/." "$work_dir"
+    vbuild -C "$work_dir" checksum
+    cp "$work_dir/VELBUILD" "$PACKAGE_DIR/"
+    rm -r "$work_dir"
     echo "Done: $PACKAGE"
 done

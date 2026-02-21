@@ -84,14 +84,14 @@ run_apkbuild_lint() {
         podman run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
-            alpine:edge \
-            sh -c "apk add --no-cache atools >/dev/null 2>&1 && SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
+            ghcr.io/eeems/vbuild-builder:main \
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
     elif command -v docker >/dev/null 2>&1; then
         docker run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
-            alpine:edge \
-            sh -c "apk add --no-cache atools >/dev/null 2>&1 && SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
+            ghcr.io/eeems/vbuild-builder:main \
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
     else
         echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
         return 0

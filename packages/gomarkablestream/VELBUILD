@@ -12,9 +12,9 @@ depends="!rmppm !rm1"
 options="!check !fhs !strip !tracedeps"
 
 source="
-$pkgname-$pkgver-aarch64::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RMPRO
-$pkgname-$pkgver-armv7::https://github.com/$_upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RM2
-LICENSE::https://raw.githubusercontent.com/$_upstream_author/goMarkableStream/master/LICENSE
+$pkgname-$pkgver-aarch64::https://github.com/$upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RMPRO
+$pkgname-$pkgver-armv7::https://github.com/$upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RM2
+LICENSE::https://raw.githubusercontent.com/$upstream_author/goMarkableStream/v$pkgver/LICENSE
 "
 
 package() {
@@ -23,7 +23,7 @@ package() {
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$_upstream_author/goMarkableStream/archive/refs/tags/v$pkgver.tar.gz" > \
+	echo "https://github.com/$upstream_author/goMarkableStream/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
