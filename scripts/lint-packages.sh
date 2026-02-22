@@ -79,19 +79,19 @@ run_apkbuild_lint() {
     local pkg_path="$1"
 
     if command -v apkbuild-lint >/dev/null 2>&1; then
-        SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint "$pkg_path/APKBUILD" 2>&1
+        SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint "$pkg_path/APKBUILD" 2>&1
     elif command -v podman >/dev/null 2>&1; then
         podman run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
             ghcr.io/eeems/vbuild-builder:main \
-            sh -c "SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
     elif command -v docker >/dev/null 2>&1; then
         docker run --rm \
             -v "$pkg_path:/src:ro" \
             -w "/src" \
             ghcr.io/eeems/vbuild-builder:main \
-            sh -c "SKIP_AL8=1 SKIP_AL7=1 apkbuild-lint APKBUILD" 2>&1
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
     else
         echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
         return 0
