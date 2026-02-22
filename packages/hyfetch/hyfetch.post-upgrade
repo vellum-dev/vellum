@@ -1,4 +1,0 @@
-#!/bin/sh
-
-/home/root/.vellum/bin/hyfetch --bpaf-complete-style-bash > \
-    /home/root/.vellum/share/bash-completion/completions/hyfetch

@@ -19,7 +19,7 @@ WARNED=0
 usage() {
     echo "Usage: $0 [OPTIONS] [PACKAGE...]"
     echo ""
-    echo "Lint APKBUILD files for vellum packages."
+    echo "Lint VELBUILD files for vellum packages."
     echo ""
     echo "Options:"
     echo "  --apkbuild-lint    Also run apkbuild-lint (requires Docker or atools)"
@@ -71,36 +71,63 @@ if [ -z "$PACKAGES" ]; then
             exit 0
         fi
     else
-        PACKAGES=$(ls -d "$REPO_ROOT"/packages/*/APKBUILD 2>/dev/null | xargs -I{} dirname {} | xargs -I{} basename {})
+        PACKAGES=$(ls -d "$REPO_ROOT"/packages/*/VELBUILD 2>/dev/null | xargs -I{} dirname {} | xargs -I{} basename {})
     fi
 fi
 
 run_apkbuild_lint() {
     local pkg_path="$1"
-    local pkg_name="$2"
 
     if command -v apkbuild-lint >/dev/null 2>&1; then
-        apkbuild-lint "$pkg_path" 2>&1
+        SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint "$pkg_path/APKBUILD" 2>&1
+    elif command -v podman >/dev/null 2>&1; then
+        podman run --rm \
+            -v "$pkg_path:/src:ro" \
+            -w "/src" \
+            ghcr.io/eeems/vbuild-builder:main \
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
     elif command -v docker >/dev/null 2>&1; then
         docker run --rm \
-            -v "$REPO_ROOT:/repo:ro" \
-            -w "/repo/packages/$pkg_name" \
-            alpine:edge \
-            sh -c "apk add --no-cache atools >/dev/null 2>&1 && apkbuild-lint APKBUILD" 2>&1
+            -v "$pkg_path:/src:ro" \
+            -w "/src" \
+            ghcr.io/eeems/vbuild-builder:main \
+            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
     else
-        echo "  (apkbuild-lint skipped - install atools or Docker)"
+        echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
         return 0
     fi
 }
+
+if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+    echo "Generating APKBUILD..."
+    echo ""
+    if ! command -v vbuild >/dev/null 2>&1; then
+        echo "Error: vbuild not found"
+        exit 1
+    fi
+    set +e
+    work_dir=$(mktemp -d)
+    ret=$?
+    if [ $ret -ne 0 ]; then
+        echo "Fatal Error: Failed to create working directory" 2>&1
+        exit $ret
+    fi
+    set -e
+    cpus=$(nproc)
+    echo "$PACKAGES" \
+    | xargs -n1 \
+    | xargs -P "$(( cpus * 2 ))" -I {} \
+        bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
+fi
 
 echo "Linting packages..."
 echo ""
 
 for pkg in $PACKAGES; do
-    APKBUILD_PATH="$REPO_ROOT/packages/$pkg/APKBUILD"
+    VELBUILD_PATH="$REPO_ROOT/packages/$pkg/VELBUILD"
 
-    if [ ! -f "$APKBUILD_PATH" ]; then
-        printf "${RED}SKIP${NC}: %s (APKBUILD not found)\n" "$pkg"
+    if [ ! -f "$VELBUILD_PATH" ]; then
+        printf "${RED}SKIP${NC}: %s (VELBUILD not found)\n" "$pkg"
         continue
     fi
 
@@ -110,7 +137,7 @@ for pkg in $PACKAGES; do
     lint_output=""
 
     status=0
-    result=$("$SCRIPT_DIR/validate-apkbuild.sh" "$APKBUILD_PATH" 2>&1) || status=$?
+    result=$("$SCRIPT_DIR/validate-velbuild.sh" "$VELBUILD_PATH" 2>&1) || status=$?
 
     if [ $status -ne 0 ]; then
         validate_output=$(echo "$result" | grep -v "^FAIL:" | sed 's/^/  /')
@@ -121,8 +148,9 @@ for pkg in $PACKAGES; do
     fi
 
     if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+        apkbuild_path="$work_dir/$pkg/APKBUILD"
         lint_status=0
-        lint_output=$(run_apkbuild_lint "$APKBUILD_PATH" "$pkg") || lint_status=$?
+        lint_output=$(run_apkbuild_lint "$work_dir/$pkg") || lint_status=$?
         if [ $lint_status -ne 0 ]; then
             pkg_status="fail"
         fi
@@ -153,6 +181,10 @@ done
 
 echo ""
 echo "Summary: $PASSED passed, $WARNED warnings, $FAILED failed"
+
+if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+    rm -r "$work_dir"
+fi
 
 if [ $FAILED -gt 0 ]; then
     exit 1

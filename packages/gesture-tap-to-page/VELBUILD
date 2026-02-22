@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=gesture-tap-to-page
+pkgver=1.0.0
+pkgrel=1
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Tap screen edges to navigate pages when toolbar is hidden (right=forward, left=back)"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+source="
+gestureTapToPage.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/gestureTapToPage.qmd
+LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/gestureTapToPage.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestureTapToPage.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+63122580594d7f3765c37c0d85e0b1362f805e5bdb54385c6d091e747b6edfc15847775bc1741206ebb0fe7a7c198f027a54b9caa3cf8ce178050121e58cafa7  gestureTapToPage.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+"

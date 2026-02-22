@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=enable-shortcuts
+pkgver=1.0.1
+pkgrel=1
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Enables keyboard shortcuts for arrow key page and scroll navigation."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+source="
+enableShortcuts.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.24/enableShortcuts.qmd
+LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/enableShortcuts.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/enableShortcuts.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+8797d37e3dbc48429da5cac3b47e090049bafefcb8e853397ba38502a88c8fd3428a42bc4759d879c3c6692ac43eab496dcced3148ecdd1d092c2d7dc2b54213  enableShortcuts.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
+"

@@ -21,3 +21,15 @@ keys/
 
 # abuild output
 packages/*/src/
+# we now use VELBUILD
+packages/*/APKBUILD
+packages/*/*.pre-install
+packages/*/*.post-install
+packages/*/*.pre-upgrade
+packages/*/*.post-upgrade
+packages/*/*.pre-os-upgrade
+packages/*/*.post-os-upgrade
+packages/*/*.pre-deinstall
+packages/*/*.post-deinstall
+packages-metadata.json
+tmp.json

@@ -1,0 +1,77 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=vellum-bash-completion
+pkgver=3.0.3
+pkgrel=3
+upstream_author="vellum-dev"
+category="utilities"
+pkgdesc="Bash completion for vellum package manager"
+url="https://github.com/vellum-dev/apk-tools"
+arch="noarch"
+license="GPL-2.0-only"
+# depends="vellum"
+source="
+https://github.com/vellum-dev/apk-tools/releases/download/v$pkgver/_apk
+"
+options="!check !fhs"
+
+package() {
+	sed -e 's/__apk_/__vellum_/g' \
+		-e 's/apk query/vellum query/g' \
+		-e 's/_comp_cmd_apk/_comp_cmd_vellum_apk/g' \
+		-e 's/complete -F _comp_cmd_vellum_apk apk$//' \
+		"$srcdir/_apk" > "$srcdir/vellum"
+
+	cat >> "$srcdir/vellum" << 'EOF'
+
+_comp_cmd_vellum() {
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+
+	case "${COMP_WORDS[1]}" in
+		self)
+			case "${COMP_WORDS[2]:-}" in
+				uninstall)
+					COMPREPLY=($(compgen -W "--all --yes -y" -- "$cur"))
+					;;
+				*)
+					COMPREPLY=($(compgen -W "uninstall" -- "$cur"))
+					;;
+			esac
+			return
+			;;
+		upgrade)
+			COMPREPLY=($(compgen -W "--yes -y" -- "$cur"))
+			return
+			;;
+		check-os|reenable)
+			return
+			;;
+		testing)
+			COMPREPLY=($(compgen -W "enable disable status" -- "$cur"))
+			return
+			;;
+	esac
+
+	# Translate aliases for argument completion
+	case "${COMP_WORDS[1]}" in
+		install) COMP_WORDS[1]=add ;;
+		remove|purge) COMP_WORDS[1]=del ;;
+		show) COMP_WORDS[1]=info ;;
+	esac
+
+	if [[ $COMP_CWORD -eq 1 ]]; then
+		_comp_cmd_vellum_apk
+		COMPREPLY+=($(compgen -W "self install remove purge show upgrade check-os reenable testing" -- "$cur"))
+	else
+		_comp_cmd_vellum_apk
+	fi
+}
+
+complete -F _comp_cmd_vellum vellum
+EOF
+
+	install -Dm644 "$srcdir/vellum" \
+		"$pkgdir/home/root/.vellum/share/bash-completion/completions/vellum"
+}
+sha512sums="
+c9ae7004ae2002250d7164ea2fa7daea1e95dd0ee0a56bd81eaa55bfb4b03b49d604b78e6f8abfc7c40bc0d46f71c2db5c26dbdbbdc4b6317ad4cd51506c3ea7  _apk
+"

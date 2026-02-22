@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=button-press-for-pen-change
+pkgver=1.0.0
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Hold stylus button to select-erase, click once to change to selection, click twice to change pen."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shorcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.26"
+_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+source="
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/buttonPressForPenChange.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/buttonPressForPenChange.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/buttonPressForPenChange.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+cae1d732750e04647230c59a6d972148a849d9b9fc80accf24ed2ac5cb601813156850c4671b4f41a2827b29e9911a8e618c2df6267420a33fa91b18177b10da  buttonPressForPenChange.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+"

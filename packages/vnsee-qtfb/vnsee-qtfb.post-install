@@ -1,9 +1,0 @@
-#!/bin/sh
-
-echo ""
-echo "================================================================="
-echo "  NOTE: You have to update your connection parameters in"
-echo "   /home/root/xovi/exthome/appload/vnsee-X/external.manifest.json"
-echo "   Where X is the different vnsee display modes."
-echo "================================================================="
-echo ""

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-/home/root/.vellum/bin/starship completions bash > \
-    /home/root/.vellum/share/bash-completion/completions/starship

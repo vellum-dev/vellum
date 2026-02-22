@@ -1,0 +1,55 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=vellum
+pkgver=0.2.1
+pkgrel=0
+_apk_ver=3.0.3
+upstream_author="vellum-dev"
+category="utilities"
+pkgdesc="Package manager wrapper for reMarkable tablets"
+url="https://github.com/vellum-dev/vellum-cli"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+source="
+vellum-aarch64::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-arm64
+vellum-armv7::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-armv7
+apk-aarch64::https://github.com/$upstream_author/apk-tools/releases/download/v$_apk_ver/apk-aarch64
+apk-armv7::https://github.com/$upstream_author/apk-tools/releases/download/v$_apk_ver/apk-armv7
+LICENSE::https://github.com/vellum-dev/vellum-cli/raw/refs/tags/v$pkgver/LICENSE
+"
+
+package() {
+	local vellum_file
+	case "$CARCH" in
+		aarch64) vellum_file="vellum-aarch64" ;;
+		armv7) vellum_file="vellum-armv7" ;;
+	esac
+
+	install -Dm755 "$srcdir/$vellum_file" \
+		"$pkgdir/home/root/.vellum/bin/vellum"
+
+	local apk_file
+	case "$CARCH" in
+		aarch64)
+			apk_file="apk-aarch64"
+			;;
+		armv7)
+			apk_file="apk-armv7"
+			;;
+	esac
+
+	install -Dm755 "$srcdir/$apk_file" \
+		"$pkgdir/home/root/.vellum/bin/apk.vellum"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/vellum-cli" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums="
+6f3906a9054f96822dc180766091f1da938b67156f95896cbffe2500f6127a5bfa007da243306fbae6496540c8f941d2fa7c30b64f3e39ae11900e1363876af3  vellum-aarch64
+c8830d09f9f2048cf69b4b6a9896cf2cbe0c73750aa6da3ecef5974b4e4279922709d086743ecc9b7211201398ab87ab2e9a1ed060ca430ec661b8784dc3a85a  vellum-armv7
+e1a9b3434c58a10f1df103b71259d1a18b5bc3885fa403b2e5bc690246c2debfcb083218a49c14683485ec0f8fda8e3508490133e547cd47cc5fa9de5cf6309c  apk-aarch64
+65cfa8b20e4315aed0f8b1e44e92a412f25724d349f741423eaba219d3d2f6a2e5b18d23954bd61243739394757cba88ecd9fc0dcb76cd52106998c383947301  apk-armv7
+f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8  LICENSE
+"

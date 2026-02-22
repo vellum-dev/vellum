@@ -1,0 +1,65 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=tilem
+pkgver=0.1.3_git6
+pkgrel=1
+upstream_author="timower"
+category="apps"
+pkgdesc="A TI-84+ calculator emulator for the remarkable."
+url="https://github.com/timower/rM2-stuff"
+arch="aarch64 armv7"
+license="GPL-3.0"
+depends="appload curl"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/tilem-aarch64.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm755 "$srcdir"/tilem \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/tilem
+
+	install -Dm644 "$srcdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/external.manifest.json
+	install -Dm644 "$srcdir"/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/tilem/icon.png
+	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/SOURCES \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall(){
+	echo ""
+	echo "================================================"
+	echo "  NOTE: To use TilEm, you must refresh AppLoad"
+	echo "================================================"
+	echo ""
+}
+
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/tilem
+	fi
+
+	echo ""
+	echo "================================================="
+	echo "  NOTE: You must refresh AppLoad to see changes"
+	echo "  reflected in the tablet UI"
+	echo "================================================="
+	echo ""
+}
+
+sha512sums="
+462a21c0f440cc789fc383461f219cb8ccea968de03b278d1ef501eddad8995823febad468a5b7133ff2f97f3d7da08edac6787f496bdff554558f92e5e9a470  tilem-aarch64.tar.gz
+7d8a159bd0294cabb29ab2e5cd5feaac8005462278b1e60d87af8e44cc540ca7f937cbcedea200beb3eb0b898083dc9427b0f14d039d2e3cc1b5b74337bc03c5  tilem-arm32.tar.gz
+"

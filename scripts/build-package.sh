@@ -1,5 +1,5 @@
 #!/bin/sh
-# Build a single package using Alpine's abuild in a container
+# Build a single package using vbuild
 # Usage: ./build-package.sh <package-name> [arch]
 #
 # Requires: docker or podman
@@ -24,14 +24,13 @@ if [ ! -d "$PACKAGE_DIR" ]; then
     exit 1
 fi
 
-if command -v podman >/dev/null 2>&1; then
-    CONTAINER_CMD="podman"
-else
-    CONTAINER_CMD="docker"
+if ! command -v vbuild >/dev/null 2>&1; then
+    echo "Error: vbuild not found"
+    exit 1
 fi
 
 if [ -z "$ARCH" ]; then
-    if grep -q '^arch="noarch"' "$PACKAGE_DIR/APKBUILD"; then
+    if grep -q '^arch="noarch"' "$PACKAGE_DIR/VELBUILD"; then
         ARCH="noarch"
     else
         ARCH="aarch64"
@@ -39,19 +38,19 @@ if [ -z "$ARCH" ]; then
 fi
 
 # Skip if the requested arch isn't supported by this package
-PKG_ARCH=$(grep '^arch=' "$PACKAGE_DIR/APKBUILD" | sed 's/arch="\(.*\)"/\1/')
+PKG_ARCH=$(grep '^arch=' "$PACKAGE_DIR/VELBUILD" | sed 's/arch="\(.*\)"/\1/')
 if [ "$PKG_ARCH" != "noarch" ] && ! echo "$PKG_ARCH" | grep -qw "$ARCH"; then
     echo "Skipping $PACKAGE: arch $ARCH not in supported architectures ($PKG_ARCH)"
     exit 0
 fi
 
-echo "Building $PACKAGE for $ARCH using $CONTAINER_CMD..."
+echo "Building $PACKAGE for $ARCH..."
 
 mkdir -p "$REPO_ROOT/dist/$ARCH"
 
 # Use production key if available, otherwise generate dev key
 if [ -f "$REPO_ROOT/keys/packages.rsa" ]; then
-    KEY_NAME="packages"
+    KEY_PATH="$REPO_ROOT/keys/packages.rsa"
 else
     KEY_NAME="vellum-dev"
     KEY_PATH="$REPO_ROOT/keys/$KEY_NAME.rsa"
@@ -63,68 +62,30 @@ else
         chmod 600 "$KEY_PATH"
     fi
 fi
+mkdir -p ~/.config/vbuild
+cp "$KEY_PATH" ~/.config/vbuild/vbuild.rsa
+cp "$KEY_PATH.pub" ~/.config/vbuild/vbuild.rsa.pub
 
 # Get reproducible timestamp from git (last commit to this package)
 SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- "$PACKAGE_DIR")
 if [ -z "$SOURCE_DATE_EPOCH" ]; then
-    SOURCE_DATE_EPOCH=$(stat -c %Y "$PACKAGE_DIR/APKBUILD" 2>/dev/null || stat -f %m "$PACKAGE_DIR/APKBUILD")
+    SOURCE_DATE_EPOCH=$(stat -c %Y "$PACKAGE_DIR/VELBUILD" 2>/dev/null || stat -f %m "$PACKAGE_DIR/VELBUILD")
 fi
 echo "Using SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH for reproducible build"
-
-CARCH_ENV="-e CARCH=$ARCH -e SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
-
-if [ "$CONTAINER_CMD" = "podman" ]; then
-    SRC_MOUNT="-v $REPO_ROOT:/work:O"
-else
-    SRC_MOUNT="-v $REPO_ROOT:/work-src:Z,ro"
+set +e
+WORK_DIR=$(mktemp -d)
+ret=$?
+if [ $ret -ne 0 ]; then
+    echo "Failed to create working directory"
+    exit $ret
 fi
-
-$CONTAINER_CMD run --rm \
-    $SRC_MOUNT \
-    -v "$REPO_ROOT/dist:/work/dist:Z" \
-    $CARCH_ENV \
-    alpine:3 \
-    sh -c '
-        set -e
-
-        apk add --no-cache alpine-sdk
-
-        # Docker: copy source to writable /work
-        if [ -d /work-src ]; then
-            cp -r /work-src/packages /work/
-            cp -r /work-src/keys /work/
-        fi
-
-        mkdir -p /work/dist/'$ARCH'
-        cd /work/packages/'$PACKAGE'
-
-        # Set up signing key
-        mkdir -p /root/.abuild
-        cp /work/keys/'$KEY_NAME'.rsa /root/.abuild/
-        cp /work/keys/'$KEY_NAME'.rsa.pub /root/.abuild/
-        echo "PACKAGER_PRIVKEY=/root/.abuild/'$KEY_NAME'.rsa" > /root/.abuild/abuild.conf
-        cp /work/keys/'$KEY_NAME'.rsa.pub /etc/apk/keys/
-
-        REPODEST=/work/dist abuild -d -r -F
-    '
-
-# Docker: fix ownership so host user can access dist files
-if [ "$CONTAINER_CMD" = "docker" ]; then
-    $CONTAINER_CMD run --rm \
-        -v "$REPO_ROOT/dist:/work/dist:Z" \
-        alpine:3 \
-        chown -R "$(id -u):$(id -g)" /work/dist
-fi
-
-# Move packages from nested structure to flat
-if [ -d "$REPO_ROOT/dist/packages/noarch" ]; then
-    mkdir -p "$REPO_ROOT/dist/noarch"
-    mv "$REPO_ROOT/dist/packages/noarch"/*.apk "$REPO_ROOT/dist/noarch/" 2>/dev/null || true
-fi
-if [ -d "$REPO_ROOT/dist/packages/$ARCH" ]; then
-    mv "$REPO_ROOT/dist/packages/$ARCH"/*.apk "$REPO_ROOT/dist/$ARCH/" 2>/dev/null || true
-fi
-rm -rf "$REPO_ROOT/dist/packages"
+set -e
+echo "Working directory $WORK_DIR"
+cp -r "$REPO_ROOT/packages/$PACKAGE/." "$WORK_DIR"
+CARCH=$ARCH vbuild -C "$WORK_DIR" all
+cp -r "$WORK_DIR/dist/." "$REPO_ROOT/dist/"
+vbuild -C "$WORK_DIR" clean
+rm -rf "$WORK_DIR"
 
 echo "Build complete."
 ls -la "$REPO_ROOT/dist/"*/*.apk 2>/dev/null || echo "No .apk files found"

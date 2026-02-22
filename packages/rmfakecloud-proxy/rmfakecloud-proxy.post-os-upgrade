@@ -1,7 +1,0 @@
-#!/bin/sh
-cat << 'EOF'
-
-  rmfakecloud-proxy requires manual re-configuration.
-  Run: /home/root/rmfakecloud/install.sh install
-
-EOF

@@ -1,0 +1,70 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=rmstream
+pkgver=0.1.1
+pkgrel=1
+upstream_author="asivery"
+category="apps"
+pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
+url="https://github.com/asivery/appload-rmstream"
+arch="aarch64 armv7"
+license="GPL-3.0"
+depends="appload framebuffer-spy"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.zip
+https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.zip
+https://raw.githubusercontent.com/asivery/appload-rmstream/master/LICENSE
+"
+
+
+unpack() {
+	case "$CARCH" in
+		aarch64) unzip -o "$srcdir"/rmstream-aarch64.zip -d "$srcdir" ;;
+		armv7) unzip -o "$srcdir"/rmstream-arm32.zip -d "$srcdir" ;;
+	esac
+}
+
+package() {
+	local folder
+	case "$CARCH" in
+		aarch64) folder="rmstream-aarch64" ;;
+		armv7) folder="rmstream-arm32" ;;
+	esac
+
+	install -d "$pkgdir"/home/root/xovi/exthome/appload
+	cp -r "$srcdir"/$folder \
+		"$pkgdir"/home/root/xovi/exthome/appload/rmstream
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/asivery/appload-rmstream/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall(){
+	echo ""
+	echo "==============================================="
+	echo "  NOTE: You must refresh AppLoad to see changes "
+	echo "  reflected in the tablet UI "
+	echo "==============================================="
+	echo ""
+}
+postdeinstall(){
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/rmstream
+	fi
+
+	echo ""
+	echo "==============================================="
+	echo "  NOTE: You must refresh AppLoad to see changes "
+	echo "  reflected in the tablet UI "
+	echo "==============================================="
+	echo ""
+}
+
+sha512sums="
+3e370b80beec32a83b3defb6a0be149d76fcb2e8ad827e695ab5a30930a4cb7a9be16db499123392f2338d942a26ff767585a6e3686c5b9455e71f507655aca1  rmstream-aarch64.zip
+ae2d9b8120945e5b27aef430078afbf84840a874ca4452c436bff7d8498a7909329e1d030003856c19a2865f35bb2c030a0f21dba27cc53c42e8ef012deb5579  rmstream-arm32.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"

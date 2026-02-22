@@ -1,7 +1,7 @@
 #!/bin/sh
-# Generates packages-metadata.json from APKINDEX + APKBUILD metadata
+# Generates packages-metadata.json from APKINDEX + VELBUILD metadata
 # APKINDEX provides: package versions, depends, arch, license, url, pkgdesc
-# APKBUILD provides: _category, _upstream_author
+# VELBUILD provides: category, upstream_author
 
 set -e
 
@@ -62,24 +62,24 @@ done
 
 [ ! -f "$WORKDIR/all-packages.tsv" ] && { echo "No packages found"; exit 0; }
 
-for apkbuild in packages/*/APKBUILD; do
-    [ -f "$apkbuild" ] || continue
+for velbuild in packages/*/VELBUILD; do
+    [ -f "$velbuild" ] || continue
 
-    pkgname=$(grep -E '^pkgname=' "$apkbuild" | head -1 | sed 's/^pkgname=//' | tr -d '"')
-    _category=$(grep -E '^_category=' "$apkbuild" | head -1 | sed 's/^_category=//' | tr -d '"')
-    _upstream_author=$(grep -E '^_upstream_author=' "$apkbuild" | head -1 | sed 's/^_upstream_author=//' | tr -d '"')
-    maintainer=$(grep -E '^maintainer=' "$apkbuild" | head -1 | sed 's/^maintainer=//' | tr -d '"')
+    pkgname=$(grep -E '^pkgname=' "$velbuild" | head -1 | sed 's/^pkgname=//' | tr -d '"')
+    category=$(grep -E '^category=' "$velbuild" | head -1 | sed 's/^category=//' | tr -d '"')
+    upstream_author=$(grep -E '^upstream_author=' "$velbuild" | head -1 | sed 's/^upstream_author=//' | tr -d '"')
+    maintainer=$(grep -E '^maintainer=' "$velbuild" | head -1 | sed 's/^maintainer=//' | tr -d '"')
 
-    _cat="${_category:-other}"
-    _auth="${_upstream_author:-unknown}"
+    _cat="${category:-other}"
+    _auth="${upstream_author:-unknown}"
     _maint="${maintainer:-unknown}"
-    pkgdir=$(dirname "$apkbuild")
+    pkgdir=$(dirname "$velbuild")
     _modsys="false"
-    [ -f "$pkgdir/$pkgname.post-os-upgrade" ] && _modsys="true"
-    echo "$pkgname	$_cat	$_auth	$_maint	$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
+    grep -q '^postosupgrade()' "$velbuild" && _modsys="true"
+    printf '%s\t%s\t%s\t%s\t%s\n' "$pkgname" "$_cat" "$_auth" "$_maint" "$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
 
     # Extract subpackages (may be multiline)
-    subpackages=$(awk '/^subpackages="/{flag=1; sub(/^subpackages="/, ""); if (/"$/) {sub(/"$/, ""); print; next}} flag{if (/"$/) {sub(/"$/, ""); print; flag=0; next} print}' "$apkbuild" | tr '\n\t' '  ')
+    subpackages=$(awk '/^subpackages="/{flag=1; sub(/^subpackages="/, ""); if (/"$/) {sub(/"$/, ""); print; next}} flag{if (/"$/) {sub(/"$/, ""); print; flag=0; next} print}' "$velbuild" | tr '\n\t' '  ')
 
     for subpkg in $subpackages; do
         subpkg_name="${subpkg%%:*}"
@@ -92,20 +92,20 @@ for apkbuild in packages/*/APKBUILD; do
             func_name=$(echo "$subpkg_name" | tr '-' '_')
         fi
 
-        # Extract _category from subpackage function body, fall back to parent
+        # Extract category from subpackage function body, fall back to parent
         subpkg_cat=$(awk -v fn="$func_name" '
             $0 ~ "^"fn"\\(\\)" { in_func=1; next }
             in_func && /^}/ { exit }
-            in_func && /_category=/ { gsub(/.*_category=["'"'"']?|["'"'"'].*/, ""); print; exit }
-        ' "$apkbuild")
+            in_func && /category=/ { gsub(/.*category=["'"'"']?|["'"'"'].*/, ""); print; exit }
+        ' "$velbuild")
         subpkg_cat="${subpkg_cat:-$_cat}"
 
-        echo "$subpkg_name	$subpkg_cat	$_auth	$_maint	$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
+        printf '%s\t%s\t%s\t%s\t%s\n' "$subpkg_name" "$subpkg_cat" "$_auth" "$_maint" "$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
     done
 done
 
-while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin apkindex_maint; do
-    # Try to get metadata from APKBUILD - first check the package itself, then fall back to origin (parent)
+while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin apkindex_maint <&3; do
+    # Try to get metadata from VELBUILD - first check the package itself, then fall back to origin (parent)
     apkbuild_line=$(grep -E "^${pkg}	" "$WORKDIR/apkbuild-meta.tsv" 2>/dev/null | head -1 || true)
     if [ -z "$apkbuild_line" ] && [ -n "$origin" ] && [ "$origin" != "_" ] && [ "$origin" != "$pkg" ]; then
         apkbuild_line=$(grep -E "^${origin}	" "$WORKDIR/apkbuild-meta.tsv" 2>/dev/null | head -1 || true)
@@ -246,7 +246,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     fi
 
     echo "Processed: $pkg $ver ($arch)"
-done < "$WORKDIR/all-packages.tsv"
+done 3< "$WORKDIR/all-packages.tsv"
 
 # Compute reverse conflicts (if A conflicts with B, B should also show conflict with A)
 echo "Computing reverse conflicts..."

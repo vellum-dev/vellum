@@ -1,0 +1,146 @@
+maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
+pkgname=tailscale
+pkgver=1.94.2
+pkgrel=0
+upstream_author="tailscale"
+category="utilities"
+pkgdesc="Tailscale VPN client"
+url="https://tailscale.com"
+arch="aarch64 armv7"
+license="BSD-3-Clause"
+options="!check !fhs !strip !tracedeps"
+depends="mount-utils"
+
+source="
+https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
+https://dl.tailscale.com/stable/tailscale_${pkgver}_arm64.tgz
+https://raw.githubusercontent.com/tailscale/tailscale/refs/tags/v$pkgver/LICENSE
+10-defaults.patch
+10-service.patch
+$pkgname.post-os-upgrade
+"
+builddir="$srcdir/tailscale"
+
+unpack() {
+	if [ -z "$force" ]; then
+		verify
+		initdcheck
+	fi
+
+	case "$CARCH" in
+		aarch64) _arch="arm64" ;;
+		armv7) _arch="arm" ;;
+	esac
+
+	mkdir -p "$srcdir"
+	_tar="$SRCDEST/tailscale_${pkgver}_$_arch.tgz"
+
+	msg "Unpacking $_tar..."
+	tar -C "$srcdir" -zxf "$_tar"
+	mv "$srcdir/tailscale_${pkgver}_$_arch" "$srcdir/tailscale"
+	msg "Unpacked."
+}
+
+package() {
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/tailscale/tailscale/tree/$pkgver/licenses" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSES-3RD-PARTY"
+
+	cd "$srcdir/tailscale"
+
+	install -Dm744 tailscaled \
+		"$pkgdir/home/root/.vellum/bin/tailscaled"
+	install -Dm744 tailscale \
+		"$pkgdir/home/root/.vellum/bin/tailscale"
+
+	install -Dm644 systemd/tailscaled.defaults \
+		"$pkgdir/home/root/.vellum/etc/default/tailscaled"
+
+	# install a backup .service file for use with post-os-upgrade
+	install -Dm644 systemd/tailscaled.service \
+		"$pkgdir/home/root/.vellum/share/tailscale/systemd/tailscaled.service"
+	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
+		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
+}
+
+postinstall(){
+	/home/root/.vellum/bin/mount-rw
+
+	echo "installing tailscaled.service..."
+	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
+
+	echo "reloading systemd daemon"
+	systemctl daemon-reload
+
+	echo "enabling tailscaled service..."
+	systemctl enable tailscaled.service
+
+	/home/root/.vellum/bin/mount-restore
+
+	echo "restarting tailscaled service..."
+	systemctl restart tailscaled.service
+}
+
+postupgrade(){
+	/home/root/.vellum/bin/mount-rw
+
+	echo "installing tailscaled.service..."
+	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
+
+	echo "reloading systemd daemon"
+	systemctl daemon-reload
+
+	echo "enabling tailscaled service..."
+	systemctl enable tailscaled.service
+
+	/home/root/.vellum/bin/mount-restore
+
+	echo "restarting tailscaled service..."
+	systemctl restart tailscaled.service
+}
+
+postosupgrade(){
+	echo " * re-installing tailscaled.service..."
+	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
+
+	echo " * reloading systemd daemon"
+	systemctl daemon-reload
+
+	echo " * enabling tailscaled service..."
+	systemctl enable tailscaled.service
+
+	echo " * restarting tailscaled service..."
+	systemctl restart tailscaled.service
+}
+
+predeinstall(){
+	/home/root/.vellum/bin/mount-rw
+
+	echo "stopping tailscaled service..."
+	systemctl disable --now tailscaled.service
+
+	echo "removing tailscaled.service..."
+	rm -f /etc/systemd/system/tailscaled.service
+
+	/home/root/.vellum/bin/mount-restore
+
+	echo "reloading systemd daemon"
+	systemctl daemon-reload
+
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		echo "deleting tailscale config files..."
+		rm -rf \
+			/home/root/.local/var/lib/tailscale \
+			/home/root/.config/tailscale
+	fi
+}
+
+sha512sums='
+7e193b8738a3fb28bf74c30eacbe846eb4d05fb818dc243ae0884e27eeccd90d8879242051f0ea3ddd685172dbd3e24e6eed01984db70f144443f017f0e7a023  tailscale_1.94.2_arm.tgz
+baf3f3ba20eaaa9b36996b6902a45c1a68a3c98d2dc0d796c93c746523fce2e7d3bce0b4ecfb3406af8730e5fbd20a93e0c545199c27405d9b5a7ec5a8ee97c9  tailscale_1.94.2_arm64.tgz
+d9e05b6d2d70e945ab5c968cfcffa3bf5d5399058c9721bd2198d89c1a5466f137bcaa4ff5a1aaf81ee08f7c7c197607b1d73d3f472f158b877d8df9fa71c790  LICENSE
+b0cbcd5e94001fc8f91ae6bc0dca40bac8f34d92112d2a0ad83189c8e6bb79fe415dce9dda6a554c8094a59f1bfd6bf1109439c47ef5f1d0b3eb522af3a62c95  10-defaults.patch
+daa522461020dacce029f6baa03421c051d05bf8627560c3c417141f03e1e82c8fe81c3dd0f1eeb2d11a9ff559e034689a0f27720829a19c93351dfca6bad8e1  10-service.patch
+2100dd4f6936569ea683d6cec4e55a5d5940edb9dd9a4f75dff5faa1a7037af3c817a1a6987796f4ad96d2958b8943ebb236141f359428520d57a760f36a58aa  tailscale.post-os-upgrade
+'

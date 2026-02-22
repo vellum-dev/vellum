@@ -1,8 +1,0 @@
-#!/bin/sh
-/home/root/.vellum/bin/mount-rw
-cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
-systemctl daemon-reload
-/home/root/.vellum/bin/mount-restore
-/opt/bin/opkg install findutils
-echo ""
-echo "You can use rcctl to manage services installed by entware"

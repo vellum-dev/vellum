@@ -1,0 +1,132 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=xovi-extensions
+pkgver=17.0.0
+pkgrel=4
+upstream_author="asivery"
+category="framework"
+pkgdesc="Extensions for xovi framework"
+url="https://github.com/asivery/rm-xovi-extensions"
+arch="aarch64 armv7"
+license="GPL-3.0"
+depends="xovi remarkable-os>=3.20 remarkable-os<3.26"
+options="!check !fhs !strip !tracedeps"
+
+subpackages="
+	qt-resource-rebuilder:qt_resource_rebuilder
+	qt-command-executor:qt_command_executor
+	xovi-message-broker:message_broker
+	webserver-remote:webserver_remote
+"
+
+_release="v17-14012026"
+
+source="
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-aarch64.zip
+https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/extensions-arm32-testing.zip
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
+"
+
+
+unpack() {
+	case "$CARCH" in
+		aarch64) unzip -o "$srcdir"/extensions-aarch64.zip -d "$srcdir" ;;
+		armv7) unzip -o "$srcdir"/extensions-arm32-testing.zip -d "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+qt_resource_rebuilder() {
+	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
+	depends="$pkgname"
+
+	install -Dm755 "$srcdir"/qt-resource-rebuilder.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
+	install -d "$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder
+
+	cat > "$subpkgdir"/home/root/xovi/rebuild_hashtable <<-'EOFSCRIPT'
+	#!/bin/bash
+
+	if [[ ! -e '/home/root/xovi/extensions.d/qt-resource-rebuilder.so' ]]; then
+	    echo "Please install qt-resource-rebuilder before updating the hashtable"
+	    exit 1
+	fi
+
+	systemctl stop xochitl.service
+
+	if pidof xochitl; then
+	  kill -15 $(pidof xochitl)
+	fi
+
+	mkdir -p /home/root/xovi/exthome/qt-resource-rebuilder
+	rm -f /home/root/xovi/exthome/qt-resource-rebuilder/hashtab
+
+	echo -e "#################################"
+	echo -e "Building new hashtable..."
+	echo -e "Please enter your password on the rM when prompted."
+	read -p "Press enter to continue:"
+
+	echo -e "\n\nOutput:"
+	sleep 3
+
+	QMLDIFF_HASHTAB_CREATE=/home/root/xovi/exthome/qt-resource-rebuilder/hashtab QML_DISABLE_DISK_CACHE=1 LD_PRELOAD=/home/root/xovi/xovi.so /usr/bin/xochitl 2>&1 | while IFS= read line; do
+	  echo -e "$line"
+	  if [[ "$line" == "[qmldiff]: Hashtab saved to /home/root/xovi/exthome/qt-resource-rebuilder/hashtab" ]]; then
+	    echo -e "\n##############"
+	    echo -e "Found expected output. Killing gui process and restarting systemd service."
+	    kill -15 $(pidof xochitl)
+	  fi
+	done
+
+	sleep 5
+	echo -e "Starting xochitl service..."
+	systemctl start xochitl.service
+	EOFSCRIPT
+
+	chmod 755 "$subpkgdir"/home/root/xovi/rebuild_hashtable
+}
+
+qt_command_executor() {
+	pkgdesc="Injects a QT module to execute shell commands from QML"
+	depends="$pkgname"
+
+	install -Dm755 "$srcdir"/qt-command-executor.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
+}
+
+message_broker() {
+	pkgdesc="IPC messaging between xovi extensions"
+	depends="$pkgname"
+
+	install -Dm755 "$srcdir"/xovi-message-broker.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
+}
+
+webserver_remote() {
+	_category="utilities"
+	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
+	depends="qt-resource-rebuilder xovi-message-broker"
+
+	install -Dm755 "$srcdir"/webserver-remote.so \
+		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
+}
+
+postinstall(){
+	echo ""
+	echo "==============================================="
+	echo "  NOTE: Before using any QT modifications,"
+	echo "  you must run: xovi/rebuild_hashtable"
+	echo "==============================================="
+	echo ""
+}
+
+sha512sums="
+bedd792ee72c0fc37246d292e7e030abd40fcebedc0ac99c1ee5d2df1e22920cefd4f09a4223bc547795ec33f4b1df97d190ac21dfbcac4c2c9d8b2ac087e68b  extensions-aarch64.zip
+69561e979048454de51d4205ba45b0dcb5117909a690cc978c049cc61dc46aa227c1e93b7f1e970c0a8846b5d470a2f48244beb4c85df5eca080ce9c55c54dc6  extensions-arm32-testing.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"
