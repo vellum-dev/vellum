@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$VELLUM_PURGE" = "1" ]; then
+    rm -f /home/root/.config/hyfetch.json
+    rm -fr /home/root/.config/neofetch
+    rm -fr /home/root/.cache/hyfetch
+fi
+
+rm -f /home/root/.vellum/share/bash-completion/completions/hyfetch

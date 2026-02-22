@@ -1,0 +1,3 @@
+#!/bin/sh
+
+rmdir /home/root/shims 2>/dev/null || true

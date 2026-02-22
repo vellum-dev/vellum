@@ -1,0 +1,4 @@
+#!/bin/sh
+cp /home/root/xovi-tripletap/xovi-tripletap.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable xovi-tripletap --now

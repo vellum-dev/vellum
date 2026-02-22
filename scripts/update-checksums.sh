@@ -1,5 +1,5 @@
 #!/bin/sh
-# Update checksums in VELBUILD files using vbuild
+# Update checksums in APKBUILD files using Alpine's abuild
 # Usage: ./update-checksums.sh <package> [package2] ...
 
 set -e
@@ -13,9 +13,10 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-if ! command -v vbuild >/dev/null 2>&1; then
-    echo "Error: vbuild not found"
-    exit 1
+if command -v podman >/dev/null 2>&1; then
+    CONTAINER_CMD="podman"
+else
+    CONTAINER_CMD="docker"
 fi
 
 for PACKAGE in "$@"; do
@@ -27,17 +28,19 @@ for PACKAGE in "$@"; do
     fi
 
     echo "Updating checksums for $PACKAGE..."
-    set +e
-    work_dir=$(mktemp -d)
-    ret=$?
-    if [ $ret -ne 0 ]; then
-        echo "Fatal Error: Failed to create working directory" 2>&1
-        exit $ret
-    fi
-    set -e
-    cp -r "$PACKAGE_DIR/." "$work_dir"
-    vbuild -C "$work_dir" checksum
-    cp "$work_dir/VELBUILD" "$PACKAGE_DIR/"
-    rm -r "$work_dir"
+
+    $CONTAINER_CMD run --rm \
+        -v "$REPO_ROOT/packages:/work/packages:Z" \
+        -w "/work/packages/$PACKAGE" \
+        alpine:3 \
+        sh -c 'apk add --no-cache abuild >/dev/null 2>&1 && abuild -F checksum && rm -rf src'
     echo "Done: $PACKAGE"
 done
+
+# Docker: fix ownership so host user can access modified files
+if [ "$CONTAINER_CMD" = "docker" ]; then
+    $CONTAINER_CMD run --rm \
+        -v "$REPO_ROOT/packages:/work/packages:Z" \
+        alpine:3 \
+        chown -R "$(id -u):$(id -g)" /work/packages
+fi
