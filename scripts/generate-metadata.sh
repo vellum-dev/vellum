@@ -76,7 +76,7 @@ for velbuild in packages/*/VELBUILD; do
     pkgdir=$(dirname "$velbuild")
     _modsys="false"
     grep -q '^postosupgrade()' "$velbuild" && _modsys="true"
-    echo "$pkgname	$_cat	$_auth	$_maint	$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
+    printf '%s\t%s\t%s\t%s\t%s\n' "$pkgname" "$_cat" "$_auth" "$_maint" "$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
 
     # Extract subpackages (may be multiline)
     subpackages=$(awk '/^subpackages="/{flag=1; sub(/^subpackages="/, ""); if (/"$/) {sub(/"$/, ""); print; next}} flag{if (/"$/) {sub(/"$/, ""); print; flag=0; next} print}' "$velbuild" | tr '\n\t' '  ')
@@ -100,11 +100,11 @@ for velbuild in packages/*/VELBUILD; do
         ' "$velbuild")
         subpkg_cat="${subpkg_cat:-$_cat}"
 
-        echo "$subpkg_name	$subpkg_cat	$_auth	$_maint	$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
+        printf '%s\t%s\t%s\t%s\t%s\n' "$subpkg_name" "$subpkg_cat" "$_auth" "$_maint" "$_modsys" >> "$WORKDIR/apkbuild-meta.tsv"
     done
 done
 
-while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin apkindex_maint; do
+while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin apkindex_maint <&3; do
     # Try to get metadata from VELBUILD - first check the package itself, then fall back to origin (parent)
     apkbuild_line=$(grep -E "^${pkg}	" "$WORKDIR/apkbuild-meta.tsv" 2>/dev/null | head -1 || true)
     if [ -z "$apkbuild_line" ] && [ -n "$origin" ] && [ "$origin" != "_" ] && [ "$origin" != "$pkg" ]; then
@@ -246,7 +246,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     fi
 
     echo "Processed: $pkg $ver ($arch)"
-done < "$WORKDIR/all-packages.tsv"
+done 3< "$WORKDIR/all-packages.tsv"
 
 # Compute reverse conflicts (if A conflicts with B, B should also show conflict with A)
 echo "Computing reverse conflicts..."
