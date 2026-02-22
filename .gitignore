@@ -31,3 +31,5 @@ packages/*/*.pre-os-upgrade
 packages/*/*.post-os-upgrade
 packages/*/*.pre-deinstall
 packages/*/*.post-deinstall
+packages-metadata.json
+tmp.json

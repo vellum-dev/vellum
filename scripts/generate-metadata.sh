@@ -66,12 +66,12 @@ for velbuild in packages/*/VELBUILD; do
     [ -f "$velbuild" ] || continue
 
     pkgname=$(grep -E '^pkgname=' "$velbuild" | head -1 | sed 's/^pkgname=//' | tr -d '"')
-    _category=$(grep -E '^category=' "$velbuild" | head -1 | sed 's/^category=//' | tr -d '"')
-    _upstream_author=$(grep -E '^upstream_author=' "$velbuild" | head -1 | sed 's/^upstream_author=//' | tr -d '"')
+    category=$(grep -E '^category=' "$velbuild" | head -1 | sed 's/^category=//' | tr -d '"')
+    upstream_author=$(grep -E '^upstream_author=' "$velbuild" | head -1 | sed 's/^upstream_author=//' | tr -d '"')
     maintainer=$(grep -E '^maintainer=' "$velbuild" | head -1 | sed 's/^maintainer=//' | tr -d '"')
 
-    _cat="${_category:-other}"
-    _auth="${_upstream_author:-unknown}"
+    _cat="${category:-other}"
+    _auth="${upstream_author:-unknown}"
     _maint="${maintainer:-unknown}"
     pkgdir=$(dirname "$velbuild")
     _modsys="false"
@@ -92,7 +92,7 @@ for velbuild in packages/*/VELBUILD; do
             func_name=$(echo "$subpkg_name" | tr '-' '_')
         fi
 
-        # Extract _category from subpackage function body, fall back to parent
+        # Extract category from subpackage function body, fall back to parent
         subpkg_cat=$(awk -v fn="$func_name" '
             $0 ~ "^"fn"\\(\\)" { in_func=1; next }
             in_func && /^}/ { exit }
