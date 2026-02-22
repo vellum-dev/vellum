@@ -84,6 +84,7 @@ echo "Working directory $WORK_DIR"
 cp -r "$REPO_ROOT/packages/$PACKAGE/." "$WORK_DIR"
 CARCH=$ARCH vbuild -C "$WORK_DIR" all
 cp -r "$WORK_DIR/dist/." "$REPO_ROOT/dist/"
+vbuild -C "$WORK_DIR" clean
 rm -rf "$WORK_DIR"
 
 echo "Build complete."
