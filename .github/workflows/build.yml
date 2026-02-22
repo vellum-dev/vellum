@@ -141,7 +141,7 @@ jobs:
           set -e
           curl \
             --location \
-            'https://github.com/Eeems/vbuild/releases/download/0.0.7/vbuild-vbuild-ubuntu' \
+            'https://github.com/Eeems/vbuild/releases/download/0.0.10/vbuild-vbuild-ubuntu' \
             --output /usr/local/bin/vbuild
           chmod +x /usr/local/bin/vbuild
 
