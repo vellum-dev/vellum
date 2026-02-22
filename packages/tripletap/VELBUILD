@@ -14,9 +14,9 @@ $pkgname-$pkgver.tar.gz::https://github.com/rmitchellscott/xovi-tripletap/archiv
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/v$pkgver/LICENSE
 "
 options="!check !fhs !strip !tracedeps"
+builddir="$srcdir/xovi-tripletap-$pkgver"
 
 package() {
-	cd "$srcdir/xovi-tripletap-$pkgver"
 	local install_dir="$pkgdir/home/root/xovi-tripletap"
 	mkdir -p "$install_dir"
 
