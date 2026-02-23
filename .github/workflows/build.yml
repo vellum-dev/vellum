@@ -170,7 +170,8 @@ jobs:
 
       - *install-vbuild
 
-      - name: Set up signing key
+      - &set-up-signing-key
+        name: Set up signing key
         run: |
           if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
             echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
@@ -196,7 +197,8 @@ jobs:
               done
             "
 
-      - name: Get package name from VELBUILD
+      - &get-package-name
+        name: Get package name from VELBUILD
         id: pkgname
         run: |
           pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/VELBUILD | cut -d= -f2)
@@ -210,7 +212,8 @@ jobs:
           path: dist/noarch/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: error
 
-      - name: Upload to S3
+      - &upload-to-s3
+        name: Upload to S3
         if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -244,23 +247,14 @@ jobs:
 
       - *install-vbuild
 
-      - name: Set up signing key
-        run: |
-          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
-            echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
-            chmod 600 keys/packages.rsa
-          fi
+      - *set-up-signing-key
 
       - name: Build ${{ matrix.package }} for ${{ matrix.arch }}
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
 
       - *verify-signature
 
-      - name: Get package name from VELBUILD
-        id: pkgname
-        run: |
-          pkgname=$(grep '^pkgname=' packages/${{ matrix.package }}/VELBUILD | cut -d= -f2)
-          echo "name=$pkgname" >> $GITHUB_OUTPUT
+      - *get-package-name
 
       - name: Upload artifact
         if: github.event_name == 'pull_request'
@@ -270,13 +264,7 @@ jobs:
           path: dist/${{ matrix.arch }}/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: warn
 
-      - name: Upload to S3
-        if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+      - *upload-to-s3
 
       - name: Upload packages to S3
         if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -307,12 +295,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      - name: Set up signing key
-        run: |
-          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
-            echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
-            chmod 600 keys/packages.rsa
-          fi
+      - *set-up-signing-key
 
       - name: Regenerate APKINDEX from S3
         run: |
