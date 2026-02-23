@@ -187,7 +187,7 @@ jobs:
           docker run --rm \
             -v "$PWD/dist:/dist:ro" \
             -v "$PWD/keys:/keys:ro" \
-            alpine:edge \
+            ghcr.io/eeems/vbuild-builder:main \
             sh -c "
               cp /keys/packages.rsa.pub /etc/apk/keys/
               for apk in /dist/*/*.apk; do
@@ -351,9 +351,8 @@ jobs:
                 -v "$PWD/s3-packages/$arch:/packages:Z" \
                 -v "$PWD/keys:/keys:ro" \
                 -w /packages \
-                alpine:edge \
+                ghcr.io/eeems/vbuild-builder:main \
                 sh -c "
-                  apk add --no-cache apk-tools abuild
                   cp /keys/packages.rsa.pub /etc/apk/keys/
                   apk index --rewrite-arch $arch -o APKINDEX.tar.gz *.apk
                   abuild-sign -k /keys/packages.rsa APKINDEX.tar.gz
