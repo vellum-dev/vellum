@@ -50,6 +50,7 @@ mkdir -p "$REPO_ROOT/dist/$ARCH"
 
 # Use production key if available, otherwise generate dev key
 if [ -f "$REPO_ROOT/keys/packages.rsa" ]; then
+    KEY_NAME=packages
     KEY_PATH="$REPO_ROOT/keys/packages.rsa"
 else
     KEY_NAME="vellum-dev"
@@ -63,8 +64,8 @@ else
     fi
 fi
 mkdir -p ~/.config/vbuild
-cp "$KEY_PATH" ~/.config/vbuild/vbuild.rsa
-cp "$KEY_PATH.pub" ~/.config/vbuild/vbuild.rsa.pub
+cp "$KEY_PATH" ~/.config/vbuild/"$KEY_NAME".rsa
+cp "$KEY_PATH.pub" ~/.config/vbuild/"$KEY_NAME".rsa.pub
 
 # Get reproducible timestamp from git (last commit to this package)
 SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- "$PACKAGE_DIR")
@@ -82,7 +83,7 @@ fi
 set -e
 echo "Working directory $WORK_DIR"
 cp -r "$REPO_ROOT/packages/$PACKAGE/." "$WORK_DIR"
-CARCH=$ARCH vbuild -C "$WORK_DIR" all
+VBUILD_KEY_NAME=$KEY_NAME CARCH=$ARCH vbuild -C "$WORK_DIR" all
 cp -r "$WORK_DIR/dist/." "$REPO_ROOT/dist/"
 vbuild -C "$WORK_DIR" clean
 rm -rf "$WORK_DIR"
