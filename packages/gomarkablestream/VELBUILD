@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gomarkablestream
-pkgver=0.50.0
+pkgver=1.2.0
 pkgrel=0
 upstream_author="owulveryck"
 category="utilities"
@@ -8,26 +8,26 @@ pkgdesc="Stream your reMarkable screen to a web browser"
 url="https://github.com/owulveryck/goMarkableStream"
 arch="aarch64 armv7"
 license="MIT"
-depends="!rmppm !rm1"
+depends="!rmppm !rm1 remarkable-os>=3.24"
 options="!check !fhs !strip !tracedeps"
 
 source="
 $pkgname-$pkgver-aarch64::https://github.com/$upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RMPRO
 $pkgname-$pkgver-armv7::https://github.com/$upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RM2
-LICENSE::https://raw.githubusercontent.com/$upstream_author/goMarkableStream/v$pkgver/LICENSE
+https://raw.githubusercontent.com/$upstream_author/goMarkableStream/v$pkgver/LICENSE
 "
 
 package() {
 	install -Dm755 "$srcdir/$pkgname-$pkgver-$CARCH" \
-		"$pkgdir/home/root/.vellum/bin/goMarkableStream"
+		"$pkgdir"/home/root/.vellum/bin/goMarkableStream
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/$upstream_author/goMarkableStream/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-9691a037982e7e21b4b0f546a1fe86b6b85c49a6e48985d155daf3dca6bef3504b9bcd44af4f5ed2d9407f6bb484b45ef99f7b879e57ba57460ed4f924993534  gomarkablestream-0.50.0-aarch64
-3e12b3a66f835c35c946ef6d1d4cc296803841ef7dfd4b69a827d18ca4bbdc17769477560bd1d9756613153f6e0cef56ebc96b99c3f6d4d74329c01d78aa1d21  gomarkablestream-0.50.0-armv7
+sha512sums='
+52f2b03cb2479120633639ecdef3dd30e5857e5fb4905a6a68466faa5a009886b769fc6f3f18802db32d028755be4ca729479edb361e69c37b669790b1a0aeea  gomarkablestream-1.2.0-aarch64
+a87cbceb7e650d8e2ecdfe13e80d185589a6f31aa0ad9858ccbb5839204d82c24a3c9e8dea95444832aab06096991481b868fa2cd39540f732fe9df991bdda2c  gomarkablestream-1.2.0-armv7
 814f7ff90e542338425c7e6740ff7cd151143ee5ae32b40ea492d99e9498ac85ec5e42b33108fd065d03bf7d453866487054652a8a6f11339c6855e34be635ac  LICENSE
-"
+'
