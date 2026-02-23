@@ -172,10 +172,12 @@ jobs:
 
       - &set-up-signing-key
         name: Set up signing key
+        id: signing
         run: |
           if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
             echo "${{ secrets.SIGNING_KEY }}" > keys/packages.rsa
             chmod 600 keys/packages.rsa
+            echo "has_key=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Build ${{ matrix.package }}
@@ -183,7 +185,7 @@ jobs:
 
       - &verify-signature
         name: Verify package signatures
-        if: github.repository == 'vellum-dev/vellum'
+        if: steps.signing.outputs.has_key == 'true'
         run: |
           docker run --rm \
             -v "$PWD/dist:/dist:ro" \
