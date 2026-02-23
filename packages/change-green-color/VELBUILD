@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=change-green-color
+pkgver=1.0.0
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Change the default green color to a darker green. Customizable via editing qmd."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+_commit="d3a61b5fefe7a947f8be8f20a5465bfac97edda5"
+source="
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/changeGreenColor.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/changeGreenColor.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/changeGreenColor.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+ed75b143af3fd5f024f668a5796d81de574780a53e4f9dd8ff3dd46fa342ae39de7dfc243600da5559ac28d49de60d6c7324085a2dae6a3ce353af7d4d72d79c  changeGreenColor.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+'
