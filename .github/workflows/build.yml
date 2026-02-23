@@ -180,6 +180,22 @@ jobs:
       - name: Build ${{ matrix.package }}
         run: ./scripts/build-package.sh "${{ matrix.package }}"
 
+      - &verify-signature
+        name: Verify package signatures
+        if: github.repository == 'vellum-dev/vellum'
+        run: |
+          docker run --rm \
+            -v "$PWD/dist:/dist:ro" \
+            -v "$PWD/keys:/keys:ro" \
+            alpine:edge \
+            sh -c "
+              cp /keys/packages.rsa.pub /etc/apk/keys/
+              for apk in /dist/*/*.apk; do
+                [ -f \"\$apk\" ] || continue
+                apk verify \"\$apk\" || exit 1
+              done
+            "
+
       - name: Get package name from VELBUILD
         id: pkgname
         run: |
@@ -237,6 +253,8 @@ jobs:
 
       - name: Build ${{ matrix.package }} for ${{ matrix.arch }}
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
+
+      - *verify-signature
 
       - name: Get package name from VELBUILD
         id: pkgname
