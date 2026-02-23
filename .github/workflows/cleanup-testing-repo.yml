@@ -4,6 +4,11 @@ on:
   pull_request_target:
     types: [closed]
 
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
 jobs:
   remove-labels:
     runs-on: ubuntu-latest
