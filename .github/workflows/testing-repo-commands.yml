@@ -150,6 +150,15 @@ jobs:
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
 
+      - name: Install vbuild
+        run: |
+          set -e
+          curl \
+            --location \
+            'https://github.com/Eeems/vbuild/releases/download/0.0.11/vbuild-vbuild-ubuntu' \
+            --output /usr/local/bin/vbuild
+          chmod +x /usr/local/bin/vbuild
+
       - name: Set up signing key
         run: |
           if [ -n "$SIGNING_KEY" ]; then
@@ -191,6 +200,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
+
+      - name: Install vbuild
+        run: |
+          set -e
+          curl \
+            --location \
+            'https://github.com/Eeems/vbuild/releases/download/0.0.11/vbuild-vbuild-ubuntu' \
+            --output /usr/local/bin/vbuild
+          chmod +x /usr/local/bin/vbuild
 
       - name: Set up signing key
         run: |
