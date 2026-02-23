@@ -1,0 +1,32 @@
+maintainer="Wajsar Josef <Wajsar.Josef@hotmail.com>"
+pkgname=xovi-settings-main
+pkgver=1.0.0
+pkgrel=0
+upstream_author="PepikVaio"
+category="framework"
+pkgdesc="Add settings to your extension. The extension will do nothing unless you add additional files."
+url="https://github.com/PepikVaio/reMarkable_Xovi_Extensions"
+arch="noarch"
+license="CC-BY-NC-ND-4.0"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
+_commit="4d24da8dbf92cec060e29f64568dc6963cf6d6fe"
+source="
+https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/$_commit/xovi_Settings_Main/3.24.0.149/xovi_Settings_Main.qmd
+https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/$_commit/LICENSE.md
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/xovi_Settings_Main.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/xovi_Settings_Main.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/PepikVaio/reMarkable_Xovi_Extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums="
+d40f92057da83a07df804f84beb9e92ec23e755133e60c841a798b2b3c828af685d6c3db4e7a46fb361e7fd9858e612d49b340fed6da2aced47e7526c4bf3b7d  xovi_Settings_Main.qmd
+e5e7d426c2f05d5f0748511bfd63f15bb946695bcb7f6ad7afaa412fb1c53e59cc6ba0d69c20fda9aed28c8695502dc2cec4d15428f9c56baa3da9de48574b4a  LICENSE.md
+"
