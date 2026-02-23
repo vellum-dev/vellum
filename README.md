@@ -18,6 +18,14 @@ Historically, vellum was the fine parchment used for illuminated manuscripts. To
 
 A fitting name for a package manager on a paper tablet.
 
+## Where To Get Help
+
+- **Package-related issues or package requests** should be opened in this repository. 
+- **Issues with the software being packaged** should be submitted to the relevant upstream
+  projects, which are linked in the package index and the package's `url` field.
+- **Issues with the Vellum cli** should be opened in [its repository](https://github.com/vellum-dev/vellum-cli).
+- **For general questions or help**, join the [community Discord](https://discord.gg/u3P9sDW) where many helpful and knowledgeable people, including mod developers, are active.
+
 ## How It Works
 
 Vellum stores everything in `/home/root/.vellum/` to work around the space-constrained and read-only root filesystem:
