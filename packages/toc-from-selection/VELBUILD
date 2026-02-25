@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=toc-from-selection
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Adds a button to the selection context menu to add the selected text as a ToC entry. Handwriting requires Connect/rmfakecloud."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder bettertoc remarkable-os>=3.25 remarkable-os<3.26"
+_commit="37379cb23d51f580f0355c5560abdac26d1fe550"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/tocFromSelection.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/tocFromSelection.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/tocFromSelection.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+8bfdceb33da5883d89dba636ed1b669397c808f00c103129022e55599c2f30fe2a802be92889ac618eb946145f76243a50cf53c52e9aef4b8f530a0956444a29  tocFromSelection.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+'
