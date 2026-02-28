@@ -20,7 +20,7 @@ subpackages="
 	webserver-remote:webserver_remote
 "
 
-_release="pre-v18-20022026"
+_release="pre2-v18-28022026"
 
 source="
 https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-aarch64.tar.gz
@@ -114,8 +114,8 @@ webserver_remote() {
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
 }
 sha512sums="
-47abf78c591fc386d4b7b79d8ab1686cc49b188665caca6b8e3c14bc644f92c38cd2da8f6f38dba1eec95b96d5109f805cda6c3160ad2a98c63cef42ac6f6995  xovi-aarch64.tar.gz
-f1638cbcd277e53060867c4672659bcd2517d97511f6973032a9a58625a7e799d722fc870b31fb22767068f4456536270d2131d1a607e5956ca7ae6eed89a0df  xovi-arm32.tar.gz
+a9e7bea74f8c5dd0fa7e48bf283e7c26fd1a5e8a390f06f38e88d123c881a0bf996fab9acc4deb1475e615bcc632a374da1f4317e6564224f46c483bad621d06  xovi-aarch64.tar.gz
+e8d72652c9d7a57aa6eb9bd536e1c57f564c7f57d7f87e71aac0acc48d882e26c66286d48bf02a750863d429551a292bdcf31eebab97abe2d64725948ee56c4b  xovi-arm32.tar.gz
 872c0fdd95b1d8890fd8c1819a445225e2aafc81b22a7b09aad18962ad4700b4f1438290160828749372b904cc113efb69a33ddcadb06dfb58e5a74e2031d7de  rebuild_hashtable
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 "
