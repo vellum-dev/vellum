@@ -122,6 +122,9 @@ postinstall() {
 	echo ""
 }
 
+predeinstall() {
+	[ -x /home/root/xovi/stock ] && /home/root/xovi/stock
+}
 sha512sums="
 a9e7bea74f8c5dd0fa7e48bf283e7c26fd1a5e8a390f06f38e88d123c881a0bf996fab9acc4deb1475e615bcc632a374da1f4317e6564224f46c483bad621d06  xovi-aarch64.tar.gz
 e8d72652c9d7a57aa6eb9bd536e1c57f564c7f57d7f87e71aac0acc48d882e26c66286d48bf02a750863d429551a292bdcf31eebab97abe2d64725948ee56c4b  xovi-arm32.tar.gz
