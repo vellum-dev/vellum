@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ ! -e '/home/root/xovi/extensions.d/qt-resource-rebuilder.so' ]]; then
+    echo "Please install qt-resource-rebuilder before updating the hashtable"
+    exit 1
+fi
+
+systemctl stop xochitl.service
+
+if pidof xochitl; then
+    kill -15 "$(pidof xochitl)"
+fi
+
+mkdir -p /home/root/xovi/exthome/qt-resource-rebuilder
+rm -f /home/root/xovi/exthome/qt-resource-rebuilder/hashtab
+
+echo -e "#################################"
+echo -e "Building new hashtable..."
+echo -e "Please enter your password on the rM when prompted."
+read -rp "Press enter to continue:"
+
+echo -e "\n\nOutput:"
+sleep 3
+
+QMLDIFF_HASHTAB_CREATE=/home/root/xovi/exthome/qt-resource-rebuilder/hashtab QML_DISABLE_DISK_CACHE=1 LD_PRELOAD=/home/root/xovi/xovi.so /usr/bin/xochitl 2>&1 | while IFS= read -r line; do
+    echo -e "$line"
+    if [[ "$line" == "[qmldiff]: Hashtab saved to /home/root/xovi/exthome/qt-resource-rebuilder/hashtab" ]]; then
+    echo -e "\n##############"
+    echo -e "Found expected output. Killing gui process and restarting systemd service."
+    kill -15 "$(pidof xochitl)"
+    fi
+done
+
+sleep 5
+echo -e "Starting xochitl service..."
+systemctl start xochitl.service

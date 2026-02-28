@@ -1,0 +1,97 @@
+maintainer="notfrants <notfrants@proton.me>"
+pkgname=xovi-rmfakecloud
+pkgver=1.1.0
+pkgrel=0
+upstream_author="asivery"
+category="utilities"
+pkgdesc="xovi module for using a self hosted rM cloud with xochitl"
+url="https://github.com/asivery/xovi-rmfakecloud"
+arch="aarch64 armv7"
+license="MIT"
+depends="xovi-extensions>=18.0.0"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://github.com/notfrants/xovi-rmfakecloud/releases/download/actions-test7/xovi-rmfakecloud-aarch64.tar.gz
+https://github.com/notfrants/xovi-rmfakecloud/releases/download/actions-test7/xovi-rmfakecloud-arm32.tar.gz
+setup.sh
+https://raw.githubusercontent.com/asivery/xovi-rmfakecloud/refs/heads/main/LICENSE
+"
+
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  tar -xzf "$srcdir"/xovi-rmfakecloud-aarch64.tar.gz -C "$srcdir" ;;
+		armv7)  tar -xzf "$srcdir"/xovi-rmfakecloud-arm32.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	install -Dm644 "$srcdir"/xovi/extensions.d/rmfakecloud_ns.so \
+		"$pkgdir"/home/root/xovi/extensions.d/rmfakecloud_ns.so
+	install -Dm644 "$srcdir"/xovi/extensions.d/rmfakecloud_ts.so \
+		"$pkgdir"/home/root/xovi/extensions.d/rmfakecloud_ts.so
+	install -Dm644 "$srcdir"/xovi/extensions.d/rmfakecloud_ws.so \
+		"$pkgdir"/home/root/xovi/extensions.d/rmfakecloud_ws.so
+	
+	install -d "$pkgdir"/home/root/xovi/exthome/rmfakecloud
+	install -Dm755 "$srcdir"/setup.sh \
+		"$pkgdir"/home/root/xovi/exthome/rmfakecloud/setup.sh
+
+	install -d "$pkgdir"/home/root/xovi/services/rm-sync.service/extensions.d
+	ln -s /home/root/xovi/extensions.d/rmfakecloud_ns.so \
+		"$pkgdir"/home/root/xovi/services/rm-sync.service/extensions.d/rmfakecloud_ns.so
+	ln -s /home/root/xovi/extensions.d/rmfakecloud_ts.so \
+		"$pkgdir"/home/root/xovi/services/rm-sync.service/extensions.d/rmfakecloud_ts.so
+	ln -s /home/root/xovi/extensions.d/rmfakecloud_ws.so \
+		"$pkgdir"/home/root/xovi/services/rm-sync.service/extensions.d/rmfakecloud_ws.so
+
+	install -d "$pkgdir"/home/root/xovi/services/rm-sync.service/exthome
+	ln -s /home/root/xovi/exthome/rmfakecloud \
+		"$pkgdir"/home/root/xovi/services/rm-sync.service/exthome/rmfakecloud
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/notfrants/xovi-rmfakecloud/archive/refs/tags/actions-test7.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall() {
+	cat << 'EOF'
+
+=============================================================
+                  xovi-rmfakecloud installed
+=============================================================
+
+  To complete the setup, run:
+
+    /home/root/xovi/exthome/rmfakecloud/setup.sh
+
+  You will be prompted for your rmfakecloud server hostname
+  and port number. You only need to do this once.
+
+  Alternatively, edit the config file at:
+
+    /home/root/xovi/exthome/rmfakecloud/config.conf
+  
+  To include your rmfakecloud server hostname and port:
+
+    host=<your domain>
+    port=443
+
+=============================================================
+
+EOF
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/rmfakecloud
+	fi
+}
+sha512sums="
+655de94a5c7898b5f328f1c5126dc1a415e7d927d928d99eba0a0d22fcebd03bc884e5d142853f04f6fc2ca341bedaf815f03fb7c31cd3e7a4af27ff30f92b2b  xovi-rmfakecloud-aarch64.tar.gz
+93c994aa5bd59dd7d067786beb1ef32f621abda816c058199e056f2cf44c5357c0172c967020eb1abcb3d2255242de4269b8e3f6be1b08e5a655e92f549743f0  xovi-rmfakecloud-arm32.tar.gz
+f4731fb0e92a8157919c2e2223f000bdabbea281223e3bffc3c6ad0f16fd8c03c36695a40fc62b0851903fadb9357890ea93309f2e34176466facfb86424e631  setup.sh
+52282ae6a41f0222d508dd061d245d97d0032bf30d55b61a18235fb2d2f40946b17115a5b96c67294858c5cf575518fcb3367ab6bf9e960c48c3bac591b9eb14  LICENSE
+"
