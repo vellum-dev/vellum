@@ -66,6 +66,7 @@ package() {
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="$pkgname"
+	install="$subpkgname.post-install $subpkgname.post-deinstall"
 
 	install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
@@ -111,15 +112,6 @@ webserver_remote() {
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
-}
-
-postinstall() {
-	echo ""
-	echo "============================================"
-	echo "  NOTE: Before using any QT modifications,"
-	echo "  you must run: xovi/rebuild_hashtable"
-	echo "============================================"
-	echo ""
 }
 
 predeinstall() {
