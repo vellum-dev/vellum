@@ -33,7 +33,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-predeinstall() {
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/xovi
 	fi
