@@ -14,6 +14,7 @@ options="!check !fhs !strip !tracedeps"
 source="
 https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz
 https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.tar.gz
+
 https://raw.githubusercontent.com/asivery/appload-rmstream/master/LICENSE
 "
 
@@ -58,7 +59,7 @@ postdeinstall(){
 }
 
 sha512sums='
-22a6e4dc8867f00fe8b7f768e23d21d05b7357a77e1d510120f669173f475a19bd5944a0bb48b4af4d20f29551128a3f0084892f955841726068cdf82fe1f333  rmstream-aarch64.tar.gz
-cedb3ebb11dff8069c6ebdd9f07f296362042276a7b392f6fb47c442486fd8c9ef16e7543bd44bab776ebbe1bc3c600c3e91e63a026fb8c8b80b1f084c73fe1a  rmstream-arm32.tar.gz
+bfb554a8fc35d8f92110d7bed8b64df46c20b1b5c9183389049e27dd5b035fc457a528928677c0c51cdbe3f15e539d488202e7bd57ccba796d1ff95b4238a1a1  rmstream-aarch64.tar.gz
+20c4b733c2e09503942e3e69aa4ded67af9bd383a633463539c16eddc54ba18b6a97634a5ad10be4c9504a4371538873dbab58d5e25690f67d7b391d8aed4547  rmstream-arm32.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 '
