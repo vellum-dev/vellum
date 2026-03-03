@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=quicksheet-use-template
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Use the last page's template when adding a quicksheet page"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
+_commit="e06be2b937f5b7128956e6a39b51dcb8ac9817e4"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/quicksheetUseTemplate.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir/quicksheetUseTemplate.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/quicksheetUseTemplate.qmd"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums='
+04b1974384b2e81c9258fa32eb280f7a9ea0339b1cb7f3b6dd856cc698f2b628c78c67a2a5c46573f9b83cbaa28f1db6bf312468a61ae41905c099f7012c1fcf  quicksheetUseTemplate.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+'
