@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=change-green-color
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
-_commit="d3a61b5fefe7a947f8be8f20a5465bfac97edda5"
+_commit="36a5383dc3b6006f9f86470ce656e1b10ee45e1e"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/changeGreenColor.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-ed75b143af3fd5f024f668a5796d81de574780a53e4f9dd8ff3dd46fa342ae39de7dfc243600da5559ac28d49de60d6c7324085a2dae6a3ce353af7d4d72d79c  changeGreenColor.qmd
+a1ef088b46022d8aebf58b2f83505f83b5657894b5f57b9ab80c7b7eca41b190f0ee40341d25056b497b86974637bc07c10c481002a0f08f989026fc5ec76a0a  changeGreenColor.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '
