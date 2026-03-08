@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
-pkgver=0.1.2
+pkgver=0.1.3
 pkgrel=0
 upstream_author="asivery"
 category="apps"
@@ -59,7 +59,7 @@ postdeinstall(){
 }
 
 sha512sums='
-bfb554a8fc35d8f92110d7bed8b64df46c20b1b5c9183389049e27dd5b035fc457a528928677c0c51cdbe3f15e539d488202e7bd57ccba796d1ff95b4238a1a1  rmstream-aarch64.tar.gz
-20c4b733c2e09503942e3e69aa4ded67af9bd383a633463539c16eddc54ba18b6a97634a5ad10be4c9504a4371538873dbab58d5e25690f67d7b391d8aed4547  rmstream-arm32.tar.gz
+3e0174245be7fad9a5597ebeb40a2ab1693f1cb718bdf41ceb7936345cd9c6af37bf9143c88698510705e07d21d35f9f7a542800dc54e3e646600ad7111e8a56  rmstream-aarch64.tar.gz
+d40fe26ca0382553599978b747d9df9d07539ceac0223bec7c8f2479009c470a0aead72e6cef8cc4912aaef63ccb6dc4dd43c1c154e8dad108fa83939e27e4f3  rmstream-arm32.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 '
