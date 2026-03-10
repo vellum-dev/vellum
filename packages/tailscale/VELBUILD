@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
 pkgver=1.94.2
-pkgrel=0
+pkgrel=1
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
