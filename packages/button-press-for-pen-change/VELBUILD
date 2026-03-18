@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=button-press-for-pen-change
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Hold stylus button to select-erase, click once to change to selection, click twice to change pen."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shorcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.26"
+depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shorcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.27"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/buttonPressForPenChange.qmd

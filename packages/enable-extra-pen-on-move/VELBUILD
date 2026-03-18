@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-extra-pen-on-move
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Adds extra pen slot to toolbar (RMPPM only, requires qt-resource-rebuilder v16+)."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rm1 !rm2 !rmpp remarkable-os>=3.22 remarkable-os<3.26"
+depends="qt-resource-rebuilder !rm1 !rm2 !rmpp remarkable-os>=3.22 remarkable-os<3.27"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="
 enableExtraPenOnMove.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.22/enableExtraPenOnMove.qmd

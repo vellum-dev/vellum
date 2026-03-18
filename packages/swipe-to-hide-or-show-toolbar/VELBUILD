@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=swipe-to-hide-or-show-toolbar
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Swipe from toolbar edge to show/hide the toolbar."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
 replaces="gesture-toolbar-hide gesture-toolbar-show"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="

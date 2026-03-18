@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tap-to-change-view-or-page
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Tap screen edges to scroll/navigate pages when toolbar is hidden."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.25 remarkable-os<3.26"
+depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.25 remarkable-os<3.27"
 replaces="gesture-tap-to-page"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="

@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=navigate-using-arrow-keys
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Keyboard arrow key navigation: left/right for pages, up/down for scrolling."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.25 remarkable-os<3.26"
+depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.25 remarkable-os<3.27"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
 source="
 navigateUsingArrowKeys.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/navigateUsingArrowKeys.qmd
