@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fav-tag-button
-pkgver=1.0.5
+pkgver=1.0.6
 pkgrel=0
 upstream_author="FouzR"
 category="ui"
@@ -8,24 +8,24 @@ pkgdesc="Adds buttons to the navigator search/new note button that lets you open
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
-_commit="af84fe8f21038c45738a3e321cd9a1e594c985f0"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+_commit="1464e2e844efec769f88048d3799bdd2486c75aa"
 source="
-favTagButton.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.25/favTagButton.qmd
-LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.26/favTagButton.qmd
+https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/favTagButton.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/favTagButton.qmd"
+	install -Dm644 "$srcdir"/favTagButton.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/favTagButton.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-7b1c7651d8bd2408a182c1c85108bdab8d07eb3053112b8a3456601bd8bc47850192c2f5e79ee5b0b277fc54e2cfdef7904a590c919604f6361e0d25a6fdd601  favTagButton.qmd
+sha512sums='
+7d9447031b6f7056ac19d20ef1da1cfcc6136bd9078607f85ef1a6d12fcdf6f4d2493c7ee4b174af4c7bb45f36caf4999291e2f36b41fc94b682b784fea4de1f  favTagButton.qmd
 48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
-"
+'

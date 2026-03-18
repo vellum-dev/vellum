@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=floating-toolbar
-pkgver=2.0.0
+pkgver=2.0.1
 pkgrel=0
 upstream_author="FouzR"
 category="ui"
@@ -8,10 +8,10 @@ pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.25 remarkable-os<3.26"
-_commit="c9e43bd2dbc484e0fc92d0c5273fbc6e8d98bf94"
+depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.26 remarkable-os<3.27"
+_commit="1464e2e844efec769f88048d3799bdd2486c75aa"
 source="
-https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.25/floating.qmd
+https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.26/floating.qmd
 https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
@@ -36,6 +36,6 @@ postdeinstall(){
 }
 
 sha512sums='
-3824a69bbc0d0c16623f91142ccb7295bda7a7ac81c5ef70a005742af18196c18e5037f47b263b79ef4bc7195fdcabc5fc93db43722631f1e02bd27137028db4  floating.qmd
+6a82847a033b5580c94b7bdcd46deb0796c0e3cbb1c9ec22c5b3b460ab3e3b9b2e42b3f7121592a8c032ebacc8ca2574734036cc1aa36d9b5cfc4fe78f75d046  floating.qmd
 48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
 '
