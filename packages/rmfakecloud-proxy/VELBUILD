@@ -28,9 +28,6 @@ package() {
 
 	install -Dm644 "$srcdir/LICENSE" "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$upstream_author/rmfakecloud-proxy" > "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
-	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
-		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 
 postinstall(){

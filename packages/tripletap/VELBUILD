@@ -49,9 +49,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$upstream_author/xovi-tripletap/archive/v$pkgver.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
-	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
-		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 
 postinstall(){
