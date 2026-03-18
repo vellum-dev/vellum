@@ -60,8 +60,6 @@ package() {
 	# install a backup .service file for use with post-os-upgrade
 	install -Dm644 systemd/tailscaled.service \
 		"$pkgdir/home/root/.vellum/share/tailscale/systemd/tailscaled.service"
-	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
-		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 
 postinstall(){
