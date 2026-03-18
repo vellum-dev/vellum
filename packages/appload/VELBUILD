@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.4.1
-pkgrel=2
+pkgrel=3
 upstream_author="asivery"
 category="framework"
 pkgdesc="Xovi extension for windowed and fullscreen apps on reMarkable tablets"
 url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.22"
+depends="qt-resource-rebuilder remarkable-os>=3.22 remarkable-os<3.26"
 options="!check !fhs !strip !tracedeps"
 
 source="
