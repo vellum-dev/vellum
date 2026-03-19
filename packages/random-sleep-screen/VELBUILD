@@ -20,7 +20,7 @@ package() {
 	install -Dm644 "$srcdir"/randomSleepScreen.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/randomSleepScreen.qmd
 
-	install -Dm644 "$srcdir"/LICENSE \
+	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES

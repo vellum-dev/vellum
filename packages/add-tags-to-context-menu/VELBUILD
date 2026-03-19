@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-09f1802ecdc41dce0ecf91b86e5a0e10204f86b9ae015ef6f21ec869c6634ba2f85213f8d9d7f6a811b74ec116cbaa772b3d58bd1541cbf2f7162ccb7654d6f1  addTagsToContextMenu.qmd
+26717f80ed9b1bfde2d0eea4a38f73e8419beb0908bad7054963d40979198f25c0bcb007922d957d6979aba9515b39e16bcb41f9eb04841b1f49906478872779  addTagsToContextMenu.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '
