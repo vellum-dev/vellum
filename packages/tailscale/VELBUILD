@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
-pkgver=1.94.2
-pkgrel=1
+pkgver=1.96.2
+pkgrel=0
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
@@ -62,7 +62,7 @@ package() {
 		"$pkgdir/home/root/.vellum/share/tailscale/systemd/tailscaled.service"
 }
 
-postinstall(){
+postinstall() {
 	/home/root/.vellum/bin/mount-rw
 
 	echo "installing tailscaled.service..."
@@ -80,7 +80,7 @@ postinstall(){
 	systemctl restart tailscaled.service
 }
 
-postupgrade(){
+postupgrade() {
 	/home/root/.vellum/bin/mount-rw
 
 	echo "installing tailscaled.service..."
@@ -98,7 +98,7 @@ postupgrade(){
 	systemctl restart tailscaled.service
 }
 
-postosupgrade(){
+postosupgrade() {
 	echo " * re-installing tailscaled.service..."
 	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
 
@@ -112,7 +112,7 @@ postosupgrade(){
 	systemctl restart tailscaled.service
 }
 
-predeinstall(){
+predeinstall() {
 	/home/root/.vellum/bin/mount-rw
 
 	echo "stopping tailscaled service..."
@@ -135,9 +135,9 @@ predeinstall(){
 }
 
 sha512sums='
-7e193b8738a3fb28bf74c30eacbe846eb4d05fb818dc243ae0884e27eeccd90d8879242051f0ea3ddd685172dbd3e24e6eed01984db70f144443f017f0e7a023  tailscale_1.94.2_arm.tgz
-baf3f3ba20eaaa9b36996b6902a45c1a68a3c98d2dc0d796c93c746523fce2e7d3bce0b4ecfb3406af8730e5fbd20a93e0c545199c27405d9b5a7ec5a8ee97c9  tailscale_1.94.2_arm64.tgz
-d9e05b6d2d70e945ab5c968cfcffa3bf5d5399058c9721bd2198d89c1a5466f137bcaa4ff5a1aaf81ee08f7c7c197607b1d73d3f472f158b877d8df9fa71c790  LICENSE
+7061960e1c3fb6bb5d6bc8626b16b558d6449e9e5e661982499d9e5626d04795ed26e07e85e9a827360d4e6b2b0b309e12f1b3ceb13dac6c5b3ce1308956b165  tailscale_1.96.2_arm.tgz
+f73f424d37f958e9d2bba0efa4878e10ff47da1f613d1babe56ef1c84e738439a2a94e94858075ded26d85a210288f255d3d4394b8e8ad7a9cc342363bba6a04  tailscale_1.96.2_arm64.tgz
+0d6d4be4907d6994e0fe6aa10aee9e168608a41b0c0c32f4770830716312bf92756bb3cc294ad2419f02383317e68043d2e804231f150813af63da62c0556eb0  LICENSE
 b0cbcd5e94001fc8f91ae6bc0dca40bac8f34d92112d2a0ad83189c8e6bb79fe415dce9dda6a554c8094a59f1bfd6bf1109439c47ef5f1d0b3eb522af3a62c95  10-defaults.patch
 c2f12c405d9a63829c0d0a18757f29c8f295dd5de7dcfea3ac5875c0871d6af439cc25edb72c58881f29231c1a254a2488344d57861d1be49123228f8cdf6bd5  10-service.patch
 2100dd4f6936569ea683d6cec4e55a5d5940edb9dd9a4f75dff5faa1a7037af3c817a1a6987796f4ad96d2958b8943ebb236141f359428520d57a760f36a58aa  tailscale.post-os-upgrade
