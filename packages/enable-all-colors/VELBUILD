@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder !rmpp !rmppm remarkable-os>=3.26 remarkable-os<3.27"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/enableAllColors.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-f3ca4be984d86b9cdf76eb9f6b620285d631a378dc00b205b41ca91f9fa3ab1dd70b4533d24c6e1b6f24b51b57c4ffe15ce2c160fd9a08282f9e7a6f561bbb91  enableAllColors.qmd
+c792cb6658d53f7e6c8692be46cf1dbefac69f9916a16c230657a72d1295c5c9aff77ce7d1ce0c9330becf1b3d0e12aa4d77288fba90265de06997dddc3e54ab  enableAllColors.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '

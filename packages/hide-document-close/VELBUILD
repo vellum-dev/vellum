@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/hideDocumentClose.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-0deaab9044ccafce00c330a0f3c03684a5c085d0d3eb92d6b954e2ce635bc1f5815f73d537f1f5525dc640ac831809b76169064ebece00f56c21cfaa9bf4989c  hideDocumentClose.qmd
+d6b5b66ab4534113d9ba341aa3fba0fa9228506bbc6336ec5d26f88997c55402547302d26215a33d8a9cc3533319ced4862d85bc826db050dc79b2c3d10c16c1  hideDocumentClose.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '

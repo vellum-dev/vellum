@@ -1,31 +1,31 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fewer-light-steps
-pkgver=1.0.1
-pkgrel=3
+pkgver=1.0.2
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Changes 5-level light slider to 4-level."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !more-light-settings !rm1 !rm2 remarkable-os>=3.23 remarkable-os<3.27"
-_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+depends="qt-resource-rebuilder !more-light-settings !rm1 !rm2 remarkable-os>=3.26 remarkable-os<3.27"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
-feverLightSteps.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.23/feverLightSteps.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/feverLightSteps.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/feverLightSteps.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/feverLightSteps.qmd"
+	install -Dm644 "$srcdir"/feverLightSteps.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/feverLightSteps.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-4e6e96bda87bdee66a6f6ce9493fd80f68cca054145c7c5213eea94a189b8d3caf121421d6f9cfa20c5894aed80361bf38c81b50c04e28f6348c7d79b14760d7  feverLightSteps.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
-"
+sha512sums='
+762dbadcf974c821ef9966a7a5bb0c906bf991160ddbab862ace1cce2db85b2e217632500e8838b0187ca2ec1f2d7d20235979b90a79f3315a60fb8915fd550b  feverLightSteps.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+'

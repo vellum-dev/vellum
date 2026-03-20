@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/hideShowToolbar.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-e238c2541da9e3d5b424936147fb332206246cb3650a2af5539cfed020df5eca0cd4391189db9013f516f1bf64b902998444b82e72c08626c96daa82f8580d4a  hideShowToolbar.qmd
+d0e744ef12b44f75593f0a6cf28bc17b6a7612952795d455738670835ede3d68f9c6071d80259f6686afb4b76b2e58d79090c4392955cc6465a3251b10e7258d  hideShowToolbar.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '

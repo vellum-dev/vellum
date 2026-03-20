@@ -10,7 +10,7 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder !gestures-fouzr remarkable-os>=3.26 remarkable-os<3.27"
 replaces="gesture-contrast-toggle"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/fourFingerChangeFilter.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -27,6 +27,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-2938a27016a6dd559cf558b20b6ab93251c6ee56a5f8d16c8f1952f1505bda8049ebc4d8696a41405665712b58c6d5ff8c76788ab95d1694af6b3d97201bcb2e  fourFingerChangeFilter.qmd
+a21ce3509a2d0b7ead813cf8cc2423f5dc0f7c8b75cacbd2a4589ea2be0997cd3b77108f2df10bd28d9f5849f6946ea0bacf1e9773c43a45f5545b17fb431e4d  fourFingerChangeFilter.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '

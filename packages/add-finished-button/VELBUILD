@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/addFinishedButton.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-d0eab8ac7f9dd890f507e9245dd48290d70c73a17955e5765d0a7528c3e0799c30796980f9fffe1e64b7f05f4baae94ab28f18c40c1013b0394db3cb91b6465a  addFinishedButton.qmd
+6c77f2f7a836997f3c114e16e26c3d1290de6c50c4609b3699e1bc541dad22853f37c59deba9504e2f63b082c2d54e6de6e77c48b694dcb09ffc00e64b8a5900  addFinishedButton.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '
