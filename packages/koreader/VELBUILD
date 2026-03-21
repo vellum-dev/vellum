@@ -8,7 +8,7 @@ pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many mo
 url="https://github.com/koreader/koreader"
 arch="aarch64 armv7"
 license="AGPL-3.0"
-depends="appload"
+depends="appload>=0.4.2"
 options="!check !fhs !strip !tracedeps"
 
 source="
