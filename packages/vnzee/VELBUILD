@@ -18,23 +18,14 @@ https://raw.githubusercontent.com/0xdeb7ef/vnzee/master/LICENSE
 "
 
 unpack() {
-	if [ -z "$force" ]; then
-		verify
-		initdcheck
-	fi
-
-	mkdir -p "$srcdir/$pkgname"
-
-	msg "Unpacking $CARCH.tar.gz..."
-	tar -C "$srcdir/$pkgname" -zxf "$srcdir/$CARCH.tar.gz"
-	msg "Unpacked."
+	tar -C "$srcdir" -zxf "$srcdir/$CARCH.tar.gz"
 }
 
 package() {
-	install -d "$pkgdir"/home/root/xovi/exthome/appload/
-
-	cp -r "$srcdir/$pkgname" \
-		"$pkgdir"/home/root/xovi/exthome/appload/"$pkgname"
+	install -Dm755 "$srcdir"/vnzee \
+		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/vnzee
+	install -Dm644 "$srcdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/external.manifest.json
 
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
