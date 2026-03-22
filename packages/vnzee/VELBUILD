@@ -51,13 +51,6 @@ postupgrade() {
 	echo ""
 }
 
-postdeinstall() {
-	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -rf \
-			/home/root/xovi/exthome/appload/vnzee
-	fi
-}
-
 sha512sums='
 9501567efaec8ec271b2ae1b506cd2c87451a87a6b866213a1795b54a76264d1ff1a7124d67ecb449f41e428293fad01ccdaaac79e0cc7b369475b27d85207e9  aarch64.tar.gz
 2a8c7e6de21fdd843bbc684efb4407d9ea9acd3f9c971d942efcd46fc22c7f13ce467d93f74fa363c4621e8ceb877b6006acc1be3907c288c853f68756bc97ad  armv7.tar.gz
