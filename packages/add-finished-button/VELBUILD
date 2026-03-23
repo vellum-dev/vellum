@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-finished-button
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -8,24 +8,24 @@ pkgdesc="Adds a Finished button when selecting documents, moving them to the fir
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.26"
-_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
-addFinishedButton.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/addFinishedButton.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/addFinishedButton.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/addFinishedButton.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/addFinishedButton.qmd"
+	install -Dm644 "$srcdir"/addFinishedButton.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/addFinishedButton.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-68bb60c827b35caadf01d5f068745ea5f8f5ec278d383e47fbbcc2930badb372d9f669b7e373e3f23eadd35c5823cb81a396a6d2c9689590043c70e92aa6f212  addFinishedButton.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
-"
+sha512sums='
+6c77f2f7a836997f3c114e16e26c3d1290de6c50c4609b3699e1bc541dad22853f37c59deba9504e2f63b082c2d54e6de6e77c48b694dcb09ffc00e64b8a5900  addFinishedButton.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+'

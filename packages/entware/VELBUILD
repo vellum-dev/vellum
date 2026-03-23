@@ -60,9 +60,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYING"
 	echo "https://github.com/$upstream_author/Entware" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
-	install -Dm755 "$startdir/$pkgname.post-os-upgrade" \
-		"$pkgdir/home/root/.vellum/hooks/post-os-upgrade/$pkgname"
 }
 postinstall(){
 	/home/root/.local/share/entware/install-entware.sh

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
-pkgver=0.1.1
-pkgrel=1
+pkgver=0.1.3
+pkgrel=0
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
@@ -12,28 +12,23 @@ depends="appload framebuffer-spy"
 options="!check !fhs !strip !tracedeps"
 
 source="
-https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.zip
-https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.zip
+https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz
+https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.tar.gz
+
 https://raw.githubusercontent.com/asivery/appload-rmstream/master/LICENSE
 "
 
 
 unpack() {
 	case "$CARCH" in
-		aarch64) unzip -o "$srcdir"/rmstream-aarch64.zip -d "$srcdir" ;;
-		armv7) unzip -o "$srcdir"/rmstream-arm32.zip -d "$srcdir" ;;
+		aarch64) tar -xzf "$srcdir"/rmstream-aarch64.tar.gz -C "$srcdir" ;;
+		armv7) tar -xzf "$srcdir"/rmstream-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
-	local folder
-	case "$CARCH" in
-		aarch64) folder="rmstream-aarch64" ;;
-		armv7) folder="rmstream-arm32" ;;
-	esac
-
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
-	cp -r "$srcdir"/$folder \
+	cp -r "$srcdir"/rmstream \
 		"$pkgdir"/home/root/xovi/exthome/appload/rmstream
 
 	install -Dm644 "$srcdir"/LICENSE \
@@ -63,8 +58,8 @@ postdeinstall(){
 	echo ""
 }
 
-sha512sums="
-3e370b80beec32a83b3defb6a0be149d76fcb2e8ad827e695ab5a30930a4cb7a9be16db499123392f2338d942a26ff767585a6e3686c5b9455e71f507655aca1  rmstream-aarch64.zip
-ae2d9b8120945e5b27aef430078afbf84840a874ca4452c436bff7d8498a7909329e1d030003856c19a2865f35bb2c030a0f21dba27cc53c42e8ef012deb5579  rmstream-arm32.zip
+sha512sums='
+3e0174245be7fad9a5597ebeb40a2ab1693f1cb718bdf41ceb7936345cd9c6af37bf9143c88698510705e07d21d35f9f7a542800dc54e3e646600ad7111e8a56  rmstream-aarch64.tar.gz
+d40fe26ca0382553599978b747d9df9d07539ceac0223bec7c8f2479009c470a0aead72e6cef8cc4912aaef63ccb6dc4dd43c1c154e8dad108fa83939e27e4f3  rmstream-arm32.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-"
+'

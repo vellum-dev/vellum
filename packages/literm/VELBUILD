@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.6
-pkgrel=3
+pkgrel=4
 upstream_author="asivery"
 category="apps"
 pkgdesc="A terminal emulator using QtQuick."
 url="https://github.com/asivery/rm-literm"
 arch="aarch64 armv7"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.27"
 options="!check !fhs !strip !tracedeps"
 
 source="

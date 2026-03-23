@@ -83,7 +83,7 @@ fi
 set -e
 echo "Working directory $WORK_DIR"
 cp -r "$REPO_ROOT/packages/$PACKAGE/." "$WORK_DIR"
-VBUILD_KEY_NAME=$KEY_NAME CARCH=$ARCH vbuild -C "$WORK_DIR" all
+SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH VBUILD_KEY_NAME=$KEY_NAME CARCH=$ARCH vbuild -C "$WORK_DIR" all
 cp -r "$WORK_DIR/dist/." "$REPO_ROOT/dist/"
 vbuild -C "$WORK_DIR" clean
 rm -rf "$WORK_DIR"

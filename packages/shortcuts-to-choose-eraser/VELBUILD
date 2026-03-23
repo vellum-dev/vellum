@@ -1,17 +1,17 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=shortcuts-to-choose-eraser
-pkgver=1.0.0
-pkgrel=1
+pkgver=1.0.1
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Use stylus side button for erase selection and rubber eraser as regular eraser."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder rm-stylus=0.2.0 remarkable-os>=3.25 remarkable-os<3.26"
-_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+depends="qt-resource-rebuilder rm-stylus=0.2.0 remarkable-os>=3.26 remarkable-os<3.27"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/shortcutsToChooseEraser.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/shortcutsToChooseEraser.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"

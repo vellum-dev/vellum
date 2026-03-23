@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=button-press-for-pen-change
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -8,10 +8,10 @@ pkgdesc="Hold stylus button to select-erase, click once to change to selection, 
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shorcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.26"
-_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shorcuts-to-choose-eraser remarkable-os>=3.26 remarkable-os<3.27"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/buttonPressForPenChange.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/buttonPressForPenChange.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"

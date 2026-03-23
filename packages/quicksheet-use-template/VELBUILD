@@ -1,31 +1,31 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
-pkgname=stylus-button-eraser
-pkgver=2.0.0
-pkgrel=2
+pkgname=quicksheet-use-template
+pkgver=1.0.1
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
-pkgdesc="Erases when stylus side button is held."
+pkgdesc="Use the last page's template when adding a quicksheet page"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shortcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.27"
-_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+_commit="edc9cefdb2ee2dde0fb495f76ac845a7e26e049e"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/stylusButtonEraser.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/quicksheetUseTemplate.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir"/stylusButtonEraser.qmd \
-		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/stylusButtonEraser.qmd
+	install -Dm644 "$srcdir"/quicksheetUseTemplate.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/quicksheetUseTemplate.qmd
 
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-549c589eb92611efa8adb9c2dc007603911984b64e55f657ddeb1cf62e45c0efa62963c28a40c1dc4a92d534506c737a5b5fc9e52ac191dbc9a4d9c74e55103c  stylusButtonEraser.qmd
+sha512sums='
+7a1ca41028a15d438f02fe93bf5e6092baf7ce5b1adf8fd7f3bd213dbed6e651899058cdd9d3a8e576ca71cf5b3313a4be291f4f973f15295420886c69d3b015  quicksheetUseTemplate.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
+'

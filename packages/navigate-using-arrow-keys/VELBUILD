@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=navigate-using-arrow-keys
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -8,22 +8,22 @@ pkgdesc="Keyboard arrow key navigation: left/right for pages, up/down for scroll
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.25 remarkable-os<3.26"
-_commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.26 remarkable-os<3.27"
+_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
-navigateUsingArrowKeys.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.25/navigateUsingArrowKeys.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/navigateUsingArrowKeys.qmd
+https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/navigateUsingArrowKeys.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/ingatellent/navigateUsingArrowKeys.qmd"
+	install -Dm644 "$srcdir"/navigateUsingArrowKeys.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/ingatellent/navigateUsingArrowKeys.qmd
 
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall(){
@@ -49,7 +49,7 @@ postdeinstall(){
 	fi
 }
 
-sha512sums="
+sha512sums='
 09c48812564f229bbdb2a2fb6cae2470fb71cb9e666feaf1abe6156b8b072c76d839778d8d296417523477248abcd925c6fc8b4799652bcfffa7d8d15ba2b0bd  navigateUsingArrowKeys.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE
-"
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+'
