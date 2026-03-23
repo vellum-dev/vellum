@@ -114,7 +114,7 @@ webserver_remote() {
 }
 
 predeinstall() {
-	# avoid a device reboot is xochitl has been restarted 4 times in the past 10 minutes
+	# avoid a device reboot if xochitl has been restarted 4 or more times in the past 10 minutes
 	systemctl reset-failed xochitl
 
 	[ -x /home/root/xovi/stock ] && /home/root/xovi/stock
