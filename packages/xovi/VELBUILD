@@ -9,6 +9,7 @@ url="https://github.com/asivery/xovi"
 arch="aarch64 armv7"
 license="GPL-3.0"
 options="!check !fhs !strip !tracedeps"
+depends="!xovi-extensions<18.0.0"
 
 source="
 https://github.com/asivery/xovi/releases/download/v$pkgver/xovi-aarch64.so
