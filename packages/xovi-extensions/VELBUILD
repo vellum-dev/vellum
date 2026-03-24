@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=18.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -107,7 +107,7 @@ framebuffer_spy() {
 webserver_remote() {
 	category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="$pkgname xovi-message-broker qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
+	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
