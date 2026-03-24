@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
 pkgver=0.1.4
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
