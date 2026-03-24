@@ -1,14 +1,15 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=settings-rmsync-restart
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the cloud settings page to restart sync service."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder>=17 qt-command-executor remarkable-os>=3.22.4.2 remarkable-os<3.27"
+# https://github.com/search?q=repo%3Armitchellscott%2Fxovi-qmd-extensions%20path%3A3.25%2FsettingsRmSyncRestart.qmd%20net.asivery.CommandExecutor&type=code
+depends="qt-resource-rebuilder>=17 qt-command-executor-qml=1.0 remarkable-os>=3.22.4.2 remarkable-os<3.27"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/settingsRmSyncRestart.qmd
