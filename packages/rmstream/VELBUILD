@@ -8,9 +8,10 @@ pkgdesc="Stream your reMarkable's screen to any device on the local network via 
 url="https://github.com/asivery/appload-rmstream"
 arch="aarch64 armv7"
 license="GPL-3.0"
+# https://github.com/search?q=repo%3Aasivery%2Fappload-rmstream+path%3Aui%2Fmain.qml+net.asivery.AppLoad&type=code
 # https://github.com/search?q=repo%3Aasivery%2Fappload-rmstream%20path%3Aui%2Fmain.qml%20framebuffer-spy&type=code
 # https://github.com/search?q=repo%3Aasivery%2Fappload-rmstream%20path%3Aui%2Fmain.qml%20net.asivery.XoviMessageBroker&type=code
-depends="appload-xovi=0.1.0 framebuffer-spy-xovi>=0.2.0 framebuffer-spy-xovi<1.0.0 xovi-message-broker-qml=2.0"
+depends="appload-qml=0.1.0 framebuffer-spy-xovi>=0.2.0 framebuffer-spy-xovi<1.0.0 xovi-message-broker-qml=2.0"
 options="!check !fhs !strip !tracedeps"
 
 source="
