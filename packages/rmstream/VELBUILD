@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
-pkgver=0.1.3
+pkgver=0.1.4
 pkgrel=0
 upstream_author="asivery"
 category="apps"
@@ -8,16 +8,14 @@ pkgdesc="Stream your reMarkable's screen to any device on the local network via 
 url="https://github.com/asivery/appload-rmstream"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="appload framebuffer-spy"
+depends="appload framebuffer-spy>=18.0.0 xovi-message-broker>=18.0.0"
 options="!check !fhs !strip !tracedeps"
 
 source="
 https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz
 https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.tar.gz
-
-https://raw.githubusercontent.com/asivery/appload-rmstream/master/LICENSE
+https://raw.githubusercontent.com/asivery/appload-rmstream/v$pkgver/LICENSE
 "
-
 
 unpack() {
 	case "$CARCH" in
@@ -45,11 +43,8 @@ postinstall(){
 	echo "==============================================="
 	echo ""
 }
-postdeinstall(){
-	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -rf /home/root/xovi/exthome/appload/rmstream
-	fi
 
+postdeinstall(){
 	echo ""
 	echo "==============================================="
 	echo "  NOTE: You must refresh AppLoad to see changes "
@@ -59,7 +54,7 @@ postdeinstall(){
 }
 
 sha512sums='
-3e0174245be7fad9a5597ebeb40a2ab1693f1cb718bdf41ceb7936345cd9c6af37bf9143c88698510705e07d21d35f9f7a542800dc54e3e646600ad7111e8a56  rmstream-aarch64.tar.gz
-d40fe26ca0382553599978b747d9df9d07539ceac0223bec7c8f2479009c470a0aead72e6cef8cc4912aaef63ccb6dc4dd43c1c154e8dad108fa83939e27e4f3  rmstream-arm32.tar.gz
+966d538577c3968e36e0d068148eaf6149ddd9e8c71081a7f6ec77764e75faeaf199ee1676fe59ca203ed805a5b99bb2dbd6a7588892166fce74d8e12656e1e7  rmstream-aarch64.tar.gz
+185867b2f18265848ca5f909fcfba570a2795fd88ee5b9eddc50008cb15fa2a09ff9ea395b6337237192f5f4e871b9c8ddca4ea95d6a491a46702fede5e54e95  rmstream-arm32.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 '
