@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksettings-screenshot
 pkgver=1.0.2
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a screenshot button to the quick settings menu."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder rm-shot remarkable-os>=3.24 remarkable-os<3.27"
+depends="qt-resource-rebuilder rm-shot<=1.0.3 remarkable-os>=3.24 remarkable-os<3.27 xovi-message-broker<=17"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/quickSettingsScreenshot.qmd
