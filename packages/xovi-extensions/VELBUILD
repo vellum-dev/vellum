@@ -105,7 +105,7 @@ framebuffer_spy() {
 }
 
 webserver_remote() {
-	_category="utilities"
+	category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
 	depends="$pkgname xovi-message-broker qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
 
