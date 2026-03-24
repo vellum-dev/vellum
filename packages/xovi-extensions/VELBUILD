@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=18.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -24,7 +24,7 @@ _release="v18-23032026"
 source="
 https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-aarch64.tar.gz
 https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-arm32.tar.gz
-https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
+https://raw.githubusercontent.com/asivery/rm-xovi-extensions/$_release/LICENSE
 "
 
 
@@ -65,6 +65,8 @@ package() {
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="$pkgname"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Aqt-resource-rebuilder%2Fqt-resource-rebuilder.xovi+version&type=code
+	provides="$subpkgname-xovi=0.3.0"
 	install="$subpkgname.post-install $subpkgname.post-deinstall"
 
 	install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
@@ -83,6 +85,9 @@ qt_resource_rebuilder() {
 qt_command_executor() {
 	pkgdesc="Injects a QT module to execute shell commands from QML"
 	depends="$pkgname"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Aqt-command-executor%2Fmain.cpp+EXTENSIONVERSION&type=code
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions%20path%3Aqt-command-executor%2Fmain.cpp%20net.asivery.CommandExecutor&type=code
+	provides="$subpkgname-xovi=0.1.0 $subpkgname-qml=1.0"
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/qt-command-executor.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
@@ -91,6 +96,10 @@ qt_command_executor() {
 message_broker() {
 	pkgdesc="IPC messaging between xovi extensions"
 	depends="$pkgname"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Axovi-message-broker%2Fxovi-message-broker.xovi+version&type=code
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Axovi-message-broker%2Fsrc%2Fmessagebroker.cpp+version+%3D%3D&type=code
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions%20path%3Axovi-message-broker%2Fsrc%2Fmain.cpp%20net.asivery.XoviMessageBroker&type=code
+	provides="$subpkgname-xovi=0.2.0 $subpkgname-proto=1 $subpkgname-qml=2.0"
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/xovi-message-broker.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
@@ -98,7 +107,10 @@ message_broker() {
 
 framebuffer_spy() {
 	pkgdesc="Module for exposing the address of the system framebuffer"
-	depends="$pkgname remarkable-os<3.27"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Aframebuffer-spy%2Fframebuffer-spy-rm2.xovi+%22xovi-message-broker%24version%22&type=code
+	depends="$pkgname xovi-message-broker-proto=1 remarkable-os<3.27"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Aframebuffer-spy%2Fframebuffer-spy-rm2.xovi+version&type=code
+	provides="$subpkgname-xovi=0.2.0"
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/framebuffer-spy.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/framebuffer-spy.so
@@ -107,7 +119,12 @@ framebuffer_spy() {
 webserver_remote() {
 	category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Awebserver-remote%2Fwebserver-remote.xovi+depends-on&type=code
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Awebserver-remote%2Fwebserver-remote.xovi+%22xovi-message-broker%24version%22&type=code
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions+path%3Awebserver-remote%2Fnotification.qmd+net.asivery.XoviMessageBroker&type=code
+	depends="$pkgname qt-resource-rebuilder-xovi>=0.2.0 qt-resource-rebuilder-xovi<1.0.0 xovi-message-broker-xovi>=0.1.0 xovi-message-broker-xovi<1.0.0 xovi-message-broker-proto=1 xovi-message-broker-qml=2.0 remarkable-os>=3.23 remarkable-os<3.27"
+	# https://github.com/search?q=repo%3Aasivery%2Frm-xovi-extensions%20path%3Awebserver-remote%2Fwebserver-remote.xovi%20version&type=code
+	provides="$subpkgname-xovi=0.1.0"
 
 	install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
 		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so

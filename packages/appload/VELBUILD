@@ -1,20 +1,24 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.4.2
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="framework"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
 url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.22 remarkable-os<3.26"
+# https://github.com/search?q=repo%3Aasivery%2Frm-appload+path%3Axovi%2Ftemplate%2Fappload.xovi+depends-on&type=code
+depends="qt-resource-rebuilder-xovi>=0.3.0 qt-resource-rebuilder-xovi<1.0.0 remarkable-os>=3.22 remarkable-os<3.26"
+# https://github.com/search?q=repo%3Aasivery%2Frm-appload%20path%3Axovi%2Ftemplate%2Fappload.xovi%20version&type=code
+# https://github.com/search?q=repo%3Aasivery%2Frm-appload+path%3A%2Fsrc%2Fmain.cpp+net.asivery.AppLoad&type=code
+provides="$pkgname-xovi=0.1.0 $pkgname-qml=1.0"
 options="!check !fhs !strip !tracedeps"
 
 source="
 https://github.com/asivery/rm-appload/releases/download/v$pkgver/appload-aarch64.zip
 https://github.com/asivery/rm-appload/releases/download/v$pkgver/appload-arm32.zip
-https://raw.githubusercontent.com/asivery/rm-appload/master/LICENSE
+https://raw.githubusercontent.com/asivery/rm-appload/v$pkgver/LICENSE
 "
 
 

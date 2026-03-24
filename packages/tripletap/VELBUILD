@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Start xovi by triple-pressing the power button"
 url="https://github.com/rmitchellscott/xovi-tripletap"
 arch="aarch64 armv7"
 license="MIT"
-depends="xovi mount-utils"
+depends="xovi-extensions mount-utils"
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/rmitchellscott/xovi-tripletap/archive/v$pkgver.tar.gz
 LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/v$pkgver/LICENSE

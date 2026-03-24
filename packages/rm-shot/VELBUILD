@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="utilities"
@@ -8,12 +8,16 @@ pkgdesc="Screenshot extension for xovi framework"
 url="https://github.com/rmitchellscott/rm-shot"
 arch="aarch64 armv7"
 license="GPL-3.0-or-later"
-depends="framebuffer-spy>=18 framebuffer-spy<19 xovi-message-broker>=18 xovi-message-broker<19"
+# https://github.com/search?q=repo%3Armitchellscott%2Frm-shot%20path%3Arm-shot.xovi%20depends-on&type=code
+# https://github.com/search?q=repo%3Armitchellscott%2Frm-shot+path%3Arm-shot.xovi+%22xovi-message-broker%24version%22&type=code
+depends="framebuffer-spy-xovi>=0.2.0 framebuffer-spy-xovi<1.0.0 xovi-message-broker-proto=1"
+# https://github.com/search?q=repo%3Armitchellscott%2Frm-shot%20path%3Arm-shot.xovi%20version&type=code
+provides="$pkgname-xovi=1.1.1"
 options="!check !fhs !strip !tracedeps"
 source="
 https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-aarch64.so
 https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-armv7.so
-https://raw.githubusercontent.com/rmitchellscott/rm-shot/main/LICENSE
+https://raw.githubusercontent.com/rmitchellscott/rm-shot/v$pkgver/LICENSE
 "
 
 package() {
@@ -32,7 +36,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-8ec5d1d966345f77f0dde6c41dc4ead06ae403df05bae70e8104ee5a5da3aa94a90521b6de13d4db564cd23f1dfd374c7f6066f1f9edb03f563edd1413162499  rm-shot-aarch64.so
-79ff0f8ef1e7653c0cb44f193fb5ee6b785395955febb54766fa674314d807d34792cec3e78b1992b39e122167d5362e5763847d44118adb01422ec22e9e6a90  rm-shot-armv7.so
+d518b65a5000fe12175425966d53f5c85b398797549cea41dd53b6ed9d4a8fec57ca2c5d8b01acb5ee61e0cbec01259074dd0c0f690b0e4f75569764a8c0c295  rm-shot-aarch64.so
+0fcbe0e1a1a3ad0c1464c37b81f874de18ffb2c908a11444a1afcbf13c04549c6d58aadfbf4f6dec07b9fa44be403da8c45aa4ff3cfdb5d2294e2f709d4ea2c9  rm-shot-armv7.so
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
 '

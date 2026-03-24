@@ -1,20 +1,23 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.6
-pkgrel=4
+pkgrel=5
 upstream_author="asivery"
 category="apps"
 pkgdesc="A terminal emulator using QtQuick."
 url="https://github.com/asivery/rm-literm"
 arch="aarch64 armv7"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.27"
+# https://github.com/search?q=repo%3Aasivery%2Frm-literm+path%3Aliterm.xovi+depends-on&type=code
+depends="qt-resource-rebuilder-xovi>=0.2.0 qt-resource-rebuilder-xovi<1.0.0 remarkable-os>=3.22 remarkable-os<3.27"
+# https://github.com/search?q=repo%3Aasivery%2Frm-literm%20path%3Aliterm.xovi%20version&type=code
+provides="$pkgname-xovi=0.1.0"
 options="!check !fhs !strip !tracedeps"
 
 source="
 https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-aarch64.so
 https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-arm32.so
-https://raw.githubusercontent.com/asivery/rm-literm/master/COPYING
+https://raw.githubusercontent.com/asivery/rm-literm/v$pkgver/COPYING
 "
 
 

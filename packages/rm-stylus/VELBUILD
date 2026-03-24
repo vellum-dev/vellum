@@ -1,19 +1,22 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-stylus
 pkgver=0.3.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Xovi extension that exposes stylus button events as a QML type."
 url="https://github.com/rmitchellscott/rm-stylus"
 arch="aarch64 armv7"
 license="MIT"
-depends="xovi"
+# https://github.com/search?q=repo%3Armitchellscott%2Frm-stylus%20path%3Arm-stylus.xovi%20version&type=code
+# https://github.com/search?q=repo%3Armitchellscott%2Frm-stylus%20path%3Asrc%2Fstylus.cpp%20net.rmitchellscott.RmStylus&type=code
+provides="$pkgname-xovi=0.1.0 $pkgname-qml=1.0"
+depends="xovi-extensions"
 options="!check !fhs !strip !tracedeps"
 source="
 https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-aarch64.so
 https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-armv7.so
-https://raw.githubusercontent.com/rmitchellscott/rm-stylus/main/LICENSE
+https://raw.githubusercontent.com/rmitchellscott/rm-stylus/v$pkgver/LICENSE
 "
 
 package() {
