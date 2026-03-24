@@ -11,7 +11,8 @@ license="GPL-3.0"
 # https://github.com/search?q=repo%3Aasivery%2Frm-appload+path%3Axovi%2Ftemplate%2Fappload.xovi+depends-on&type=code
 depends="qt-resource-rebuilder-xovi>=0.3.0 qt-resource-rebuilder-xovi<1.0.0 remarkable-os>=3.22 remarkable-os<3.26"
 # https://github.com/search?q=repo%3Aasivery%2Frm-appload%20path%3Axovi%2Ftemplate%2Fappload.xovi%20version&type=code
-provides="$pkgname-xovi=0.1.0"
+# https://github.com/search?q=repo%3Aasivery%2Frm-appload+path%3A%2Fsrc%2Fmain.cpp+net.asivery.AppLoad&type=code
+provides="$pkgname-xovi=0.1.0 $pkgname-qml=1.0"
 options="!check !fhs !strip !tracedeps"
 
 source="
