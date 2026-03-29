@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
-pkgver=0.3.2
-pkgrel=1
+pkgver=0.3.3
+pkgrel=0
 upstream_author="asivery"
 category="framework"
 pkgdesc="Core xovi framework for reMarkable tablets"
@@ -39,8 +39,8 @@ postdeinstall() {
 		rm -rf /home/root/xovi
 	fi
 }
-sha512sums="
-72570b63fcd072a20abba298715334d1b9ecce6f8ae02b53c09bfe4c61263f95eb78302b494d3337e173841d3eaf840c14fbb4b4d9c76292bbb5e9389ee8870c  xovi-aarch64.so
-6ad3b6db12ae486357d50aaaf2d8a257cdadec0d7a1ac7b27029db7357f6588962cba3309ae6a2298cfaebe2694d1f0264c2753c1252a6dd223fd138f6ee996d  xovi-arm32.so
+sha512sums='
+0843529de6871c77ece2a5246a75840f873fdaee28992445ef499346f696726b19cef9c56d5d1bdad31c163d1a78e9f780f9880cef51afaf07f8de2ac22e06a3  xovi-aarch64.so
+e9a08fe463c2dd7d7a190cf2f84036bbc29c8245eafb5cd2ff7fe7b8c06331a2fb696d5239d6250fd8b5642d6a5104c414294b7244c61112be40d5f9c8e27ea8  xovi-arm32.so
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-"
+'
