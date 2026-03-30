@@ -18,20 +18,10 @@ https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
 "
 
 package() {
-    case $(cat /sys/devices/soc0/machine) in
-        "reMarkable Chiappa") 
-            install -Dm644 "$srcdir/tun-chiappa.ko" \
-                "$pkgdir/home/root/.vellum/bin/tun.ko"
-            ;;
-        "reMarkable Ferrari")
-            install -Dm644 "$srcdir/tun-ferrari.ko" \
-                "$pkdgir/home/root/.vellum/bin/tun.ko"
-            ;;
-        *)
-            echo -n "Only supports rMPP and rMPPM"
-            exit 1
-            ;;
-    esac
+    install -Dm644 "$srcdir/tun-chiappa.ko" \
+        "$pkgdir/home/root/.vellum/bin/tun-chiappa.ko"
+    install -Dm644 "$srcdir/tun-ferrari.ko" \
+        "$pkgdir/home/root/.vellum/bin/tun-ferrari.ko"
     install -Dm644 "$srcdir/LICENSE" \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
     echo "https://github.com/reMarkable/linux-imx-rm" > \
@@ -43,7 +33,18 @@ package() {
 postinstall() {
     /home/root/.vellum/bin/mount-rw
     echo "Installing tun..."
-    cp /home/root/.vellum/bin/tun.ko /lib/modules/`uname -r`
+    case $(cat /sys/devices/soc0/machine) in
+        "reMarkable Chiappa")
+            cp /home/root/.vellum/bin/tun-chiappa.ko /lib/modules/`uname -r`/tun.ko
+            ;;
+        "reMarkable Ferrari")
+            cp /home/root/.vellum/bin/tun-ferrari.ko /lib/modules/`uname -r`/tun.ko
+            ;;
+        *)
+            echo "unsupported tablet type"
+            exit 1
+            ;;
+    esac
     depmod -a
     modprobe tun
     echo "tun" > /etc/modules-load.d/tun.conf
