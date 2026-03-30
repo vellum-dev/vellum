@@ -2,10 +2,10 @@ maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=tun
 pkgver=1.0.0
 pkgrel=0
-upstream_author="reMarkable"
+upstream_author="esclee"
 category="utilities"
-pkgdesc="Pre-compiled TUN module for reMarkable Paper Pro/reMarkable Paper Pro Move"
-url="https://github.com/reMarkable/linux-imx-rm"
+pkgdesc="TUN module for reMarkable Paper Pro/reMarkable Paper Pro Move, compiled from the linux kernel code released by reMarkable using reMarkable's toolchains"
+url="https://github.com/esclee/tun-package"
 arch="aarch64"
 license="GPL-2.0-or-later"
 depends="mount-utils remarkable-os>=3.26 remarkable-os<3.27 !rm1 !rm2"
