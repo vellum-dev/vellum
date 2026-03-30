@@ -18,13 +18,20 @@ https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
 "
 
 package() {
-    if [[ $(cat /sys/devices/soc0/machine) == "reMarkable Chiappa" ]]; then
-        install -Dm644 "$srcdir/tun-chiappa.ko" \
-            "$pkgdir/home/root/.vellum/bin/tun.ko"
-    else
-        install -Dm644 "$srcdir/tun-ferrari.ko" \
-            "$pkdgir/home/root/.vellum/bin/tun.ko"
-    fi
+    case $(cat /sys/devices/soc0/machine) in
+        "reMarkable Chiappa") 
+            install -Dm644 "$srcdir/tun-chiappa.ko" \
+                "$pkgdir/home/root/.vellum/bin/tun.ko"
+            ;;
+        "reMarkable Ferrari")
+            install -Dm644 "$srcdir/tun-ferrari.ko" \
+                "$pkdgir/home/root/.vellum/bin/tun.ko"
+            ;;
+        *)
+            echo -n "Only supports rMPP and rMPPM"
+            exit 1
+            ;;
+    esac
     install -Dm644 "$srcdir/LICENSE" \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
     echo "https://github.com/reMarkable/linux-imx-rm" > \
