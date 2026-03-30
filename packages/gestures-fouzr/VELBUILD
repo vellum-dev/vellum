@@ -1,6 +1,6 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-fouzr
-pkgver=1.0.8
+pkgver=1.0.10
 pkgrel=0
 upstream_author="FouzR"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder !gestures-ingatellent remarkable-os>=3.26 remarkable-os<3.27"
-_commit="1464e2e844efec769f88048d3799bdd2486c75aa"
+_commit="3e2db0728df8e30ccb241f5e24b5f5b4c5400266"
 source="
 https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.26/gestures.qmd
 https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
@@ -35,6 +35,6 @@ postdeinstall(){
 }
 
 sha512sums='
-c00fc128d977d7d3028c5f5ce072161c23f69bfc6e5f0e99f2041e404f417331d21c1db67d962802ac2f5253689e6d640598cecc31629f68a5aba50d37d7f808  gestures.qmd
+8e040b24bb59e97f3dbbfca49a304d3cae6239703bde5c429915cdc754671067051aa704c55e02d25bbe0c8dfddc131b4359fc89bd791f486b3e3cd2a81905ec  gestures.qmd
 48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
 '
