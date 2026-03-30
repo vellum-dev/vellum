@@ -1,24 +1,24 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
-pkgname=prevent-notebook-zoomout
-pkgver=1.0.3
+pkgname=ghostbuster
+pkgver=1.0.0
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
-pkgdesc="Forces notebook pages to start at 1x zoom with optional horizontal offset in portrait mode"
+pkgdesc="5-finger tap to perform a full screen refresh."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
-_commit="edc9cefdb2ee2dde0fb495f76ac845a7e26e049e"
+depends="qt-resource-rebuilder remarkable-os>=3.22 remarkable-os<3.27"
+_commit="44244e6fb6797a807357d651192040b46b141b3b"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/preventNotebookZoomOut.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/ghostbuster.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir"/preventNotebookZoomOut.qmd \
-		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/preventNotebookZoomOut.qmd
+	install -Dm644 "$srcdir"/ghostbuster.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/ghostbuster.qmd
 
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
@@ -26,6 +26,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-0593bd35bdfd25ca638ca099f84ac06351d3b04163014a7bbd24c4f0a03796507e506cb837e3dc190686a1301dde27bb4934e49594ea69b91f54030a58ec079c  preventNotebookZoomOut.qmd
+0e99061bbcbea6096f95de99a5145d33f4f4700f243958ccdd648fdd1369cae6e4aa9f9b328eeeb14ee7c0ce573f7781a6a708f28e0b2e6bfeb444d852653392  ghostbuster.qmd
 b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
 '
