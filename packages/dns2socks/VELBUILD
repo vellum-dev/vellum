@@ -60,8 +60,9 @@ postosupgrade() {
 }
 
 predeinstall() {
-	/home/root/.vellum/bin/mount-rw
 	systemctl disable --now dns2socks.service
+
+	/home/root/.vellum/bin/mount-rw
 	rm -f /etc/systemd/system/dns2socks.service
 	systemctl daemon-reload
 	/home/root/.vellum/bin/mount-restore
