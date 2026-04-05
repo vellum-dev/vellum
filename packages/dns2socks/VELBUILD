@@ -9,7 +9,7 @@ url="https://github.com/tun2proxy/dns2socks"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
-depends=""
+depends="mount-utils"
 
 source="
 https://github.com/tun2proxy/dns2socks/releases/download/v$pkgver/dns2socks-aarch64-unknown-linux-gnu.zip
