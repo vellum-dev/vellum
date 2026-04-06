@@ -228,7 +228,8 @@ jobs:
         run: |
           for arch in aarch64 armv7; do
             if [ -d "dist/noarch" ] && ls dist/noarch/*.apk >/dev/null 2>&1; then
-              aws s3 cp dist/noarch/ s3://packages.vellum.delivery/$arch/ --recursive --exclude "APKINDEX.tar.gz"
+              aws s3 cp dist/noarch/ s3://packages.vellum.delivery/$arch/ --recursive --exclude "APKINDEX.tar.gz" \
+                --cache-control "public, max-age=31536000"
             fi
           done
 
@@ -272,7 +273,8 @@ jobs:
         if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           if [ -d "dist/${{ matrix.arch }}" ] && ls dist/${{ matrix.arch }}/*.apk >/dev/null 2>&1; then
-            aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/${{ matrix.arch }}/ --recursive --exclude "APKINDEX.tar.gz"
+            aws s3 cp dist/${{ matrix.arch }}/ s3://packages.vellum.delivery/${{ matrix.arch }}/ --recursive --exclude "APKINDEX.tar.gz" \
+              --cache-control "public, max-age=31536000"
           fi
 
   deploy:
