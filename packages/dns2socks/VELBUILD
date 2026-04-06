@@ -1,0 +1,78 @@
+maintainer="lhf <luis@lhf.pt>"
+pkgname=dns2socks
+pkgver=0.2.3
+pkgrel=0
+upstream_author="ssrlive"
+category="utilities"
+pkgdesc="A DNS server that forwards DNS requests to a SOCKS5 server."
+url="https://github.com/tun2proxy/dns2socks"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+depends="mount-utils"
+
+source="
+https://github.com/tun2proxy/dns2socks/releases/download/v$pkgver/dns2socks-aarch64-unknown-linux-gnu.zip
+https://github.com/tun2proxy/dns2socks/releases/download/v$pkgver/dns2socks-armv7-unknown-linux-gnueabihf.zip
+https://raw.githubusercontent.com/tun2proxy/dns2socks/refs/tags/v$pkgver/LICENSE
+dns2socks.defaults
+dns2socks.service
+"
+
+unpack() {
+	case "$CARCH" in
+		aarch64)  unzip -o "$srcdir"/dns2socks-aarch64-unknown-linux-gnu.zip -d "$srcdir" ;;
+		armv7)  unzip -o "$srcdir"/dns2socks-armv7-unknown-linux-gnueabihf.zip -d "$srcdir" ;;
+	esac
+}
+
+package() {	
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	
+	install -Dm755 "$srcdir"/dns2socks \
+		"$pkgdir"/home/root/.vellum/bin/dns2socks
+
+	install -Dm644 "$srcdir"/dns2socks.defaults \
+		"$pkgdir/home/root/.vellum/etc/default/dns2socks"
+	install -Dm644 "$srcdir"/dns2socks.service \
+		"$pkgdir/home/root/.vellum/share/dns2socks/systemd/dns2socks.service"
+}
+
+postinstall() {
+	/home/root/.vellum/bin/mount-rw
+	cp /home/root/.vellum/share/dns2socks/systemd/dns2socks.service /etc/systemd/system/
+	systemctl daemon-reload
+	systemctl enable --now dns2socks
+	/home/root/.vellum/bin/mount-restore
+}
+
+postupgrade() {
+	/home/root/.vellum/bin/mount-rw
+	cp /home/root/.vellum/share/dns2socks/systemd/dns2socks.service /etc/systemd/system/
+	systemctl daemon-reload
+	/home/root/.vellum/bin/mount-restore
+	systemctl try-reload-or-restart dns2socks
+}
+
+postosupgrade() {
+	cp /home/root/.vellum/share/dns2socks/systemd/dns2socks.service /etc/systemd/system/
+	systemctl daemon-reload
+	systemctl enable --now dns2socks
+}
+
+predeinstall() {
+	/home/root/.vellum/bin/mount-rw
+	systemctl disable --now mypackage 2>/dev/null || true
+	rm -f /etc/systemd/system/dns2socks
+	systemctl daemon-reload
+	/home/root/.vellum/bin/mount-restore
+}
+
+sha512sums="
+7d2f2a6e8fda43b452cc663b483ba91dbb2cdada06a9118de99bd5c0249f56acf1a9e9c6a47c46f66c5a46b52a0b4d2c24a251e0eddd604693a75e1a0b454d34  dns2socks-aarch64-unknown-linux-gnu.zip
+8aa227f4eec7015cf562eda5161e85c6ca8acbd4ec1b4634fee2a9a12f9a32d7e85c3607a4d9df8c130ceed1c372a7b7df0379b4c0c5627706bcb8125e5de8c7  dns2socks-armv7-unknown-linux-gnueabihf.zip
+22dfdc2d888fa34d6c4542279da005d17dbc12d9bc35ce48b0f03d8cf355969b1ba33055b5b22014d939a25215b692704f78b47d946c38ec659f52b198457909  LICENSE
+47953cad899c4b5584d71002689df6c97cb97f40fa2ef555797d021a87d74700503ef043d5ead04798661c94566a4d8585f6aabc8537821a8083595efd44f7f1  dns2socks.defaults
+ac7eb17da029704d4031af0985ff0e2b6a3d9f6dea557d170a5c3551a61efb71cf3eda29573e56bff4ecf93d1d70dbeaf4d36c33650d4b9ad0b043a64dfcd181  dns2socks.service
+"

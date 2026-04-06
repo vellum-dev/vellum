@@ -1,0 +1,14 @@
+[Unit]
+Description=dns2socks proxy server
+Wants=network.target
+After=network.target home.mount
+Requires=home.mount
+
+[Service]
+EnvironmentFile=/home/root/.vellum/etc/default/dns2socks
+ExecStart=/home/root/.vellum/bin/dns2socks $FLAGS
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

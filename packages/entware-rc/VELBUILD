@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=entware-rc
 pkgver=0.1
-pkgrel=0
+pkgrel=1
 pkgdesc="Manage entware installed services"
 upstream_author="toltec-dev"
 category="utilities"
@@ -38,7 +38,7 @@ postinstall(){
 	echo "You can use rcctl to manage services installed by entware"
 }
 postupgrade(){
-	/home/root/.vellum/share/entware-rc/entware-rc.post-install
+	/home/root/.vellum/hooks/post-install/entware-rc
 }
 postosupgrade(){
 	cp /home/root/.vellum/share/entware-rc/entware-rc.service /etc/systemd/system/
