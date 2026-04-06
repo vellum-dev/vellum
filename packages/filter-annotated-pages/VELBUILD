@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=filter-annotated-pages
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Adds a button to the Page Overview to show only pages with annotations"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
+_commit="85ffbd95949abf45a6e711a6d8a38c9db7af1881"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/filterAnnotatedPages.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/filterAnnotatedPages.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/filterAnnotatedPages.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+0c3f8759af8384d71cfca1efa15093e928fa4cf22535ac6c5028255c25cf7ff99f0caffffad0257a26acd7f464a339448e953a638aa4910574021ac7255f7a69  filterAnnotatedPages.qmd
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
+'
