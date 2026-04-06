@@ -1,0 +1,38 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=librarian
+pkgver=0.3.1
+pkgrel=0
+upstream_author="rmitchellscott"
+category="framework"
+pkgdesc="Document library management extension"
+url="https://github.com/rmitchellscott/rm-librarian"
+arch="aarch64 armv7"
+license="GPL-3.0-or-later"
+depends="xovi-message-broker>=18 xovi-message-broker<19"
+options="!check !fhs !strip !tracedeps"
+source="
+https://github.com/rmitchellscott/rm-librarian/releases/download/v$pkgver/librarian-aarch64.so
+https://github.com/rmitchellscott/rm-librarian/releases/download/v$pkgver/librarian-armv7.so
+https://raw.githubusercontent.com/rmitchellscott/rm-librarian/main/LICENSE
+"
+
+package() {
+	local so_file
+	case "$CARCH" in
+		aarch64) so_file="librarian-aarch64.so" ;;
+		armv7) so_file="librarian-armv7.so" ;;
+	esac
+
+	install -Dm644 "$srcdir"/$so_file \
+		"$pkgdir"/home/root/xovi/extensions.d/librarian.so
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/rm-librarian/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+7847252828f661e0859e9a758f44ba4b6284f5bf0d953f9887f9ebb18af9dc630d147a6725a0d92106af45a771100e831d61e19e912105d66e98cb2022a095c2  librarian-aarch64.so
+ea86745116ae19b48553b65ef54acdd509b244ce9fadfc393660373630e7a32a642235325ac57e57e688b444ba521fce3a814f048ff616ba7cf5d67314893e5d  librarian-armv7.so
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+'
