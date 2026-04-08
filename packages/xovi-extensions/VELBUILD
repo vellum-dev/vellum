@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=18.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
