@@ -18,14 +18,18 @@ https://ziglang.org/download/$pkgver/zig-aarch64-linux-$pkgver.tar.xz
 
 unpack() {
 	if [ -z "$force" ]; then
-			verify
-			initdcheck
+		verify
+		initdcheck
 	fi
 
 	mkdir -p "$srcdir"
 	case "$CARCH" in
-			aarch64) _arch="aarch64" ;;
-			armv7) _arch="arm" ;;
+	aarch64) _arch="aarch64" ;;
+	armv7) _arch="arm" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 	_tar="$SRCDEST/zig-$_arch-linux-$pkgver.tar.xz"
 
@@ -51,11 +55,13 @@ package() {
 
 doc() {
 	pkgdesc="Zig documentation (language reference)"
-	cd "$srcdir/zig"
+	package() {
+		cd "$srcdir/zig"
 
-	mkdir -p "$subpkgdir/home/root/.vellum/share/doc"
-	cp -r "doc" "$subpkgdir/home/root/.vellum/share/doc/$pkgname"
-	install -Dm644 README.md "$subpkgdir/home/root/.vellum/share/doc/$pkgname/README.md"
+		mkdir -p "$subpkgdir/home/root/.vellum/share/doc"
+		cp -r "doc" "$subpkgdir/home/root/.vellum/share/doc/$pkgname"
+		install -Dm644 README.md "$subpkgdir/home/root/.vellum/share/doc/$pkgname/README.md"
+	}
 }
 
 sha512sums="
