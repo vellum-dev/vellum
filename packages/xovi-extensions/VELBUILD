@@ -68,7 +68,30 @@ package() {
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="$pkgname"
-	install="$subpkgname.post-install $subpkgname.post-deinstall"
+
+	postinstall() {
+		echo ""
+		echo "============================================"
+		echo "  NOTE: Before using any QT modifications,"
+		echo "  you must run: xovi/rebuild_hashtable"
+		echo "============================================"
+		echo ""
+	}
+
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -fr /home/root/xovi/exthome/qt-resource-rebuilder
+		fi
+	}
+
+	postosupgrade() {
+		echo ""
+		echo "==============================================="
+		echo "  NOTE: Before using any QT modifications,"
+		echo "  you must run: xovi/rebuild_hashtable"
+		echo "==============================================="
+		echo ""
+	}
 
 	package() {
 		install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
