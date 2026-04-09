@@ -10,7 +10,7 @@ arch="aarch64 armv7"
 license="BSD-3-Clause"
 options="!check !fhs !strip !tracedeps"
 depends="mount-utils"
-subpackages="$pkgname-tun"
+subpackages="$pkgname-tun:tun"
 
 source="
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
