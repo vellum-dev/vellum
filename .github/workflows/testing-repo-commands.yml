@@ -54,7 +54,7 @@ jobs:
       - name: Get PR details
         id: pr
         if: steps.auth.outputs.authorized == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
@@ -67,7 +67,7 @@ jobs:
 
       - name: React to command
         if: steps.auth.outputs.authorized == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           COMMAND: ${{ steps.parse.outputs.command }}
         with:
@@ -90,7 +90,7 @@ jobs:
       packages_list: ${{ steps.detect.outputs.packages_list }}
       has_packages: ${{ steps.detect.outputs.has_packages }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
           fetch-depth: 0
@@ -146,20 +146,14 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.detect-changes.outputs.noarch_packages) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
 
-      - name: Install vbuild
-        run: |
-          set -e
-          curl \
-            --location \
-            'https://github.com/Eeems/vbuild/releases/download/0.0.11/vbuild-vbuild-ubuntu' \
-            --output /usr/local/bin/vbuild
-          chmod +x /usr/local/bin/vbuild
+      - uses: ./.github/actions/install-vbuild
 
-      - name: Set up signing key
+      - &set-up-signing-key
+        name: Set up signing key
         run: |
           if [ -n "$SIGNING_KEY" ]; then
             echo "$SIGNING_KEY" > keys/packages.rsa
@@ -171,8 +165,9 @@ jobs:
       - name: Build ${{ matrix.package }}
         run: ./scripts/build-package.sh "${{ matrix.package }}"
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - &configure-aws-credentials
+        name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -197,37 +192,18 @@ jobs:
         package: ${{ fromJson(needs.detect-changes.outputs.multiarch_packages) }}
         arch: [aarch64, armv7]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
 
-      - name: Install vbuild
-        run: |
-          set -e
-          curl \
-            --location \
-            'https://github.com/Eeems/vbuild/releases/download/0.0.11/vbuild-vbuild-ubuntu' \
-            --output /usr/local/bin/vbuild
-          chmod +x /usr/local/bin/vbuild
+      - uses: ./.github/actions/install-vbuild
 
-      - name: Set up signing key
-        run: |
-          if [ -n "$SIGNING_KEY" ]; then
-            echo "$SIGNING_KEY" > keys/packages.rsa
-            chmod 600 keys/packages.rsa
-          fi
-        env:
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      - *set-up-signing-key
 
       - name: Build ${{ matrix.package }} (${{ matrix.arch }})
         run: ./scripts/build-package.sh "${{ matrix.package }}" "${{ matrix.arch }}"
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+      - *configure-aws-credentials
 
       - name: Upload to S3
         run: |
@@ -243,14 +219,9 @@ jobs:
       needs.detect-changes.outputs.has_packages == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+      - *configure-aws-credentials
 
       - name: Remove packages from S3
         env:
@@ -280,23 +251,11 @@ jobs:
         needs.remove-packages.result == 'failure')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Set up signing key
-        run: |
-          if [ -n "$SIGNING_KEY" ]; then
-            echo "$SIGNING_KEY" > keys/packages.rsa
-            chmod 600 keys/packages.rsa
-          fi
-        env:
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      - *set-up-signing-key
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+      - *configure-aws-credentials
 
       - name: Regenerate APKINDEX
         run: |
@@ -356,7 +315,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Comment on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           COMMAND: ${{ needs.check-command.outputs.command }}
           NOARCH_PACKAGES: ${{ needs.detect-changes.outputs.noarch_packages || '[]' }}

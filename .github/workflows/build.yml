@@ -26,7 +26,7 @@ jobs:
       multiarch: ${{ steps.generate-matrix.outputs.multiarch }}
       has_packages: ${{ steps.generate-matrix.outputs.has_packages }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -133,17 +133,9 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - &install-vbuild
-        name: Install vbuild
-        run: |
-          set -e
-          curl \
-            --location \
-            'https://github.com/Eeems/vbuild/releases/download/0.0.15/vbuild-vbuild-ubuntu' \
-            --output /usr/local/bin/vbuild
-          chmod +x /usr/local/bin/vbuild
+      - uses: ./.github/actions/install-vbuild
 
       - name: Lint VELBUILD files
         run: |
@@ -166,9 +158,9 @@ jobs:
         package: ${{ fromJson(needs.setup.outputs.noarch) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - *install-vbuild
+      - uses: ./.github/actions/install-vbuild
 
       - &set-up-signing-key
         name: Set up signing key
@@ -208,16 +200,16 @@ jobs:
 
       - name: Upload artifact
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.package }}-noarch
           path: dist/noarch/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: error
 
-      - &upload-to-s3
-        name: Upload to S3
+      - &configure-aws-credentials
+        name: Configure AWS Credentials
         if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -246,9 +238,9 @@ jobs:
         arch: [aarch64, armv7]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - *install-vbuild
+      - uses: ./.github/actions/install-vbuild
 
       - *set-up-signing-key
 
@@ -261,13 +253,13 @@ jobs:
 
       - name: Upload artifact
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}
           path: dist/${{ matrix.arch }}/${{ steps.pkgname.outputs.name }}-*.apk
           if-no-files-found: warn
 
-      - *upload-to-s3
+      - *configure-aws-credentials
 
       - name: Upload packages to S3
         if: github.repository == 'vellum-dev/vellum' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -290,10 +282,10 @@ jobs:
         (github.ref == 'refs/heads/main' && github.event_name != 'pull_request')
       )
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

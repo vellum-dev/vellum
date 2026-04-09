@@ -164,8 +164,7 @@ postinstall(){
 }
 
 postupgrade(){
-	# Call postinstall
-	/home/root/.vellum/share/my-package/my-package.post-install
+	postinstall
 }
 
 predeinstall(){
@@ -216,7 +215,7 @@ postinstall(){
 }
 
 postupgrade(){
-	/home/root/.vellum/share/mypackage/mypackage.post-install
+	postinstall
 }
 
 postosupgrade(){

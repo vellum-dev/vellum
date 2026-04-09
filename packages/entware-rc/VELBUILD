@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=entware-rc
 pkgver=0.1
-pkgrel=0
+pkgrel=3
 pkgdesc="Manage entware installed services"
 upstream_author="toltec-dev"
 category="utilities"
@@ -28,7 +28,7 @@ package() {
 	install -D -m 755 -t "$pkgdir"/home/root/.vellum/bin/ \
 		"$srcdir"/rcctl
 }
-postinstall(){
+postinstall() {
 	/home/root/.vellum/bin/mount-rw
 	cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
 	systemctl daemon-reload
@@ -37,14 +37,14 @@ postinstall(){
 	echo ""
 	echo "You can use rcctl to manage services installed by entware"
 }
-postupgrade(){
-	/home/root/.vellum/share/entware-rc/entware-rc.post-install
+postupgrade() {
+	postinstall
 }
-postosupgrade(){
-	cp /home/root/.vellum/share/entware-rc/entware-rc.service /etc/systemd/system/
+postosupgrade() {
+	cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
 	systemctl daemon-reload
 }
-predeinstall(){
+predeinstall() {
 	/home/root/.vellum/bin/mount-rw
 	/home/root/.vellum/bin/rcctl list | xargs -I {} systemctl disable --now entware-rc@{}
 	rm -f /etc/systemd/system/entware-rc@.service
