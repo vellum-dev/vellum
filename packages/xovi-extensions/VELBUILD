@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=18.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -27,11 +27,14 @@ https://github.com/asivery/rm-xovi-extensions/releases/download/$_release/xovi-a
 https://raw.githubusercontent.com/asivery/rm-xovi-extensions/master/LICENSE
 "
 
-
 unpack() {
 	case "$CARCH" in
-		aarch64) tar -xzf "$srcdir"/xovi-aarch64.tar.gz -C "$srcdir" ;;
-		armv7) tar -xzf "$srcdir"/xovi-arm32.tar.gz -C "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/xovi-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/xovi-arm32.tar.gz -C "$srcdir" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 }
 
@@ -65,43 +68,74 @@ package() {
 qt_resource_rebuilder() {
 	pkgdesc="Rebuilds QT resource databases on the fly to replace or add QML files"
 	depends="$pkgname"
-	install="$subpkgname.post-install $subpkgname.post-deinstall"
 
-	install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
-		"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
-	install -d "$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder
+	postinstall() {
+		echo ""
+		echo "============================================"
+		echo "  NOTE: Before using any QT modifications,"
+		echo "  you must run: xovi/rebuild_hashtable"
+		echo "============================================"
+		echo ""
+	}
 
-	install -Dm755 "$srcdir"/xovi/scripts/debug/qt-resource-rebuilder.sh \
-		"$subpkgdir"/home/root/xovi/scripts/debug/qt-resource-rebuilder.sh
-	install -Dm644 "$srcdir"/xovi/services/xochitl.service/qt-resource-rebuilder.conf \
-		"$subpkgdir"/home/root/xovi/services/xochitl.service/qt-resource-rebuilder.conf
-	
-	install -Dm755 "$srcdir"/xovi/rebuild_hashtable \
-		"$subpkgdir"/home/root/xovi/rebuild_hashtable
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -fr /home/root/xovi/exthome/qt-resource-rebuilder
+		fi
+	}
+
+	postosupgrade() {
+		echo ""
+		echo "==============================================="
+		echo "  NOTE: Before using any QT modifications,"
+		echo "  you must run: xovi/rebuild_hashtable"
+		echo "==============================================="
+		echo ""
+	}
+
+	package() {
+		install -Dm644 "$srcdir"/xovi/extensions.d/qt-resource-rebuilder.so \
+			"$subpkgdir"/home/root/xovi/extensions.d/qt-resource-rebuilder.so
+		install -d "$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder
+
+		install -Dm755 "$srcdir"/xovi/scripts/debug/qt-resource-rebuilder.sh \
+			"$subpkgdir"/home/root/xovi/scripts/debug/qt-resource-rebuilder.sh
+		install -Dm644 "$srcdir"/xovi/services/xochitl.service/qt-resource-rebuilder.conf \
+			"$subpkgdir"/home/root/xovi/services/xochitl.service/qt-resource-rebuilder.conf
+
+		install -Dm755 "$srcdir"/xovi/rebuild_hashtable \
+			"$subpkgdir"/home/root/xovi/rebuild_hashtable
+	}
 }
 
 qt_command_executor() {
 	pkgdesc="Injects a QT module to execute shell commands from QML"
 	depends="$pkgname"
 
-	install -Dm644 "$srcdir"/xovi/inactive-extensions/qt-command-executor.so \
-		"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
+	package() {
+		install -Dm644 "$srcdir"/xovi/inactive-extensions/qt-command-executor.so \
+			"$subpkgdir"/home/root/xovi/extensions.d/qt-command-executor.so
+	}
 }
 
 message_broker() {
 	pkgdesc="IPC messaging between xovi extensions"
 	depends="$pkgname"
 
-	install -Dm644 "$srcdir"/xovi/inactive-extensions/xovi-message-broker.so \
-		"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
+	package() {
+		install -Dm644 "$srcdir"/xovi/inactive-extensions/xovi-message-broker.so \
+			"$subpkgdir"/home/root/xovi/extensions.d/xovi-message-broker.so
+	}
 }
 
 framebuffer_spy() {
 	pkgdesc="Module for exposing the address of the system framebuffer"
 	depends="$pkgname remarkable-os<3.27"
 
-	install -Dm644 "$srcdir"/xovi/inactive-extensions/framebuffer-spy.so \
-		"$subpkgdir"/home/root/xovi/extensions.d/framebuffer-spy.so
+	package() {
+		install -Dm644 "$srcdir"/xovi/inactive-extensions/framebuffer-spy.so \
+			"$subpkgdir"/home/root/xovi/extensions.d/framebuffer-spy.so
+	}
 }
 
 webserver_remote() {
@@ -109,8 +143,10 @@ webserver_remote() {
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
 	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
 
-	install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
-		"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
+	package() {
+		install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
+			"$subpkgdir"/home/root/xovi/extensions.d/webserver-remote.so
+	}
 }
 
 predeinstall() {

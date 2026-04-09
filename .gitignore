@@ -25,3 +25,5 @@ packages/*/src/
 packages/*/APKBUILD
 packages-metadata.json
 tmp.json
+packages/*/pkg/
+packages/*/*.pre-deinstall
