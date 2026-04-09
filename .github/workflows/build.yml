@@ -135,15 +135,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - &install-vbuild
-        name: Install vbuild
-        run: |
-          set -e
-          curl \
-            --location \
-            'https://github.com/Eeems/vbuild/releases/download/0.0.18/vbuild-vbuild-ubuntu' \
-            --output /usr/local/bin/vbuild
-          chmod +x /usr/local/bin/vbuild
+      - uses: .github/actions/install-vbuild
 
       - name: Lint VELBUILD files
         run: |
@@ -168,7 +160,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - *install-vbuild
+      - uses: .github/actions/install-vbuild
 
       - &set-up-signing-key
         name: Set up signing key
@@ -248,7 +240,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - *install-vbuild
+      - uses: .github/actions/install-vbuild
 
       - *set-up-signing-key
 
