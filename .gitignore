@@ -27,3 +27,6 @@ packages-metadata.json
 tmp.json
 packages/*/pkg/
 packages/*/*.pre-deinstall
+packages/*/*.post-install
+packages/*/*.post-os-upgrade
+packages/*/*.post-upgrade
