@@ -150,7 +150,7 @@ jobs:
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
 
-      - uses: .github/actions/install-vbuild
+      - uses: ./.github/actions/install-vbuild
 
       - &set-up-signing-key
         name: Set up signing key
@@ -196,7 +196,7 @@ jobs:
         with:
           ref: ${{ needs.check-command.outputs.pr_sha }}
 
-      - uses: .github/actions/install-vbuild
+      - uses: ./.github/actions/install-vbuild
 
       - *set-up-signing-key
 
