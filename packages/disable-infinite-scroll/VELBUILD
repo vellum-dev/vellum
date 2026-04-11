@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-infinite-scroll
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
-_commit="80bf8ef1cc43b1e4c96202a212b13f919f22d0ec"
+_commit="4f0391346e6eb1ff1e23f393c267a6923dd6481e"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/disableInfiniteScroll.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
@@ -25,7 +25,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='c3ab94b6163565163f66f7ad2c29ae1ef804698b5efa8cd713882866f5eda49bf6f777ee0f812dd8d43c222a27212476ae9f13f622698f0e0b29784c668c2e89
+sha512sums='6f0d36261d968646ac5c8ca116281893cfdd757ffd607a6846cee08d5cbf7d390819f48f929e513107af9fbcbc9c6b9f58a11b4d6d3e72029ce18ccfdf4fc71c
 disableInfiniteScroll.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
