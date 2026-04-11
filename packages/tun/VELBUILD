@@ -1,0 +1,75 @@
+maintainer="esclee <5288860+esclee@users.noreply.github.com>"
+pkgname=tun
+pkgver=1.0.0
+pkgrel=0
+upstream_author="esclee"
+category="utilities"
+pkgdesc="TUN module for rMPP(M), compiled from kernel code released by rM using rM's SDKs"
+url="https://github.com/esclee/tun-package"
+arch="aarch64"
+license="GPL-2.0-or-later"
+depends="mount-utils remarkable-os>=3.26 remarkable-os<3.27 !rm1 !rm2"
+options="!check !fhs !strip !tracedeps"
+
+source="
+https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-ferrari.ko
+https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-chiappa.ko
+https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
+"
+
+package() {
+    install -Dm644 "$srcdir/tun-chiappa.ko" \
+        "$pkgdir/home/root/.vellum/bin/tun-chiappa.ko"
+    install -Dm644 "$srcdir/tun-ferrari.ko" \
+        "$pkgdir/home/root/.vellum/bin/tun-ferrari.ko"
+    install -Dm644 "$srcdir/LICENSE" \
+        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+    echo "https://github.com/reMarkable/linux-imx-rm" > \
+        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+    echo "https://github.com/esclee/tun-package" > \
+        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES-COMPILED"
+}
+
+postinstall() {
+    /home/root/.vellum/bin/mount-rw
+    echo "Installing tun..."
+    case $(cat /sys/devices/soc0/machine) in
+        "reMarkable Chiappa")
+            cp /home/root/.vellum/bin/tun-chiappa.ko /lib/modules/`uname -r`/tun.ko
+            ;;
+        "reMarkable Ferrari")
+            cp /home/root/.vellum/bin/tun-ferrari.ko /lib/modules/`uname -r`/tun.ko
+            ;;
+        *)
+            echo "unsupported tablet type"
+            exit 1
+            ;;
+    esac
+    depmod -a
+    modprobe tun
+    echo "tun" > /etc/modules-load.d/tun.conf
+    /home/root/.vellum/bin/mount-restore
+}
+
+postupgrade() {
+    /home/root/.vellum/share/$pkgname/$pkgname.post-install
+}
+
+postosupgrade() {
+    /home/root/.vellum/share/$pkgname/$pkgname.post-install
+}
+
+predeinstall() {
+    /home/root/.vellum/bin/mount-rw
+    modprobe -r tun
+    rm /lib/modules/`uname -r`/tun.ko
+    rm /etc/modules-load.d/tun.conf
+    depmod -a
+    /home/root/.vellum/bin/mount-restore
+}
+
+sha512sums='
+19b0c809c8d0cd583345968ad0ebb3112818de0590411f556b9a5ca47d63e2f6607f6c4120285bc27f7b8c973c3fd9e7ba80312ba9c4d88dd338c5f805aebb72  tun-ferrari.ko
+8b3af1b1b74a25fd4e4af80fb2e6d055d669674790e2f21501f426ceeeb4ea999311f3edb733fe6cbd33859ec046f54f6dc6a71a93d515a240413b6c6ff3661d  tun-chiappa.ko
+03f5a11e7ddd8db7222d25efdcbdb839d37a0c62fadc505c0c5cebcf045eb5e85ec3c779d78fc3b7e710b0031aad167e43a1c14cd571954271122a6e381c4ee9  LICENSE
+'
