@@ -48,6 +48,7 @@ postinstall() {
     depmod -a
     modprobe tun
     echo "tun" > /etc/modules-load.d/tun.conf
+    sleep 1s
     /home/root/.vellum/bin/mount-restore
 }
 
@@ -61,11 +62,15 @@ postosupgrade() {
 
 predeinstall() {
     /home/root/.vellum/bin/mount-rw
-    modprobe -r tun
+    systemctl is-active --quiet tailscaled && systemctl stop tailscaled
+    modprobe --remove-dependencies -f tun
+    modprobe -rf tun
     rm /lib/modules/`uname -r`/tun.ko
     rm /etc/modules-load.d/tun.conf
     depmod -a
+    sleep 1s 
     /home/root/.vellum/bin/mount-restore
+    echo "Reboot the tablet to complete."
 }
 
 sha512sums='
