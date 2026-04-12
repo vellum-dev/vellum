@@ -35,10 +35,10 @@ postinstall() {
     echo "Installing tun..."
     case $(cat /sys/devices/soc0/machine) in
         "reMarkable Chiappa")
-            cp /home/root/.vellum/bin/tun-chiappa.ko /lib/modules/`uname -r`/tun.ko
+            cp /home/root/.vellum/bin/lib/modules/tun-chiappa.ko /lib/modules/`uname -r`/tun.ko
             ;;
         "reMarkable Ferrari")
-            cp /home/root/.vellum/bin/tun-ferrari.ko /lib/modules/`uname -r`/tun.ko
+            cp /home/root/.vellum/bin/lib/modules/tun-ferrari.ko /lib/modules/`uname -r`/tun.ko
             ;;
         *)
             echo "unsupported tablet type"
@@ -48,7 +48,7 @@ postinstall() {
     depmod -a
     modprobe tun
     echo "tun" > /etc/modules-load.d/tun.conf
-    sleep 1s
+    sync
     /home/root/.vellum/bin/mount-restore
 }
 
@@ -68,7 +68,7 @@ predeinstall() {
     rm /lib/modules/`uname -r`/tun.ko
     rm /etc/modules-load.d/tun.conf
     depmod -a
-    sleep 1s 
+    sync 
     /home/root/.vellum/bin/mount-restore
     echo "Reboot the tablet to complete."
 }
