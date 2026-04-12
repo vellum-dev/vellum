@@ -19,9 +19,9 @@ https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
 
 package() {
     install -Dm644 "$srcdir/tun-chiappa.ko" \
-        "$pkgdir/home/root/.vellum/bin/tun-chiappa.ko"
+        "$pkgdir/home/root/.vellum/bin/lib/modules/tun-chiappa.ko"
     install -Dm644 "$srcdir/tun-ferrari.ko" \
-        "$pkgdir/home/root/.vellum/bin/tun-ferrari.ko"
+        "$pkgdir/home/root/.vellum/bin/lib/modules/tun-ferrari.ko"
     install -Dm644 "$srcdir/LICENSE" \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
     echo "https://github.com/reMarkable/linux-imx-rm" > \
