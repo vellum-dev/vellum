@@ -53,11 +53,11 @@ postinstall() {
 }
 
 postupgrade() {
-    /home/root/.vellum/share/$pkgname/$pkgname.post-install
+    postinstall
 }
 
 postosupgrade() {
-    /home/root/.vellum/share/$pkgname/$pkgname.post-install
+    postinstall
 }
 
 predeinstall() {
