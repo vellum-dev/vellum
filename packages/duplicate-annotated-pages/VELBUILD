@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=duplicate-annotated-pages
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds an option to the Duplicate menu to duplicate only pages that have been annotated."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<=18 remarkable-os>=3.26 remarkable-os<3.27"
+depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<19 remarkable-os>=3.26 remarkable-os<3.27"
 _commit="80bf8ef1cc43b1e4c96202a212b13f919f22d0ec"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/duplicateAnnotatedPages.qmd
