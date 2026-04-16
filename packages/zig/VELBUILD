@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=zig
-pkgver=0.15.2
-pkgrel=1
+pkgver=0.16.0
+pkgrel=0
 upstream_author="ziglang"
 category="utilities"
 pkgdesc="A general-purpose programming language and toolchain for maintaining robust, optimal and reusable software"
@@ -17,19 +17,9 @@ https://ziglang.org/download/$pkgver/zig-aarch64-linux-$pkgver.tar.xz
 "
 
 unpack() {
-	if [ -z "$force" ]; then
-		verify
-		initdcheck
-	fi
-
-	mkdir -p "$srcdir"
 	case "$CARCH" in
 	aarch64) _arch="aarch64" ;;
 	armv7) _arch="arm" ;;
-	*)
-		echo "Invalid CARCH: $CARCH"
-		exit 1
-		;;
 	esac
 	_tar="$SRCDEST/zig-$_arch-linux-$pkgver.tar.xz"
 
@@ -64,7 +54,7 @@ doc() {
 	}
 }
 
-sha512sums="
-03456c940adebf23b050b66fec3e7d7c9bf70b956fa425992ce155e713b1ea1ac6b616f22b0334ca3d62655209c639b020ea29dda1a75aa5fd200e93e1775c18  zig-arm-linux-0.15.2.tar.xz
-32e406bc5eebd2f41fb4fa8a04e76a4bdc5fcf44dcfbdc7242e063796ba5fccab6734653ca4108576b4557d85c8e984d40431dc707c5699a464dd19ac04aaf1d  zig-aarch64-linux-0.15.2.tar.xz
-"
+sha512sums='5dd36f21e76cfe7af45cd6a6d1b4e161aaa3ea6f6366ec01f7abc3dadc4384f2646a279d1d51782ae3a53fed69cdbb0795d19b13145fb1ea7c0ef87ae5f6dcd0
+zig-arm-linux-0.16.0.tar.xz
+031285b96682ddd3321fd7ad95f7832570dc079ce6f048179fca2f85c9aa116976e2d2b37f6eca4bd1922d020bbaf9f2d80b90e16f28488bbcac641110891a70
+zig-aarch64-linux-0.16.0.tar.xz'
