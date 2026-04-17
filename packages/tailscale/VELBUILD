@@ -30,8 +30,12 @@ unpack() {
 	fi
 
 	case "$CARCH" in
-		aarch64) _arch="arm64" ;;
-		armv7) _arch="arm" ;;
+	aarch64) _arch="arm64" ;;
+	armv7) _arch="arm" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 
 	mkdir -p "$srcdir"

@@ -30,6 +30,10 @@ package() {
 	armv7)
 		install -Dm755 evtest.arm32 "$install_dir/evtest"
 		;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 
 	install -Dm755 main.sh "$install_dir/main.sh"
