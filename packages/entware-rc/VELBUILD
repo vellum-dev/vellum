@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=entware-rc
 pkgver=0.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Manage entware installed services"
 upstream_author="toltec-dev"
 category="utilities"
