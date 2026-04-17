@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=hide-hyperlink-back-button
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Hides the Back button when clicking PDF hyperlinks."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+_commit="95223b96928596eaacb8416f6b72c083baf582db"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/hideHyperlinkBackButton.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/hideHyperlinkBackButton.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/hideHyperlinkBackButton.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='bc0d3de34cf3537e44d10a525abe1be4705b5e5d804b8e062b79e1f33da223a5b7972efeb3c19d3f33cbfde93a38cbc523ef2820b7b5a68661b4ed2adb308d10
+hideHyperlinkBackButton.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
