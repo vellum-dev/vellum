@@ -16,6 +16,9 @@ entware-rc@.service::https://raw.githubusercontent.com/toltec-dev/toltec/$_commi
 rcctl::https://raw.githubusercontent.com/toltec-dev/toltec/$_commit/package/entware-rc/rcctl
 LICENSE::https://raw.githubusercontent.com/toltec-dev/toltec/refs/heads/stable/LICENSE
 "
+systemdunits='
+entware-rc@.service
+'
 
 package() {
 	install -Dm644 "$srcdir/LICENSE" \
@@ -23,16 +26,10 @@ package() {
 	echo "https://github.com/$upstream_author/toltec/tree/stable/package/entware-rc" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
-	install -D -m 666 -t "$pkgdir"/home/root/.vellum/share/$pkgname/ \
-		"$srcdir"/entware-rc@.service
 	install -D -m 755 -t "$pkgdir"/home/root/.vellum/bin/ \
 		"$srcdir"/rcctl
 }
 postinstall() {
-	/home/root/.vellum/bin/mount-rw
-	cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
-	systemctl daemon-reload
-	/home/root/.vellum/bin/mount-restore
 	/opt/bin/opkg install findutils
 	echo ""
 	echo "You can use rcctl to manage services installed by entware"
@@ -40,16 +37,8 @@ postinstall() {
 postupgrade() {
 	postinstall
 }
-postosupgrade() {
-	cp /home/root/.vellum/share/entware-rc/entware-rc@.service /etc/systemd/system/
-	systemctl daemon-reload
-}
 predeinstall() {
-	/home/root/.vellum/bin/mount-rw
-	/home/root/.vellum/bin/rcctl list | xargs -I {} systemctl disable --now entware-rc@{}
-	rm -f /etc/systemd/system/entware-rc@.service
-	systemctl daemon-reload
-	/home/root/.vellum/bin/mount-restore
+	/home/root/.vellum/bin/rcctl list | xargs -I {} systemctl stop entware-rc@{}
 }
 
 sha512sums="
