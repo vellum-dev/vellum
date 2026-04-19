@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Start xovi by triple-pressing the power button"
@@ -15,18 +15,25 @@ LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-tripletap/v$pkgve
 "
 options="!check !fhs !strip !tracedeps"
 builddir="$srcdir/xovi-tripletap-$pkgver"
+systemdunits="
+xovi-tripletap-$pkgver/xovi-tripletap.service
+"
 
 package() {
 	local install_dir="$pkgdir/home/root/xovi-tripletap"
 	mkdir -p "$install_dir"
 
 	case "$CARCH" in
-		aarch64)
-			install -Dm755 evtest.arm64 "$install_dir/evtest"
-			;;
-		armv7)
-			install -Dm755 evtest.arm32 "$install_dir/evtest"
-			;;
+	aarch64)
+		install -Dm755 evtest.arm64 "$install_dir/evtest"
+		;;
+	armv7)
+		install -Dm755 evtest.arm32 "$install_dir/evtest"
+		;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 
 	install -Dm755 main.sh "$install_dir/main.sh"
@@ -41,9 +48,7 @@ package() {
 	install -Dm644 config.default "$install_dir/config.default"
 	install -Dm755 migrate-to-config.sh "$install_dir/migrate-to-config.sh"
 
-	install -Dm644 xovi-tripletap.service "$install_dir/xovi-tripletap.service"
-
-	echo "$pkgver" > "$install_dir/version.txt"
+	echo "$pkgver" >"$install_dir/version.txt"
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -51,11 +56,7 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
-postinstall(){
-	/home/root/xovi-tripletap/enable.sh
-}
-
-preupgrade(){
+preupgrade() {
 	CONFIG_FILE="/home/root/xovi-tripletap/config"
 	MAIN_SH="/home/root/xovi-tripletap/main.sh"
 
@@ -78,7 +79,7 @@ preupgrade(){
 	TIME_THRESHOLD=${TIME_THRESHOLD:-$DEFAULT_TIME_THRESHOLD}
 	REQUIRED_PRESSES=${REQUIRED_PRESSES:-$DEFAULT_REQUIRED_PRESSES}
 
-	cat > "$CONFIG_FILE" << EOF
+	cat >"$CONFIG_FILE" <<EOF
 ENABLE_VERSION_SWITCHING=${ENABLE_VERSION_SWITCHING}
 TRIGGER_ACTION=${TRIGGER_ACTION}
 TIME_THRESHOLD=${TIME_THRESHOLD}
@@ -88,31 +89,14 @@ POST_START_COMMANDS=()
 EOF
 }
 
-postupgrade(){
-	/home/root/xovi-tripletap/enable.sh
-}
-
-postosupgrade(){
-	cp /home/root/xovi-tripletap/xovi-tripletap.service /etc/systemd/system/
-	systemctl daemon-reload
-	systemctl enable xovi-tripletap --now
-}
-
-predeinstall(){
+predeinstall() {
 	/home/root/.vellum/bin/mount-rw
 
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		/home/root/xovi-tripletap/uninstall.sh
-	else
-		systemctl stop xovi-tripletap 2>/dev/null || true
-		systemctl disable xovi-tripletap 2>/dev/null || true
-		rm -f /etc/systemd/system/xovi-tripletap.service
-		systemctl daemon-reload
-
-		if [ -f /home/root/xovi-tripletap/config ]; then
-			echo "Note: /home/root/xovi-tripletap/config preserved"
-			echo "      Use 'vellum purge tripletap' to remove everything"
-		fi
+	elif [ -f /home/root/xovi-tripletap/config ]; then
+		echo "Note: /home/root/xovi-tripletap/config preserved"
+		echo "      Use 'vellum purge tripletap' to remove everything"
 	fi
 
 	/home/root/.vellum/bin/mount-restore

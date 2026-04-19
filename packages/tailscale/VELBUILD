@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
 pkgver=1.96.2
-pkgrel=0
+pkgrel=1
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
@@ -17,9 +17,11 @@ https://dl.tailscale.com/stable/tailscale_${pkgver}_arm64.tgz
 https://raw.githubusercontent.com/tailscale/tailscale/refs/tags/v$pkgver/LICENSE
 10-defaults.patch
 10-service.patch
-$pkgname.post-os-upgrade
 "
 builddir="$srcdir/tailscale"
+systemdunits='
+tailscale/systemd/tailscaled.service
+'
 
 unpack() {
 	if [ -z "$force" ]; then
@@ -28,8 +30,12 @@ unpack() {
 	fi
 
 	case "$CARCH" in
-		aarch64) _arch="arm64" ;;
-		armv7) _arch="arm" ;;
+	aarch64) _arch="arm64" ;;
+	armv7) _arch="arm" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
 
 	mkdir -p "$srcdir"
@@ -56,76 +62,9 @@ package() {
 
 	install -Dm644 systemd/tailscaled.defaults \
 		"$pkgdir/home/root/.vellum/etc/default/tailscaled"
-
-	# install a backup .service file for use with post-os-upgrade
-	install -Dm644 systemd/tailscaled.service \
-		"$pkgdir/home/root/.vellum/share/tailscale/systemd/tailscaled.service"
 }
 
-postinstall() {
-	/home/root/.vellum/bin/mount-rw
-
-	echo "installing tailscaled.service..."
-	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
-
-	echo "reloading systemd daemon"
-	systemctl daemon-reload
-
-	echo "enabling tailscaled service..."
-	systemctl enable tailscaled.service
-
-	/home/root/.vellum/bin/mount-restore
-
-	echo "restarting tailscaled service..."
-	systemctl restart tailscaled.service
-}
-
-postupgrade() {
-	/home/root/.vellum/bin/mount-rw
-
-	echo "installing tailscaled.service..."
-	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
-
-	echo "reloading systemd daemon"
-	systemctl daemon-reload
-
-	echo "enabling tailscaled service..."
-	systemctl enable tailscaled.service
-
-	/home/root/.vellum/bin/mount-restore
-
-	echo "restarting tailscaled service..."
-	systemctl restart tailscaled.service
-}
-
-postosupgrade() {
-	echo " * re-installing tailscaled.service..."
-	cp /home/root/.vellum/share/tailscale/systemd/tailscaled.service /etc/systemd/system/tailscaled.service
-
-	echo " * reloading systemd daemon"
-	systemctl daemon-reload
-
-	echo " * enabling tailscaled service..."
-	systemctl enable tailscaled.service
-
-	echo " * restarting tailscaled service..."
-	systemctl restart tailscaled.service
-}
-
-predeinstall() {
-	/home/root/.vellum/bin/mount-rw
-
-	echo "stopping tailscaled service..."
-	systemctl disable --now tailscaled.service
-
-	echo "removing tailscaled.service..."
-	rm -f /etc/systemd/system/tailscaled.service
-
-	/home/root/.vellum/bin/mount-restore
-
-	echo "reloading systemd daemon"
-	systemctl daemon-reload
-
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		echo "deleting tailscale config files..."
 		rm -rf \
@@ -140,5 +79,4 @@ f73f424d37f958e9d2bba0efa4878e10ff47da1f613d1babe56ef1c84e738439a2a94e94858075de
 0d6d4be4907d6994e0fe6aa10aee9e168608a41b0c0c32f4770830716312bf92756bb3cc294ad2419f02383317e68043d2e804231f150813af63da62c0556eb0  LICENSE
 b0cbcd5e94001fc8f91ae6bc0dca40bac8f34d92112d2a0ad83189c8e6bb79fe415dce9dda6a554c8094a59f1bfd6bf1109439c47ef5f1d0b3eb522af3a62c95  10-defaults.patch
 c2f12c405d9a63829c0d0a18757f29c8f295dd5de7dcfea3ac5875c0871d6af439cc25edb72c58881f29231c1a254a2488344d57861d1be49123228f8cdf6bd5  10-service.patch
-2100dd4f6936569ea683d6cec4e55a5d5940edb9dd9a4f75dff5faa1a7037af3c817a1a6987796f4ad96d2958b8943ebb236141f359428520d57a760f36a58aa  tailscale.post-os-upgrade
 '
