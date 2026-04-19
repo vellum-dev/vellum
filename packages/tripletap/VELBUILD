@@ -56,10 +56,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
-postinstall() {
-	/home/root/xovi-tripletap/enable.sh
-}
-
 preupgrade() {
 	CONFIG_FILE="/home/root/xovi-tripletap/config"
 	MAIN_SH="/home/root/xovi-tripletap/main.sh"
@@ -91,10 +87,6 @@ REQUIRED_PRESSES=${REQUIRED_PRESSES}
 PRE_START_COMMANDS=()
 POST_START_COMMANDS=()
 EOF
-}
-
-postupgrade() {
-	/home/root/xovi-tripletap/enable.sh
 }
 
 predeinstall() {
