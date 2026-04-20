@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=filter-annotated-pages
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the Page Overview to show only pages with annotations"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
 _commit="85ffbd95949abf45a6e711a6d8a38c9db7af1881"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/filterAnnotatedPages.qmd
