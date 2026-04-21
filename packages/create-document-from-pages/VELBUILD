@@ -1,0 +1,31 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=duplicate-annotated-pages
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Adds an option to the Page Overview More menu to create a new document from selected pages."
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<19 remarkable-os>=3.26 remarkable-os<3.27"
+_commit="9cae6828ff324d2497d60012d9dba85f5a7cef18"
+source="
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/createDocumentFromPages.qmd
+https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/createDocumentFromPages.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/createDocumentFromPages.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='8b25bc65168a4a6e0e2d24f0f3376c662be90ae0c5436af2b970e59b98ed3d41f0fa2b058f65e47b268136a785d4798089f34bac4d75c1cda92876363dceab80
+createDocumentFromPages.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
