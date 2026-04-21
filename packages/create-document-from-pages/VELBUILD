@@ -1,5 +1,5 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
-pkgname=duplicate-annotated-pages
+pkgname=create-document-from-pages
 pkgver=1.0.0
 pkgrel=0
 upstream_author="rmitchellscott"
