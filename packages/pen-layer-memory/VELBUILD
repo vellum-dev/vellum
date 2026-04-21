@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=pen-layer-memory
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
-_commit="1578d2fefa95afd8b8e0222ba8d72b4fc357e198"
+_commit="ac1c883a3fa60855708285b0037cfd3db3d73570"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/penLayerMemory.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE

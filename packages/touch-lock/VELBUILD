@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=touch-lock
-pkgver=1.0.1
-pkgrel=1
+pkgver=1.0.2
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the toolbar to lock out touch input in documents. Toolbar remains touch-aware and pen input is unaffected."
@@ -9,7 +9,7 @@ url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
-_commit="1fb0e918b51e7638650da546986bb164d7ae3afd"
+_commit="ac1c883a3fa60855708285b0037cfd3db3d73570"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/touchLock.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
@@ -25,7 +25,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-d7ee426658fcd83ba76c2a18134e84d915b5694f38d16b3a6e8e02195b8b5e5757c90f72e5d0e4b99d668ecc8f433a5409ae9d0857b714252f6b5aaafaca44ce  touchLock.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
+sha512sums='37141b748b5c1e27b60259f594ab41e8b8258fa072d4f564cb685ccd1058ffb0fb398c47daec94d9753b6c42c49b92c7fff04be165b843d71ca9fc154321e78e
+touchLock.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
