@@ -16,7 +16,6 @@ https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-ferrari.ko
 https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-chiappa.ko
 https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
 "
-
 package() {
     install -Dm644 "$srcdir/tun-chiappa.ko" \
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-chiappa.ko"
@@ -45,10 +44,10 @@ postinstall() {
             exit 1
             ;;
     esac
-    depmod -a
-    modprobe tun
+    /home/root/.vellum/bin/depmod-noorphan
     echo "tun" > /etc/modules-load.d/tun.conf
-    sync
+    modprobe tun
+    modinfo tun > /dev/null 2>&1 && echo "tun is in place"
     /home/root/.vellum/bin/mount-restore
 }
 
@@ -67,10 +66,9 @@ predeinstall() {
     modprobe -rf tun
     rm /lib/modules/`uname -r`/tun.ko
     rm /etc/modules-load.d/tun.conf
-    depmod -a
-    sync 
+    /home/root/.vellum/bin/depmod-noorphan
+    modinfo tun > /dev/null 2>&1 || echo "Confirming tun is no longer there"
     /home/root/.vellum/bin/mount-restore
-    echo "Reboot the tablet to complete."
 }
 
 sha512sums='
