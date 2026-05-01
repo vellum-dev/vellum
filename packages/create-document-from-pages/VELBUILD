@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=create-document-from-pages
-pkgver=1.0.0
+pkgver=2.0.0
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -8,8 +8,8 @@ pkgdesc="Adds an option to the Page Overview More menu to create a new document 
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<19 remarkable-os>=3.26 remarkable-os<3.27"
-_commit="9cae6828ff324d2497d60012d9dba85f5a7cef18"
+depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<19 rm-pdfium<1.0.0 remarkable-os>=3.26 remarkable-os<3.27"
+_commit="00f15ac02041264eb1bc1b0246a794c4cec7246e"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/createDocumentFromPages.qmd
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
@@ -25,7 +25,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='8b25bc65168a4a6e0e2d24f0f3376c662be90ae0c5436af2b970e59b98ed3d41f0fa2b058f65e47b268136a785d4798089f34bac4d75c1cda92876363dceab80
+sha512sums='5b1f11fec057334ccc65aae3248a4ed53e69e30096d6d4d7aca9f0253d4088399eb80dbd08a1cd3c0fcf8d1405c766071681e2a95912e4de24f7a45944b923a1
 createDocumentFromPages.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
