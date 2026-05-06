@@ -1,17 +1,17 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=selection-stuff
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=2
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds the ability to select everything above the line."
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
-license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.27"
-_commit="af84fe8f21038c45738a3e321cd9a1e594c985f0"
+license="GPL-3.0"
+depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+_commit="f67f853dbfee9dc6c99c82e8e1343a985474d72b"
 source="
-selectionStuff.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.23/selectionStuff.qmd
+selectionStuff.qmd::https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.27/selectionStuff.qmd
 LICENSE::https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
@@ -27,5 +27,5 @@ package() {
 }
 sha512sums="
 fba0d722607f2e4bb68db57f7e1e2988e4d1adcf07d892c681b3ac2ffea04b9b8af0d1e7ec882d5e58742f28c7b981238567886ff1a58ff4cbff42baeb8f839b  selectionStuff.qmd
-48d498777fe609c2d71d0b6109fee48374e46aa533eed9a9514cc65be55574bd5b1e55313c0fe42dfeccfaaae757770c3a3e2ad513184e2343fbad74e26669ae  LICENSE
+714d66c4a17e6dfc1553521af2be03f4579fac64048c0b96c592177562b01fc70a8e184bb21725e11ef96a54bf466ae1abd4992b8940f0fe2c0859d6a166a2ef  LICENSE
 "
