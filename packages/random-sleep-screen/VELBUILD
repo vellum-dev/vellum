@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=random-sleep-screen
-pkgver=1.0.5
+pkgver=1.0.6
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
-_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
+_commit="5eb20866e94847134326b36449ca00bf654b3f3c"
 source="
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/randomSleepScreen.qmd
 https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
@@ -25,7 +25,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='
-bc2c13c391ac196c8f04d6b32d8dff20bbfb39c054492fbaf9a0a1e99d87cce3c3f4bb7463cf6b85fc88ed7ec294672b15f85f8404fe5b602927a23975957bbd  randomSleepScreen.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
-'
+sha512sums='d5aa80e6ab9814e97110e399695d2965fa43bb0263dfe9cc7ac94ae5965b40c54dbfe23468fd83f0da2a1e242cff5f55d4f4031864e94fb2a2ee66f47d2d38d3
+randomSleepScreen.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
+LICENSE.md'

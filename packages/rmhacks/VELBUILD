@@ -1,8 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmhacks
-pkgver=0.0.11_pre4
+pkgver=0.0.11_pre4_git4
 pkgrel=0
-_commit=1c617914af95e2d3b8f25c7c0fd71ef11e21b461
+_commit=69f905c2747da6bfc6fa79f7c505d43d559acbf2
 upstream_author="asivery"
 category="ui"
 pkgdesc="reMarkable hacks in QMD format"
@@ -29,6 +29,5 @@ package() {
 	echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
-sha512sums="
-8ce81544967a51aabd788ecc63771731e02c9f6e99636dea844bb9ac69656a5d4b3583351c7ffb5caad60288ac6472385fc9e143a693ca6691eaccb862f3d01e  rm-hacks-qmd-1c617914af95e2d3b8f25c7c0fd71ef11e21b461.tar.gz
-"
+sha512sums='5b053632dc96e40f84265cf425aa82c8e3b6d46fd5cba9dc96df72051a4eba1308240ebc96401a05b6aaa50f61ae71fe275136d56080fa264dda594e78ce4705
+rm-hacks-qmd-69f905c2747da6bfc6fa79f7c505d43d559acbf2.tar.gz'

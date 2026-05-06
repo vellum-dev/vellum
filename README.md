@@ -164,8 +164,7 @@ postinstall(){
 }
 
 postupgrade(){
-	# Call postinstall
-	/home/root/.vellum/share/my-package/my-package.post-install
+	postinstall
 }
 
 predeinstall(){
@@ -204,33 +203,12 @@ mount-restore  # Restore /etc overlay and remount root read-only
 ```
 It automatically detects if mount changes are required by the device.
 
-Example for a package with a systemd service:
+Example:
 
 ```sh
-postinstall(){
+postinstall() {
 	/home/root/.vellum/bin/mount-rw
-	cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
-	systemctl daemon-reload
-	systemctl enable --now mypackage
-	/home/root/.vellum/bin/mount-restore
-}
-
-postupgrade(){
-	/home/root/.vellum/share/mypackage/mypackage.post-install
-}
-
-postosupgrade(){
-	# mount-rw/mount-restore handled by vellum reenable
-	cp /home/root/.vellum/share/mypackage/mypackage.service /etc/systemd/system/
-	systemctl daemon-reload
-	systemctl enable --now mypackage
-}
-
-predeinstall(){
-	/home/root/.vellum/bin/mount-rw
-	systemctl disable --now mypackage 2>/dev/null || true
-	rm -f /etc/systemd/system/mypackage.service
-	systemctl daemon-reload
+	echo "tun" > /etc/modules-load.d/tun.conf
 	/home/root/.vellum/bin/mount-restore
 }
 ```
