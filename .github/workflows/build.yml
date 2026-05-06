@@ -87,7 +87,7 @@ jobs:
 
           # Get all multiarch packages
           all_multiarch=$(for pkg in packages/*/VELBUILD; do
-            if grep -qE '^arch="(aarch64|armv7|aarch64 armv7)"' "$pkg"; then
+            if grep -qE '^arch="(aarch64|armv7|aarch64 armv7|armv7 aarch64)"' "$pkg"; then
               basename $(dirname "$pkg")
             fi
           done)
