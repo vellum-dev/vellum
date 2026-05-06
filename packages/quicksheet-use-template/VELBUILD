@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksheet-use-template
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Use the last page's template when adding a quicksheet page"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
 _commit="edc9cefdb2ee2dde0fb495f76ac845a7e26e049e"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/quicksheetUseTemplate.qmd

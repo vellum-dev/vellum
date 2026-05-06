@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=ghostbuster
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="5-finger tap to perform a full screen refresh."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.22 remarkable-os<3.27"
+depends="qt-resource-rebuilder remarkable-os>=3.22 remarkable-os<3.28"
 _commit="44244e6fb6797a807357d651192040b46b141b3b"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/ghostbuster.qmd

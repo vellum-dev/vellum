@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-dev-mode-icon
 pkgver=1.0.2
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Hides the developer mode icon next to the battery icon."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder !rm1 !rm2 remarkable-os>=3.24 remarkable-os<3.27"
+depends="qt-resource-rebuilder !rm1 !rm2 remarkable-os>=3.24 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
 source="
 https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/hideDevModeIcon.qmd
