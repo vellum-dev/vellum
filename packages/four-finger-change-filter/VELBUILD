@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=four-finger-change-filter
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Four-finger tap to toggle contrast filter in PDF/EPUB documents."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !gestures-fouzr remarkable-os>=3.26 remarkable-os<3.27"
+depends="qt-resource-rebuilder !gestures-fouzr remarkable-os>=3.26 remarkable-os<3.28"
 replaces="gesture-contrast-toggle"
 _commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
 source="
