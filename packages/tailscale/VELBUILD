@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="BSD-3-Clause"
 options="!check !fhs !strip !tracedeps"
 depends="mount-utils"
+subpackages="$pkgname-tun:tun"
 
 source="
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
@@ -24,11 +25,6 @@ tailscale/systemd/tailscaled.service
 '
 
 unpack() {
-	if [ -z "$force" ]; then
-		verify
-		initdcheck
-	fi
-
 	case "$CARCH" in
 	aarch64) _arch="arm64" ;;
 	armv7) _arch="arm" ;;
@@ -37,14 +33,11 @@ unpack() {
 		exit 1
 		;;
 	esac
-
-	mkdir -p "$srcdir"
 	_tar="$SRCDEST/tailscale_${pkgver}_$_arch.tgz"
 
 	msg "Unpacking $_tar..."
 	tar -C "$srcdir" -zxf "$_tar"
 	mv "$srcdir/tailscale_${pkgver}_$_arch" "$srcdir/tailscale"
-	msg "Unpacked."
 }
 
 package() {
@@ -71,6 +64,34 @@ postdeinstall() {
 			/home/root/.local/var/lib/tailscale \
 			/home/root/.config/tailscale
 	fi
+}
+
+tun() {
+	pkgdesk="Tailscale kernel module support (only install this if you have the kernel module)"
+
+	package() {
+		cd "$srcdir/tailscale"
+
+		# Reset FLAGS
+		sed '/FLAGS/d' systemd/tailscaled.defaults > systemd/tailscaled.tun
+		echo 'FLAGS=""' >> systemd/tailscaled.tun
+
+		install -Dm644 systemd/tailscaled.tun \
+			"$subpkgdir/home/root/.vellum/etc/default/tailscaled"
+	}
+
+	postdeinstall() {
+		# Restore userspace
+		echo "restoring userspace networking..."
+		sed -i '/FLAGS/d' /home/root/.vellum/etc/default/tailscaled
+		echo 'FLAGS="--tun userspace-networking"' >> /home/root/.vellum/etc/default/tailscaled
+
+		echo "enabling tailscaled service..."
+		systemctl enable tailscaled.service
+
+		echo "restarting tailscaled service..."
+		systemctl restart tailscaled.service
+	}
 }
 
 sha512sums='
