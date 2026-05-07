@@ -6,16 +6,17 @@
 set -e
 
 S3_BUCKET="${S3_BUCKET:-packages.vellum.delivery}"
+S3_REGION="${S3_REGION:-us-east-2}"
 S3_PREFIX="${S3_PREFIX:-}"
 PREFIX_PATH="${S3_PREFIX:+$S3_PREFIX/}"
+S3_URL="https://s3.$S3_REGION.amazonaws.com/$S3_BUCKET"
 METADATA_FILE="packages-metadata.json"
 WORKDIR=$(mktemp -d)
 trap "rm -rf $WORKDIR" EXIT
 
 # Fetch existing metadata to preserve release timestamps
-OLD_METADATA_URL="https://$S3_BUCKET/${PREFIX_PATH}packages-metadata.json"
 echo "Fetching existing metadata for timestamp preservation..."
-if curl -sf "$OLD_METADATA_URL" -o "$WORKDIR/old-metadata.json" 2>/dev/null; then
+if curl -sf "$S3_URL/${PREFIX_PATH}packages-metadata.json" -o "$WORKDIR/old-metadata.json" 2>/dev/null; then
     echo "Found existing metadata"
 else
     echo "No existing metadata found, starting fresh"
@@ -25,7 +26,7 @@ fi
 echo '{"packages":{}}' > "$METADATA_FILE"
 
 for arch in aarch64 armv7; do
-    INDEX_URL="https://$S3_BUCKET/${PREFIX_PATH}$arch/APKINDEX.tar.gz"
+    INDEX_URL="$S3_URL/${PREFIX_PATH}$arch/APKINDEX.tar.gz"
     INDEX_FILE="$WORKDIR/APKINDEX-$arch"
 
     echo "Fetching APKINDEX for $arch..."
