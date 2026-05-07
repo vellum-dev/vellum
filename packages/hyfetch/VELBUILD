@@ -12,8 +12,8 @@ options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/hyfetch/2.0.5/README.md"
 
 source="
-https://github.com/$upstream_author/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
-https://github.com/$upstream_author/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
+https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
 "
 
 unpack() {
