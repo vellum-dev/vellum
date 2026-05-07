@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=floating-toolbar
 pkgver=2.0.4
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and layers."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-3.0"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.27 remarkable-os<3.28"
 _commit="f67f853dbfee9dc6c99c82e8e1343a985474d72b"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/3.27/floating.qmd
-https://raw.githubusercontent.com/FouzR/xovi-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.27/floating.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
@@ -26,7 +27,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -f \
 			/home/root/quickTool.json \

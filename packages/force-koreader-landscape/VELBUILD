@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=force-koreader-landscape
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Keeps the KOReader appload app in the same aspect ratio as the screen"
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
 _commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/forceKoreaderLandscape.qmd
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/forceKoreaderLandscape.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

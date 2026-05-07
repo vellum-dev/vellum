@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=librarian
 pkgver=0.3.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Document library management extension"
@@ -10,17 +10,18 @@ arch="aarch64 armv7"
 license="GPL-3.0-or-later"
 depends="xovi-message-broker>=18 xovi-message-broker<19"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-librarian/v$pkgver/README.md"
 source="
-https://github.com/rmitchellscott/rm-librarian/releases/download/v$pkgver/librarian-aarch64.so
-https://github.com/rmitchellscott/rm-librarian/releases/download/v$pkgver/librarian-armv7.so
-https://raw.githubusercontent.com/rmitchellscott/rm-librarian/main/LICENSE
+https://github.com/$upstream_author/rm-librarian/releases/download/v$pkgver/librarian-aarch64.so
+https://github.com/$upstream_author/rm-librarian/releases/download/v$pkgver/librarian-armv7.so
+https://raw.githubusercontent.com/$upstream_author/rm-librarian/v$pkgver/LICENSE
 "
 
 package() {
 	local so_file
 	case "$CARCH" in
-		aarch64) so_file="librarian-aarch64.so" ;;
-		armv7) so_file="librarian-armv7.so" ;;
+	aarch64) so_file="librarian-aarch64.so" ;;
+	armv7) so_file="librarian-armv7.so" ;;
 	esac
 
 	install -Dm644 "$srcdir"/$so_file \

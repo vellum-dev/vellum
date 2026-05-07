@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-all-colors
 pkgver=1.0.3
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Enables full color selection on rM1 and rM2."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder !rmpp !rmppm remarkable-os>=3.26 remarkable-os<3.28"
 _commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/enableAllColors.qmd
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/enableAllColors.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

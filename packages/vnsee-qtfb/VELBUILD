@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=vnsee-qtfb
 pkgver=1.1.0
-pkgrel=2
+pkgrel=3
 upstream_author="khyryra"
 category="apps"
 pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as a second screen"
@@ -11,17 +11,18 @@ arch="aarch64 armv7"
 depends="appload"
 replaces="vnsee-qtfb-rm1 vnsee-qtfb-rm2 vnsee-qtfb-rmpp vnsee-qtfb-rmppm"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/README.md"
 
 source="
-https://github.com/khyryra/vnsee-qtfb/releases/download/v$pkgver/vnsee-rm2.zip
-https://github.com/khyryra/vnsee-qtfb/releases/download/v$pkgver/vnsee-ferrari.zip
-https://raw.githubusercontent.com/khyryra/vnsee-qtfb/master/LICENSE.md
+https://github.com/$upstream_author/vnsee-qtfb/releases/download/v$pkgver/vnsee-rm2.zip
+https://github.com/$upstream_author/vnsee-qtfb/releases/download/v$pkgver/vnsee-ferrari.zip
+https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/LICENSE.md
 "
 
 unpack() {
 	case "$CARCH" in
-		armv7) unzip -o "$srcdir"/vnsee-rm2.zip -d "$srcdir" ;;
-		aarch64) unzip -o "$srcdir"/vnsee-ferrari.zip -d "$srcdir" ;;
+	armv7) unzip -o "$srcdir"/vnsee-rm2.zip -d "$srcdir" ;;
+	aarch64) unzip -o "$srcdir"/vnsee-ferrari.zip -d "$srcdir" ;;
 	esac
 }
 
@@ -39,7 +40,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	echo ""
 	echo "================================================================="
 	echo "  NOTE: You have to update your connection parameters in"
@@ -49,7 +50,7 @@ postinstall(){
 	echo ""
 }
 
-postupgrade(){
+postupgrade() {
 	echo ""
 	echo "================================================================="
 	echo "  NOTE: You have to update your connection parameters in"
@@ -59,7 +60,7 @@ postupgrade(){
 	echo ""
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf \
 			/home/root/xovi/exthome/appload/vnsee \

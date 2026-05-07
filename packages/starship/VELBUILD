@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=starship
 pkgver=1.24.2
-pkgrel=0
+pkgrel=1
 upstream_author="starship"
 category="utilities"
 pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
@@ -9,31 +9,32 @@ url="https://starship.rs/"
 arch="aarch64 armv7"
 license="ISC"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/starship/v$pkgver/README.md"
 
 source="
-https://github.com/starship/starship/releases/download/v$pkgver/starship-aarch64-unknown-linux-musl.tar.gz
-https://github.com/starship/starship/releases/download/v$pkgver/starship-arm-unknown-linux-musleabihf.tar.gz
-https://raw.githubusercontent.com/starship/starship/refs/heads/master/LICENSE
+https://github.com/$upstream_author/starship/releases/download/v$pkgver/starship-aarch64-unknown-linux-musl.tar.gz
+https://github.com/$upstream_author/starship/releases/download/v$pkgver/starship-arm-unknown-linux-musleabihf.tar.gz
+https://raw.githubusercontent.com/$upstream_author/starship/v$pkgver/LICENSE
 "
 
 unpack() {
 	case "$CARCH" in
-		aarch64)  tar -xzf "$srcdir"/starship-aarch64-unknown-linux-musl.tar.gz -C "$srcdir" ;;
-		armv7)  tar -xzf "$srcdir"/starship-arm-unknown-linux-musleabihf.tar.gz -C "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/starship-aarch64-unknown-linux-musl.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/starship-arm-unknown-linux-musleabihf.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
 	install -Dm755 "$srcdir"/starship \
 		"$pkgdir"/home/root/.vellum/bin/starship
-	
+
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/starship/starship/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	/home/root/.vellum/bin/starship completions bash > \
 		/home/root/.vellum/share/bash-completion/completions/starship
 
@@ -49,12 +50,12 @@ postinstall(){
 	echo ""
 }
 
-postupgrade(){
+postupgrade() {
 	/home/root/.vellum/bin/starship completions bash > \
 		/home/root/.vellum/share/bash-completion/completions/starship
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf \
 			/home/root/.config/starship.toml \

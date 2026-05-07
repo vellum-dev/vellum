@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
 pkgver=0.1.4
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
@@ -10,17 +10,18 @@ arch="aarch64 armv7"
 license="GPL-3.0"
 depends="appload framebuffer-spy>=18.0.0 framebuffer-spy<19.0.0 xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/appload-rmstream/v$pkgver/README.MD"
 
 source="
-https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz
-https://github.com/asivery/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.tar.gz
-https://raw.githubusercontent.com/asivery/appload-rmstream/v$pkgver/LICENSE
+https://github.com/$upstream_author/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz
+https://github.com/$upstream_author/appload-rmstream/releases/download/v$pkgver/rmstream-arm32.tar.gz
+https://raw.githubusercontent.com/$upstream_author/appload-rmstream/v$pkgver/LICENSE
 "
 
 unpack() {
 	case "$CARCH" in
-		aarch64) tar -xzf "$srcdir"/rmstream-aarch64.tar.gz -C "$srcdir" ;;
-		armv7) tar -xzf "$srcdir"/rmstream-arm32.tar.gz -C "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/rmstream-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/rmstream-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
@@ -35,7 +36,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	echo ""
 	echo "==============================================="
 	echo "  NOTE: You must refresh AppLoad to see changes "
@@ -44,7 +45,7 @@ postinstall(){
 	echo ""
 }
 
-postdeinstall(){
+postdeinstall() {
 	echo ""
 	echo "==============================================="
 	echo "  NOTE: You must refresh AppLoad to see changes "

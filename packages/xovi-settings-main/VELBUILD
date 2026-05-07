@@ -1,7 +1,7 @@
 maintainer="Wajsar Josef <Wajsar.Josef@hotmail.com>"
 pkgname=xovi-settings-main
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="PepikVaio"
 category="framework"
 pkgdesc="Add settings to your extension. The extension will do nothing unless you add additional files."
@@ -10,9 +10,10 @@ arch="noarch"
 license="CC-BY-NC-ND-4.0"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.25"
 _commit="4d24da8dbf92cec060e29f64568dc6963cf6d6fe"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkable_Xovi_Extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/$_commit/xovi_Settings_Main/3.24.0.149/xovi_Settings_Main.qmd
-https://raw.githubusercontent.com/PepikVaio/reMarkable_Xovi_Extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/reMarkable_Xovi_Extensions/$_commit/xovi_Settings_Main/3.24.0.149/xovi_Settings_Main.qmd
+https://raw.githubusercontent.com/$upstream_author/reMarkable_Xovi_Extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

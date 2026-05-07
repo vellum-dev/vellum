@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gomarkablestream
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="owulveryck"
 category="utilities"
 pkgdesc="Stream your reMarkable screen to a web browser"
@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="MIT"
 depends="!rmppm !rm1 remarkable-os>=3.24"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/goMarkableStream/v$pkgver/README.md"
 
 source="
 $pkgname-$pkgver-aarch64::https://github.com/$upstream_author/goMarkableStream/releases/download/v$pkgver/gomarkablestream-RMPRO

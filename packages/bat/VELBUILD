@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=bat
 pkgver=0.26.1
-pkgrel=0
+pkgrel=1
 upstream_author="sharkdp"
 category="utilities"
 pkgdesc="A cat(1) clone with wings."
@@ -11,28 +11,30 @@ license="Apache-2.0 OR MIT"
 options="!check !fhs !strip !tracedeps"
 depends="less"
 
+readmeurl="https://raw.githubusercontent.com/$upstream_author/bat/v$pkgver/README.md"
+
 source="
-https://github.com/sharkdp/bat/releases/download/v$pkgver/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz
-https://github.com/sharkdp/bat/releases/download/v$pkgver/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz
+https://github.com/$upstream_author/bat/releases/download/v$pkgver/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz
+https://github.com/$upstream_author/bat/releases/download/v$pkgver/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz
 "
 
 unpack() {
 	case "$CARCH" in
-		aarch64)  tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz -C "$srcdir" ;;
-		armv7)  tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz -C "$srcdir" ;;
+	aarch64) tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-aarch64-unknown-linux-gnu.tar.gz -C "$srcdir" ;;
+	armv7) tar --strip-components=1 -xzf "$srcdir"/bat-v$pkgver-arm-unknown-linux-gnueabihf.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
 	install -Dm755 "$srcdir"/bat \
 		"$pkgdir"/home/root/.vellum/bin/bat
-	
+
 	install -Dm644 "$srcdir"/LICENSE-MIT \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/sharkdp/bat/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -fr /home/root/.config/bat
 	fi

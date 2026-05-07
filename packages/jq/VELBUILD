@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=jq
 pkgver=1.8.1
-pkgrel=0
+pkgrel=1
 upstream_author="jqlang"
 category="utilities"
 pkgdesc="Command-line JSON processor"
@@ -9,23 +9,24 @@ url="https://jqlang.org/"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/jq/jq-$pkgver/README.md"
 
 source="
-https://github.com/jqlang/jq/releases/download/jq-$pkgver/jq-linux-arm64
-https://github.com/jqlang/jq/releases/download/jq-$pkgver/jq-linux-armhf
-https://raw.githubusercontent.com/jqlang/jq/refs/heads/master/COPYING
+https://github.com/$upstream_author/jq/releases/download/jq-$pkgver/jq-linux-arm64
+https://github.com/$upstream_author/jq/releases/download/jq-$pkgver/jq-linux-armhf
+https://raw.githubusercontent.com/$upstream_author/jq/refs/heads/master/COPYING
 "
 
 package() {
 	local bin_file
 	case "$CARCH" in
-		aarch64)  bin_file="jq-linux-arm64" ;;
-		armv7)  bin_file="jq-linux-armhf" ;;
+	aarch64) bin_file="jq-linux-arm64" ;;
+	armv7) bin_file="jq-linux-armhf" ;;
 	esac
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/jq
-	
+
 	install -Dm644 "$srcdir"/COPYING \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
 	echo "https://github.com/jqlang/jq/archive/refs/tags/jq-$pkgver.tar.gz" > \

@@ -1,13 +1,14 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=netevent
 pkgver=2.2.2
-pkgrel=0
+pkgrel=1
 pkgdesc="Input-Event device cloning utility"
 upstream_author="Blub"
 category="utilities"
 url="https://github.com/Blub/netevent"
 arch="armv7 aarch64"
 license="GPL-2.0-only"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/netevent/${pkgver%-*}/README.md"
 source="$pkgname-${pkgver%-*}.tar.gz::https://github.com/$upstream_author/netevent/archive/refs/tags/${pkgver%-*}.tar.gz"
 options="!check !fhs !strip !tracedeps"
 

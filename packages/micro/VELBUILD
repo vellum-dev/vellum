@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=micro
 pkgver=2.0.14
-pkgrel=0
+pkgrel=1
 upstream_author="zyedidia"
 category="apps"
 pkgdesc="Modern and intuitive terminal-based text editor"
@@ -12,9 +12,10 @@ options="!check !fhs !strip !tracedeps"
 
 _release="v$pkgver"
 
+readmeurl="https://raw.githubusercontent.com/$upstream_author/micro/$_release/README.md"
 source="
-$pkgname-$pkgver-armv7.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/micro-$pkgver-linux-arm.tar.gz
-$pkgname-$pkgver-arm64.tar.gz::https://github.com/zyedidia/micro/releases/download/$_release/micro-$pkgver-linux-arm64.tar.gz
+$pkgname-$pkgver-armv7.tar.gz::https://github.com/$upstream_author/micro/releases/download/$_release/micro-$pkgver-linux-arm.tar.gz
+$pkgname-$pkgver-arm64.tar.gz::https://github.com/$upstream_author/micro/releases/download/$_release/micro-$pkgver-linux-arm64.tar.gz
 "
 
 unpack() {

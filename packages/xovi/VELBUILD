@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
 pkgver=0.3.3
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="framework"
 pkgdesc="Core xovi framework for reMarkable tablets"
@@ -10,20 +10,20 @@ arch="aarch64 armv7"
 license="GPL-3.0"
 options="!check !fhs !strip !tracedeps"
 depends="!xovi-extensions<18.0.0"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi/v$pkgver/README.MD"
 
 source="
-https://github.com/asivery/xovi/releases/download/v$pkgver/xovi-aarch64.so
-https://github.com/asivery/xovi/releases/download/v$pkgver/xovi-arm32.so
-https://raw.githubusercontent.com/asivery/xovi/master/LICENSE
+https://github.com/$upstream_author/xovi/releases/download/v$pkgver/xovi-aarch64.so
+https://github.com/$upstream_author/xovi/releases/download/v$pkgver/xovi-arm32.so
+https://raw.githubusercontent.com/$upstream_author/xovi/v$pkgver/LICENSE
 "
-
 
 package() {
 	local xovi_so
 
 	case "$CARCH" in
-		aarch64) xovi_so="xovi-aarch64.so" ;;
-		armv7) xovi_so="xovi-arm32.so" ;;
+	aarch64) xovi_so="xovi-aarch64.so" ;;
+	armv7) xovi_so="xovi-arm32.so" ;;
 	esac
 
 	install -Dm644 "$srcdir"/$xovi_so "$pkgdir"/home/root/xovi/xovi.so

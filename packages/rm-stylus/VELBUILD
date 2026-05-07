@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-stylus
 pkgver=0.3.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Xovi extension that exposes stylus button events as a QML type."
@@ -10,17 +10,18 @@ arch="aarch64 armv7"
 license="MIT"
 depends="xovi"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-stylus/v$pkgver/README.md"
 source="
-https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-aarch64.so
-https://github.com/rmitchellscott/rm-stylus/releases/download/v$pkgver/rm-stylus-armv7.so
-https://raw.githubusercontent.com/rmitchellscott/rm-stylus/main/LICENSE
+https://github.com/$upstream_author/rm-stylus/releases/download/v$pkgver/rm-stylus-aarch64.so
+https://github.com/$upstream_author/rm-stylus/releases/download/v$pkgver/rm-stylus-armv7.so
+https://raw.githubusercontent.com/$upstream_author/rm-stylus/v$pkgver/LICENSE
 "
 
 package() {
 	local so_file
 	case "$CARCH" in
-		aarch64) so_file="rm-stylus-aarch64.so" ;;
-		armv7) so_file="rm-stylus-armv7.so" ;;
+	aarch64) so_file="rm-stylus-aarch64.so" ;;
+	armv7) so_file="rm-stylus-armv7.so" ;;
 	esac
 
 	install -Dm644 "$srcdir"/$so_file \

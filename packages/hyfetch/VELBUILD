@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=hyfetch
 pkgver=2.0.5_git6
-pkgrel=3
+pkgrel=4
 upstream_author="hykilpikonna"
 category="utilities"
 pkgdesc="Neofetch with LGBTQ+ pride flags!"
@@ -9,40 +9,41 @@ url="https://github.com/hykilpikonna/hyfetch"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/hyfetch/2.0.5/README.md"
 
 source="
-https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
-https://github.com/notfrants/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
+https://github.com/$upstream_author/vellum-builds/releases/download/v0.1.1/hyfetch-aarch64.tar.gz
+https://github.com/$upstream_author/vellum-builds/releases/download/v0.1.1/hyfetch-arm32.tar.gz
 "
 
 unpack() {
 	case "$CARCH" in
-		aarch64)  tar -xzf "$srcdir"/hyfetch-aarch64.tar.gz -C "$srcdir" ;;
-		armv7)  tar -xzf "$srcdir"/hyfetch-arm32.tar.gz -C "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/hyfetch-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/hyfetch-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
 package() {
 	install -Dm755 "$srcdir"/hyfetch \
 		"$pkgdir"/home/root/.vellum/bin/hyfetch
-	
+
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	install -Dm644 "$srcdir"/SOURCES \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	/home/root/.vellum/bin/hyfetch --bpaf-complete-style-bash > \
 		/home/root/.vellum/share/bash-completion/completions/hyfetch
 }
 
-postupgrade(){
+postupgrade() {
 	/home/root/.vellum/bin/hyfetch --bpaf-complete-style-bash > \
 		/home/root/.vellum/share/bash-completion/completions/hyfetch
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf \
 			/home/root/.config/hyfetch.json \

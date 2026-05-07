@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=curl
 pkgver=8.11.0
-pkgrel=1
+pkgrel=2
 upstream_author="curl"
 category="utilities"
 pkgdesc="URL retrival utility and library"
@@ -9,23 +9,24 @@ url="https://curl.se/"
 arch="aarch64 armv7"
 license="curl"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/curl/curl-${pkgver//./_}/README.md"
 
 source="
 https://github.com/moparisthebest/static-curl/releases/download/v$pkgver/curl-aarch64
 https://github.com/moparisthebest/static-curl/releases/download/v$pkgver/curl-armv7
-https://raw.githubusercontent.com/curl/curl/refs/heads/master/COPYING
+https://raw.githubusercontent.com/$upstream_author/curl/refs/heads/v$pkgver/COPYING
 "
 
 package() {
 	local bin_file
 	case "$CARCH" in
-		aarch64)  bin_file="curl-aarch64" ;;
-		armv7)  bin_file="curl-armv7" ;;
+	aarch64) bin_file="curl-aarch64" ;;
+	armv7) bin_file="curl-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/curl
-	
+
 	install -Dm644 "$srcdir"/COPYING \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
 	echo "https://curl.se/download/curl-$pkgver.tar.xz" > \

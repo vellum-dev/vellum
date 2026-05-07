@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
 pkgver=1.4.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.27 remarkable-os<3.28"
 _commit="59bb593608babe147312fbb424d8472858ac8ab7"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.27/betterToc.qmd
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/betterToc.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 

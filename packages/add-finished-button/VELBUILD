@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-finished-button
 pkgver=1.0.3
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Adds a Finished button when selecting documents, moving them to the first subfolder in the current folder"
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
 _commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.27/addFinishedButton.qmd
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/addFinishedButton.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

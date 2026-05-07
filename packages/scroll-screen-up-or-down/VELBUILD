@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=scroll-screen-up-or-down
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Screen scrolling with page change at boundaries. Prerequisite for tap and arrow key navigation."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
 _commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/scrollScreenUpOrDown.qmd
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/scrollScreenUpOrDown.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
@@ -26,19 +27,19 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	LOADER="/home/root/xovi/exthome/qt-resource-rebuilder/_ingatellent.qmd"
 	QMD_FILE="ingatellent/scrollScreenUpOrDown.qmd"
 
 	if ! grep -q "LOAD $QMD_FILE" "$LOADER" 2>/dev/null; then
 		if [ ! -s "$LOADER" ]; then
-			echo "LOAD $QMD_FILE" > "$LOADER"
+			echo "LOAD $QMD_FILE" >"$LOADER"
 		else
 			sed -i "1i LOAD $QMD_FILE" "$LOADER"
 		fi
 	fi
 }
-postdeinstall(){
+postdeinstall() {
 	LOADER="/home/root/xovi/exthome/qt-resource-rebuilder/_ingatellent.qmd"
 
 	if [ -f "$LOADER" ]; then

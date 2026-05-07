@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
 pkgver=1.96.2
-pkgrel=1
+pkgrel=2
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
@@ -10,11 +10,12 @@ arch="aarch64 armv7"
 license="BSD-3-Clause"
 options="!check !fhs !strip !tracedeps"
 depends="mount-utils"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/tailscale/v$pkgver/README.md"
 
 source="
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm64.tgz
-https://raw.githubusercontent.com/tailscale/tailscale/refs/tags/v$pkgver/LICENSE
+https://raw.githubusercontent.com/$upstream_author/tailscale/refs/tags/v$pkgver/LICENSE
 10-defaults.patch
 10-service.patch
 "
