@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksettings-clock-serif
 pkgver=1.0.2
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a clock to the quick settings menu in serif font"
@@ -10,9 +10,10 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.25/quickSettingsClockSerif.qmd
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.25/quickSettingsClockSerif.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 

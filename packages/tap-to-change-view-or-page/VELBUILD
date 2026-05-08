@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tap-to-change-view-or-page
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Tap screen edges to scroll/navigate pages when toolbar is hidden."
@@ -11,9 +11,10 @@ license="GPL-2.0"
 depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.26 remarkable-os<3.28"
 replaces="gesture-tap-to-page"
 _commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.26/tapToChangeViewOrPage.qmd
-https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/tapToChangeViewOrPage.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 
@@ -27,18 +28,18 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	LOADER="/home/root/xovi/exthome/qt-resource-rebuilder/_ingatellent.qmd"
 	QMD_FILE="ingatellent/tapToChangeViewOrPage.qmd"
 
 	touch "$LOADER"
 
 	if ! grep -q "LOAD $QMD_FILE" "$LOADER"; then
-	    echo "LOAD $QMD_FILE" >> "$LOADER"
+		echo "LOAD $QMD_FILE" >>"$LOADER"
 	fi
 }
 
-postdeinstall(){
+postdeinstall() {
 	LOADER="/home/root/xovi/exthome/qt-resource-rebuilder/_ingatellent.qmd"
 
 	if [ -f "$LOADER" ]; then

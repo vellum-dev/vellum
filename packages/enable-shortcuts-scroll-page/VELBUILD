@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-shortcuts-scroll-page
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Advanced shortcuts with scroll or page change (requires gestureTapToPage)."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-2.0"
 depends="qt-resource-rebuilder !enable-shortcuts remarkable-os>=3.24 remarkable-os<3.25"
 _commit="82f0526a81a46751dd4c16d7c27f754a6afa23ec"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-enableShortcutsWithScrollOrChangePage.qmd::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/3.24/enableShortcutsWithScrollOrChangePage.qmd
-LICENSE::https://raw.githubusercontent.com/ingatellent/xovi-qmd-extensions/$_commit/LICENSE.md
+enableShortcutsWithScrollOrChangePage.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/enableShortcutsWithScrollOrChangePage.qmd
+LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
 

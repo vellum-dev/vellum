@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=create-document-from-pages
 pkgver=2.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds an option to the Page Overview More menu to create a new document from selected pages."
@@ -10,9 +10,10 @@ arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<19 rm-pdfium<1.0.0 remarkable-os>=3.27 remarkable-os<3.28"
 _commit="59bb593608babe147312fbb424d8472858ac8ab7"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.27/createDocumentFromPages.qmd
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/createDocumentFromPages.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 

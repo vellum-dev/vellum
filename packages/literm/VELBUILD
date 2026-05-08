@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.6
-pkgrel=5
+pkgrel=6
 upstream_author="asivery"
 category="apps"
 pkgdesc="A terminal emulator using QtQuick."
@@ -10,25 +10,25 @@ arch="aarch64 armv7"
 license="GPL-2.0"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-literm/v$pkgver/README.md"
 
 source="
-https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-aarch64.so
-https://github.com/asivery/rm-literm/releases/download/v$pkgver/literm-arm32.so
-https://raw.githubusercontent.com/asivery/rm-literm/master/COPYING
+https://github.com/$upstream_author/rm-literm/releases/download/v$pkgver/literm-aarch64.so
+https://github.com/$upstream_author/rm-literm/releases/download/v$pkgver/literm-arm32.so
+https://raw.githubusercontent.com/$upstream_author/rm-literm/v$pkgver/COPYING
 "
-
 
 package() {
 	local so_file
 
 	case "$CARCH" in
-		aarch64) so_file="literm-aarch64.so" ;;
-		armv7) so_file="literm-arm32.so" ;;
+	aarch64) so_file="literm-aarch64.so" ;;
+	armv7) so_file="literm-arm32.so" ;;
 	esac
 
 	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/$pkgname.so
-	
+
 	install -d "$pkgdir"/home/root/.config/$pkgname
 
 	install -Dm644 "$srcdir"/COPYING \
@@ -37,7 +37,7 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/.config/literm
 	fi

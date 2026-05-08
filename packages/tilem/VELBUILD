@@ -1,7 +1,7 @@
 maintainer="notfrants <notfrants@proton.me>"
 pkgname=tilem
 pkgver=0.1.3_git6
-pkgrel=1
+pkgrel=2
 upstream_author="timower"
 category="apps"
 pkgdesc="A TI-84+ calculator emulator for the remarkable."
@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="GPL-3.0"
 depends="appload curl"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v0.1.3/Readme.md"
 
 source="
 https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-aarch64.tar.gz
@@ -18,8 +19,8 @@ https://github.com/notfrants/vellum-builds/releases/download/v0.1.0/tilem-arm32.
 
 unpack() {
 	case "$CARCH" in
-		aarch64)  tar -xzf "$srcdir"/tilem-aarch64.tar.gz -C "$srcdir" ;;
-		armv7)  tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/tilem-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/tilem-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
@@ -31,14 +32,14 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/external.manifest.json
 	install -Dm644 "$srcdir"/icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/icon.png
-	
+
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	install -Dm644 "$srcdir"/SOURCES \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall(){
+postinstall() {
 	echo ""
 	echo "================================================"
 	echo "  NOTE: To use TilEm, you must refresh AppLoad"
@@ -46,7 +47,7 @@ postinstall(){
 	echo ""
 }
 
-postdeinstall(){
+postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/xovi/exthome/appload/tilem
 	fi

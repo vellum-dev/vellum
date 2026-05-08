@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pokemon
 pkgver=0.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Display the Pokemon sprite matching your reMarkable firmware codename"
@@ -9,18 +9,19 @@ url="https://github.com/rmitchellscott/rm-pokemon"
 arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-pokemon/v$pkgver/README.md"
 
 source="
-https://github.com/rmitchellscott/rm-pokemon/releases/download/v$pkgver/rm-pokemon-aarch64
-https://github.com/rmitchellscott/rm-pokemon/releases/download/v$pkgver/rm-pokemon-armv7
-LICENSE::https://raw.githubusercontent.com/rmitchellscott/rm-pokemon/main/LICENSE
+https://github.com/$upstream_author/rm-pokemon/releases/download/v$pkgver/rm-pokemon-aarch64
+https://github.com/$upstream_author/rm-pokemon/releases/download/v$pkgver/rm-pokemon-armv7
+LICENSE::https://raw.githubusercontent.com/$upstream_author/rm-pokemon/v$pkgver/LICENSE
 "
 
 package() {
 	local bin_file
 	case "$CARCH" in
-		aarch64) bin_file="rm-pokemon-aarch64" ;;
-		armv7) bin_file="rm-pokemon-armv7" ;;
+	aarch64) bin_file="rm-pokemon-aarch64" ;;
+	armv7) bin_file="rm-pokemon-armv7" ;;
 	esac
 
 	install -Dm755 "$srcdir/$bin_file" \

@@ -31,40 +31,40 @@ usage() {
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        --apkbuild-lint)
-            RUN_APKBUILD_LINT=true
+    --apkbuild-lint)
+        RUN_APKBUILD_LINT=true
+        shift
+        ;;
+    --changed)
+        shift
+        if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then
+            CHANGED_REF="$1"
             shift
-            ;;
-        --changed)
-            shift
-            if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then
-                CHANGED_REF="$1"
-                shift
-            else
-                CHANGED_REF="origin/main"
-            fi
-            ;;
-        -h|--help)
-            usage
-            exit 0
-            ;;
-        -*)
-            echo "Unknown option: $1"
-            usage
-            exit 1
-            ;;
-        *)
-            PACKAGES="$PACKAGES $1"
-            shift
-            ;;
+        else
+            CHANGED_REF="origin/main"
+        fi
+        ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    -*)
+        echo "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    *)
+        PACKAGES="$PACKAGES $1"
+        shift
+        ;;
     esac
 done
 
 if [ -z "$PACKAGES" ]; then
     if [ -n "$CHANGED_REF" ]; then
-        PACKAGES=$(git diff --name-only "$CHANGED_REF" -- packages/ 2>/dev/null | \
-            grep "^packages/" | \
-            cut -d/ -f2 | \
+        PACKAGES=$(git diff --name-only "$CHANGED_REF" -- packages/ 2>/dev/null |
+            grep "^packages/" |
+            cut -d/ -f2 |
             sort -u)
         if [ -z "$PACKAGES" ]; then
             echo "No packages changed since $CHANGED_REF"
@@ -108,16 +108,17 @@ if [ "$RUN_APKBUILD_LINT" = "true" ]; then
     set +e
     work_dir=$(mktemp -d)
     ret=$?
+    trap 'rm -rf $work_dir' EXIT
     if [ $ret -ne 0 ]; then
         echo "Fatal Error: Failed to create working directory" 2>&1
         exit $ret
     fi
     set -e
     cpus=$(nproc)
-    echo "$PACKAGES" \
-    | xargs -n1 \
-    | xargs -P "$(( cpus * 2 ))" -I {} \
-        bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
+    echo "$PACKAGES" |
+        xargs -n1 |
+        xargs -P "$((cpus * 2))" -I {} \
+            bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
 fi
 
 echo "Linting packages..."
@@ -148,7 +149,6 @@ for pkg in $PACKAGES; do
     fi
 
     if [ "$RUN_APKBUILD_LINT" = "true" ]; then
-        apkbuild_path="$work_dir/$pkg/APKBUILD"
         lint_status=0
         lint_output=$(run_apkbuild_lint "$work_dir/$pkg") || lint_status=$?
         if [ $lint_status -ne 0 ]; then
@@ -157,19 +157,19 @@ for pkg in $PACKAGES; do
     fi
 
     case "$pkg_status" in
-        fail)
-            printf "${RED}FAIL${NC}: %s\n" "$pkg"
-            FAILED=$((FAILED + 1))
-            ;;
-        *)
-            if [ "$pkg_warned" = true ]; then
-                printf "${YELLOW}WARN${NC}: %s\n" "$pkg"
-                WARNED=$((WARNED + 1))
-            else
-                printf "${GREEN}PASS${NC}: %s\n" "$pkg"
-                PASSED=$((PASSED + 1))
-            fi
-            ;;
+    fail)
+        printf "${RED}FAIL${NC}: %s\n" "$pkg"
+        FAILED=$((FAILED + 1))
+        ;;
+    *)
+        if [ "$pkg_warned" = true ]; then
+            printf "${YELLOW}WARN${NC}: %s\n" "$pkg"
+            WARNED=$((WARNED + 1))
+        else
+            printf "${GREEN}PASS${NC}: %s\n" "$pkg"
+            PASSED=$((PASSED + 1))
+        fi
+        ;;
     esac
 
     [ -n "$validate_output" ] && echo "$validate_output"

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
 pkgver=1.1.2
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Screenshot extension for xovi framework"
@@ -10,17 +10,18 @@ arch="aarch64 armv7"
 license="GPL-3.0-or-later"
 depends="framebuffer-spy>=18 framebuffer-spy<19 xovi-message-broker>=18 xovi-message-broker<19"
 options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-shot/v$pkgver/README.md"
 source="
-https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-aarch64.so
-https://github.com/rmitchellscott/rm-shot/releases/download/v$pkgver/rm-shot-armv7.so
-https://raw.githubusercontent.com/rmitchellscott/rm-shot/main/LICENSE
+https://github.com/$upstream_author/rm-shot/releases/download/v$pkgver/rm-shot-aarch64.so
+https://github.com/$upstream_author/rm-shot/releases/download/v$pkgver/rm-shot-armv7.so
+https://raw.githubusercontent.com/$upstream_author/rm-shot/v$pkgver/LICENSE
 "
 
 package() {
 	local so_file
 	case "$CARCH" in
-		aarch64) so_file="rm-shot-aarch64.so" ;;
-		armv7) so_file="rm-shot-armv7.so" ;;
+	aarch64) so_file="rm-shot-aarch64.so" ;;
+	armv7) so_file="rm-shot-armv7.so" ;;
 	esac
 
 	install -Dm644 "$srcdir"/$so_file \

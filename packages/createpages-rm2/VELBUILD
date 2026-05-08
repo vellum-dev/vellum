@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=createpages-rm2
 pkgver=1.0.4
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Overrides new page creation to use reMarkable 2 dimensions."
@@ -10,9 +10,10 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder !createpages-paperpro remarkable-os>=3.26 remarkable-os<3.28"
 _commit="edc9cefdb2ee2dde0fb495f76ac845a7e26e049e"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.26/createPagesRM2Size.qmd
-https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/createPagesRM2Size.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 

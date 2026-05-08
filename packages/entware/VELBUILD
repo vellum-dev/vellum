@@ -38,22 +38,22 @@ package() {
 	install -Dm755 "$srcdir/reenable-entware.sh" "$install_dir/reenable-entware.sh"
 
 	case "$CARCH" in
-		aarch64)
-			install -Dm755 "$srcdir/opkg.aarch64" "$bin_dir/opkg"
-			install -Dm644 "$srcdir/opkg.conf.aarch64" "$install_dir/opkg.conf"
-			install -Dm755 "$srcdir/ld-2.27.so.aarch64" "$lib_dir/ld-2.27.so"
-			install -Dm755 "$srcdir/libc-2.27.so.aarch64" "$lib_dir/libc-2.27.so"
-			install -Dm755 "$srcdir/libgcc_s.so.1.aarch64" "$lib_dir/libgcc_s.so.1"
-			install -Dm755 "$srcdir/libpthread-2.27.so.aarch64" "$lib_dir/libpthread-2.27.so"
-			;;
-		armv7)
-			install -Dm755 "$srcdir/opkg.armv7" "$bin_dir/opkg"
-			install -Dm644 "$srcdir/opkg.conf.armv7" "$install_dir/opkg.conf"
-			install -Dm755 "$srcdir/ld-2.27.so.armv7" "$lib_dir/ld-2.27.so"
-			install -Dm755 "$srcdir/libc-2.27.so.armv7" "$lib_dir/libc-2.27.so"
-			install -Dm755 "$srcdir/libgcc_s.so.1.armv7" "$lib_dir/libgcc_s.so.1"
-			install -Dm755 "$srcdir/libpthread-2.27.so.armv7" "$lib_dir/libpthread-2.27.so"
-			;;
+	aarch64)
+		install -Dm755 "$srcdir/opkg.aarch64" "$bin_dir/opkg"
+		install -Dm644 "$srcdir/opkg.conf.aarch64" "$install_dir/opkg.conf"
+		install -Dm755 "$srcdir/ld-2.27.so.aarch64" "$lib_dir/ld-2.27.so"
+		install -Dm755 "$srcdir/libc-2.27.so.aarch64" "$lib_dir/libc-2.27.so"
+		install -Dm755 "$srcdir/libgcc_s.so.1.aarch64" "$lib_dir/libgcc_s.so.1"
+		install -Dm755 "$srcdir/libpthread-2.27.so.aarch64" "$lib_dir/libpthread-2.27.so"
+		;;
+	armv7)
+		install -Dm755 "$srcdir/opkg.armv7" "$bin_dir/opkg"
+		install -Dm644 "$srcdir/opkg.conf.armv7" "$install_dir/opkg.conf"
+		install -Dm755 "$srcdir/ld-2.27.so.armv7" "$lib_dir/ld-2.27.so"
+		install -Dm755 "$srcdir/libc-2.27.so.armv7" "$lib_dir/libc-2.27.so"
+		install -Dm755 "$srcdir/libgcc_s.so.1.armv7" "$lib_dir/libgcc_s.so.1"
+		install -Dm755 "$srcdir/libpthread-2.27.so.armv7" "$lib_dir/libpthread-2.27.so"
+		;;
 	esac
 
 	install -Dm644 "$srcdir/COPYING" \
@@ -61,7 +61,7 @@ package() {
 	echo "https://github.com/$upstream_author/Entware" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
-postinstall(){
+postinstall() {
 	/home/root/.local/share/entware/install-entware.sh
 
 	BASHRC="/home/root/.bashrc"
@@ -71,13 +71,13 @@ postinstall(){
 	if [ -f "$BASHRC" ] && grep -qF "/opt/bin" "$BASHRC"; then
 		echo "Entware PATH already configured in $BASHRC"
 	else
-		echo "" >> "$BASHRC"
-		echo "$PATH_LINE" >> "$BASHRC"
+		echo "" >>"$BASHRC"
+		echo "$PATH_LINE" >>"$BASHRC"
 		echo "Added Entware to PATH in $BASHRC"
 		BASHRC_CHANGED=true
 	fi
 
-	cat << 'EOF'
+	cat <<'EOF'
 
 ======================================================
                   Entware Installed
@@ -103,7 +103,7 @@ EOF
 		echo ""
 	fi
 }
-postupgrade(){
+postupgrade() {
 	/home/root/.vellum/bin/mount-rw
 
 	/home/root/.local/share/entware/reenable-entware.sh
@@ -115,7 +115,7 @@ postupgrade(){
 		/opt/bin/opkg upgrade opkg
 	fi
 
-	cat << 'EOF'
+	cat <<'EOF'
 
 ======================================================
                   Entware Upgraded
@@ -132,15 +132,15 @@ postupgrade(){
 
 EOF
 }
-postosupgrade(){
+postosupgrade() {
 	/home/root/.local/share/entware/reenable-entware.sh
 }
-predeinstall(){
+predeinstall() {
 	VELLUM_BIN="/home/root/.vellum/bin"
 
 	BASHRC="/home/root/.bashrc"
 	if [ -f "$BASHRC" ]; then
-		grep -v "/opt/bin:/opt/sbin" "$BASHRC" > "$BASHRC.tmp" && mv "$BASHRC.tmp" "$BASHRC"
+		grep -v "/opt/bin:/opt/sbin" "$BASHRC" >"$BASHRC.tmp" && mv "$BASHRC.tmp" "$BASHRC"
 	fi
 
 	"$VELLUM_BIN/mount-rw"
@@ -162,14 +162,14 @@ predeinstall(){
 
 	"$VELLUM_BIN/mount-restore"
 }
-postdeinstall(){
+postdeinstall() {
 	ENTWARE_DATA="/home/root/.entware"
 
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf "$ENTWARE_DATA"
 		echo "Entware data purged from $ENTWARE_DATA"
 	elif [ -d "$ENTWARE_DATA" ]; then
-		cat << 'EOF'
+		cat <<'EOF'
 
 ======================================================
     Entware data preserved at /home/root/.entware

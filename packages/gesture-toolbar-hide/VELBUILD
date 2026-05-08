@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gesture-toolbar-hide
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Single-finger swipe from toolbar edge to hide the toolbar"
@@ -10,9 +10,10 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.26"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-gestureToolbarHide.qmd::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/3.24/gestureToolbarHide.qmd
-LICENSE::https://raw.githubusercontent.com/rmitchellscott/xovi-qmd-extensions/$_commit/LICENSE
+gestureToolbarHide.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/gestureToolbarHide.qmd
+LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
