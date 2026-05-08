@@ -165,4 +165,12 @@ generate_feed "rmppm" "$FEEDS_DIR/rmppm.rss" \
     "Vellum Packages - reMarkable Paper Pro Move" \
     "Package updates for reMarkable Paper Pro Move"
 
+generate_feed "rmppmove" "$FEEDS_DIR/rmppmove.rss" \
+    "Vellum Packages - reMarkable Paper Pro Move" \
+    "Package updates for reMarkable Paper Pro Move"
+
+generate_feed "rmppure" "$FEEDS_DIR/rmppure.rss" \
+    "Vellum Packages - reMarkable Paper Pure" \
+    "Package updates for reMarkable Paper Pure"
+
 echo "All feeds generated in $FEEDS_DIR/"

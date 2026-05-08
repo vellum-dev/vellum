@@ -172,16 +172,16 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
         esac
     done
 
-    all_devices='["rm1","rm2","rmpp","rmppm"]'
-    device_names="rm1 rm2 rmpp rmppm"
+    all_devices='["rm1","rm2","rmpp","rmppm","rmppmove","rmppure"]'
+    device_names="rm1 rm2 rmpp rmppm rmppmove rmppure"
     pos_devices=""
     neg_devices=""
 
     # Check depends for device constraints
     for token in $deps; do
         case "$token" in
-        rm1 | rm2 | rmpp | rmppm) pos_devices="$pos_devices $token" ;;
-        !rm1 | !rm2 | !rmpp | !rmppm) neg_devices="$neg_devices ${token#!}" ;;
+        rm1 | rm2 | rmpp | rmppm | rmppmove | rmppure) pos_devices="$pos_devices $token" ;;
+        !rm1 | !rm2 | !rmpp | !rmppm | !rmppmove | !rmppure) neg_devices="$neg_devices ${token#!}" ;;
         esac
     done
 
@@ -189,7 +189,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     if [ -n "$install_if" ] && [ "$install_if" != "_" ]; then
         for token in $install_if; do
             case "$token" in
-            rm1 | rm2 | rmpp | rmppm) pos_devices="$pos_devices $token" ;;
+            rm1 | rm2 | rmpp | rmppm | rmppmove | rmppure) pos_devices="$pos_devices $token" ;;
             esac
         done
     fi
@@ -202,12 +202,15 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
 
     for excluded in $neg_devices; do
         devices=$(echo "$devices" | jq --arg dev "$excluded" 'map(select(. != $dev))')
+        if [ "$excluded" = "rmppm" ] || [ "$excluded" = "rmppmove" ]; then
+            devices=$(echo "$devices" | jq 'map(select(. != "rmppm" and . != "rmppmove"))')
+        fi
     done
 
-    conflicts=$(echo "$deps" | tr ' ' '\n' | grep '^!' | grep -vE '^!(rm1|rm2|rmpp|rmppm)$' | sed 's/!//' | jq -R . | jq -s . 2>/dev/null)
+    conflicts=$(echo "$deps" | tr ' ' '\n' | grep '^!' | grep -vE '^!(rm1|rm2|rmpp|rmppm|rmppmove|rmppure)$' | sed 's/!//' | jq -R . | jq -s . 2>/dev/null)
     [ -z "$conflicts" ] && conflicts="[]"
 
-    regular_deps=$(echo "$deps" | tr ' ' '\n' | grep -vE '^remarkable-os|^rm1$|^rm2$|^rmpp$|^rmppm$|^!|^aarch64$|^armv7$|^noarch$|^/bin/sh$|^_$' | grep -vE '^\|$' | grep -v '^$' | jq -R . | jq -s . 2>/dev/null)
+    regular_deps=$(echo "$deps" | tr ' ' '\n' | grep -vE '^remarkable-os|^rm1$|^rm2$|^rmpp$|^rmppm$|^rmppmove$|^rmppure$|^!|^aarch64$|^armv7$|^noarch$|^/bin/sh$|^_$' | grep -vE '^\|$' | grep -v '^$' | jq -R . | jq -s . 2>/dev/null)
     [ -z "$regular_deps" ] && regular_deps="[]"
 
     provides_arr=$(echo "$provides" | tr ' ' '\n' | grep -vE '^$|^_$' | jq -R . | jq -s . 2>/dev/null)
