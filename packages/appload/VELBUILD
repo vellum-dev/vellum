@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
-pkgver=0.5.1
-pkgrel=1
+pkgver=0.5.2
+pkgrel=0
 upstream_author="asivery"
 category="framework"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
 url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.27"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/README.MD"
 source="
@@ -39,9 +39,9 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-sha512sums='a67d88efe514b4152649ea54979f20a03737a78bbdfee021982ad8317bb557e4b0628cebbbe5c59a067025a31a783a276a0352f69767ed505874d1cf1f4cd421
+sha512sums='067a1ce17578d1508876b076619e23bd648e0006dbf01c096627452cf6dd3cbd84a1d27d976446b79071883d103008772a03ebe1826576bad2f433eaa7431d70
 appload-aarch64.zip
-f11cf49e043c98b68b3fde17c4c221924b5cf0c939e0ca5de8d9842aacdf15534f45a0ded50f1fe6d760868091941dcfa934f44c893fb0a90c359d813fead849
+f40b558b0f387660f9c184fe6d86b6f16024de987d9bef8cf3bae8256f1c3dfbead029bc92dd172c6c6152a8d0d981b8bb47db08a170f0be00d3231088eeed89
 appload-arm32.zip
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
