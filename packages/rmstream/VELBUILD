@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
@@ -11,6 +11,7 @@ license="GPL-3.0"
 depends="appload framebuffer-spy>=18.0.0 framebuffer-spy<19.0.0 xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/appload-rmstream/v$pkgver/README.MD"
+donateurl="https://ko-fi.com/asivery"
 
 source="
 https://github.com/$upstream_author/appload-rmstream/releases/download/v$pkgver/rmstream-aarch64.tar.gz

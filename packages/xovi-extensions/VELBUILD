@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=18.0.0
-pkgrel=4
+pkgrel=5
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -21,6 +21,7 @@ subpackages="
 
 _release="v18-23032026"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-xovi-extensions/$_release/README.MD"
+donateurl="https://ko-fi.com/asivery"
 
 source="
 https://github.com/$upstream_author/rm-xovi-extensions/releases/download/$_release/xovi-aarch64.tar.gz

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
 pkgver=0.3.3
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="framework"
 pkgdesc="Core xovi framework for reMarkable tablets"
@@ -11,6 +11,7 @@ license="GPL-3.0"
 options="!check !fhs !strip !tracedeps"
 depends="!xovi-extensions<18.0.0"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi/v$pkgver/README.MD"
+donateurl="https://ko-fi.com/asivery"
 
 source="
 https://github.com/$upstream_author/xovi/releases/download/v$pkgver/xovi-aarch64.so
