@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=toc-from-selection
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the selection context menu to add the selected text as a ToC entry. Handwriting requires Connect/rmfakecloud."
@@ -10,7 +10,8 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder bettertoc remarkable-os>=3.25 remarkable-os<3.28"
 _commit="37379cb23d51f580f0355c5560abdac26d1fe550"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#tocfromselection"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.25/tocFromSelection.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE

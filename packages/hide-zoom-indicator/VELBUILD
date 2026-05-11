@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-zoom-indicator
 pkgver=1.0.3
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Auto-hides zoom indicator after 4 seconds"
@@ -10,7 +10,8 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#hidezoomindicator"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/hideZoomIndicator.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE

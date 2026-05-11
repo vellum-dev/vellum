@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pokemon
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Display the Pokemon sprite matching your reMarkable firmware codename"
@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-pokemon/v$pkgver/README.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 
 source="
 https://github.com/$upstream_author/rm-pokemon/releases/download/v$pkgver/rm-pokemon-aarch64

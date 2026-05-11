@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-button-eraser
 pkgver=2.0.0
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Erases when stylus side button is held."
@@ -10,7 +10,8 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shortcuts-to-choose-eraser remarkable-os>=3.25 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#stylusbuttoneraser"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.25/stylusButtonEraser.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE

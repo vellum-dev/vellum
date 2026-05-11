@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=pen-layer-memory
 pkgver=1.0.2
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Remembers which layer each pen tool was last used on, and switches to that layer when the pen is selected."
@@ -10,7 +10,8 @@ arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
 _commit="ac1c883a3fa60855708285b0037cfd3db3d73570"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#penlayermemory"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/penLayerMemory.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE

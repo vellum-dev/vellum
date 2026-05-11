@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-page-number-on-slider
 pkgver=1.0.1
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Restores the z-index for the pageLabel element so it appears on top of the page slider like in previous versions."
@@ -10,7 +10,8 @@ arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#fixpagenumberonslider"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/fixPageNumberOnSlider.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE

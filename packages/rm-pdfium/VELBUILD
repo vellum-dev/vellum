@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pdfium
 pkgver=0.1.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="xovi extension to expose xochitl's libpdfium."
@@ -11,6 +11,7 @@ license="GPL-3.0-only"
 depends="xovi-message-broker>=18 xovi-message-broker<19 remarkable-os>=3.26 remarkable-os<3.28"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-pdfium/v$pkgver/README.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://github.com/$upstream_author/rm-pdfium/releases/download/v$pkgver/rm-pdfium-aarch64.so
 https://github.com/$upstream_author/rm-pdfium/releases/download/v$pkgver/rm-pdfium-armv7.so

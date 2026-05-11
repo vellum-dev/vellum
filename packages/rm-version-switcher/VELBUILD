@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-version-switcher
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Interactive CLI tool for switching between installed reMarkable OS versions"
@@ -10,6 +10,7 @@ arch="aarch64 armv7"
 license="MIT"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-version-switcher/v$pkgver/README.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 
 source="
 https://github.com/$upstream_author/rm-version-switcher/releases/download/v$pkgver/rm-version-switcher-aarch64.tar.gz

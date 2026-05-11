@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-button-undo-redo
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Double-click stylus button to undo, triple-click to redo."
@@ -11,6 +11,7 @@ license="MIT"
 depends="qt-resource-rebuilder rm-stylus>=0.3.0 !shortcuts-to-choose-eraser !button-press-for-pen-change remarkable-os>=3.25 remarkable-os<3.28"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.25/stylusButtonUndoRedo.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
