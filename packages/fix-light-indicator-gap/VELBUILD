@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-light-indicator-gap
 pkgver=1.0.0
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Removes the gap reserved for the frontlight icon when the light is off on Paper Pro and Paper Pro Move."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28 !rm1 !rm2"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28 !rm1 !rm2 !rmppure"
 _commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="

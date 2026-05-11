@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=more-light-settings
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Provides additional light intensity settings beyond the default options."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !fewer-light-steps !rm1 !rm2 !rmppm remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder !fewer-light-steps !rm1 !rm2 !rmppm !rmppure remarkable-os>=3.27 remarkable-os<3.28"
 _commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="

@@ -53,6 +53,7 @@ Vellum automatically detects the device model and creates an appropriate virtual
 - **rm2** - reMarkable 2
 - **rmpp** - reMarkable Paper Pro
 - **rmppm** - reMarkable Paper Pro Move
+- **rmppure** - reMarkable Paper Pure
 
 The `remarkable-os` virtual package is generated dynamically to match the installed OS version, enabling version-specific package dependencies.
 
