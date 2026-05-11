@@ -69,6 +69,9 @@ done
 for velbuild in packages/*/VELBUILD; do
     [ -f "$velbuild" ] || continue
 
+    unset pkgname pkgver pkgrel upstream_author category maintainer status \
+          readmeurl donateurl subpackages url arch license depends options \
+          source pkgdesc
     . "$velbuild"
     _cat="${category:-other}"
     _auth="${upstream_author:-unknown}"
