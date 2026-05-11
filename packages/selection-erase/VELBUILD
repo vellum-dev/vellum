@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=selection-erase
 pkgver=1.0.3
-pkgrel=3
+pkgrel=4
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds the ability to delete a stroke once selected by the selection tool."
@@ -11,6 +12,7 @@ license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.27"
 _commit="af84fe8f21038c45738a3e321cd9a1e594c985f0"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
+donateurl="https://ko-fi.com/fouzr"
 source="
 selectionErase.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.24/selectionErase.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE

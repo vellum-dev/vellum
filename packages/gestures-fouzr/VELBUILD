@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-fouzr
 pkgver=1.0.11
-pkgrel=1
+pkgrel=2
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds four-finger document drawer, and multiple swipe gestures to control pen settings."
@@ -11,6 +11,7 @@ license="GPL-3.0"
 depends="qt-resource-rebuilder !gestures-ingatellent remarkable-os>=3.27 remarkable-os<3.28"
 _commit="f67f853dbfee9dc6c99c82e8e1343a985474d72b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
+donateurl="https://ko-fi.com/fouzr"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.27/gestures.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
