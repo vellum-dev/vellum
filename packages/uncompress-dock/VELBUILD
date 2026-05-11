@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=uncompress-dock
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Replaces the More menu in the document dock with dedicated notebook, folder, and quick sheet buttons."

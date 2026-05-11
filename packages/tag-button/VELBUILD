@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=tag-button
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Puts a Tag action next to other list controls to open the tag editor directly."

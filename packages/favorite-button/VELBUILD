@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=favorite-button
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Restores a Favorite action in the document list header for faster pinning."

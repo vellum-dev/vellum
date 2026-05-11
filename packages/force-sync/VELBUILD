@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=force-sync
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Adds a cloud button in Quick Settings that forces a library sync when tapped."

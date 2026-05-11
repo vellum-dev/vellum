@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=sidebar-clock
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Adds a live clock to the library sidebar; tap the entry to toggle seconds display."
