@@ -1,13 +1,13 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
-pkgver=1.0.0
-pkgrel=4
+pkgver=1.1.0
+pkgrel=0
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Start xovi by triple-pressing the power button"
 url="https://github.com/rmitchellscott/xovi-tripletap"
 arch="aarch64 armv7"
-license="MIT"
+license="GPL-3.0-only"
 depends="xovi mount-utils"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-tripletap/v$pkgver/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
@@ -104,7 +104,7 @@ predeinstall() {
 	/home/root/.vellum/bin/mount-restore
 }
 
-sha512sums="
-0ae119c57a2829877fb0ed7e82eea23938e1ad97d226b428e1e18b7f074ad3f35e0be520c2fc1d47f82151c0975bf54b4adc40c5eae9af68726633effed17b2f  tripletap-1.0.0.tar.gz
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
+sha512sums='e204d64777999f23c5bcc44e145493bbb497dcd55e8074ebe8a27adf7b102a2b3d374debf1852e7b49781820652bec55e19f0deaaccceb31bdca821963bf8536
+tripletap-1.1.0.tar.gz
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
