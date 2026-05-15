@@ -34,7 +34,7 @@ jobs:
 
       - name: Check team membership
         id: team-check
-        uses: tspascoal/get-user-teams-membership@v3
+        uses: tspascoal/get-user-teams-membership@v4
         with:
           username: ${{ github.event.comment.user.login }}
           organization: vellum-dev
