@@ -1,0 +1,44 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=bandwhich
+pkgver=0.23.1
+pkgrel=0
+upstream_author="imsnif"
+category="utilities"
+pkgdesc="CLI network utilization tool"
+url="https://github.com/imsnif/bandwhich"
+arch="aarch64 armv7"
+license="MIT"
+options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/v$pkgver/README.md"
+source="
+https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.zip
+"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+build() {
+	cd "$srcdir"/"$pkgname"-"$pkgver"
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	ls -l
+	cargo build --release
+	"${CROSS_COMPILE}strip" target/"$CARGO_BUILD_TARGET"/release/bandwhich
+	mv target/"$CARGO_BUILD_TARGET"/release/bandwhich .
+}
+
+package() {
+	cd "$srcdir"/"$pkgname"-"$pkgver"
+	install -Dm755 bandwhich \
+		"$pkgdir"/home/root/.vellum/bin/bandwhich
+	install -Dm644 LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.zip" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='2de6bb465b21b8cfc106b0e3661428b09787d60258a12cccb9257bfb133fb34c0668be70e041d519fdf36e9d9d1490574804aac79e2c3a1ac559a3039b2e98c5
+v0.23.1.zip'
