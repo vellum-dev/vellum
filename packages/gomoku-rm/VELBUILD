@@ -1,7 +1,7 @@
 maintainer="jeffrey <jeffrey@shaojia.fan>"
 pkgname=gomoku-rm
 pkgver=1.0.1
-pkgrel=1
+pkgrel=0
 upstream_author="jiafans"
 category="apps"
 pkgdesc="Gomoku (五子棋) game for reMarkable 2 — pure Rust + libremarkable + AppLoad with self-built Alpha-Beta engine"
@@ -41,13 +41,6 @@ postinstall() {
 	echo "  Open AppLoad on your rM2 and tap Gomoku."
 	echo "==============================================="
 	echo ""
-}
-
-postdeinstall() {
-	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -rf /home/root/xovi/exthome/appload/gomoku
-		rm -rf /home/root/.config/gomoku-rm
-	fi
 }
 
 sha512sums="
