@@ -1,0 +1,34 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=debootstrap
+pkgver=1.0.133
+pkgrel=0
+pkgdesc="debootstrap is a tool which will install a Debian base system into a subdirectory of another, already installed system."
+upstream_author="Debian"
+category="utilities"
+url=https://wiki.debian.org/Debootstrap
+arch="noarch"
+license="MIT"
+readmeurl="https://salsa.debian.org/installer-team/debootstrap/-/raw/$pkgver/README?ref_type=tags"
+source="https://salsa.debian.org/installer-team/debootstrap/-/archive/$pkgver/debootstrap-$pkgver.tar.gz"
+depends="entware"
+options="!check !fhs !strip !tracedeps"
+preinstall() {
+	/opt/bin/opkg install perl ar
+}
+preupgrade() {
+	preinstall
+}
+package() {
+	cd "$srcdir"/"$pkgname"-"$pkgver"
+	sed -i 's|/usr/sbin|/bin|' Makefile
+	make DESTDIR="$pkgdir"/home/root/.vellum/ install
+	sed -i 's|DEBOOTSTRAP_DIR=/usr/share/debootstrap|DEBOOTSTRAP_DIR=/home/root/.vellum/usr/share/debootstrap|' \
+		"$pkgdir"/home/root/.vellum/bin/debootstrap
+	install -Dm644 debian/copyright \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://salsa.debian.org/installer-team/debootstrap/-/archive/$pkgver/debootstrap-$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+sha512sums='
+dd73fec98a592daccadc17b36449a53ea5ee580380fb10da069843d3c8885096a0f9a7f13c2afc6ddc14c38d8a826180f925e1c96630bd5312ea557f4f3e2229
+debootstrap-1.0.133.tar.gz'

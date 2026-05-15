@@ -1,0 +1,92 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=debian-chroot
+pkgver=0.0.0
+pkgrel=0
+pkgdesc="A minimal Debian chroot for the reMarkable tablet"
+upstream_author="Eeems-org"
+category="utilities"
+url="https://github.com/Eeems-org/remarkable-debian-chroot"
+arch="noarch"
+license="MIT"
+_commit=92356654e185e42b6d179d2ede6eab75778c76eb
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-debian-chroot/$_commit/README.md"
+source="https://github.com/$upstream_author/remarkable-debian-chroot/archive/$_commit.zip"
+depends="entware debootstrap"
+options="!check !fhs !strip !tracedeps"
+
+package() {
+	cd "$srcdir"/remarkable-debian-chroot-"$_commit"
+	install -D -m 755 \
+		bin/debian-chroot \
+		"$pkgdir"/home/root/.vellum/bin/debian-chroot
+	mkdir -p "$pkgdir"/home/root/.vellum/etc/
+	# shellcheck disable=SC1091,SC1090
+	mkdir -p "$pkgdir"/home/root/.vellum/lib/
+	ln -s "/home/root/.local/share/debian" \
+		"$pkgdir"/home/root/.vellum/lib/debian-chroot
+
+	install -Dm644 LICENSE \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+preinstall() {
+	/opt/bin/opkg install lsof
+}
+preupgrade() {
+	preinstall
+}
+postinstall() {
+	machine_arch="$(uname -m)"
+	case "$machine_arch" in
+	x86_64)
+		debian_arch=${debian_arch:-amd64}
+		;;
+	aarch64)
+		debian_arch=${debian_arch:-arm64}
+		;;
+	armv7l)
+		debian_arch=${debian_arch:-armhf}
+		;;
+	*)
+		echo "Unknown architecture $machine_arch"
+		exit 1
+		;;
+	esac
+	if [ -f /home/root/.config/debian-chroot.conf ]; then
+		. /home/root/.config/debian-chroot.conf
+	fi
+	{
+		echo "chroot_path=\"${chroot_path:-/home/root/.local/share/debian}\""
+		echo "debian_arch=\"$debian_arch\""
+		echo "debian_variant=${debian_variant:-minbase}"
+		echo "debian_version=${debian_version:-bullseye}"
+	} >/home/root/.config/debian-chroot.conf
+	export PATH=$PATH:/home/root/.vellum/bin/:/opt/bin
+	USER=$(whoami)
+	export USER
+	debian-chroot true
+}
+postupgrade() {
+	postinstall
+}
+preremove() {
+	# shellcheck disable=SC1091,SC1090
+	. /home/root/.config/debian-chroot.conf
+	if lsof "$chroot_path" 2>/dev/null | grep "$chroot_path"; then
+		echo "Error: debian-chroot has running processes"
+		exit 1
+	fi
+	if grep -q "$chroot_path " /proc/mounts; then
+		/bin/umount -R "$chroot_path"
+	fi
+	cp /home/root/.config/debian-chroot.conf /tmp/_debian-chroot.conf
+}
+postremove() {
+	# shellcheck disable=SC1091,SC1090
+	. /tmp/_debian-chroot.conf
+	rm -rf "$chroot_path"
+	rm /tmp/_debian-chroot.conf
+}
+sha512sums='00491f5c77243b72dfb5a348b9e24e0ea89e4a245b770f02fd9c686cdbf1147ea48aa4c8b5b839866b7c30f13ecd72b5ab2f843a924eca4683c3cc1a3e591c77
+92356654e185e42b6d179d2ede6eab75778c76eb.zip'
