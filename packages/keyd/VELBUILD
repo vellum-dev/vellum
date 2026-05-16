@@ -1,0 +1,62 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=keyd
+pkgver=2.6.0
+pkgrel=0
+pkgdesc="A key remapping daemon for linux"
+upstream_author="rvaiya"
+category="utilities"
+url="https://github.com/rvaiya/keyd"
+arch="armv7 aarch64"
+license="MIT"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/keyd/v${pkgver}/README.md"
+source="
+https://github.com/$upstream_author/keyd/archive/refs/tags/v$pkgver.zip
+default.conf
+"
+subpackages="$pkgname-doc"
+options="!check !fhs !strip !tracedeps"
+systemdunits="keyd.service"
+image="ghcr.io/toltec-dev/base:v4.0"
+build() {
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	cd "$srcdir/$pkgname-${pkgver%-*}"
+	make PREFIX=/home/root/.vellum CONFIG_DIR=/home/root/.config/keyd "CC=${CROSS_COMPILE}cc"
+	PREFIX=/home/root/.vellum \
+		sed -e "s|@PREFIX@|/home/root/.vellum|" keyd.service.in >"$srcdir"/keyd.service
+	"${CROSS_COMPILE}strip" bin/keyd
+}
+
+package() {
+	cd "$srcdir/$pkgname-${pkgver%-*}"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	make PREFIX=/home/root/.vellum CONFIG_DIR=/home/root/.config/keyd DESTDIR="$pkgdir" install
+	install -Dm644 "$startdir"/default.conf \
+		"$pkgdir"/home/root/.config/keyd/default.conf
+	rm -rf \
+		"$pkgdir"/home/root/.vellum/share/keyd/gnome-extension \
+		"$pkgdir"/home/root/.vellum/share/keyd/gnome-extension-45
+}
+doc() {
+	package() {
+		mkdir -p "$subpkgdir"/home/root/.vellum/share/
+		mv "$pkgdir"/home/root/.vellum/share/man/ \
+			"$subpkgdir"/home/root/.vellum/share/man/
+		mv "$pkgdir"/home/root/.vellum/share/doc/ \
+			"$subpkgdir"/home/root/.vellum/share/doc/
+	}
+}
+sha512sums='ddaed9d8a20aee3bbec899ae87b90b4aa9d4c6fd575c0d4225b0796df5de1a024303ffeefa614e94c15b4093549df179ac67eecf17b741fed6775354cd9f5bd6
+v2.6.0.zip
+a8ed7dfbe03b9bfabd51642a735cd0acab394abb550e4080d893a74efcc6aa13b49033144fd962c55d73fd39725ee1ed5556a66be79f40fcff3483a539ca078f
+default.conf'
