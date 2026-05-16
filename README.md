@@ -306,12 +306,12 @@ Package update feeds are available at `https://packages.vellum.delivery#feeds`:
 
 | Feed | Contents |
 |------|----------|
-| `all.rss` | All packages |
-| `rm1.rss` | reMarkable 1 |
-| `rm2.rss` | reMarkable 2 |
-| `rmpp.rss` | reMarkable Paper Pro |
-| `rmppmove.rss` | reMarkable Paper Pro Move |
-| `rmppure.rss` | reMarkable Paper Pure |
+| https://packages.vellum.delivery/feeds/all.rss | All packages |
+| https://packages.vellum.delivery/feeds/rm1.rss | reMarkable 1 |
+| https://packages.vellum.delivery/feeds/rm2.rss | reMarkable 2 |
+| https://packages.vellum.delivery/feeds/rmpp.rss | reMarkable Paper Pro |
+| https://packages.vellum.delivery/feeds/rmppmove.rss | reMarkable Paper Pro Move |
+| https://packages.vellum.delivery/feeds/rmppure.rss | reMarkable Paper Pure |
 
 ## License
 
