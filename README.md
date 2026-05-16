@@ -302,7 +302,7 @@ vellum testing disable  # Disable testing repository
 
 ## RSS Feeds
 
-Package update feeds are available at `https://packages.vellum.delivery/feeds/`:
+Package update feeds are available at `https://packages.vellum.delivery#feeds`:
 
 | Feed | Contents |
 |------|----------|
