@@ -1,0 +1,58 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=doomarkable
+pkgver=0.4.1
+pkgrel=0
+pkgdesc="DOOM game"
+upstream_author="LinusCDE"
+category="apps"
+url="https://github.com/LinusCDE/doomarkable"
+arch="armv7 aarch64"
+license="MIT"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/doomarkable/${pkgver%-*}/README.md"
+_commit="7d10769d625fbe733768e39cf5006cde341d2fef"
+source="
+https://github.com/LinusCDE/doomarkable/archive/$_commit.zip
+external.manifest.json
+"
+options="!check !fhs !strip !tracedeps"
+depends="appload"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+build() {
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	ls -l
+	ls -l "$srcdir"
+	cd "$srcdir/$pkgname-7d10769d625fbe733768e39cf5006cde341d2fef" # $_commit is not available in build() currently
+	cargo build --release
+	mv target/"$CARGO_BUILD_TARGET"/release/doomarkable .
+	"${CROSS_COMPILE}strip" doomarkable
+}
+
+package() {
+	cd "$srcdir/$pkgname-$_commit"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 \
+		doomarkable \
+		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/doomarkable
+	install -Dm644 \
+		doomarkable.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/icon.png
+	install -Dm644 \
+		"$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/external.manifest.json
+}
+sha512sums='2e6a7afb9f24b554bc93eb046e18f0530d0ae88f28f76ca439a2d013690ee41cbde08b94511f3601e083da2628168a0e82281ba37e604b6a6e2fb207c278cdcd
+7d10769d625fbe733768e39cf5006cde341d2fef.zip
+1a38044fdfe539bf82d69a67da81301a74cb172cc3c2677fb97eb5abac896bbb39607dfa17ef8e7219cb025c410664a6e4a95cb40f1bd28deb08007ad5d49eba
+external.manifest.json'
