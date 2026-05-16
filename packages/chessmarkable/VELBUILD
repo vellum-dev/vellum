@@ -1,0 +1,54 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=chessmarkable
+_pkgver=0.8.1-1
+pkgver=${_pkgver%-*}
+pkgrel=1
+pkgdesc="Chess game"
+upstream_author="LinusCDE"
+category="apps"
+url="https://github.com/LinusCDE/chessmarkable"
+arch="armv7 aarch64"
+license="MIT"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/chessmarkable/$_pkgver/README.md"
+source="
+$pkgname-$_pkgver.tar.gz::https://github.com/$upstream_author/chessmarkable/archive/refs/tags/$_pkgver.tar.gz
+external.manifest.json
+"
+options="!check !fhs !strip !tracedeps"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+build() {
+	set -e
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	_pkgver=0.8.1-1 # $_pkgver is not passed through to build() yet
+	cd "$srcdir/$pkgname-$_pkgver"
+	cargo build --release --bin chessmarkable
+	mv target/$CARGO_BUILD_TARGET/release/chessmarkable .
+	"${CROSS_COMPILE}strip" chessmarkable
+}
+
+package() {
+	cd "$srcdir/$pkgname-$_pkgver"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 chessmarkable \
+		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/chessmarkable
+	install -Dm644 icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/icon.png
+	install -Dm644 "$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/external.manifest.json
+}
+sha512sums='29b722f6a9d7cb6255283a69b5355b40cfe260d02695a1de487457bfa2d6042915d1023a788259b3f11808e7cb6c907941c8430aff666b08ea95e18b6f74ff00
+chessmarkable-0.8.1-1.tar.gz
+6b3e5b1eeca6875bf595c8701da23516539dec9f2b2f79ff2d1b285af554f87f7e2269ee1009340389cd445d2ad3ca6a2aac5fbbfeda2baf9c8328953b4ffbaf
+external.manifest.json'
