@@ -1,0 +1,70 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=puzzles
+pkgver=0.2.4
+pkgrel=0
+pkgdesc="Simon Tatham's Puzzle Package"
+upstream_author="mrichards42"
+category="apps"
+url="https://github.com/mrichards42/remarkable_puzzles"
+arch="armv7 aarch64"
+license="GPL-2.0-only"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable_puzzles/v$pkgver/README.md"
+source="
+https://github.com/$upstream_author/remarkable_puzzles/releases/download/v$pkgver/puzzles-source.tar.gz
+rmkit.zip::https://github.com/rmkit-dev/rmkit/archive/fc372b29c6f19e4da645277e1902255e3198b59f.zip
+external.manifest.json
+"
+options="!check !fhs !strip !tracedeps"
+
+image="ghcr.io/toltec-dev/python:v4.0"
+build() {
+	set -e
+	cd "$srcdir/$pkgname-source"
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	export CXX="${CROSS_COMPILE}g++"
+	python3 -m pip install --break-system-packages okp
+	sed -i 's|arm-linux-gnueabihf-|${CROSS_COMPILE}|' defs.mk
+	rm -rf vendor/rmkit
+	ln -s "$srcdir"/rmkit-fc372b29c6f19e4da645277e1902255e3198b59f vendor/rmkit
+	sed -ri 's|pointer_size\)|pointer_size*)|' \
+		vendor/rmkit/src/rmkit/fb/fb.cpy
+	sed -i 's|/opt/etc/puzzles|/home/root/xovi/exthome/appload/puzzles|' \
+		src/paths.hpp
+	CROSS_TC=${CROSS_COMPILE%-} \
+	ARCH=rm \
+	BUILD=release \
+	RMP_VERSION="$pkgver" \
+	make puzzles
+}
+
+package() {
+	cd "$srcdir/$pkgname-source"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/remarkable_puzzles" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 build/release/puzzles \
+		"$pkgdir"/home/root/xovi/exthome/appload/puzzles/puzzles
+	install -Dm644 config/* \
+		-t "$pkgdir"/home/root/xovi/exthome/appload/puzzles/
+	install -Dm644 help/* \
+		-t "$pkgdir"/home/root/xovi/exthome/appload/puzzles/help
+	install -Dm644 icons/* \
+		-t "$pkgdir"/home/root/xovi/exthome/appload/puzzles/icons
+	install -Dm644 "$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/puzzles/external.manifest.json
+}
+sha512sums='6194f0a7328bfa4f52c4967fdd842f9a06b6ee645d9a22d8e7f6cb19ac2b0427d0604718a9b771b093d8a4a7fbe9b117324943d8ae64407a30950d556ebb910a
+puzzles-source.tar.gz
+7771facb6c5116f4a6771412a81d09d685e958eeb6102609b4a9e728c23930b5436918fb0cd7d12de70235a4f684dd694c53f7a233548ec70276be6341fbc503
+rmkit.zip
+b41999549dea73aa212fae40fcaac815834c77065711958a7de2dde73750a53e81967baf0859099b7eca76e084f93b189260657e70ead2c0c5f4db9b7d2c6708
+external.manifest.json'
