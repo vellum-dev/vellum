@@ -1,0 +1,80 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=zerotier-one
+pkgver=1.16.0
+pkgrel=0
+pkgdesc="A Smart Ethernet Switch for Earth"
+upstream_author="zerotier"
+category="utilities"
+url="https://github.com/$upstream_author/ZeroTierOne"
+arch="armv7 aarch64"
+license="MPL-2.0"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/ZeroTierOne/$pkgver/README.md"
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/ZeroTierOne/archive/refs/tags/$pkgver.tar.gz"
+options="!check !fhs !strip !tracedeps"
+subpackages="zerotier-selftest:selftest"
+systemdunits="ZeroTierOne-$pkgver/debian/zerotier-one.service"
+
+image="ghcr.io/toltec-dev/base:v4.0"
+build() {
+	set -xe
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	cd "$srcdir/ZeroTierOne-$pkgver"
+	sed -i \
+        -e 's|/usr/sbin|/home/root/.vellum/bin|' \
+        -e 's|/usr/share|/home/root/.vellum/share|' \
+        -e 's|/var/lib|/home/root/.vellum/var/lib|' \
+        make-linux.mk \
+        debian/zerotier-one.service
+    sed -i \
+        -e 's|/var/lib/zerotier-one|/home/root/.vellum/var/lib/zerotier-one|' \
+        osdep/OSUtils.cpp
+    sed -i \
+        -e 's|/var/lib/zerotier|/home/root/.vellum/var/lib/zerotier|' \
+        doc/zerotier-cli.1 \
+        doc/zerotier-cli.1.md \
+        doc/zerotier-one.8 \
+        doc/zerotier-one.8.md
+    export ZT_EMBEDDED=1
+    export CC="${CROSS_COMPILE}gcc"
+    export CXX="${CROSS_COMPILE}g++"
+    export AR="${CROSS_COMPILE}ar"
+    export STRIP="${CROSS_COMPILE}strip"
+    export ZT_NONFREE=0
+    # aarch64 overrides ZT_SSO_SUPPORTED if not specified in the make call
+    make -j"$(nproc)" ZT_SSO_SUPPORTED=0
+    make -j"$(nproc)" ZT_SSO_SUPPORTED=0 selftest
+}
+
+package() {
+	cd "$srcdir/ZeroTierOne-$pkgver"
+	install -Dm644 "LICENSE-MPL.txt" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	DESTDIR="$pkgdir" make install
+}
+doc() {
+	pkgdesc="Man files for zerotier-one"
+	package() {
+		mkdir -p "$subpkgdir"/home/root/.vellum/share
+		mv "$pkgdir"/home/root/.vellum/share/. "$subpkgdir"/home/root/.vellum/share
+	}
+}
+selftest() {
+	pkgdesc="Unit test zerotier to ensure that it works as expected on the system"
+	package() {
+		cd "$srcdir/ZeroTierOne-$pkgver"
+		install -Dm755 zerotier-selftest \
+			"$subpkgdir"/home/root/.vellum/bin/zerotier-selftest
+	}
+}
+sha512sums='158ab83059ea1dcdfab073429404d6e9ef812c40e4be6b718c48e4eb9f7a9ab45f71ffdd9cf9179e6b5864a302201cbf96ee1441659ebf8a8293de57dc13a2b7
+zerotier-one-1.16.0.tar.gz'
