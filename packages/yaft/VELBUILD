@@ -8,6 +8,7 @@ category="apps"
 url="https://github.com/$upstream_author/rM2-stuff"
 arch="armv7"
 license="GPL-3.0"
+depends="appload"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/Readme.md"
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rM2-stuff/archive/refs/tags/v$pkgver.tar.gz
