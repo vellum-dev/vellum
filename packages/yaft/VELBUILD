@@ -1,0 +1,75 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=yaft
+pkgver=0.1.2
+pkgrel=0
+pkgdesc="Yet another framebuffer terminal"
+upstream_author="timower"
+category="apps"
+url="https://github.com/$upstream_author/rM2-stuff"
+arch="armv7"
+license="GPL-3.0"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/Readme.md"
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rM2-stuff/archive/refs/tags/v$pkgver.tar.gz
+external.manifest.json
+"
+options="!check !fhs !strip !tracedeps"
+
+prepare() {
+	apk add --no-cache git-lfs
+	cd "$srcdir/rM2-stuff-$pkgver"
+	mkdir -p yaft
+	cd yaft
+	git config set --global advice.defaultBranchName false
+	git init
+	git lfs install
+	git remote add origin https://github.com/timower/rM2-stuff.git
+	git fetch --depth 1 origin tag v${pkgver} --no-tags
+	git checkout v${pkgver}
+	git lfs fetch
+	git lfs checkout
+}
+
+image="ghcr.io/toltec-dev/base:v4.0"
+build() {
+	set -e
+	case "$CARCH" in
+	# aarch64) . /opt/x-tools/switch-aarch64.sh ;; # Not supported yet
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	cd "$srcdir/rM2-stuff-$pkgver"
+	mkdir install
+	cd yaft
+	cmake --preset release-toltec
+	cmake \
+		--build build/release-toltec \
+		--target yaft
+	cmake \
+		--install build/release-toltec \
+		--prefix ../install \
+		--component yaft \
+		--strip
+}
+
+package() {
+	cd "$srcdir/rM2-stuff-$pkgver"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 install/opt/bin/yaft \
+		"$pkgdir"/home/root/xovi/exthome/appload/yaft/yaft
+	install -Dm755 install/opt/etc/draft/icons/yaft.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/yaft/icon.png
+	install -Dm755 "$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/yaft/external.manifest.json
+}
+sha512sums='a84d26fcf6da3b5c8c19b8f773a6d9655dc527a4ff822b9580c65ebc4e95b1bf88e985dd9ff45b62186b39f4dbddf1f13dc0ff435776a1c481a99e829d1ffee0
+yaft-0.1.2.tar.gz
+c1da4e5bb1c410c8cb1a70a7b31e95e0c3542c5ef55fcdafffd33247b4ca2e94e35fee9f586a02b0d1a0ede79d8e84a32275cedec7575e692a01fda1249bbcb7
+external.manifest.json'
