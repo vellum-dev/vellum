@@ -16,6 +16,7 @@ external.manifest.json
 options="!check !fhs !strip !tracedeps"
 
 prepare() {
+	default_prepare
 	apk add --no-cache git-lfs
 	cd "$srcdir/rM2-stuff-$pkgver"
 	mkdir -p yaft
@@ -24,8 +25,8 @@ prepare() {
 	git init
 	git lfs install
 	git remote add origin https://github.com/timower/rM2-stuff.git
-	git fetch --depth 1 origin tag v${pkgver} --no-tags
-	git checkout v${pkgver}
+	git fetch --depth 1 origin tag v$pkgver --no-tags
+	git checkout v$pkgver
 	git lfs fetch
 	git lfs checkout
 }
