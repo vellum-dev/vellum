@@ -302,16 +302,15 @@ vellum testing disable  # Disable testing repository
 
 ## RSS Feeds
 
-Package update feeds are available at `https://packages.vellum.delivery/feeds/`:
 
 | Feed | Contents |
 |------|----------|
-| `all.rss` | All packages |
-| `rm1.rss` | reMarkable 1 |
-| `rm2.rss` | reMarkable 2 |
-| `rmpp.rss` | reMarkable Paper Pro |
-| `rmppmove.rss` | reMarkable Paper Pro Move |
-| `rmppure.rss` | reMarkable Paper Pure |
+| https://vellum.delivery/feeds/all.rss | All packages |
+| https://vellum.delivery/feeds/rm1.rss | reMarkable 1 |
+| https://vellum.delivery/feeds/rm2.rss | reMarkable 2 |
+| https://vellum.delivery/feeds/rmpp.rss | reMarkable Paper Pro |
+| https://vellum.delivery/feeds/rmppmove.rss | reMarkable Paper Pro Move |
+| https://vellum.delivery/feeds/rmppure.rss | reMarkable Paper Pure |
 
 ## License
 
