@@ -1,0 +1,41 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=restream
+pkgver=1.4.0
+pkgrel=0
+pkgdesc="Binary framebuffer capture tool for the reStream script"
+upstream_author="rien"
+category="utilities"
+url="https://github.com/$upstream_author/reStream"
+arch="armv7"
+license="MIT"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/reStream/v$pkgver/README.md"
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/reStream/archive/refs/tags/v$pkgver.tar.gz"
+options="!check !fhs !strip !tracedeps"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+build() {
+	case "$CARCH" in
+	# aarch64) . /opt/x-tools/switch-aarch64.sh ;;  # Not supported currently
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	cd "$srcdir/reStream-$pkgver"
+	cargo build --release --bin restream
+	"${CROSS_COMPILE}strip" target/"$CARGO_BUILD_TARGET"/release/restream
+	mv target/"$CARGO_BUILD_TARGET"/release/restream .
+}
+
+package() {
+	cd "$srcdir/reStream-$pkgver"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 restream "$pkgdir"/home/root/.vellum/bin/restream
+}
+sha512sums='e2c4a16517af7a1eab9e396ef3314800df53ad6e6a33c0255d80278866f0ae18f66a106bf85fdbdef5320ad772abef1e0e293409cdad9ae777d3efa128685bda
+restream-1.4.0.tar.gz'
