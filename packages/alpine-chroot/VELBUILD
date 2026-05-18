@@ -1,0 +1,101 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=alpine-chroot
+pkgver=0.0.0
+pkgrel=1
+pkgdesc="A minimal alpine chroot for the reMarkable tablet"
+upstream_author="Eeems"
+category="utilities"
+url="https://github.com/$upstream_author/remarkable-alpine-chroot"
+arch="noarch"
+license="MIT"
+_commit=1a545809c859d2159bcd6fc917d76eac83735c42
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-alpine-chroot/$_commit/README.md"
+source="https://github.com/$upstream_author/remarkable-alpine-chroot/archive/$_commit.zip"
+depends="entware alpine-chroot-install"
+options="!check !fhs !strip !tracedeps"
+
+package() {
+	cd "$srcdir"/remarkable-alpine-chroot-"$_commit"
+	install -D -m 755 \
+		bin/alpine-chroot \
+		"$pkgdir"/home/root/.vellum/bin/alpine-chroot
+	mkdir -p "$pkgdir"/home/root/.vellum/etc/
+	# shellcheck disable=SC1091,SC1090
+	mkdir -p "$pkgdir"/home/root/.vellum/lib/
+	ln -s "/home/root/.local/share/alpine" \
+		"$pkgdir"/home/root/.vellum/lib/alpine-chroot
+
+	install -Dm644 LICENSE \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+preinstall() {
+	/opt/bin/opkg install lsof
+}
+preupgrade() {
+	preinstall
+}
+postinstall() {
+	machine_arch="$(uname -m)"
+	case "$machine_arch" in
+	x86_64)
+		alpine_arch=${alpine_arch:-x86_64}
+		;;
+	aarch64)
+		alpine_arch=${alpine_arch:-aarch64}
+		;;
+	armv7l)
+		alpine_arch=${alpine_arch:-armv7}
+		;;
+	*)
+		echo "Unknown architecture $machine_arch"
+		exit 1
+		;;
+	esac
+	if [ -f /home/root/.config/alpine-chroot.conf ]; then
+		. /home/root/.config/alpine-chroot.conf
+	fi
+	{
+		echo "chroot_path=\"${chroot_path:-/home/root/.local/share/alpine}\""
+		echo "alpine_arch=\"$alpine_arch\""
+		echo "alpine_branch=${alpine_branch:-latest-stable}"
+	} >/home/root/.config/alpine-chroot.conf
+	export PATH=$PATH:/home/root/.vellum/bin/:/opt/bin
+	USER=$(whoami)
+	export USER
+	alpine-chroot true
+}
+postupgrade() {
+	postinstall
+}
+predeinstall() {
+	# shellcheck disable=SC1091,SC1090
+	. /home/root/.config/alpine-chroot.conf
+	if lsof "$chroot_path" 2>/dev/null | grep "$chroot_path"; then
+		echo "Error: alpine-chroot has running processes"
+		exit 1
+	fi
+	while ! cat /proc/mounts |
+		cut -d' ' -f2 |
+		grep "^${chroot_path%/}" |
+		xargs -rn1 umount -l 2>/dev/null; do
+		true
+	done
+}
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ] && [ -f /home/root/.config/alpine-chroot.conf ]; then
+		# shellcheck disable=SC1091,SC1090
+		. /home/root/.config/alpine-chroot.conf
+		while ! cat /proc/mounts |
+			cut -d' ' -f2 |
+			grep "^${chroot_path%/}" |
+			xargs -rn1 umount -l 2>/dev/null; do
+			true
+		done
+		rm -rf "$chroot_path"
+		rm /home/root/.config/alpine-chroot.conf
+	fi
+}
+sha512sums='0262cc046f67d7b8d47f8448d16a52d20931fbb0d3464d85f4d3c5f1644cb3fc7d9b93c138f2f6a904deab56e121d1a31f2bc7b430387fd7a5a341090ca00db5
+1a545809c859d2159bcd6fc917d76eac83735c42.zip'
