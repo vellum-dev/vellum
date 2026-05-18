@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=force-koreader-landscape
-pkgver=1.0.1
-pkgrel=1
+pkgver=1.0.2
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Keeps the KOReader appload app in the same aspect ratio as the screen"
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.25 remarkable-os<3.27"
-_commit="eda7ff2bb6012417bd37634958a1dc8f9bc1377e"
+depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+_commit="927231f34c624263b78bb6b4690fd1b0b150321c"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/forceKoreaderLandscape.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/forceKoreaderLandscape.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="!check !fhs"
@@ -26,7 +26,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='
-b37da992e5394baacb855c3f719992ef833a68d2e7d655ed6d224be519b0246d0db9311d772863e8a07ea2e7cb6182b5cb7be6760dee98a223c6e518d911dd9d  forceKoreaderLandscape.qmd
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
-'
+sha512sums='884242f16cb49d6c6dc73b5745976a49a7832f4993b3a805dd99e930846f6a72e3c6ce132355d62a335aace5a97d374b722c8509ea002f0050177b4c4e02d022
+forceKoreaderLandscape.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
+LICENSE.md'
