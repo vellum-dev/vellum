@@ -70,7 +70,7 @@ postinstall() {
 postupgrade() {
 	postinstall
 }
-preremove() {
+predeinstall() {
 	# shellcheck disable=SC1091,SC1090
 	. /home/root/.config/debian-chroot.conf
 	if lsof "$chroot_path" 2>/dev/null | grep "$chroot_path"; then
@@ -80,13 +80,14 @@ preremove() {
 	if grep -q "$chroot_path " /proc/mounts; then
 		/bin/umount -R "$chroot_path"
 	fi
-	cp /home/root/.config/debian-chroot.conf /tmp/_debian-chroot.conf
 }
-postremove() {
-	# shellcheck disable=SC1091,SC1090
-	. /tmp/_debian-chroot.conf
-	rm -rf "$chroot_path"
-	rm /tmp/_debian-chroot.conf
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ] && [ -f /home/root/.config/debian-chroot.conf ]; then
+		# shellcheck disable=SC1091,SC1090
+		. /home/root/.config/debian-chroot.conf
+		rm -rf "$chroot_path"
+		rm /home/root/.config/debian-chroot.conf
+	fi
 }
 sha512sums='6b9437e2373322bd16e10d487293ccae7468fe2016ae8ebfdfad6ebb2574f4559be9d8f0ea72f0b5b645d641d1354fb25252559f966e088a5ea123b22b26b36b
 8e14f6f0b75102053acf6b61b60827b61812edf0.zip'
