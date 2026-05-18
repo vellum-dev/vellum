@@ -1,14 +1,14 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=debian-chroot
 pkgver=0.0.0
-pkgrel=0
+pkgrel=1
 pkgdesc="A minimal Debian chroot for the reMarkable tablet"
 upstream_author="Eeems-org"
 category="utilities"
 url="https://github.com/Eeems-org/remarkable-debian-chroot"
 arch="noarch"
 license="MIT"
-_commit=92356654e185e42b6d179d2ede6eab75778c76eb
+_commit=8e14f6f0b75102053acf6b61b60827b61812edf0
 readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-debian-chroot/$_commit/README.md"
 source="https://github.com/$upstream_author/remarkable-debian-chroot/archive/$_commit.zip"
 depends="entware debootstrap"
@@ -88,5 +88,5 @@ postremove() {
 	rm -rf "$chroot_path"
 	rm /tmp/_debian-chroot.conf
 }
-sha512sums='00491f5c77243b72dfb5a348b9e24e0ea89e4a245b770f02fd9c686cdbf1147ea48aa4c8b5b839866b7c30f13ecd72b5ab2f843a924eca4683c3cc1a3e591c77
-92356654e185e42b6d179d2ede6eab75778c76eb.zip'
+sha512sums='6b9437e2373322bd16e10d487293ccae7468fe2016ae8ebfdfad6ebb2574f4559be9d8f0ea72f0b5b645d641d1354fb25252559f966e088a5ea123b22b26b36b
+8e14f6f0b75102053acf6b61b60827b61812edf0.zip'
