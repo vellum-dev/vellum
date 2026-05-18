@@ -14,6 +14,10 @@ source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rM2-stuff/archive/refs/tags/v$pkgver.tar.gz
 external.manifest.json
 "
+depends="
+appload
+libevdev
+"
 options="!check !fhs !strip !tracedeps"
 
 prepare() {

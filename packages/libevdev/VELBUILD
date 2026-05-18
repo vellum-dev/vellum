@@ -1,0 +1,38 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=libevdev
+pkgver=1.13.1
+pkgrel=0
+pkgdesc="Handler library for evdev events"
+upstream_author="libevdev"
+category="apps"
+url="https://gitlab.freedesktop.org/libevdev/libevdev"
+arch="armv7"
+license="GPL-3.0"
+readmeurl="https://gitlab.freedesktop.org/libevdev/libevdev/-/raw/libevdev-1.13.1/README.md?ref_type=tags"
+options="!check !fhs !strip !tracedeps"
+
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm2" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+}
+build() {
+	set -e
+	find /opt/codex -name libevdev.so.2.3.0 -print0 | xargs -0I{} cp -a "{}" "$srcdir"
+	[ -f "$srcdir"/libevdev.so.2.3.0 ]
+}
+
+package() {
+	mkdir -p "$pkgdir"/home/root/.vellum/lib/
+	cd "$pkgdir"/home/root/.vellum/lib/
+	cp -a "$srcdir"/libevdev.so.2.3.0 .
+	ln -s libevdev.so.2.3.0 libevdev.so.2.3
+	ln -s libevdev.so.2.3.0 libevdev.so.2
+	ln -s libevdev.so.2.3.0 libevdev.so
+}
