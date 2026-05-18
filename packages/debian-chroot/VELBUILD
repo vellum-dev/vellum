@@ -77,19 +77,23 @@ predeinstall() {
 		echo "Error: debian-chroot has running processes"
 		exit 1
 	fi
-	cat /proc/mounts |
+	while ! cat /proc/mounts |
 		cut -d' ' -f2 |
 		grep "^${chroot_path%/}" |
-		xargs -rn1 umount -l
+		xargs -rn1 umount -l 2>/dev/null; do
+		true
+	done
 }
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ] && [ -f /home/root/.config/debian-chroot.conf ]; then
 		# shellcheck disable=SC1091,SC1090
 		. /home/root/.config/debian-chroot.conf
-		cat /proc/mounts |
+		while ! cat /proc/mounts |
 			cut -d' ' -f2 |
 			grep "^${chroot_path%/}" |
-			xargs -rn1 umount -l
+			xargs -rn1 umount -l 2>/dev/null; do
+			true
+		done
 		rm -rf "$chroot_path"
 		rm /home/root/.config/debian-chroot.conf
 	fi
