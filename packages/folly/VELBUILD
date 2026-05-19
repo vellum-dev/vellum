@@ -1,0 +1,62 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=folly
+pkgver=0.0.1
+pkgrel=0
+pkgdesc="Z-machine interpreter for interactive fiction"
+upstream_author="bkirwi"
+category="apps"
+url="https://github.com/$upstream_author/folly"
+arch="armv7"
+license="MIT"
+_commit="97f5813086a9adabb70114b12aa5a2073458bc91"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/folly/$_commit/README.md"
+source="
+https://github.com/$upstream_author/folly/archive/$_commit.zip
+external.manifest.json
+"
+options="!check !fhs !strip !tracedeps"
+depends="appload"
+
+image="ghcr.io/toltec-dev/rust:v3.3"
+build() {
+	set -e
+	apt-get update
+	apt-get install -y \
+		clang-13 \
+		libclang-13-dev \
+		llvm-13-dev
+	rustup component add rustfmt
+	gcc_version="$("$CROSS_COMPILE"gcc -dumpfullversion)"
+	cpp_includes="$(realpath "$SYSROOT"/../include/c++/"$gcc_version")"
+	export BINDGEN_EXTRA_CLANG_ARGS="--sysroot=$SYSROOT -I$cpp_includes \
+		-I$cpp_includes/$NGCONFIG"
+	export TFLITE_RS_MAKE_TARGET_TOOLCHAIN_PREFIX="$CROSS_COMPILE"
+	export TFLITE_RS_MAKE_EXTRA_CFLAGS="$BINDGEN_EXTRA_CLANG_ARGS \
+		-mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 \
+		-D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64"
+	export CARGO_BUILD_TARGET=armv7-unknown-linux-gnueabihf
+	_commit=97f5813086a9adabb70114b12aa5a2073458bc91 # $_commit is not available in build() currently
+	cd "$srcdir"/"$pkgname"-"$_commit"
+	cargo build --release
+	mv target/"$CARGO_BUILD_TARGET"/release/folly .
+	"${CROSS_COMPILE}strip" folly
+}
+
+package() {
+	cd "$srcdir"/"$pkgname"-"$_commit"
+	install -Dm644 "LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/$pkgname" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 \
+		folly \
+		"$pkgdir"/home/root/xovi/exthome/appload/folly/folly
+	install -Dm644 \
+		"$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/folly/external.manifest.json
+}
+sha512sums='eeb29cc994a6c9bf85e44f75cac4d394dec5202b050b20316357d47717359c41dc701d233cf561b6633becc46c21da86ca4de8059634169b280db24c043abb64
+97f5813086a9adabb70114b12aa5a2073458bc91.zip
+c5fccf60f9ce159a4fbda11fef9766cff7566cf72e77bb4173fedc52c2b3f1d39b31da48fab0c56f8244d08f04be3b4b1ac57aee4f8c114e56a8b52f8786375b
+external.manifest.json'
