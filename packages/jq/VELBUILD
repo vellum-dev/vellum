@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=jq
 pkgver=1.8.1
-pkgrel=1
+pkgrel=2
 upstream_author="jqlang"
 category="utilities"
 pkgdesc="Command-line JSON processor"

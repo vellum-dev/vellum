@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=curl
 pkgver=8.11.0
-pkgrel=2
+pkgrel=3
 upstream_author="curl"
 category="utilities"
 pkgdesc="URL retrival utility and library"
