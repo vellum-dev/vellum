@@ -1,0 +1,29 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=alpine-chroot-install
+pkgver=0.14.0
+pkgrel=0
+pkgdesc="Install Alpine Linux in chroot with a breeze."
+upstream_author="alpinelinux"
+category="utilities"
+url=https://github.com/$upstream_author/alpine-chroot-install
+arch="noarch"
+license="MIT"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgver/README.adoc"
+source="
+https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgver/alpine-chroot-install
+https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgver/LICENSE
+"
+options="!check !fhs !strip !tracedeps"
+package() {
+	cd "$srcdir"
+	install -Dm644 LICENSE \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/alpine-chroot-install" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	install -Dm755 alpine-chroot-install \
+		"$pkgdir/home/root/.vellum/bin/alpine-chroot-install"
+}
+sha512sums='4625e9b7d1b03d619abde14f5bc1853f2c6a04035b1533bf14b744842413b9772f3285ceace031ae66b710a40e23c1483a85a351feb836808842d293831f521a
+alpine-chroot-install
+530addb0477ec8f643449774b266494867230dd470533ff0374117b95f11501d10258bb9146b6743ada7c23cdb0eca895cf5f49b4bca884346f0d2cdbfad8008
+LICENSE'
