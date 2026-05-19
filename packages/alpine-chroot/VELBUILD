@@ -93,7 +93,7 @@ postdeinstall() {
 			xargs -rn1 umount -l 2>/dev/null; do
 			true
 		done
-		rm -rf "$chroot_path"
+		"$chroot_path"/destroy --remove
 		rm /home/root/.config/alpine-chroot.conf
 	fi
 }
