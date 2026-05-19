@@ -46,7 +46,7 @@ image() {
 }
 build() {
 	set -e
-	. /opt/codex/*/*/environment-setup-*
+	. "$(find /opt/codex -name 'environment-setup-*' -type f)"
 	export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 	cd "$srcdir/rM2-stuff-$pkgver"
 	ln -sf "$startdir"/rm-toolchain.cmake cmake/rm-toolchain.cmake
