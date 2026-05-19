@@ -1,6 +1,9 @@
 {
   "name": "TilEm",
   "application": "tilem",
+  "args": [
+    "--full"
+  ],
   "aspectRatio": "original",
   "qtfb": true,
   "environment": {
