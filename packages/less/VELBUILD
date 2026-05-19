@@ -1,4 +1,5 @@
-maintainer="notfrants <notfrants@proton.me>"
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status=unmaintained
 pkgname=less
 pkgver=692
 pkgrel=0

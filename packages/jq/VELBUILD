@@ -1,4 +1,4 @@
-maintainer="notfrants <notfrants@proton.me>"
+maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=jq
 pkgver=1.8.1
 pkgrel=1

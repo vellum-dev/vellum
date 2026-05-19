@@ -1,4 +1,4 @@
-maintainer="notfrants <notfrants@proton.me>"
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=curl
 pkgver=8.11.0
 pkgrel=2
