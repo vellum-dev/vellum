@@ -13,7 +13,6 @@ options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/README.md"
 
 source="
-$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rM2-stuff/archive/refs/tags/v$pkgver.tar.gz
 external.manifest.json
 rm-toolchain.cmake
 "
@@ -21,9 +20,8 @@ rm-toolchain.cmake
 prepare() {
 	default_prepare
 	apk add --no-cache git-lfs
+	mkdir -p "$srcdir/rM2-stuff-$pkgver"
 	cd "$srcdir/rM2-stuff-$pkgver"
-	mkdir -p tilem
-	cd tilem
 	git config set --global advice.defaultBranchName false
 	git init
 	git lfs install
@@ -52,34 +50,31 @@ build() {
 	export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 	cd "$srcdir/rM2-stuff-$pkgver"
 	ln -sf "$startdir"/rm-toolchain.cmake cmake/rm-toolchain.cmake
-	ln -sf "$startdir"/rm-toolchain.cmake tilem/cmake/rm-toolchain.cmake
-	sed -i 's|CMAKE_SYSTEM_PROCESSOR|ENV{ARCH}|' \
+	sed -i 's|{CMAKE_SYSTEM_PROCESSOR}|ENV{ARCH}|' \
 		vendor/frida/CMakeLists.txt
 	sed -i 's|wget -O|/home/root/.vellum/bin/curl -Lfo|' \
 		apps/tilem/Dialog.cpp
-	mkdir install
-	cd tilem
+	mkdir "$srcdir"/install
 	cmake --preset release
 	cmake \
 		--build build/release \
 		--target tilem
 	cmake \
 		--install build/release \
-		--prefix ../install \
+		--prefix "$srcdir"/install \
 		--component tilem \
 		--strip
 }
 
 package() {
-	cd "$srcdir/rM2-stuff-$pkgver"
-	install -Dm644 "LICENSE" \
+	install -Dm644 "$srcdir"/rM2-stuff-"$pkgver"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
 	echo "https://github.com/$upstream_author/$pkgname" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
-	install -Dm755 install/bin/tilem \
+	install -Dm755 "$srcdir"/install/bin/tilem \
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/tilem
-	install -Dm644 install/etc/draft/icons/tilem.png \
+	install -Dm644 "$srcdir"/install/etc/draft/icons/tilem.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/icon.png
 	install -Dm644 "$startdir"/external.manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/external.manifest.json
@@ -90,8 +85,7 @@ postdeinstall() {
 		rm -rf /home/root/xovi/exthome/appload/tilem
 	fi
 }
-sha512sums='ee5a8fae2324453ea12408a6e1cf2984d55c2a0dcc61766311acafd9f42548a57a6e4828f0d6bc96f62e9e24a1aa03bde431db8e0fc5d14ce07d3a1282bfbd7f
-tilem-0.1.4.tar.gz
+sha512sums='
 1466a1ede8f6af015a7eacbedfa48d964e1187eeb358ddb820fd105fb6a3585c6b01ed9f54b8b7a1dbee449b7ca7bf8d72f90808a9a1b1cdbb8040167c90cc89
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656

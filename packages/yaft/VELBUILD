@@ -1,6 +1,6 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=yaft
-pkgver=0.1.3
+pkgver=0.1.4
 pkgrel=0
 pkgdesc="Yet another framebuffer terminal"
 upstream_author="timower"
@@ -9,9 +9,8 @@ url="https://github.com/$upstream_author/rM2-stuff"
 arch="armv7"
 license="GPL-3.0"
 depends="appload"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/Readme.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/README.md"
 source="
-$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rM2-stuff/archive/refs/tags/v$pkgver.tar.gz
 external.manifest.json
 rm-toolchain.cmake
 "
@@ -20,9 +19,8 @@ options="!check !fhs !strip !tracedeps"
 prepare() {
 	default_prepare
 	apk add --no-cache git-lfs
+	mkdir -p "$srcdir/rM2-stuff-$pkgver"
 	cd "$srcdir/rM2-stuff-$pkgver"
-	mkdir -p yaft
-	cd yaft
 	git config set --global advice.defaultBranchName false
 	git init
 	git lfs install
@@ -45,45 +43,44 @@ image() {
 }
 build() {
 	set -e
+	apt-get update
+	apt-get install -y xxd
+
 	. "$(find /opt/codex -name 'environment-setup-*' -type f)"
 	export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 	cd "$srcdir/rM2-stuff-$pkgver"
 	ln -sf "$startdir"/rm-toolchain.cmake cmake/rm-toolchain.cmake
-	ln -sf "$startdir"/rm-toolchain.cmake yaft/cmake/rm-toolchain.cmake
-	sed -i 's|CMAKE_SYSTEM_PROCESSOR|ENV{ARCH}|' \
+	sed -i 's|{CMAKE_SYSTEM_PROCESSOR}|ENV{ARCH}|' \
 		vendor/frida/CMakeLists.txt
-	sed -i 's|wget -O|/home/root/.vellum/bin/curl -Lfo|' \
-		apps/tilem/Dialog.cpp
-	cd "$srcdir/rM2-stuff-$pkgver"
-	mkdir install
-	cd yaft
+	mkdir "$srcdir"/install
 	cmake --preset release
 	cmake \
 		--build build/release \
 		--target yaft
 	cmake \
+		--build build/release \
+		--target yaft_reader
+	cmake \
 		--install build/release \
-		--prefix ../install \
+		--prefix "$srcdir"/install \
 		--component yaft \
 		--strip
 }
 
 package() {
-	cd "$srcdir/rM2-stuff-$pkgver"
-	install -Dm644 "LICENSE" \
+	install -Dm644 "$srcdir"/rM2-stuff-"$pkgver"/LICENSE \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$upstream_author/$pkgname" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
-	install -Dm755 install/bin/yaft \
+	install -Dm755 "$srcdir"/install/bin/yaft \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/yaft
-	install -Dm755 install/etc/draft/icons/yaft.png \
+	install -Dm755 "$srcdir"/install/etc/draft/icons/yaft.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/icon.png
 	install -Dm755 "$startdir"/external.manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/external.manifest.json
 }
-sha512sums='5dab2bd2f84222737b8b25dd899527cc58879e313e1eabbd41961d4497a8fdc17ae62e9aaf914cbe56abe319bd2f78cc88bf401f40d00942e860d8694d40da7e
-yaft-0.1.3.tar.gz
+sha512sums='
 82e33e02f57e481f42df1feaeafe4b1dc7f1725bbc3e28f36a238087a5e2faff692c831fb0a603deeb44d564b00350fd7f3fda36afd8d42ef78d9b02267f5a50
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656
