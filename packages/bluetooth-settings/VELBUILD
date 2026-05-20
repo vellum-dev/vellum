@@ -1,0 +1,38 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=bluetooth-settings
+pkgver=0.1.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Adds a Bluetooth settings page for pairing and managing Bluetooth keyboards."
+url="https://github.com/rmitchellscott/xovi-bluetoothsettings"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.27 remarkable-os<3.28"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/README.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$pkgver/bluetoothSettings.qmd
+https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$pkgver/bluetooth.rcc
+https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/bluetoothSettings.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/bluetoothSettings.qmd
+
+	install -Dm644 "$srcdir"/bluetooth.rcc \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/bluetooth.rcc
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-bluetoothsettings" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='e787b2d4e8a265c2e35df74a1dac07eb8c3d62450aee0235e1673e7c0df9853d20a2ad79a7b4d4a4fbb604fe5bb5e50d3c2ed3499c68ba0abf62858d1c73d1bc
+bluetoothSettings.qmd
+45849b0bd74f7d29a2abaa142f6539301a9ef065be3283f78781197f45e499b1ba3f0b0a9fc2c6f0fb93ca3763f8f8ca3085f7c62543792fad1fd93f29f711a8
+bluetooth.rcc
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
