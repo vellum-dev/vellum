@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum
-pkgver=0.2.7
+pkgver=0.3.0
 pkgrel=0
 _apk_ver=3.0.3
 upstream_author="vellum-dev"
@@ -46,9 +46,9 @@ package() {
 	echo "https://github.com/$upstream_author/vellum-cli" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
-sha512sums='531a5d18aa53ad4e0da295894125017365a22a6ea269c90e19ff899b2a58ee8d34a5a560b86d9cd3a33b7cd2f1409afc164e10956ef6c0833cd60bd93f6dec97
+sha512sums='592085688a74b6c4a3079c3c7d01cd92026286283907c9f654940a5f0ce16f27394705b5884cc35d6073fa61eb1a91f4a0b5e296f731a0cc818edf6b7461ae7b
 vellum-aarch64
-5b3772dee4c9807e2cfdf7f03552bcdc55fe8483b5114b0f1c50ba6e27c2d5903ba4a83f6b230db0ac978c99166c7baf0cba1dc90499f335b4957f2dad267a08
+acbc347fea29cc4875a5b68dd00830630a6d82a932cfeff6672cd8bdfb967d1cd23270dc840663e960cc7b1c6aa19d9f101fd483d11ec6048fb170e418397d01
 vellum-armv7
 e1a9b3434c58a10f1df103b71259d1a18b5bc3885fa403b2e5bc690246c2debfcb083218a49c14683485ec0f8fda8e3508490133e547cd47cc5fa9de5cf6309c
 apk-aarch64
