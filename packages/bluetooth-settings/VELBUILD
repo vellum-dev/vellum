@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bluetooth-settings
 pkgver=0.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a Bluetooth settings page for pairing and managing Bluetooth keyboards."
 url="https://github.com/rmitchellscott/xovi-bluetoothsettings"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.27 remarkable-os<3.28"
+depends="!rm1 !rm2 qt-resource-rebuilder qt-command-executor remarkable-os>=3.27 remarkable-os<3.28"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
