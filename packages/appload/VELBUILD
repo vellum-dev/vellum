@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
-pkgver=0.5.2
-pkgrel=1
+pkgver=0.5.3
+pkgrel=0
 upstream_author="asivery"
 category="framework"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
@@ -40,9 +40,9 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-sha512sums='067a1ce17578d1508876b076619e23bd648e0006dbf01c096627452cf6dd3cbd84a1d27d976446b79071883d103008772a03ebe1826576bad2f433eaa7431d70
+sha512sums='9ff48f5b5ebcf134ce4f212ea812dfc17dc35daf0630316dd3ec2e332efe479eba25643d7e24d54e7410208f49bdedd4da1378cdef788da161879d7324a04929
 appload-aarch64.zip
-f40b558b0f387660f9c184fe6d86b6f16024de987d9bef8cf3bae8256f1c3dfbead029bc92dd172c6c6152a8d0d981b8bb47db08a170f0be00d3231088eeed89
+a507cbd38079919599cc33d299ac991cbac3974633744133edb0f8761008e0f2320c701a9b433ca74c71610fc79a8b5307ed5a57680d42edad9bc05084dc986c
 appload-arm32.zip
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
