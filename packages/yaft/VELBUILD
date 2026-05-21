@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=yaft
 pkgver=0.1.4
-pkgrel=0
+pkgrel=1
 pkgdesc="Yet another framebuffer terminal"
 upstream_author="timower"
 category="apps"
@@ -80,8 +80,7 @@ package() {
 	install -Dm755 "$startdir"/external.manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/external.manifest.json
 }
-sha512sums='
-82e33e02f57e481f42df1feaeafe4b1dc7f1725bbc3e28f36a238087a5e2faff692c831fb0a603deeb44d564b00350fd7f3fda36afd8d42ef78d9b02267f5a50
+sha512sums='6ab27a5be294f69830baa8ef84fc5d0e5f617067f83866f3194815e1c20c044e1a526de824b9c634a47e05bc9b267e9654840ae121fe88de743a1e06cc2fe441
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656
 rm-toolchain.cmake'
