@@ -15,7 +15,7 @@ https://github.com/$upstream_author/folly/archive/$_commit.zip
 external.manifest.json
 "
 options="!check !fhs !strip !tracedeps"
-depends="appload"
+depends="appload >= 0.5.3"
 
 image="ghcr.io/toltec-dev/rust:v3.3"
 build() {
@@ -58,5 +58,5 @@ package() {
 }
 sha512sums='eeb29cc994a6c9bf85e44f75cac4d394dec5202b050b20316357d47717359c41dc701d233cf561b6633becc46c21da86ca4de8059634169b280db24c043abb64
 97f5813086a9adabb70114b12aa5a2073458bc91.zip
-c5fccf60f9ce159a4fbda11fef9766cff7566cf72e77bb4173fedc52c2b3f1d39b31da48fab0c56f8244d08f04be3b4b1ac57aee4f8c114e56a8b52f8786375b
+febbed3c3ddeb9e63350490b9ab8701835ecfba64cf6f60cdf693f419bcfbb98fccbac22163f74471231acebc2a6b9d39c4609db9d6550dc65edb5e479c41a74
 external.manifest.json'
