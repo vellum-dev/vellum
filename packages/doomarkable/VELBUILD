@@ -15,7 +15,7 @@ https://github.com/LinusCDE/doomarkable/archive/$_commit.zip
 external.manifest.json
 "
 options="!check !fhs !strip !tracedeps"
-depends="appload"
+depends="appload >= 0.5.3"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
