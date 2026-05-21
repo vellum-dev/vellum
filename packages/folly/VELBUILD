@@ -15,7 +15,7 @@ https://github.com/$upstream_author/folly/archive/$_commit.zip
 external.manifest.json
 "
 options="!check !fhs !strip !tracedeps"
-depends="appload >= 0.5.3"
+depends="appload>=0.5.3"
 
 image="ghcr.io/toltec-dev/rust:v3.3"
 build() {
