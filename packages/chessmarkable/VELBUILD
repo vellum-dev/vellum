@@ -7,7 +7,7 @@ pkgdesc="Chess game"
 upstream_author="LinusCDE"
 category="apps"
 url="https://github.com/LinusCDE/chessmarkable"
-arch="armv7 aarch64"
+arch="aarch64"
 license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/chessmarkable/$_pkgver/README.md"
 source="
@@ -22,7 +22,7 @@ build() {
 	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-	armv7) . /opt/x-tools/switch-arm.sh ;;
+	# armv7) . /opt/x-tools/switch-arm.sh ;; # To be added back when appload can work properly with libremarkable apps
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
