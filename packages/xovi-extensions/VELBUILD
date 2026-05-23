@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
-pkgver=18.0.0
-pkgrel=6
+pkgver=19.0.0
+pkgrel=0
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -19,7 +19,7 @@ subpackages="
 	webserver-remote:webserver_remote
 "
 
-_release="v18-23032026"
+_release="v19-23052026"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-xovi-extensions/$_release/README.MD"
 donateurl="https://ko-fi.com/asivery"
 
@@ -143,7 +143,7 @@ framebuffer_spy() {
 webserver_remote() {
 	category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<19.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.28"
+	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<20.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.28"
 
 	package() {
 		install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
@@ -157,8 +157,9 @@ predeinstall() {
 
 	[ -x /home/root/xovi/stock ] && /home/root/xovi/stock
 }
-sha512sums='
-dec458ffe04c01510e5fac91dabe15e6ba1838da9e885674212049d1e99a95cffd1f43b06b3f1449893170f0d91d2f153d929f92e856dcb89b6d83a86c314a1b  xovi-aarch64.tar.gz
-450e18fa2b3c6ab897988a7a7d145947fc152c21c6b8db08bd8c2fc688b75c230e045c3bfcd030562fe23a4d7df071aa67aba65a9dd4cc6bb392932df04609ee  xovi-arm32.tar.gz
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-'
+sha512sums='42f02eb0b7363ec5234a1a805bf861df0f075672f914318924a8e22f5ab1aaf1458b68e7891e8c7df5350ebaeafb3af8888c6dc7084b0d1ad5bbeb62864aca2e
+xovi-aarch64.tar.gz
+996f87fe06c40358f16378d7a6fe4692667698dc3871df2b3d31041bffe64375b97a2bbff8d414a74132f3fd54fed7b34b2efa3b0e2c4ac758552d02e972b134
+xovi-arm32.tar.gz
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'

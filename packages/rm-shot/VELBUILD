@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
 pkgver=1.1.2
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Screenshot extension for xovi framework"
 url="https://github.com/rmitchellscott/rm-shot"
 arch="aarch64 armv7"
 license="GPL-3.0-or-later"
-depends="framebuffer-spy>=18 framebuffer-spy<19 xovi-message-broker>=18 xovi-message-broker<19"
+depends="framebuffer-spy>=18 framebuffer-spy<20 xovi-message-broker>=18 xovi-message-broker<20"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-shot/v$pkgver/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"

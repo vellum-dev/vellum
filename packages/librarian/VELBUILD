@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=librarian
 pkgver=0.3.1
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Document library management extension"
 url="https://github.com/rmitchellscott/rm-librarian"
 arch="aarch64 armv7"
 license="GPL-3.0-or-later"
-depends="xovi-message-broker>=18 xovi-message-broker<19"
+depends="xovi-message-broker>=18 xovi-message-broker<20"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-librarian/v$pkgver/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
