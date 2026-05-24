@@ -1,12 +1,12 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=yaft
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Yet another framebuffer terminal"
 upstream_author="timower"
 category="apps"
 url="https://github.com/$upstream_author/rM2-stuff"
-arch="armv7"
+arch="armv7 aarch64"
 license="GPL-3.0"
 depends="appload"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/README.md"
@@ -34,7 +34,7 @@ prepare() {
 image() {
 	case "$CARCH" in
 	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
-	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm2" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
@@ -46,7 +46,7 @@ build() {
 	apt-get update
 	apt-get install -y xxd
 
-	. "$(find /opt/codex -name 'environment-setup-*' -type f)"
+	. "$(find /opt/codex -name 'environment-setup-*' -type f | head -n1)"
 	export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 	cd "$srcdir/rM2-stuff-$pkgver"
 	ln -sf "$startdir"/rm-toolchain.cmake cmake/rm-toolchain.cmake
@@ -80,7 +80,7 @@ package() {
 	install -Dm755 "$startdir"/external.manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/external.manifest.json
 }
-sha512sums='6ab27a5be294f69830baa8ef84fc5d0e5f617067f83866f3194815e1c20c044e1a526de824b9c634a47e05bc9b267e9654840ae121fe88de743a1e06cc2fe441
+sha512sums='6796ea71840761e6eeb0ae96dfaa9d14fd46a3a0189fe3cbedde2609002bb317a19030b919ab1f38e1276fbb60531cab561b8005beb60a6d44570f6bf6b52e42
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656
 rm-toolchain.cmake'

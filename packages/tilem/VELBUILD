@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=tilem
 pkgver=0.1.4
-pkgrel=0
+pkgrel=1
 upstream_author="timower"
 category="apps"
 pkgdesc="A TI-84+ calculator emulator for the remarkable."
@@ -34,7 +34,7 @@ prepare() {
 image() {
 	case "$CARCH" in
 	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
-	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm2" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
@@ -85,8 +85,7 @@ postdeinstall() {
 		rm -rf /home/root/xovi/exthome/appload/tilem
 	fi
 }
-sha512sums='
-1466a1ede8f6af015a7eacbedfa48d964e1187eeb358ddb820fd105fb6a3585c6b01ed9f54b8b7a1dbee449b7ca7bf8d72f90808a9a1b1cdbb8040167c90cc89
+sha512sums='b1dc32a1354d6f7a16603ac9ff57ae20299f4911b41684e060d448d7675b38e1d3aebbf88e5fad78f951f9577545dd2b22b5da3898e5d0a42a589827b619df39
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656
 rm-toolchain.cmake'
