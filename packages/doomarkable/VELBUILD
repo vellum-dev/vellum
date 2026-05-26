@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=doomarkable
 pkgver=0.4.1
-pkgrel=0
+pkgrel=1
 pkgdesc="DOOM game"
 upstream_author="LinusCDE"
 category="apps"
@@ -15,7 +15,7 @@ https://github.com/LinusCDE/doomarkable/archive/$_commit.zip
 external.manifest.json
 "
 options="!check !fhs !strip !tracedeps"
-depends="appload>=0.5.3"
+depends="appload>=0.5.3 !rmppure"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
