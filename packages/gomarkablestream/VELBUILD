@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gomarkablestream
-pkgver=1.2.0
-pkgrel=1
+pkgver=1.3.1
+pkgrel=0
 upstream_author="owulveryck"
 category="utilities"
 pkgdesc="Stream your reMarkable screen to a web browser"
@@ -27,8 +27,9 @@ package() {
 	echo "https://github.com/$upstream_author/goMarkableStream/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='
-52f2b03cb2479120633639ecdef3dd30e5857e5fb4905a6a68466faa5a009886b769fc6f3f18802db32d028755be4ca729479edb361e69c37b669790b1a0aeea  gomarkablestream-1.2.0-aarch64
-a87cbceb7e650d8e2ecdfe13e80d185589a6f31aa0ad9858ccbb5839204d82c24a3c9e8dea95444832aab06096991481b868fa2cd39540f732fe9df991bdda2c  gomarkablestream-1.2.0-armv7
-814f7ff90e542338425c7e6740ff7cd151143ee5ae32b40ea492d99e9498ac85ec5e42b33108fd065d03bf7d453866487054652a8a6f11339c6855e34be635ac  LICENSE
-'
+sha512sums='12a0b3629d24501d5b98a122e4235e9cd271d2821f6801d2a286a3b28c70db8f5335c60b21f227302edbe55ebea466ba5ed6f5a35a14af41b6dc34cecde035ba
+gomarkablestream-1.3.1-aarch64
+0111186157e694d34d5fc929e6ab68174831c1da151a1043853ca1ce1e3744c372e54f22e29af59cae7a7811b9c9141f26b22480cac1d0e2e595acce635b6d03
+gomarkablestream-1.3.1-armv7
+814f7ff90e542338425c7e6740ff7cd151143ee5ae32b40ea492d99e9498ac85ec5e42b33108fd065d03bf7d453866487054652a8a6f11339c6855e34be635ac
+LICENSE'
