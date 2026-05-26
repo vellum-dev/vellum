@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
-pkgver=0.1.4
-pkgrel=3
+pkgver=0.1.5
+pkgrel=0
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
@@ -55,8 +55,9 @@ postdeinstall() {
 	echo ""
 }
 
-sha512sums='
-966d538577c3968e36e0d068148eaf6149ddd9e8c71081a7f6ec77764e75faeaf199ee1676fe59ca203ed805a5b99bb2dbd6a7588892166fce74d8e12656e1e7  rmstream-aarch64.tar.gz
-185867b2f18265848ca5f909fcfba570a2795fd88ee5b9eddc50008cb15fa2a09ff9ea395b6337237192f5f4e871b9c8ddca4ea95d6a491a46702fede5e54e95  rmstream-arm32.tar.gz
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-'
+sha512sums='150322f05ad36257e91c20eb15370a620feac125ffcae9a32c6375fe3a102cd1e44e2382c0a26e2f689c608dda6c0a90e9af5718ebbadf148a63b3a56e3249b2
+rmstream-aarch64.tar.gz
+b84c6e75ec1bbef6199f43c33413a149ae1254469bbce79e5dbf9f6d662e3adfd5da764747c61ec627cb5570615d2e8e838a4387829d721ff61cd37341e87862
+rmstream-arm32.tar.gz
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
