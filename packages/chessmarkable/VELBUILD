@@ -2,7 +2,7 @@ maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=chessmarkable
 _pkgver=0.8.1-1
 pkgver=${_pkgver%-*}
-pkgrel=1
+pkgrel=2
 pkgdesc="Chess game"
 upstream_author="LinusCDE"
 category="apps"
@@ -15,7 +15,7 @@ $pkgname-$_pkgver.tar.gz::https://github.com/$upstream_author/chessmarkable/arch
 external.manifest.json
 "
 options="!check !fhs !strip !tracedeps"
-depends="appload>=0.5.3"
+depends="appload>=0.5.3 !rmppure"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
