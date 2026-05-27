@@ -4,11 +4,11 @@ pkgver=1.0.1
 pkgrel=0
 upstream_author="esclee"
 category="utilities"
-pkgdesc="TUN module for rMPP(M), compiled from kernel code released by rM using rM's SDKs"
+pkgdesc="TUN module for rMP[Pro, Move, Pure], compiled from kernel code released by rM using rM's SDKs"
 url="https://github.com/esclee/tun-package"
 arch="aarch64"
 license="GPL-2.0-or-later"
-depends="mount-utils remarkable-os>=3.26 remarkable-os<3.27 !rm1 !rm2"
+depends="mount-utils remarkable-os>=3.27 remarkable-os<3.28 !rm1 !rm2"
 options="!check !fhs !strip !tracedeps"
 
 source="
