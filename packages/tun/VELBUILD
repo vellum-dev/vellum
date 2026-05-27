@@ -12,8 +12,8 @@ depends="mount-utils remarkable-os>=3.26 remarkable-os<3.27 !rm1 !rm2"
 options="!check !fhs !strip !tracedeps"
 
 source="
-https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-ferrari.ko
-https://raw.githubusercontent.com/esclee/tun-package/main/3.26/tun-chiappa.ko
+https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-ferrari.ko
+https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-chiappa.ko
 https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-tatsu.ko
 https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
 "
