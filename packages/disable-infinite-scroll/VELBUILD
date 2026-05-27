@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-infinite-scroll
 pkgver=1.1.0
-pkgrel=5
+pkgrel=6
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Disables infinite scroll by limiting zooming and scrolling to page boundaries."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !disable-selection-autoscroll !prevent-notebook-zoomout remarkable-os>=3.25 remarkable-os<3.28"
+depends="qt-resource-rebuilder !disable-selection-autoscroll !prevent-notebook-zoomout !fix-custom-fit remarkable-os>=3.25 remarkable-os<3.28"
 _commit="4f0391346e6eb1ff1e23f393c267a6923dd6481e"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#disableinfinitescroll"
 donateurl="https://buymeacoffee.com/rmitchellscott"
