@@ -1,11 +1,11 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=puzzles
 pkgver=0.2.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Simon Tatham's Puzzle Package"
-upstream_author="mrichards42"
+upstream_author="rmkit-dev"
 category="apps"
-url="https://github.com/mrichards42/remarkable_puzzles"
+url="https://github.com/$upstream_author/remarkable_puzzles"
 arch="armv7 aarch64"
 license="GPL-2.0-only"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable_puzzles/v$pkgver/README.md"
