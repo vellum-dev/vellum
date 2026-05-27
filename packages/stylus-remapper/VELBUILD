@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-remapper
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="utilities"
@@ -59,9 +59,9 @@ predeinstall() {
 	killall stylus-remapper 2>/dev/null
 }
 
-sha512sums='f95ebdeaf67e458cc9f729287bcaf50afb94907b59a55160fdaafeab1aabb502bc3e77513d250916c255d4751f97e05d21986a04d10135a0f899c86a34a44d32
+sha512sums='0d010a05e96b04d21044b7dcc80f8d4ee7986129a5eddd107bfec2ad01e4514dfbcb23b34a050e529a590ba39e0cf91b2da37a97d8e2b0e23137dda5578d48ee
 stylus-remapper-aarch64.tar.gz
-50d23e91c14e21c9c6a2684f20c157dafbce4a92867274bbbf6e1f55e393bc35c5da83d7674579fe3544f326fc9ea3001536a2c931c54d805ac307a6d4c3e0f0
+0d72ce2c5744573fc6b1dba3f247a1c407433333191629913ab3cedcc27cdfbae1b0d57f27d01376a9afd19bb5c6731be2d8045fb4cdd84ed746928a01393e18
 stylus-remapper-armv7.tar.gz
 c85444e91c53b4db7dd3847bca814a7e6279faf3b8a8b1b16ea1ec0fd139e5682575983ddb7c45ed373523d41fd0b02b2b0b9aab78df3fc6042dacb14ba3fade
 stylusRemapperSettings.qmd
