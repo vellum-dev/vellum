@@ -1,14 +1,14 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=yaft
 pkgver=0.1.4
-pkgrel=2
+pkgrel=3
 pkgdesc="Yet another framebuffer terminal"
 upstream_author="timower"
 category="apps"
 url="https://github.com/$upstream_author/rM2-stuff"
 arch="armv7 aarch64"
 license="GPL-3.0"
-depends="appload"
+depends="appload >= 0.5.3"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/README.md"
 source="
 external.manifest.json
