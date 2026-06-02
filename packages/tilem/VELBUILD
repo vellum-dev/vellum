@@ -1,14 +1,14 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=tilem
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 upstream_author="timower"
 category="apps"
 pkgdesc="A TI-84+ calculator emulator for the remarkable."
 url="https://github.com/$upstream_author/rM2-stuff"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="appload curl"
+depends="appload>=0.5.3 curl"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rM2-stuff/v$pkgver/README.md"
 
