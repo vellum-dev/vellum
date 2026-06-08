@@ -1,7 +1,7 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
 pkgver=0.4.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
@@ -11,7 +11,7 @@ license="GPL-2.0-or-later"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=1e6d4c8b4e249ed33c80d632d9048ebb68605e38
+_commit=19074d8f53e4860f1cddec5fca0a6f16949920e0
 _dejavuver=2.37
 
 readmeurl="https://raw.githubusercontent.com/$upstream_author/netsurf-reMarkable/$_commit/README.md"
@@ -39,7 +39,7 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=1e6d4c8b4e249ed33c80d632d9048ebb68605e38 # $_commit is not passed through to build()
+	_commit=19074d8f53e4860f1cddec5fca0a6f16949920e0 # $_commit is not passed through to build()
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	# The original Toltec recipe symlinked /usr/bin/which into /bin (needed on
 	# the older base:v3.2 image, which had a separate /bin). On this image
@@ -73,7 +73,7 @@ build() {
 }
 
 package() {
-	_commit=1e6d4c8b4e249ed33c80d632d9048ebb68605e38 # $_commit is not passed through to package()
+	_commit=19074d8f53e4860f1cddec5fca0a6f16949920e0 # $_commit is not passed through to package()
 	_dejavuver=2.37 # $_dejavuver is not passed through to package()
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	install -Dm644 LICENSE \
@@ -130,8 +130,8 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='db585cac462a51eb796b3f1be4a880e4a69e5e9377378faab093779ed031e3f1b93fbdfb52cc25f40603096bc11336b4177686132c4c3e6b3d6a6522b8942bb8
-netsurf-reMarkable-1e6d4c8b4e249ed33c80d632d9048ebb68605e38.zip
+sha512sums='ab774515f6509682d35ed22abe5ad5e8d156a50136ba0c39b94da3cd19edd01c19ef2d5346b4665036e8b4fb5910c4c02c8a8af04d5956d190527afcc5e24238
+netsurf-reMarkable-19074d8f53e4860f1cddec5fca0a6f16949920e0.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
 a94da3627058da5d12ab0f57cc5b201219ab9110c963133f4280a18b1e210062d86e9422a8c9c4da0b85a84009ead21cf384649835c44fe667e228d3e91a4d4a
