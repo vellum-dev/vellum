@@ -1,0 +1,25 @@
+homepage_url:about:welcome
+fb_download_directory:/home/root/Downloads
+
+# appload manages the app lifecycle; there is no "xochitl"/"remux" service to
+# restart here, so repurpose NetSurf's restart button to just terminate the
+# browser process (appload returns to its launcher when the app exits).
+fb_xochitl_restart_command:killall -9 netsurf
+
+scale:150
+enable_javascript:0
+
+fb_face_sans_serif:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans.ttf
+fb_face_sans_serif_bold:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans-Bold.ttf
+fb_face_sans_serif_italic:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans-Oblique.ttf
+fb_face_sans_serif_italic_bold:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans-BoldOblique.ttf
+fb_face_serif:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSansMono.ttf
+fb_face_serif_bold:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSerif-Bold.ttf
+fb_face_cursive:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSerif-Italic.ttf
+fb_face_monospace:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSansMono.ttf
+fb_face_monospace_bold:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSansMono-Bold.ttf
+fb_face_fantasy:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans-Oblique.ttf
+
+fb_toolbar_size:60
+fb_furniture_size:40
+fb_osk:1
