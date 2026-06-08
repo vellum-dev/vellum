@@ -1,7 +1,7 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
 pkgver=0.4.0
-pkgrel=2
+pkgrel=0
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
@@ -11,7 +11,7 @@ license="GPL-2.0-or-later"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=5eef0b700d6e13097c63932eb1c6add25846798f
+_commit=36afacc3d3d921a4a6a258471fba1530bc6f6585
 _dejavuver=2.37
 
 readmeurl="https://raw.githubusercontent.com/$upstream_author/netsurf-reMarkable/$_commit/README.md"
@@ -27,9 +27,8 @@ image="ghcr.io/toltec-dev/base:v4.0"
 
 build() {
 	set -e
-	# install_dependencies.sh needs these to build FreeType (autogen.sh) and
-	# the netsurf buildsystem (the original Toltec recipe declared them as
-	# makedepends; Vellum's images don't ship them, so install at build time).
+	# Build deps for FreeType (autogen.sh) and the netsurf buildsystem; not in
+	# the base image, so install them at build time.
 	apt-get update
 	apt-get install -y automake autoconf libtool bison flex gperf libpng-dev
 	case "$CARCH" in
@@ -39,42 +38,17 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=5eef0b700d6e13097c63932eb1c6add25846798f # $_commit is not passed through to build()
+	_commit=36afacc3d3d921a4a6a258471fba1530bc6f6585 # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
-	# The original Toltec recipe symlinked /usr/bin/which into /bin (needed on
-	# the older base:v3.2 image, which had a separate /bin). On this image
-	# /bin is itself a symlink to /usr/bin, so that command would instead
-	# create a self-referential symlink loop and break `which` entirely -
-	# it's already available at both paths, so just skip it.
-
-	# The toolchain sysroot ships prebuilt shared libs for OpenSSL 3.x
-	# (libssl.so.3/libcrypto.so.3) and curl (libcurl.so.4, linked against that
-	# same OpenSSL 3.x). install_dependencies.sh cross-builds static OpenSSL
-	# 1.1.1k and curl 7.75.0 into the same prefix (--disable-shared, so no new
-	# .so files are produced; only headers/.a libs are (re)written) - but the
-	# linker still finds and prefers the preexisting prebuilt .so's over the
-	# freshly built .a's, causing "undefined reference to
-	# SSL_get_peer_certificate/EVP_PKEY_id/EVP_PKEY_get_id@OPENSSL_3.0.0/..."
-	# (symbol names changed between OpenSSL 1.1.x and 3.x). Remove the prebuilt
-	# shared libs up front so nothing ever links against them.
+	# Remove the toolchain's prebuilt shared OpenSSL/curl/libevdev libs so the
+	# linker uses the static libs install_dependencies.sh builds instead.
 	rm -f "$SYSROOT"/usr/lib/libssl.so* "$SYSROOT"/usr/lib/libcrypto.so* \
-		"$SYSROOT"/usr/lib/libcurl.so*
+		"$SYSROOT"/usr/lib/libcurl.so* "$SYSROOT"/usr/lib/libevdev.so*
 	scripts/install_dependencies.sh
 	TARGET_WORKSPACE="$PWD"/build scripts/build.sh
-
-	# The device has no libevdev.so.2 (it's not part of the OS image or any
-	# installed package - only the toolchain sysroot ships one, prebuilt,
-	# linked against the netsurf binary at build time), so bundle it into the
-	# package alongside the binary (see package()), the same way koreader
-	# ships its own libs/ directory. package() doesn't source switch-arm.sh,
-	# so $SYSROOT isn't set there; stash the file under $srcdir here instead,
-	# where package() can reach it using only the paths it already has.
-	cp "$SYSROOT"/usr/lib/libevdev.so.2.3.0 "$srcdir"/libevdev.so.2
 }
 
 package() {
-	_commit=5eef0b700d6e13097c63932eb1c6add25846798f # $_commit is not passed through to package()
-	_dejavuver=2.37 # $_dejavuver is not passed through to package()
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	install -Dm644 LICENSE \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -87,11 +61,6 @@ package() {
 		"$appdir"/netsurf
 	install -Dm644 "$startdir"/external.manifest.json \
 		"$appdir"/external.manifest.json
-
-	# Bundled libevdev.so.2 (see build()); external.manifest.json points
-	# LD_LIBRARY_PATH at this lib/ dir so the dynamic linker finds it.
-	install -Dm755 "$srcdir"/libevdev.so.2 \
-		"$appdir"/lib/libevdev.so.2
 
 	resdir=build/netsurf/frontends/framebuffer/res
 	install -Dm644 -t "$appdir"/res \
@@ -110,8 +79,6 @@ package() {
 	install -Dm644 "$resdir"/netsurf.png \
 		"$appdir"/icon.png
 
-	# Fetched from upstream (see source=) rather than bundled in the package
-	# repo - keeps the binary font blobs out of git history.
 	dejavudir="$srcdir/dejavu-fonts-ttf-$_dejavuver/ttf"
 	install -Dm644 -t "$appdir"/res/fonts \
 		"$dejavudir"/DejaVuSans.ttf \
@@ -130,11 +97,11 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='f173b0c53e7dacfbecdefef1989def60c17cb83b56298b907b8c59c16198e634e3bbd54929b35da1daa60d63ea2e188ca139147a4c27d7361969e91f892a0213
-netsurf-reMarkable-5eef0b700d6e13097c63932eb1c6add25846798f.zip
+sha512sums='df60e4f270bba2e80e92423777424072f43d90d767a167868b6c096978aac228d7e702165ca69cf7044f423c218ce82493d979e2d9462fc92b2421aa00870818
+netsurf-reMarkable-36afacc3d3d921a4a6a258471fba1530bc6f6585.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
-a94da3627058da5d12ab0f57cc5b201219ab9110c963133f4280a18b1e210062d86e9422a8c9c4da0b85a84009ead21cf384649835c44fe667e228d3e91a4d4a
+34b8aaac63783679a6466b04403e71db666d4edcf6606e4c98032509719ec9ac6d513fa4a9b8b5b32aed5103352c7d2a1bc0ecc130c1a97d37dc7f0bed39cdf3
 external.manifest.json
 3a2793966be20033ab5827c631f87267a1d13bfa0276a942b66d0018e42d1386a7408f9356a03e0d52eff07180379cdd05b538faa5a84b824e0325d169b228f4
 Choices'
