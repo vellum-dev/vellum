@@ -55,15 +55,13 @@ package() {
 	echo "https://github.com/$upstream_author/netsurf-reMarkable" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
-	appdir="$pkgdir/home/root/xovi/exthome/appload/netsurf"
-
 	install -Dm755 build/netsurf/nsfb \
-		"$appdir"/netsurf
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/netsurf
 	install -Dm644 "$startdir"/external.manifest.json \
-		"$appdir"/external.manifest.json
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/external.manifest.json
 
 	resdir=build/netsurf/frontends/framebuffer/res
-	install -Dm644 -t "$appdir"/res \
+	install -Dm644 -t "$pkgdir"/home/root/xovi/exthome/appload/netsurf/res \
 		"$resdir"/adblock.css \
 		"$resdir"/default.css \
 		"$resdir"/quirks.css \
@@ -75,12 +73,12 @@ package() {
 		"$resdir"/welcome-netsurf.html \
 		"$resdir"/netsurf.png
 	install -Dm644 "$startdir"/Choices \
-		"$appdir"/res/Choices
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/Choices
 	install -Dm644 "$resdir"/netsurf.png \
-		"$appdir"/icon.png
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/icon.png
 
 	dejavudir="$srcdir/dejavu-fonts-ttf-$_dejavuver/ttf"
-	install -Dm644 -t "$appdir"/res/fonts \
+	install -Dm644 -t "$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/fonts \
 		"$dejavudir"/DejaVuSans.ttf \
 		"$dejavudir"/DejaVuSans-Bold.ttf \
 		"$dejavudir"/DejaVuSans-Oblique.ttf \
@@ -93,7 +91,10 @@ package() {
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -rf /home/root/xovi/exthome/appload/netsurf
+		# NetSurf stores cookies, the URL database and saved options under
+		# ~/.netsurf (HOME=/home/root); installed files are removed by the
+		# package manager.
+		rm -rf /home/root/.netsurf
 	fi
 }
 
