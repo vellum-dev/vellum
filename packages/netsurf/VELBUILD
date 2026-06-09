@@ -11,7 +11,7 @@ license="GPL-2.0-or-later"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=36afacc3d3d921a4a6a258471fba1530bc6f6585
+_commit=94fc1d85d8ea2726066b8969bfb7594b99f20fb9
 _dejavuver=2.37
 
 readmeurl="https://raw.githubusercontent.com/$upstream_author/netsurf-reMarkable/$_commit/README.md"
@@ -38,12 +38,11 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=36afacc3d3d921a4a6a258471fba1530bc6f6585 # not set in build() when image= is used
+	_commit=94fc1d85d8ea2726066b8969bfb7594b99f20fb9 # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
-	# Remove the toolchain's prebuilt shared OpenSSL/curl/libevdev libs so the
-	# linker uses the static libs install_dependencies.sh builds instead.
-	rm -f "$SYSROOT"/usr/lib/libssl.so* "$SYSROOT"/usr/lib/libcrypto.so* \
-		"$SYSROOT"/usr/lib/libcurl.so* "$SYSROOT"/usr/lib/libevdev.so*
+	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
+	# static one install_dependencies.sh builds instead.
+	rm -f "$SYSROOT"/usr/lib/libevdev.so*
 	scripts/install_dependencies.sh
 	TARGET_WORKSPACE="$PWD"/build scripts/build.sh
 }
@@ -91,18 +90,15 @@ package() {
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
-		# NetSurf stores cookies, the URL database and saved options under
-		# ~/.netsurf (HOME=/home/root); installed files are removed by the
-		# package manager.
 		rm -rf /home/root/.netsurf
 	fi
 }
 
-sha512sums='df60e4f270bba2e80e92423777424072f43d90d767a167868b6c096978aac228d7e702165ca69cf7044f423c218ce82493d979e2d9462fc92b2421aa00870818
-netsurf-reMarkable-36afacc3d3d921a4a6a258471fba1530bc6f6585.zip
+sha512sums='4c11302a292926bd51fc2cb0e0fdd54a04da732885260defec4f12a5a49bc90b3ea7501bc5177297332e292e4649ac0d398aebc37a4f36877ec2a22a3578b6ee
+netsurf-reMarkable-94fc1d85d8ea2726066b8969bfb7594b99f20fb9.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
 34b8aaac63783679a6466b04403e71db666d4edcf6606e4c98032509719ec9ac6d513fa4a9b8b5b32aed5103352c7d2a1bc0ecc130c1a97d37dc7f0bed39cdf3
 external.manifest.json
-3a2793966be20033ab5827c631f87267a1d13bfa0276a942b66d0018e42d1386a7408f9356a03e0d52eff07180379cdd05b538faa5a84b824e0325d169b228f4
+a6f3a8963c2fb49c39dd49a11c389fe0acefb525612e3ff4b38380053ec37ec68e3b5d01638a02d11c3681347b58d08b7117f09893e6ce444620e892860e0855
 Choices'
