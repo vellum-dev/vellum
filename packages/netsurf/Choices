@@ -16,6 +16,7 @@ fb_face_cursive:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSerif-It
 fb_face_monospace:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSansMono.ttf
 fb_face_monospace_bold:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSansMono-Bold.ttf
 fb_face_fantasy:/home/root/xovi/exthome/appload/netsurf/res/fonts/DejaVuSans-Oblique.ttf
+fb_face_cjk:/home/root/xovi/exthome/appload/netsurf/res/fonts/NotoSansCJKsc-Regular.otf
 
 fb_toolbar_size:60
 fb_furniture_size:40
