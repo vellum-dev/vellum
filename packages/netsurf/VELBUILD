@@ -11,7 +11,7 @@ license="GPL-2.0-or-later"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=a3cf3901953f41a6964aa3a76e3cf62ad6b0499a
+_commit=0ebeaa879e57c729bbf3d93509b7e718f621c5d0
 _dejavuver=2.37
 _notocjkver=2.004
 
@@ -40,7 +40,7 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=a3cf3901953f41a6964aa3a76e3cf62ad6b0499a # not set in build() when image= is used
+	_commit=0ebeaa879e57c729bbf3d93509b7e718f621c5d0 # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
 	# static one install_dependencies.sh builds instead.
@@ -96,12 +96,14 @@ package() {
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
+		# Remove runtime data and the app dir.
 		rm -rf /home/root/.netsurf
+		rm -rf /home/root/xovi/exthome/appload/netsurf
 	fi
 }
 
-sha512sums='6a1f3090184963b4df8db02814181c149869fff6256d99c0e702f1722e4ad40d4b51728267e53b78196670a2074f6512eea70f6800e96da32a1d03a5690e53ee
-netsurf-reMarkable-a3cf3901953f41a6964aa3a76e3cf62ad6b0499a.zip
+sha512sums='25eaef2e499548c383def59967eb7eb710c10a24f7b1723224ae94e50a260eda5ffd32e9f41f6dabd9524679da7f7b065fefd511f40f7b251150ef5ed5f859f8
+netsurf-reMarkable-0ebeaa879e57c729bbf3d93509b7e718f621c5d0.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
 d523187e27fa554d9ae3c64496235f0bd3a505a8f31f89da2762df5148be83ba1c2650fe6fa125b0214e2c1c699ee22703371b81a4d3141e522149915121fdf4
