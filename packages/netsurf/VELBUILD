@@ -1,0 +1,114 @@
+maintainer="maicrohard <maicrohard@proton.me>"
+pkgname=netsurf
+pkgver=0.4.0
+pkgrel=0
+pkgdesc="Lightweight web browser"
+upstream_author="MaicroNotHard"
+category="apps"
+url="https://github.com/$upstream_author/netsurf-reMarkable"
+arch="armv7"
+license="GPL-2.0-or-later"
+depends="appload>=0.5.3"
+options="!check !fhs !strip !tracedeps"
+
+_commit=0ebeaa879e57c729bbf3d93509b7e718f621c5d0
+_dejavuver=2.37
+_notocjkver=2.004
+
+readmeurl="https://raw.githubusercontent.com/$upstream_author/netsurf-reMarkable/$_commit/README.md"
+
+source="
+netsurf-reMarkable-$_commit.zip::https://github.com/$upstream_author/netsurf-reMarkable/archive/$_commit.zip
+dejavu-fonts-ttf-$_dejavuver.tar.bz2::https://downloads.sourceforge.net/project/dejavu/dejavu/$_dejavuver/dejavu-fonts-ttf-$_dejavuver.tar.bz2
+noto-sans-cjk-sc-$_notocjkver.zip::https://github.com/notofonts/noto-cjk/releases/download/Sans$_notocjkver/08_NotoSansCJKsc.zip
+external.manifest.json
+Choices
+"
+
+image="ghcr.io/toltec-dev/base:v4.0"
+
+build() {
+	set -e
+	# Build deps for FreeType (autogen.sh) and the netsurf buildsystem; not in
+	# the base image, so install them at build time.
+	apt-get update
+	apt-get install -y automake autoconf libtool bison flex gperf libpng-dev
+	case "$CARCH" in
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	_commit=0ebeaa879e57c729bbf3d93509b7e718f621c5d0 # not set in build() when image= is used
+	cd "$srcdir/netsurf-reMarkable-$_commit"
+	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
+	# static one install_dependencies.sh builds instead.
+	rm -f "$SYSROOT"/usr/lib/libevdev.so*
+	scripts/install_dependencies.sh
+	TARGET_WORKSPACE="$PWD"/build scripts/build.sh
+}
+
+package() {
+	cd "$srcdir/netsurf-reMarkable-$_commit"
+	install -Dm644 LICENSE \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/netsurf-reMarkable" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	install -Dm755 build/netsurf/nsfb \
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/netsurf
+	install -Dm644 "$startdir"/external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/external.manifest.json
+
+	resdir=build/netsurf/frontends/framebuffer/res
+	install -Dm644 -t "$pkgdir"/home/root/xovi/exthome/appload/netsurf/res \
+		"$resdir"/adblock.css \
+		"$resdir"/default.css \
+		"$resdir"/quirks.css \
+		"$resdir"/internal.css \
+		"$resdir"/Messages \
+		"$resdir"/credits.html \
+		"$resdir"/licence.html \
+		"$resdir"/welcome.html \
+		"$resdir"/welcome-netsurf.html \
+		"$resdir"/netsurf.png
+	install -Dm644 "$startdir"/Choices \
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/Choices
+	install -Dm644 "$resdir"/netsurf.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/icon.png
+
+	dejavudir="$srcdir/dejavu-fonts-ttf-$_dejavuver/ttf"
+	install -Dm644 -t "$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/fonts \
+		"$dejavudir"/DejaVuSans.ttf \
+		"$dejavudir"/DejaVuSans-Bold.ttf \
+		"$dejavudir"/DejaVuSans-Oblique.ttf \
+		"$dejavudir"/DejaVuSans-BoldOblique.ttf \
+		"$dejavudir"/DejaVuSerif-Bold.ttf \
+		"$dejavudir"/DejaVuSerif-Italic.ttf \
+		"$dejavudir"/DejaVuSansMono.ttf \
+		"$dejavudir"/DejaVuSansMono-Bold.ttf
+
+	# CJK fallback font (Chinese/Japanese/Korean)
+	install -Dm644 -t "$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/fonts \
+		"$srcdir"/NotoSansCJKsc-Regular.otf
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		# Remove runtime data and the app dir.
+		rm -rf /home/root/.netsurf
+		rm -rf /home/root/xovi/exthome/appload/netsurf
+	fi
+}
+
+sha512sums='25eaef2e499548c383def59967eb7eb710c10a24f7b1723224ae94e50a260eda5ffd32e9f41f6dabd9524679da7f7b065fefd511f40f7b251150ef5ed5f859f8
+netsurf-reMarkable-0ebeaa879e57c729bbf3d93509b7e718f621c5d0.zip
+bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
+dejavu-fonts-ttf-2.37.tar.bz2
+d523187e27fa554d9ae3c64496235f0bd3a505a8f31f89da2762df5148be83ba1c2650fe6fa125b0214e2c1c699ee22703371b81a4d3141e522149915121fdf4
+noto-sans-cjk-sc-2.004.zip
+34b8aaac63783679a6466b04403e71db666d4edcf6606e4c98032509719ec9ac6d513fa4a9b8b5b32aed5103352c7d2a1bc0ecc130c1a97d37dc7f0bed39cdf3
+external.manifest.json
+eba7f3e095216c685f1e8d55f43361026d68c9c3aeec447ea1dec4a98ae638e561119551a37a69a1e0e93b9be03dde29406006512fcfda0c663eb7413c0f286a
+Choices'
