@@ -22,6 +22,10 @@ package() {
 postinstall() {
 	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
 		/home/root/.vellum/bin/mount-rw
+		mkdir -p /etc/systemd/system/systemd-logind.service.d \
+			/etc/systemd/system/systemd-resolved.service.d \
+			/etc/systemd/system/systemd-timedated.service.d \
+			/etc/systemd/system/chronyd.service.d
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-logind.service.d/override.conf
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
@@ -49,6 +53,10 @@ postupgrade() {
 }
 postosupgrade() {
 	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
+		mkdir -p /etc/systemd/system/systemd-logind.service.d \
+			/etc/systemd/system/systemd-resolved.service.d \
+			/etc/systemd/system/systemd-timedated.service.d \
+			/etc/systemd/system/chronyd.service.d
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-logind.service.d/override.conf
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
