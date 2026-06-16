@@ -8,7 +8,7 @@ category="fixes"
 url="https://vellum.delivery/"
 arch="aarch64 armv7"
 license="MIT"
-depends="!rmppm !rmppure !rm2 remarkable-os>=3.27.1.0"
+depends="!rmppm !rmppure remarkable-os>=3.27.1.0"
 options="!check !fhs !strip !tracedeps"
 source="
 service-overrides.conf
