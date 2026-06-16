@@ -1,40 +1,49 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
-pkgname=rmpp-fixes
+pkgname=os-fixes
 pkgver=0.1
 pkgrel=0
-pkgdesc="Fix systemd service startup issues on the rMPP"
+pkgdesc="Fix systemd service startup issues on some devices"
 upstream_author="vellum-dev"
 category="fixes"
 url="https://vellum.delivery/"
-arch="aarch64"
+arch="aarch64 armv7"
 license="MIT"
-depends="rmpp remarkable-os>=3.27.1.0"
+depends="!rmppm !rmppure remarkable-os>=3.27.1.0"
 options="!check !fhs !strip !tracedeps"
 source="
-rmpp-fixes.conf
+service-overrides.conf
 "
+replaces="rmpp-fixes"
 
 package() {
-	install -Dm644 "$srcdir"/rmpp-fixes.conf \
-		"$pkgdir"/home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf
+	install -Dm644 "$srcdir"/service-overrides.conf \
+		"$pkgdir"/home/root/.vellum/share/os-fixes/service-overrides.conf
 }
 postinstall() {
 	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
 		/home/root/.vellum/bin/mount-rw
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		mkdir -p /etc/systemd/system/systemd-logind.service.d \
+			/etc/systemd/system/systemd-resolved.service.d \
+			/etc/systemd/system/systemd-timedated.service.d \
+			/etc/systemd/system/chronyd.service.d
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-logind.service.d/override.conf
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-resolved.service.d/override.conf
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
+			/etc/systemd/system/systemd-timedated.service.d/override.conf
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/chronyd.service.d/override.conf
 		systemctl daemon-reload
 		systemctl reset-failed \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		systemctl restart \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		/home/root/.vellum/bin/mount-restore
 	fi
@@ -44,20 +53,28 @@ postupgrade() {
 }
 postosupgrade() {
 	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		mkdir -p /etc/systemd/system/systemd-logind.service.d \
+			/etc/systemd/system/systemd-resolved.service.d \
+			/etc/systemd/system/systemd-timedated.service.d \
+			/etc/systemd/system/chronyd.service.d
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-logind.service.d/override.conf
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-resolved.service.d/override.conf
-		cp /home/root/.vellum/share/rmpp-fixes/rmpp-fixes.conf \
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
+			/etc/systemd/system/systemd-timedated.service.d/override.conf
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/chronyd.service.d/override.conf
 		systemctl daemon-reload
 		systemctl reset-failed \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		systemctl restart \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 	fi
 }
@@ -65,8 +82,9 @@ predeinstall() {
 	rm -f \
 		/etc/systemd/system/systemd-logind.service.d/override.conf \
 		/etc/systemd/system/systemd-resolved.service.d/override.conf \
+		/etc/systemd/system/systemd-timedated.service.d/override.conf \
 		/etc/systemd/system/chronyd.service.d/override.conf
 	systemctl daemon-reload
 }
 sha512sums='b8131a0cfab85a6d57853f2cab9f0c454084142bef5967ee0cbb4dd2845abe71c040a3ac2b4c81724a537fef3443e3fe12d74dd99f88eb19c756602aa451ef32
-rmpp-fixes.conf'
+service-overrides.conf'
