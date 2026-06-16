@@ -27,15 +27,19 @@ postinstall() {
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-resolved.service.d/override.conf
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
+			/etc/systemd/system/systemd-timedated.service.d/override.conf
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/chronyd.service.d/override.conf
 		systemctl daemon-reload
 		systemctl reset-failed \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		systemctl restart \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		/home/root/.vellum/bin/mount-restore
 	fi
@@ -50,15 +54,19 @@ postosupgrade() {
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/systemd-resolved.service.d/override.conf
 		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
+			/etc/systemd/system/systemd-timedated.service.d/override.conf
+		cp /home/root/.vellum/share/os-fixes/service-overrides.conf \
 			/etc/systemd/system/chronyd.service.d/override.conf
 		systemctl daemon-reload
 		systemctl reset-failed \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 		systemctl restart \
 			systemd-logind \
 			systemd-resolved \
+			systemd-timedated \
 			chronyd
 	fi
 }
@@ -66,6 +74,7 @@ predeinstall() {
 	rm -f \
 		/etc/systemd/system/systemd-logind.service.d/override.conf \
 		/etc/systemd/system/systemd-resolved.service.d/override.conf \
+		/etc/systemd/system/systemd-timedated.service.d/override.conf \
 		/etc/systemd/system/chronyd.service.d/override.conf
 	systemctl daemon-reload
 }
