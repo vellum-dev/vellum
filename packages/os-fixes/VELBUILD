@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=os-fixes
 pkgver=0.1
-pkgrel=0
+pkgrel=1
 pkgdesc="Fix systemd service startup issues on some devices"
 upstream_author="vellum-dev"
 category="fixes"
@@ -14,6 +14,7 @@ source="
 service-overrides.conf
 "
 replaces="rmpp-fixes"
+provides="rmpp-fixes"
 
 package() {
 	install -Dm644 "$srcdir"/service-overrides.conf \
