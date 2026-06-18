@@ -1,14 +1,14 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=os-fixes
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Fix systemd service startup issues on some devices"
 upstream_author="vellum-dev"
 category="fixes"
 url="https://vellum.delivery/"
 arch="aarch64 armv7"
 license="MIT"
-depends="!rmppm !rmppure remarkable-os>=3.27.1.0"
+depends="!rmppure remarkable-os>=3.27.1.0"
 options="!check !fhs !strip !tracedeps"
 source="
 service-overrides.conf
