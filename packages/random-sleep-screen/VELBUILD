@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=random-sleep-screen
 pkgver=1.0.7
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Picks random sleep screen from ~/sleepScreens/ folder."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder !rmppure remarkable-os>=3.27 remarkable-os<3.28"
 _commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
