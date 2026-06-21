@@ -1,17 +1,17 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
-pkgver=0.4.0
+pkgver=0.5.0
 pkgrel=0
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
 url="https://github.com/$upstream_author/netsurf-reMarkable"
-arch="armv7"
-license="GPL-2.0-or-later"
+arch="armv7 aarch64"
+license="GPL-2.0-only"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=6acd9cb226b9ae50ce5db560e17c8f2ba64375be
+_commit=f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2
 _dejavuver=2.37
 _notocjkver=2.004
 
@@ -29,23 +29,23 @@ image="ghcr.io/toltec-dev/base:v4.0"
 
 build() {
 	set -e
-	# Build deps for FreeType (autogen.sh) and the netsurf buildsystem; not in
-	# the base image, so install them at build time.
 	apt-get update
-	apt-get install -y automake autoconf libtool bison flex gperf libpng-dev
+	apt-get install -y automake autoconf libtool bison flex gperf libpng-dev git
 	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
 		;;
 	esac
-	_commit=6acd9cb226b9ae50ce5db560e17c8f2ba64375be # not set in build() when image= is used
+	_commit=f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2 # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
 	# static one install_dependencies.sh builds instead.
 	rm -f "$SYSROOT"/usr/lib/libevdev.so*
 	scripts/install_dependencies.sh
+	scripts/install_image_libs.sh
 	TARGET_WORKSPACE="$PWD"/build scripts/build.sh
 }
 
@@ -102,8 +102,8 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='c9a0fbf120ac155273fab8013a14f216702750a37381ef283d69a0d19b649ce6c47c9a5e7d3dfaa0c47dd64a93436f37709a150293e048195722d6101c3ac7bd
-netsurf-reMarkable-6acd9cb226b9ae50ce5db560e17c8f2ba64375be.zip
+sha512sums='ecd638361fa0887537759356c581f0f2d0703d6ee64a969f077dd81ca58170f39935c3057cdcda47c8dc0ca4a85784ba96563a33cb38ed68054235609a1fa456
+netsurf-reMarkable-f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
 d523187e27fa554d9ae3c64496235f0bd3a505a8f31f89da2762df5148be83ba1c2650fe6fa125b0214e2c1c699ee22703371b81a4d3141e522149915121fdf4
