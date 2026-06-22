@@ -1,0 +1,49 @@
+maintainer="Jarett <jarett@reticulum.us>"
+pkgname=retaskable
+pkgver=1.0.0
+pkgrel=0
+upstream_author="jdkruzr"
+category="utilities"
+pkgdesc="CalDAV (VTODO) task client for the reMarkable Paper Pro — sync to-dos, due dates, offline-first."
+url="https://github.com/jdkruzr/reTaskable"
+arch="aarch64"
+license="GPL-3.0-only"
+# The app is a sandboxed AppLoad app (it does NOT patch xochitl), so it only needs
+# the AppLoad runtime. appload itself carries the qt-resource-rebuilder + OS pins;
+# we mirror the OS range for clarity.
+depends="appload remarkable-os>=3.26 remarkable-os<3.28"
+options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
+
+# PREBUILT distribution: cut a GitHub release tagged v$pkgver with the output of
+# app/build-rmpp.sh zipped as retaskable-aarch64.zip (the tree: backend/entry,
+# resources.rcc, manifest.json, icon.png). See packaging/vellum/README.md.
+source="
+https://github.com/$upstream_author/reTaskable/releases/download/v$pkgver/retaskable-aarch64.zip
+https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/LICENSE
+"
+
+unpack() {
+	unzip -o "$srcdir"/retaskable-aarch64.zip -d "$srcdir"
+}
+
+package() {
+	install -Dm755 "$srcdir"/backend/entry \
+		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/backend/entry
+	install -Dm644 "$srcdir"/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/resources.rcc
+	install -Dm644 "$srcdir"/manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/manifest.json
+	install -Dm644 "$srcdir"/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/icon.png
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+# Generated for the v1.0.0 release (sha512sum of the published artifacts).
+sha512sums="
+a5d39eedcee966dabb151dfc7dcc62ce1d639664d46f086ec32d49056d078c6e0ab25ce47267f43362359c9c6229c821287b738000dd0f6a0d9e332ae5c53fcb  retaskable-aarch64.zip
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"
