@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=librarian
-pkgver=0.3.1
-pkgrel=4
+pkgver=0.4.0
+pkgrel=0
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Document library management extension"
@@ -33,8 +33,9 @@ package() {
 	echo "https://github.com/rmitchellscott/rm-librarian/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='
-7847252828f661e0859e9a758f44ba4b6284f5bf0d953f9887f9ebb18af9dc630d147a6725a0d92106af45a771100e831d61e19e912105d66e98cb2022a095c2  librarian-aarch64.so
-ea86745116ae19b48553b65ef54acdd509b244ce9fadfc393660373630e7a32a642235325ac57e57e688b444ba521fce3a814f048ff616ba7cf5d67314893e5d  librarian-armv7.so
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
-'
+sha512sums='74ff77ba4678df3e1d4b43d47846588a47d5e1706ad78de079890151ea8ff1c02ab2a2d8a7f3e40dce629a371435b8286570cc3c37b0c6c156f82f9215f3691a
+librarian-aarch64.so
+b66d253ad4d863c13301bbdfd1d57ccd2d6a1d76c267135fae2cafca2f7a51647e4b146cc54039eef2c3cc72cddfc6953299577622d188c225d1fb2f99b9f2b3
+librarian-armv7.so
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
