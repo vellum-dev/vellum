@@ -12,9 +12,6 @@ depends="appload"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
 
-# PREBUILT distribution: cut a GitHub release tagged v$pkgver with the output of
-# app/build-rmpp.sh zipped as retaskable-aarch64.zip (the tree: backend/entry,
-# resources.rcc, manifest.json, icon.png). See packaging/vellum/README.md.
 source="
 https://github.com/$upstream_author/reTaskable/releases/download/v$pkgver/retaskable-aarch64.zip
 https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/LICENSE
