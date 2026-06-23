@@ -8,13 +8,6 @@ pkgdesc="reTaskable note capture: lasso handwriting into a to-do and jump back t
 url="https://github.com/jdkruzr/reTaskable"
 arch="noarch"
 license="GPL-3.0-only"
-# Depends on the app, the qmldiff host, and the two asivery extensions the hooks
-# use (capture auto-sync + jump-back IPC). NOTE the package is qt-command-executor,
-# NOT command-executor. The OS pin is load-bearing: these hooks are verified only
-# against xochitl 3.27's QML, and a qmldiff that fails to apply makes
-# qt-resource-rebuilder safe-fail ALL mods — so we refuse to install on an
-# unverified OS rather than risk that. !convert-to-text-remover because our capture
-# reuses xochitl's convert-to-text recognition path, which that mod strips.
 depends="
 retaskable
 qt-resource-rebuilder
