@@ -38,7 +38,6 @@ package() {
 	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-# Generated for the v1.0.0 release (sha512sum of the .qmd + LICENSE at the tag).
 sha512sums="
 aada3fa46fb49fce226b1ef25a3ddcf37e64731758e8fe560921c6651de6a2af374c4698d5d39d6a21df491b97a7880a2d2bdc322282ce1c79dde5ce043dcfbb  retaskableSend.qmd
 382282ba6ee67fb806af77758460ef36a37090454724659b6b5880bfc19e1c91ccf52f9c9746a139a4c9f55375dfee5da3ba378452323dc6e7b1e4150764f593  retaskableJump.qmd
