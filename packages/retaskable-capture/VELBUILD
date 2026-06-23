@@ -15,7 +15,15 @@ license="GPL-3.0-only"
 # qt-resource-rebuilder safe-fail ALL mods — so we refuse to install on an
 # unverified OS rather than risk that. !convert-to-text-remover because our capture
 # reuses xochitl's convert-to-text recognition path, which that mod strips.
-depends="retaskable qt-resource-rebuilder qt-command-executor xovi-message-broker !convert-to-text-remover remarkable-os>=3.27 remarkable-os<3.28"
+depends="
+retaskable
+qt-resource-rebuilder
+qt-command-executor
+xovi-message-broker
+!convert-to-text-remover
+remarkable-os>=3.27
+remarkable-os<3.28
+"
 options="!check !fhs"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
 
