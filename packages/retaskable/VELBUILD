@@ -8,9 +8,6 @@ pkgdesc="CalDAV (VTODO) task client for the reMarkable Paper Pro — sync to-dos
 url="https://github.com/jdkruzr/reTaskable"
 arch="aarch64"
 license="GPL-3.0-only"
-# The app is a sandboxed AppLoad app (it does NOT patch xochitl), so it only needs
-# the AppLoad runtime. appload itself carries the qt-resource-rebuilder + OS pins;
-# we mirror the OS range for clarity.
 depends="appload remarkable-os>=3.26 remarkable-os<3.28"
 options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
