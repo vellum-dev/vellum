@@ -26,23 +26,6 @@ https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/app/xovi/
 https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/LICENSE
 "
 
-postinstall() {
-	echo ""
-	echo "============================================================"
-	echo "  reTaskable capture installed. Reload xovi to activate"
-	echo "  (triple-tap, or reboot). If QML mods don't take, run:"
-	echo "      xovi/rebuild_hashtable"
-	echo "============================================================"
-	echo ""
-}
-
-postosupgrade() {
-	echo ""
-	echo "  NOTE: reTaskable capture patches xochitl and is pinned to a"
-	echo "  specific OS range. After an OS upgrade it may need an update;"
-	echo "  if note-capture stops working, check for a newer version."
-	echo ""
-}
 
 package() {
 	install -Dm644 "$srcdir"/retaskableSend.qmd \
