@@ -1,0 +1,33 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=force-wide-column
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Forces a note's typed text to the Wide column on open, including existing notes"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppm remarkable-os>=3.27 remarkable-os<3.28"
+_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#forcewidecolumn"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/forceWideColumn.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/forceWideColumn.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/forceWideColumn.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+c0dae9872644f89e405aeb8c75c5e5e326a7478a4dfc027d9cd94e1d5c4e29dab38d5b4882dee0eecad6cc6bc4467f6db8ed53ea34dac718bcb3cbc472fd2a35  forceWideColumn.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
