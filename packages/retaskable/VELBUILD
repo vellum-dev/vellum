@@ -1,43 +1,91 @@
 maintainer="Jarett <jarett@reticulum.us>"
 pkgname=retaskable
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=0
 upstream_author="jdkruzr"
 category="utilities"
-pkgdesc="CalDAV (VTODO) task client for the reMarkable Paper Pro — sync to-dos, due dates, offline-first."
+pkgdesc="CalDAV task client for reMarkable tablets"
 url="https://github.com/jdkruzr/reTaskable"
-arch="aarch64"
+arch="aarch64 armv7"
 license="GPL-3.0-only"
 depends="appload"
 options="!check !fhs !strip !tracedeps"
+subpackages="retaskable-capture:capture"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
 
-source="
-https://github.com/$upstream_author/reTaskable/releases/download/v$pkgver/retaskable-aarch64.zip
-https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/LICENSE
-"
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/reTaskable/archive/refs/tags/v$pkgver.tar.gz"
 
-unpack() {
-	unzip -o "$srcdir"/retaskable-aarch64.zip -d "$srcdir"
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
+
+	case "$CARCH" in
+	aarch64)
+		. /opt/x-tools/switch-aarch64.sh
+		cd "$srcdir"/reTaskable-"$pkgver"/app
+		./build-rmpp.sh
+		;;
+	armv7)
+		. /opt/x-tools/switch-arm.sh
+		cd "$srcdir"/reTaskable-"$pkgver"/app
+		./build-rm.sh
+		;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
 }
 
 package() {
-	install -Dm755 "$srcdir"/backend/entry \
+	case "$CARCH" in
+	aarch64) _output="output-rmpp" ;;
+	armv7) _output="output-rm" ;;
+	esac
+
+	cd "$srcdir"/reTaskable-"$pkgver"
+	install -Dm755 app/"$_output"/backend/entry \
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/backend/entry
-	install -Dm644 "$srcdir"/resources.rcc \
+	install -Dm644 app/"$_output"/resources.rcc \
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/resources.rcc
-	install -Dm644 "$srcdir"/manifest.json \
+	install -Dm644 app/"$_output"/manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/manifest.json
-	install -Dm644 "$srcdir"/icon.png \
+	install -Dm644 app/"$_output"/icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/icon.png
 
-	install -Dm644 "$srcdir"/LICENSE \
+	install -Dm644 LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-# Generated for the v1.0.0 release (sha512sum of the published artifacts).
+capture() {
+	category="ui"
+	pkgdesc="reTaskable note capture"
+	depends="
+	retaskable
+	qt-resource-rebuilder
+	qt-command-executor
+	xovi-message-broker
+	!convert-to-text-remover
+	remarkable-os>=3.27
+	"
+
+	package() {
+		cd "$srcdir"/reTaskable-"$pkgver"
+		install -Dm644 app/xovi/retaskableSend.qmd \
+			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/retaskableSend.qmd
+		install -Dm644 app/xovi/retaskableJump.qmd \
+			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/retaskableJump.qmd
+
+		install -Dm644 LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/retaskable-capture/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/retaskable-capture/SOURCES
+	}
+}
+
 sha512sums="
-a5d39eedcee966dabb151dfc7dcc62ce1d639664d46f086ec32d49056d078c6e0ab25ce47267f43362359c9c6229c821287b738000dd0f6a0d9e332ae5c53fcb  retaskable-aarch64.zip
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+3751691b0872ab1962319f829b53a886530a941c9bc24f8e15db1b3d3f8d1287af87ab33bfdeb1c573bbaf9e89e348c2b3eadd3e751e671b6f3d47552498dcb0  retaskable-1.0.1.tar.gz
 "
