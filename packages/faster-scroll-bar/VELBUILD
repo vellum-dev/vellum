@@ -1,0 +1,33 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=faster-scroll-bar
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Auto-hides the document scrollbar ~0.35s after you stop scrolling"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppm remarkable-os>=3.27 remarkable-os<3.28"
+_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#fasterscrollbar"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/fasterScrollBar.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/fasterScrollBar.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fasterScrollBar.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+3eadc819c4efc3b88f39c8e4cefd759f070d81394e70d44d527df676d43f14cca699ddff54c93ddf50f172617ffce57902836d4f8238de7650fc60af317dee45  fasterScrollBar.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
