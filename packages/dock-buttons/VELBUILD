@@ -8,7 +8,7 @@ pkgdesc="Adds My Files / Favorites / Tags / Trash shortcut buttons to the homepa
 url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !fav-tag-button !rm1 !rm2 !rmpp !rmppm remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder !fav-tag-button remarkable-os>=3.27 remarkable-os<3.28"
 _commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#dockbuttons"
 donateurl="https://buymeacoffee.com/afaraci"
