@@ -97,6 +97,11 @@ postosupgrade() {
     mkdir -p /etc/terminfo/y
 	cp -a /home/root/.vellum/share/yaft/yaft-256color \
 		/etc/terminfo/y/yaft-256color
+	if systemctl is-active opt.mount 2> /dev/null; then
+		mkdir -p /opt/share/terminfo/y
+		cp -a /home/root/.vellum/share/yaft/yaft-256color \
+			/opt/share/terminfo/y/yaft-256color
+	fi
 }
 
 predeinstall() {
