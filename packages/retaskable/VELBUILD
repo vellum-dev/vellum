@@ -1,6 +1,6 @@
 maintainer="Jarett <jarett@reticulum.us>"
 pkgname=retaskable
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=0
 upstream_author="jdkruzr"
 category="utilities"
@@ -87,5 +87,5 @@ capture() {
 }
 
 sha512sums="
-3751691b0872ab1962319f829b53a886530a941c9bc24f8e15db1b3d3f8d1287af87ab33bfdeb1c573bbaf9e89e348c2b3eadd3e751e671b6f3d47552498dcb0  retaskable-1.0.1.tar.gz
+0b7992679c8958fc0972d968313fdc6491a3cf7b45e40d394ceaebafe70e8fd024305d1d11c938f65ac7c4b4bdb6865f622420a5933852e74cca38ae616d70d7  retaskable-1.0.2.tar.gz
 "
