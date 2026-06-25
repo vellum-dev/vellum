@@ -1,0 +1,33 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=hide-back-to-page-bar
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Hides the native Back-to-page-N bar shown after following a PDF hyperlink"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder !hide-hyperlink-back-button remarkable-os>=3.27 remarkable-os<3.28"
+_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#hidebacktopagebar"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/hideBackToPageBar.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/hideBackToPageBar.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/hideBackToPageBar.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+ef7774506438886b5aca21669b805e347e19c642600aed0e1d35b4560e4ad98af517638880070c1cbd4419ac608097e89c6a58b033f6f2db4f73a7f44be22215  hideBackToPageBar.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
