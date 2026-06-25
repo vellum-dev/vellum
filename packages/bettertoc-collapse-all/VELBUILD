@@ -8,7 +8,7 @@ pkgdesc="Adds a collapse-all / expand-all button to the Table-of-Contents header
 url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder bettertoc bettertoc-collapse !rmhacks !rm1 !rm2 !rmpp !rmppm remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder bettertoc bettertoc-collapse !rmhacks remarkable-os>=3.27 remarkable-os<3.28"
 _commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#bettertoccollapseall"
 donateurl="https://buymeacoffee.com/afaraci"
