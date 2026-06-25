@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=yaft
 pkgver=0.1.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Yet another framebuffer terminal"
 upstream_author="timower"
 category="apps"
@@ -79,7 +79,32 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/icon.png
 	install -Dm755 "$startdir"/external.manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/yaft/external.manifest.json
+	install -Dm644 "$srcdir"/install/share/terminfo/y/yaft-256color \
+		"$pkgdir"/home/root/.vellum/share/yaft/yaft-256color
 }
+
+postinstall() {
+	/home/root/.vellum/bin/mount-rw
+	postosinstall
+	/home/root/.vellum/bin/mount-restore
+}
+
+postupgrade() {
+	postinstall
+}
+
+postosinstall() {
+    mkdir -p /etc/terminfo/y
+	cp -a /home/root/.vellum/share/yaft/yaft-256color \
+		/etc/terminfo/y/yaft-256color
+}
+
+predeinstall() {
+	/home/root/.vellum/bin/mount-rw
+	rm -f /usr/share/terminfo/y/yaft-256color
+	/home/root/.vellum/bin/mount-restore
+}
+
 sha512sums='6796ea71840761e6eeb0ae96dfaa9d14fd46a3a0189fe3cbedde2609002bb317a19030b919ab1f38e1276fbb60531cab561b8005beb60a6d44570f6bf6b52e42
 external.manifest.json
 a501914f2bae72334f9502506d3c3548402788dd70926b17bb4eb66d8b42031e4627d235af9a8d41396fb6a5267acad1f3fef2c87e2d7601af90e95a65f66656
