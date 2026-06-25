@@ -85,7 +85,7 @@ package() {
 
 postinstall() {
 	/home/root/.vellum/bin/mount-rw
-	postosinstall
+	postosupgrade
 	/home/root/.vellum/bin/mount-restore
 }
 
@@ -93,7 +93,7 @@ postupgrade() {
 	postinstall
 }
 
-postosinstall() {
+postosupgrade() {
     mkdir -p /etc/terminfo/y
 	cp -a /home/root/.vellum/share/yaft/yaft-256color \
 		/etc/terminfo/y/yaft-256color
