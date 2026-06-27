@@ -11,7 +11,7 @@ license="GPL-2.0-only"
 depends="appload>=0.5.3"
 options="!check !fhs !strip !tracedeps"
 
-_commit=f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2
+_commit=125e7e10d044e6eef1fa391a979067fb1c18cb3c
 _dejavuver=2.37
 _notocjkver=2.004
 
@@ -23,6 +23,7 @@ dejavu-fonts-ttf-$_dejavuver.tar.bz2::https://downloads.sourceforge.net/project/
 noto-sans-cjk-sc-$_notocjkver.zip::https://github.com/notofonts/noto-cjk/releases/download/Sans$_notocjkver/08_NotoSansCJKsc.zip
 external.manifest.json
 Choices
+icon.png
 "
 
 image="ghcr.io/toltec-dev/base:v4.0"
@@ -39,7 +40,7 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2 # not set in build() when image= is used
+	_commit=125e7e10d044e6eef1fa391a979067fb1c18cb3c # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
 	# static one install_dependencies.sh builds instead.
@@ -75,7 +76,7 @@ package() {
 		"$resdir"/netsurf.png
 	install -Dm644 "$startdir"/Choices \
 		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/res/Choices
-	install -Dm644 "$resdir"/netsurf.png \
+	install -Dm644 "$startdir"/icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/icon.png
 
 	dejavudir="$srcdir/dejavu-fonts-ttf-$_dejavuver/ttf"
@@ -102,13 +103,15 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='ecd638361fa0887537759356c581f0f2d0703d6ee64a969f077dd81ca58170f39935c3057cdcda47c8dc0ca4a85784ba96563a33cb38ed68054235609a1fa456
-netsurf-reMarkable-f538e7e5bd820ba49e98e9d17cb15ce8a8edd3b2.zip
+sha512sums='b2eb9226aa7addb3b236d69f00d7f1a657e507f61409ef426a7cb9805485ba6cf02da279e7627d9229d7e345c8044910e48ed8dbca07c79e8067145568d38d4e
+netsurf-reMarkable-125e7e10d044e6eef1fa391a979067fb1c18cb3c.zip
 bafa39321021097432777f0825d700190c23f917d754a4504722cd8946716c22c083836294dab7f3ae7cf20af63c4d0944f3423bf4aa25dbca562d1f30e00654
 dejavu-fonts-ttf-2.37.tar.bz2
 d523187e27fa554d9ae3c64496235f0bd3a505a8f31f89da2762df5148be83ba1c2650fe6fa125b0214e2c1c699ee22703371b81a4d3141e522149915121fdf4
 noto-sans-cjk-sc-2.004.zip
-34b8aaac63783679a6466b04403e71db666d4edcf6606e4c98032509719ec9ac6d513fa4a9b8b5b32aed5103352c7d2a1bc0ecc130c1a97d37dc7f0bed39cdf3
+3ce876f3cfbfaffa78ed9b7b67eb29e8d3643262fb49bfad70baece254fc2b3098dbde02b95d81dd5893d916d65da369f782b21003a5d3cb0c682b11f87e2030
 external.manifest.json
 eba7f3e095216c685f1e8d55f43361026d68c9c3aeec447ea1dec4a98ae638e561119551a37a69a1e0e93b9be03dde29406006512fcfda0c663eb7413c0f286a
-Choices'
+Choices
+da6459e55cc20d142aeec03000bfe8d65d0a0b5ce22ec08a4073888c5321c550486a54851d7ebc7004b2710b0560569fe3c41ee2eca4158128d98c3eb36c27b9
+icon.png'
