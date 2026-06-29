@@ -2,7 +2,7 @@ maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=chessmarkable
 _pkgver=0.8.1-1
 pkgver=${_pkgver%-*}
-pkgrel=2
+pkgrel=3
 pkgdesc="Chess game"
 upstream_author="LinusCDE"
 category="apps"
@@ -12,7 +12,8 @@ license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/chessmarkable/$_pkgver/README.md"
 source="
 $pkgname-$_pkgver.tar.gz::https://github.com/$upstream_author/chessmarkable/archive/refs/tags/$_pkgver.tar.gz
-external.manifest.json
+external.manifest.aarch64.json
+external.manifest.armv7.json
 "
 options="!check !fhs !strip !tracedeps"
 depends="appload>=0.5.3 !rmppure"
@@ -22,7 +23,7 @@ build() {
 	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-	# armv7) . /opt/x-tools/switch-arm.sh ;; # To be added back when appload can work properly with libremarkable apps
+	armv7) . /opt/x-tools/switch-arm.sh ;; # To be added back when appload can work properly with libremarkable apps
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
@@ -46,10 +47,12 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/chessmarkable
 	install -Dm644 icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/icon.png
-	install -Dm644 "$startdir"/external.manifest.json \
+	install -Dm644 "$startdir"/external.manifest."$CARCH".json \
 		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/external.manifest.json
 }
 sha512sums='29b722f6a9d7cb6255283a69b5355b40cfe260d02695a1de487457bfa2d6042915d1023a788259b3f11808e7cb6c907941c8430aff666b08ea95e18b6f74ff00
 chessmarkable-0.8.1-1.tar.gz
 78228748a55efd385dcd9ee36406bff0f4f850bcee6849fa148bd4b15a72a86f92a6cbe94b682b8f0fe814f80c171c50fd9f7f3e270847ca3ecaf4da4d0116f2
-external.manifest.json'
+external.manifest.aarch64.json
+fe41d2980f00f5e76ef90a27697e1561a13374f1e772bd1bc698fc4e9de6ec73a12ab91423538cd30d34d80bbcd95bcaf83df4811a908dd5efcff5451a7e5eea
+external.manifest.armv7.json'
