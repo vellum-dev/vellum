@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-572481c9cd779abe092b14034fcdb04cfba537fb21e83f51dd27084d63493602a5051894f86ffddc1b59b361ef5a6af7ec44c991f26fdec53bf916f8942e5b5c  batteryPercentage.qmd
+572481c9cd779abe092b14034fcdb04cfba537fb21e83f51dd27084d63493602a5051894f86ffddc1b59b361ef5a6af7ec44c991f26cdec53bf916f8942e5b5c  batteryPercentage.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
