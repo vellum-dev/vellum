@@ -1,8 +1,8 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=sidebar-clock
-pkgver=1.0.0
-pkgrel=3
+pkgver=1.1.0
+pkgrel=0
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Adds a live clock to the library sidebar; tap the entry to toggle seconds display."
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-33ccbedda414a79a7cf6bf3e74b07b92d129c3d5d0bf78e4978536a4a3f1f696d8d26bb75be3c72f9cce8629a9491df03b49e529c68222a9451bcbaa62ad6279  clock.qmd
+1e4a0e43a28fc8be15453e44cc86707a557f34b29e692f18e66e7651b62eb5bb33992eec9cc12c8e1afbf03d80280b8b35a8d48d56626b75fb250b4bb02f5bdd  clock.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "

@@ -1,8 +1,8 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=convert-to-text-remover
-pkgver=1.0.0
-pkgrel=3
+pkgver=1.1.0
+pkgrel=0
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Removes the Convert to text option from selection menus and the toolbar."

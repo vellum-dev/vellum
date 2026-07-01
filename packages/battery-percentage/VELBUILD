@@ -1,8 +1,8 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=battery-percentage
 pkgver=1.0.0
-pkgrel=1
+pkgrel=0
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Shows the battery percentage next to the battery icon in the main view header."
