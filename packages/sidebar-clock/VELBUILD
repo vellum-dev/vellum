@@ -10,7 +10,7 @@ url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="86e43a4d8d26c49abcc81f149245ff1f52961124"
+_commit="28fe82a3bca3f13b3834d73755f85b12448190ea"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
 clock.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/clock.qmd
