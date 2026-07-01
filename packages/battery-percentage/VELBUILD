@@ -1,11 +1,11 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="maintained"
-pkgname=uncompress-dock
+pkgname=battery-percentage
 pkgver=1.0.0
-pkgrel=3
+pkgrel=1
 upstream_author="NohamR"
 category="ui"
-pkgdesc="Replaces the More menu in the document dock with dedicated notebook, folder, and quick sheet buttons."
+pkgdesc="Shows the battery percentage next to the battery icon in the main view header."
 url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
@@ -13,14 +13,14 @@ depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
 _commit="86e43a4d8d26c49abcc81f149245ff1f52961124"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-uncompressDock.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/uncompressDock.qmd
+batteryPercentage.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/batteryPercentage.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
 
 package() {
-	install -Dm644 "$srcdir/uncompressDock.qmd" \
-		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/uncompressDock.qmd"
+	install -Dm644 "$srcdir/batteryPercentage.qmd" \
+		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/batteryPercentage.qmd"
 
 	install -Dm644 "$srcdir/LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-745dab2e884d1efb4cd3b757433951736f17abcd72b2b493e2c661e48e058fefe91d6d7c4f1085b5897bac8d957267c3b82024cdf5be377992688c2039c16780  uncompressDock.qmd
+572481c9cd779abe092b14034fcdb04cfba537fb21e83f51dd27084d63493602a5051894f86ffddc1b59b361ef5a6af7ec44c991f26fdec53bf916f8942e5b5c  batteryPercentage.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "

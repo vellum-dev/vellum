@@ -1,19 +1,19 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
-status="unmaintained"
+status="maintained"
 pkgname=sidebar-clock
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Adds a live clock to the library sidebar; tap the entry to toggle seconds display."
 url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.24"
-_commit="17898d11afc96767842507cc2a9606a974ae5ec5"
+depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+_commit="86e43a4d8d26c49abcc81f149245ff1f52961124"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-clock.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.23.0.64/clock.qmd
+clock.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/clock.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-28cc27547f21f246345d240d2e2ce40c0aed6401a1dceebf133d36ca2c37a0a5af8a25001e48d4006a8cf7177464838b303b9a1f816e6eaf3c594a4709304c81  clock.qmd
+33ccbedda414a79a7cf6bf3e74b07b92d129c3d5d0bf78e4978536a4a3f1f696d8d26bb75be3c72f9cce8629a9491df03b49e529c68222a9451bcbaa62ad6279  clock.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
