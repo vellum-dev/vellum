@@ -1,0 +1,24 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=qt-plugin-path
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="framework"
+pkgdesc="Sets QT_PLUGIN_PATH for xochitl to find plugins in .vellum/lib/plugins"
+url="https://github.com/rmitchellscott/epaper-qpa"
+arch="noarch"
+license="MIT"
+depends="xovi-extensions"
+options="!check !fhs"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+qt-plugin-path.conf
+"
+
+package() {
+	install -Dm644 "$srcdir"/qt-plugin-path.conf \
+		"$pkgdir"/home/root/xovi/services/xochitl.service/qt-plugin-path.conf
+}
+
+sha512sums='b1cf19d2b60a82b4c81bb2b47146a0e4424472db49bb380aca0fe0685182098b6eac3aed820131580059d93c76c0da5c41e2425c6d885ac5f38f0f2d0141d6b0
+qt-plugin-path.conf'
