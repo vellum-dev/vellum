@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "Running depmod-noorphan..."
+set -e
+
+kver=$(uname -r)
+tmp=$(mktemp -d /tmp/depmod.XXXXXX)
+depmod -a -o "$tmp"
+for f in "$tmp/lib/modules/$kver"/modules.*; do
+	cat "$f" > "/lib/modules/$kver/$(basename "$f")"
+done
+rm -rf "$tmp"
