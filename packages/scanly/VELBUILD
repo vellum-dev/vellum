@@ -1,0 +1,60 @@
+maintainer="Err0r-v2 <err0r-v2@proton.me>"
+pkgname=scanly
+pkgver=0.4.0
+pkgrel=0
+upstream_author="Err0r-v2"
+category="apps"
+pkgdesc="A third-party manga reader for the reMarkable Paper Pro"
+url="https://github.com/Err0r-v2/Scanly"
+arch="aarch64"
+license="GPL-3.0-or-later"
+depends="appload>=0.5.3 !rm1 !rm2 !rmppm !rmppure"
+options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/Scanly/v$pkgver/README.md"
+
+# Prebuilt aarch64 device payload, published as a clean release asset.
+# The tarball's top-level dir is scanly/ so it unpacks to $srcdir/scanly/...
+#   scanly/scanly                    aarch64 Qt6 reader binary
+#   scanly/platforms/libqlinuxfb.so  bundled Qt linuxfb plugin (opens /dev/fb0 under AppLoad)
+#   scanly/external.manifest.json    AppLoad manifest
+#   scanly/run.sh                    qtfb-shim launcher wrapper
+#   scanly/icon.png                  launcher tile
+source="
+scanly-rmpp-$pkgver.tar.gz::https://github.com/$upstream_author/Scanly/releases/download/v$pkgver/scanly-rmpp-$pkgver.tar.gz
+https://raw.githubusercontent.com/$upstream_author/Scanly/v$pkgver/LICENSE
+"
+
+# No build() — the payload is already a cross-compiled aarch64 ELF + Qt plugin.
+
+package() {
+	cd "$srcdir/scanly"
+
+	install -Dm755 scanly \
+		"$pkgdir"/home/root/xovi/exthome/appload/scanly/scanly
+	install -Dm755 platforms/libqlinuxfb.so \
+		"$pkgdir"/home/root/xovi/exthome/appload/scanly/platforms/libqlinuxfb.so
+	install -Dm755 run.sh \
+		"$pkgdir"/home/root/xovi/exthome/appload/scanly/run.sh
+	install -Dm644 external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/scanly/external.manifest.json
+	install -Dm644 icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/scanly/icon.png
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/$upstream_author/Scanly" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	# apk removes the installed appload bundle itself; only wipe user data on purge.
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.local/share/Scanly
+		rm -rf /home/root/.cache/Scanly
+	fi
+}
+
+sha512sums="
+40aca4de50483aaca12d53827a9308d0236cede7044a0803dd0819bfbb12f35f2e6290771d5211d5933aed232afb24ea528a58f0042027b0f729ff2c32194dec  scanly-rmpp-0.4.0.tar.gz
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE
+"
