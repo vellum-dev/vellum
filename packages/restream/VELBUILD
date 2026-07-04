@@ -1,6 +1,6 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=restream
-pkgver=1.4.0
+pkgver=1.5.0
 pkgrel=0
 pkgdesc="Binary framebuffer capture tool for the reStream script"
 upstream_author="rien"
@@ -37,5 +37,5 @@ package() {
 
 	install -Dm755 restream "$pkgdir"/home/root/.vellum/bin/restream
 }
-sha512sums='e2c4a16517af7a1eab9e396ef3314800df53ad6e6a33c0255d80278866f0ae18f66a106bf85fdbdef5320ad772abef1e0e293409cdad9ae777d3efa128685bda
-restream-1.4.0.tar.gz'
+sha512sums='2f20953cbb41ed96b0de7aa8a9fe2ea26d0599caa0d5ee74b042b0cfa2a7bbbc472d49c43c0140e28a29533ea617e244dae77c093d06ea7af22aa84f2195dca6
+restream-1.5.0.tar.gz'
