@@ -15,7 +15,6 @@ source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/xovi-tripletap/archive/v$pkgver.tar.gz
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-tripletap/v$pkgver/LICENSE
 "
-options="!check !fhs !strip !tracedeps"
 builddir="$srcdir/xovi-tripletap-$pkgver"
 systemdunits="
 xovi-tripletap-$pkgver/xovi-tripletap.service

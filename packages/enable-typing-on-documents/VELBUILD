@@ -17,7 +17,7 @@ source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/enableTypingOnDocuments.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
-options="!check !fhs"
+options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir"/enableTypingOnDocuments.qmd \

@@ -9,7 +9,6 @@ pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any s
 url="https://starship.rs/"
 arch="aarch64 armv7"
 license="ISC"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/starship/v$pkgver/README.md"
 
 source="

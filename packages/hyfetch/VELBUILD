@@ -9,7 +9,6 @@ pkgdesc="Neofetch with LGBTQ+ pride flags!"
 url="https://github.com/hykilpikonna/hyfetch"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/hyfetch/2.0.5/README.md"
 
 source="

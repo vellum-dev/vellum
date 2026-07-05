@@ -14,7 +14,6 @@ https://github.com/$upstream_author/keyd/archive/refs/tags/v$pkgver.zip
 default.conf
 "
 subpackages="$pkgname-doc"
-options="!check !fhs !strip !tracedeps"
 systemdunits="keyd.service"
 image="ghcr.io/toltec-dev/base:v4.0"
 build() {

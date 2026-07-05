@@ -15,7 +15,6 @@ rmkit.zip::https://github.com/rmkit-dev/rmkit/archive/fc372b29c6f19e4da645277e19
 external.manifest.json
 "
 depends="appload>=0.5.3"
-options="!check !fhs !strip !tracedeps"
 
 image="ghcr.io/toltec-dev/python:v4.0"
 build() {

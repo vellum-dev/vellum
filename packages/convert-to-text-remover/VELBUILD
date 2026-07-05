@@ -16,7 +16,7 @@ source="
 convertToText_remover.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/convertToText_remover.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
-options="!check !fhs"
+options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir/convertToText_remover.qmd" \

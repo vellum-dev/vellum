@@ -12,7 +12,6 @@ _commit=1a545809c859d2159bcd6fc917d76eac83735c42
 readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-alpine-chroot/$_commit/README.md"
 source="https://github.com/$upstream_author/remarkable-alpine-chroot/archive/$_commit.zip"
 depends="entware alpine-chroot-install"
-options="!check !fhs !strip !tracedeps"
 
 package() {
 	cd "$srcdir"/remarkable-alpine-chroot-"$_commit"

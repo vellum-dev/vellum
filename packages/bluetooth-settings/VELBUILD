@@ -16,7 +16,7 @@ https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$p
 https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$pkgver/bluetooth.rcc
 https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/LICENSE
 "
-options="!check !fhs"
+options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir"/bluetoothSettings.qmd \

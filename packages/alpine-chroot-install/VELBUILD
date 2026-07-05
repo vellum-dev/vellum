@@ -13,7 +13,6 @@ source="
 https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgver/alpine-chroot-install
 https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgver/LICENSE
 "
-options="!check !fhs !strip !tracedeps"
 package() {
 	cd "$srcdir"
 	install -Dm644 LICENSE \

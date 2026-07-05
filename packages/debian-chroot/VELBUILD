@@ -12,7 +12,6 @@ _commit=8e14f6f0b75102053acf6b61b60827b61812edf0
 readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-debian-chroot/$_commit/README.md"
 source="https://github.com/$upstream_author/remarkable-debian-chroot/archive/$_commit.zip"
 depends="entware debootstrap"
-options="!check !fhs !strip !tracedeps"
 
 package() {
 	cd "$srcdir"/remarkable-debian-chroot-"$_commit"

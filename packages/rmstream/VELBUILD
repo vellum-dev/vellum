@@ -9,7 +9,6 @@ url="https://github.com/asivery/appload-rmstream"
 arch="aarch64 armv7"
 license="GPL-3.0"
 depends="appload framebuffer-spy>=18.0.0 framebuffer-spy<20.0.0 xovi-message-broker>=18.0.0 xovi-message-broker<20.0.0"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/appload-rmstream/v$pkgver/README.MD"
 donateurl="https://ko-fi.com/asivery"
 

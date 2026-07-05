@@ -15,7 +15,7 @@ source="
 https://raw.githubusercontent.com/$upstream_author/reMarkable_Xovi_Extensions/$_commit/xovi_Settings_Main/3.24.0.149/xovi_Settings_Main.qmd
 https://raw.githubusercontent.com/$upstream_author/reMarkable_Xovi_Extensions/$_commit/LICENSE.md
 "
-options="!check !fhs"
+options="strip tracedeps"
 
 package() {
 	install -Dm644 "$srcdir"/xovi_Settings_Main.qmd \

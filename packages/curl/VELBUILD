@@ -8,7 +8,6 @@ pkgdesc="URL retrival utility and library"
 url="https://curl.se/"
 arch="aarch64 armv7"
 license="curl"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/curl/curl-${pkgver//./_}/README.md"
 
 source="

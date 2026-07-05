@@ -11,7 +11,6 @@ license="MIT"
 readmeurl="https://salsa.debian.org/installer-team/debootstrap/-/raw/$pkgver/README?ref_type=tags"
 source="https://salsa.debian.org/installer-team/debootstrap/-/archive/$pkgver/debootstrap-$pkgver.tar.gz"
 depends="entware"
-options="!check !fhs !strip !tracedeps"
 preinstall() {
 	/opt/bin/opkg install perl ar
 }

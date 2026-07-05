@@ -8,7 +8,6 @@ category="utilities"
 url="https://github.com/ddvk/rmfakecloud-proxy"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rmfakecloud-proxy/v$pkgver/README.md"
 
 source="

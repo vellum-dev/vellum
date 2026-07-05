@@ -9,7 +9,6 @@ pkgdesc="File pager"
 url="https://greenwoodsoftware.com/less/"
 arch="aarch64 armv7"
 license="GPL-3.0-or-later OR BSD-2-Clause"
-options="!check !fhs !strip !tracedeps"
 
 source="
 https://github.com/notfrants/vellum-builds/releases/download/v0.1.2/less-aarch64.tar.gz

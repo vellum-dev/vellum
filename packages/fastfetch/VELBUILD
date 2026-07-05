@@ -9,7 +9,6 @@ pkgdesc="A maintained, feature-rich and performance oriented, neofetch like syst
 url="https://github.com/fastfetch-cli/fastfetch"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/fastfetch/2.25.0/README.md"
 
 source="

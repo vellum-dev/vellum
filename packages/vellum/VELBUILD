@@ -9,7 +9,6 @@ pkgdesc="Package manager wrapper for reMarkable tablets"
 url="https://github.com/vellum-dev/vellum-cli"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 source="
 vellum-aarch64::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-arm64
 vellum-armv7::https://github.com/$upstream_author/vellum-cli/releases/download/v$pkgver/vellum-linux-armv7

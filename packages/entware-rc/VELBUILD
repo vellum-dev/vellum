@@ -9,7 +9,6 @@ url="https://toltec-dev.org/"
 arch="noarch"
 license="MIT"
 depends="entware"
-options="!check !fhs !strip !tracedeps"
 _commit="c4ffc32a58765b27f49952640b616c2f48adb83b"
 source="
 entware-rc@.service::https://raw.githubusercontent.com/toltec-dev/toltec/$_commit/package/entware-rc/entware-rc%40.service

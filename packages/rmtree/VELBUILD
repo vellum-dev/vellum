@@ -8,7 +8,6 @@ pkgdesc="Display reMarkable document hierarchy in tree format"
 url="https://github.com/rmitchellscott/rmtree"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rmtree/v$pkgver/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 

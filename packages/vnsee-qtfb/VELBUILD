@@ -10,7 +10,6 @@ license="GPL-3.0"
 arch="aarch64 armv7"
 depends="appload !rmppure"
 replaces="vnsee-qtfb-rm1 vnsee-qtfb-rm2 vnsee-qtfb-rmpp vnsee-qtfb-rmppm"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/README.md"
 
 source="

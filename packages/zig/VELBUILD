@@ -8,7 +8,6 @@ pkgdesc="A general-purpose programming language and toolchain for maintaining ro
 url="https://ziglang.org"
 arch="aarch64 armv7"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 subpackages="$pkgname-doc"
 
 source="

@@ -9,7 +9,6 @@ url="https://github.com/vellum-dev/vellum"
 arch="noarch"
 license="MIT"
 depends="mount-utils"
-options="!check !fhs !strip !tracedeps"
 source="
 update-hosts.sh
 LICENSE

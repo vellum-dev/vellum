@@ -9,7 +9,6 @@ url="https://github.com/$upstream_author/netsurf-reMarkable"
 arch="armv7 aarch64"
 license="GPL-2.0-only"
 depends="appload>=0.5.3"
-options="!check !fhs !strip !tracedeps"
 
 _commit=125e7e10d044e6eef1fa391a979067fb1c18cb3c
 _dejavuver=2.37

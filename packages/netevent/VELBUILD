@@ -10,7 +10,6 @@ arch="armv7 aarch64"
 license="GPL-2.0-only"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/netevent/${pkgver%-*}/README.md"
 source="$pkgname-${pkgver%-*}.tar.gz::https://github.com/$upstream_author/netevent/archive/refs/tags/${pkgver%-*}.tar.gz"
-options="!check !fhs !strip !tracedeps"
 
 image="ghcr.io/toltec-dev/base:v4.0"
 build() {

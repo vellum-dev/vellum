@@ -9,7 +9,6 @@ url="https://github.com/koreader/koreader"
 arch="aarch64 armv7"
 license="AGPL-3.0"
 depends="appload>=0.4.2"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/README.md"
 
 source="

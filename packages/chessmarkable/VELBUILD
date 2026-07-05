@@ -15,7 +15,6 @@ $pkgname-$_pkgver.tar.gz::https://github.com/$upstream_author/chessmarkable/arch
 external.manifest.aarch64.json
 external.manifest.armv7.json
 "
-options="!check !fhs !strip !tracedeps"
 depends="appload>=0.5.3 !rmppure"
 
 image="ghcr.io/toltec-dev/rust:v4.0"

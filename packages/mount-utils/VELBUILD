@@ -8,7 +8,6 @@ pkgdesc="Commands to toggle reMarkable filesystem between read-write and read-on
 url="https://github.com/vellum-dev/vellum"
 arch="noarch"
 license="MIT"
-options="!check !fhs !strip !tracedeps"
 source="
 mount-rw
 mount-restore

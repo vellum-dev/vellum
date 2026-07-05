@@ -9,7 +9,6 @@ url="https://entware.net/"
 arch="aarch64 armv7"
 license="GPL-2.0"
 depends="mount-utils"
-options="!check !fhs !strip !tracedeps"
 source="
 install-entware.sh
 reenable-entware.sh

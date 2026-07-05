@@ -9,7 +9,6 @@ url="https://github.com/owulveryck/goMarkableStream"
 arch="aarch64 armv7"
 license="MIT"
 depends="!rmppm !rm1 !rm2 !rmppure remarkable-os>=3.24"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/goMarkableStream/v$pkgver/README.md"
 
 source="

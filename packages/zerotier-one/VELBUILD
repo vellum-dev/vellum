@@ -10,7 +10,6 @@ arch="armv7 aarch64"
 license="MPL-2.0"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/ZeroTierOne/$pkgver/README.md"
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/ZeroTierOne/archive/refs/tags/$pkgver.tar.gz"
-options="!check !fhs !strip !tracedeps"
 subpackages="zerotier-selftest:selftest"
 systemdunits="ZeroTierOne-$pkgver/debian/zerotier-one.service"
 

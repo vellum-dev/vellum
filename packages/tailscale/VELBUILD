@@ -8,7 +8,6 @@ pkgdesc="Tailscale VPN client"
 url="https://tailscale.com"
 arch="aarch64 armv7"
 license="BSD-3-Clause"
-options="!check !fhs !strip !tracedeps"
 depends="mount-utils"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/tailscale/v$pkgver/README.md"
 

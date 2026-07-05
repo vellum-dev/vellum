@@ -15,7 +15,7 @@ source="
 enableShortcutsWithScrollOrChangePage.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/enableShortcutsWithScrollOrChangePage.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
-options="!check !fhs"
+options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir/enableShortcutsWithScrollOrChangePage.qmd" \

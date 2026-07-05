@@ -14,7 +14,6 @@ source="
 external.manifest.json
 rm-toolchain.cmake
 "
-options="!check !fhs !strip !tracedeps"
 
 prepare() {
 	default_prepare

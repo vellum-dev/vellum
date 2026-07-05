@@ -9,7 +9,6 @@ pkgdesc="A monitor of resources"
 url="https://github.com/aristocratos/btop"
 arch="aarch64 armv7"
 license="Apache-2.0"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/btop/v$pkgver/README.md"
 
 source="

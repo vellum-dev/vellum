@@ -9,7 +9,6 @@ pkgdesc="A cat(1) clone with wings."
 url="https://github.com/sharkdp/bat"
 arch="aarch64 armv7"
 license="Apache-2.0 OR MIT"
-options="!check !fhs !strip !tracedeps"
 depends="less"
 
 readmeurl="https://raw.githubusercontent.com/$upstream_author/bat/v$pkgver/README.md"

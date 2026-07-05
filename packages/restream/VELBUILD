@@ -10,7 +10,6 @@ arch="armv7"
 license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reStream/v$pkgver/README.md"
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/reStream/archive/refs/tags/v$pkgver.tar.gz"
-options="!check !fhs !strip !tracedeps"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {

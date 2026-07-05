@@ -17,7 +17,7 @@ source="
 selectionErase.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.24/selectionErase.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
-options="!check !fhs"
+options="strip tracedeps"
 
 package() {
 	install -Dm644 "$srcdir/selectionErase.qmd" \

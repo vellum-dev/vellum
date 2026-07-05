@@ -16,7 +16,7 @@ source="
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.27/toolbar_icon.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
-options="!check !fhs"
+options="strip tracedeps"
 
 package() {
 	install -Dm644 "$srcdir"/toolbar_icon.qmd \

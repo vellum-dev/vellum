@@ -16,7 +16,7 @@ source="
 batteryPercentage.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/batteryPercentage.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
-options="!check !fhs"
+options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir/batteryPercentage.qmd" \
