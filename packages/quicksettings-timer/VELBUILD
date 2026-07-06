@@ -10,7 +10,7 @@ url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
-_commit="8d00f8633eb4ca341e2eb184bb77af9435d61714"
+_commit="404c970f3602a970e899fe150245826552d5614d"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
 quickSettingsTimer.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/quickSettingsTimer.qmd
@@ -33,6 +33,6 @@ postdeinstall() {
 	fi
 }
 sha512sums="
-d5fc3ad6569cf06af30b1568b395a529042d10d0f418d733ad9b61c09274bf551f447f82d48b933e3d4b32cad9735c2693986d12f93a96b0bef67f4b52b80a26  quickSettingsTimer.qmd
+5a5694491ffcdc2fed1918aa3b642cb7925c49106827185118c57741b29015e6c68989fff907a55e8fb1096b0ecd7cfbc0cd5c77b6bea8d6afaee5b9b77efc2a  quickSettingsTimer.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
