@@ -9,8 +9,8 @@ pkgdesc="Adds a countdown timer and stopwatch to the quick settings panel."
 url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="f1da1d19a6cec3eab74645c2ffd82c3142a6584b"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
+_commit="8d00f8633eb4ca341e2eb184bb77af9435d61714"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
 quickSettingsTimer.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/quickSettingsTimer.qmd
@@ -27,7 +27,12 @@ package() {
 	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -f /home/root/alarms.json
+	fi
+}
 sha512sums="
-03118952aee470a0246c8ba14af3cc00673b36844c9fe92d2c60b2890447d0ab66d086468c6361e927b267cb4b900cfd2e886f9c797a3a1f3c51667acb4c733a  quickSettingsTimer.qmd
+d5fc3ad6569cf06af30b1568b395a529042d10d0f418d733ad9b61c09274bf551f447f82d48b933e3d4b32cad9735c2693986d12f93a96b0bef67f4b52b80a26  quickSettingsTimer.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
