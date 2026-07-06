@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bluetooth-settings
-pkgver=0.1.2
+pkgver=0.2.0
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -30,7 +30,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-bluetoothsettings" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='26f0863af9e6c102ddf7a873d029dbef016ab074059a6cdea8996e149702de3add2b5fe580eeeceb4059b5c0ce7c22eeae0b35f34fe107192b340eefafc5398c
+sha512sums='e03549d2d77942e470b93fd792cf3a89ec3d0d5adeb762b00a7ae241edc1078dac4d1aba0c88b73850ba25dd8f5d6b1441e3e15e38ba83038a9580e8aa5e9a8b
 bluetoothSettings.qmd
 45849b0bd74f7d29a2abaa142f6539301a9ef065be3283f78781197f45e499b1ba3f0b0a9fc2c6f0fb93ca3763f8f8ca3085f7c62543792fad1fd93f29f711a8
 bluetooth.rcc

@@ -1,0 +1,33 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=quicksettings-bluetooth
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Adds a Bluetooth toggle to quicksettings"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="MIT"
+depends="qt-resource-rebuilder bluetooth-settings>=0.2.0 remarkable-os>=3.27 remarkable-os<3.28"
+_commit="d2459f7159d79e17a7c38cb2cc73de1f6e52db5d"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#quicksettingsbluetooth"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/quickSettingsBluetooth.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="strip tracedeps"
+
+package() {
+	install -Dm644 "$srcdir"/quickSettingsBluetooth.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/quickSettingsBluetooth.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='2edd9d8b31af486f3f52cfc2b00046f371918716ca63f4a0ec0dbb81eed5f483e30b0da791b5f811d6b1241a2d0d97cc32bee3b5607d9abeaa8b14abde9a7daf
+quickSettingsBluetooth.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
