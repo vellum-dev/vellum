@@ -10,7 +10,7 @@ url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="7bf4c219e4bb5fdf1c4d2417eea125907db5c22e"
+_commit="f1da1d19a6cec3eab74645c2ffd82c3142a6584b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
 quickSettingsTimer.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/quickSettingsTimer.qmd
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-e3bad3ff57efb17408a4e2974dff0717edd7e221b4869217031394b7c351fac73ede9713ea12af803d335323812f48e6d1e7f0ffed7fe0a33c1354689f4a5676  quickSettingsTimer.qmd
+03118952aee470a0246c8ba14af3cc00673b36844c9fe92d2c60b2890447d0ab66d086468c6361e927b267cb4b900cfd2e886f9c797a3a1f3c51667acb4c733a  quickSettingsTimer.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
