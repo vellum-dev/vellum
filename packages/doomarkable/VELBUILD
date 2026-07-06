@@ -1,26 +1,27 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=doomarkable
-pkgver=0.4.1
-pkgrel=1
+pkgver=0.4.2
+pkgrel=0
 pkgdesc="DOOM game"
 upstream_author="LinusCDE"
 category="apps"
 url="https://github.com/LinusCDE/doomarkable"
-arch="aarch64"
+arch="aarch64 armv7"
 license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/doomarkable/${pkgver%-*}/README.md"
-_commit="7d10769d625fbe733768e39cf5006cde341d2fef"
 source="
-https://github.com/LinusCDE/doomarkable/archive/$_commit.zip
-external.manifest.json
+https://github.com/LinusCDE/doomarkable/archive/$pkgver.zip
+external.manifest.aarch64.json
+external.manifest.armv7.json
 "
-depends="appload>=0.5.3 !rmppure"
+options="!check !fhs !strip !tracedeps"
+depends="appload>=0.5.3 !rmppure !rm2"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-	# armv7) . /opt/x-tools/switch-arm.sh ;; # To be added back when appload can work properly with libremarkable apps
+	armv7) . /opt/x-tools/switch-arm.sh ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
@@ -28,14 +29,14 @@ build() {
 	esac
 	ls -l
 	ls -l "$srcdir"
-	cd "$srcdir/$pkgname-7d10769d625fbe733768e39cf5006cde341d2fef" # $_commit is not available in build() currently
+	cd "$srcdir/$pkgname-$pkgver"
 	cargo build --release
 	mv target/"$CARGO_BUILD_TARGET"/release/doomarkable .
 	"${CROSS_COMPILE}strip" doomarkable
 }
 
 package() {
-	cd "$srcdir/$pkgname-$_commit"
+	cd "$srcdir/$pkgname-$pkgver"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 	echo "https://github.com/$upstream_author/$pkgname" > \
@@ -48,10 +49,12 @@ package() {
 		doomarkable.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/icon.png
 	install -Dm644 \
-		"$startdir"/external.manifest.json \
+		"$startdir"/external.manifest."$CARCH".json \
 		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/external.manifest.json
 }
-sha512sums='2e6a7afb9f24b554bc93eb046e18f0530d0ae88f28f76ca439a2d013690ee41cbde08b94511f3601e083da2628168a0e82281ba37e604b6a6e2fb207c278cdcd
-7d10769d625fbe733768e39cf5006cde341d2fef.zip
+sha512sums='abda3a481122d9f09e219836d1c62f9e6e5302219d9963d5b568e942e23671e2be40d96456a5afcd36eebfc92c7f8f648e9c4c00f83d9e18c37173ac3e62c431
+0.4.2.zip
 6d6aa255cfafca776275188bca07ddaa79da171e60d89d3778a29a2dde03da7bc9fa96b50c10e40006b1e4e6ad585398707d6bd8b8cd467c0722a13ad0dba88e
-external.manifest.json'
+external.manifest.aarch64.json
+ed5af8db670d3dc710c940927b3f327bb00d22ff1352d8e7acee2c3dbd63e1beac73402c4f3735fe0e16e75ac6fe7ab7282337926376ad482ca0c23984cb9dfb
+external.manifest.armv7.json'
