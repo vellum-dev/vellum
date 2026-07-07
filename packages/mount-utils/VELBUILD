@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=mount-utils
-pkgver=1.1.0
+pkgver=1.2.0
 pkgrel=0
 upstream_author="vellum-dev"
 category="utilities"
