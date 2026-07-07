@@ -1,0 +1,33 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=toolbar-tool
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Turns the toolbar expand button into an at-a-glance active-tool readout"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder !toolbar-icon remarkable-os>=3.27 remarkable-os<3.28"
+_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#toolbartool"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/toolbarTool.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/toolbarTool.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/toolbarTool.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+0a2cfa64fb5e39a3ba0bb2dffbafbf1b97fec7dfc94e2f5592b385fc48c3814eb5b665cbfca35730006eb0d69694ff4d680fd75f8dacfbd9d752b44c48ef167d  toolbarTool.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
