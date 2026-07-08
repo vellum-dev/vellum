@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+case "$1" in
+is-active)
+    pid=$(systemctl show --property MainPID --value xochitl.service)
+    if [ "$pid" -eq 0 ]; then
+        exit 1
+    fi
+    xargs --null --max-args=1 echo </proc/"$pid"/environ | grep LD_PRELOAD | grep -q xovi.so
+    ;;
+is-enabled | enable | disable | paused | running)
+    ;;
+logs)
+    if [ $# -eq 2 ] && [[ "$2" == "-f" ]] || [[ "$2" == "--follow" ]]; then
+        journalctl --follow --all --unit xochitl.service
+    else
+        journalctl --no-pager --all --unit xochitl.service
+    fi
+    ;;
+start)
+    /home/root/xovi/start
+    ;;
+stop)
+    systemctl stop xochitl.service
+    ;;
+apps)
+    find /home/root/xovi/exthome/appload -name external.manifest.json |
+        /usr/bin/xargs -n1 /usr/bin/dirname |
+        xargs -n1 /usr/bin/basename
+    ;;
+*)
+    echo "Xovi does not support this method"
+    exit 1
+    ;;
+esac

@@ -1,7 +1,10 @@
+subpackages='
+launcherctl-appload:launcherctl_appload
+'
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.5.3
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="framework"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
@@ -15,6 +18,8 @@ source="
 https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-aarch64.zip
 https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-arm32.zip
 https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/LICENSE
+appload
+launcherctl.LICENSE
 "
 
 unpack() {
@@ -39,9 +44,38 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
+launcherctl_appload() {
+	pkgdesc="Launcherctl configuration for appload"
+	category="utilities"
+	license="MIT"
+	depends="
+    appload
+    launcherctl
+    "
+	package() {
+		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/launcherctl \
+			"$srcdir/appload"
+		install -Dm644 "$srcdir/launcherctl.LICENSE" \
+			"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+		echo "https://github.com/vellum-dev/vellum" > \
+			"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	}
+
+	predeinstall() {
+		set -e
+		if [[ "$(/home/root/.vellum/bin/launcherctl current-launcher)" == "appload" ]]; then
+			/home/root/.vellum/bin/launcherctl switch-launcher none
+		fi
+	}
+}
+
 sha512sums='9ff48f5b5ebcf134ce4f212ea812dfc17dc35daf0630316dd3ec2e332efe479eba25643d7e24d54e7410208f49bdedd4da1378cdef788da161879d7324a04929
 appload-aarch64.zip
 a507cbd38079919599cc33d299ac991cbac3974633744133edb0f8761008e0f2320c701a9b433ca74c71610fc79a8b5307ed5a57680d42edad9bc05084dc986c
 appload-arm32.zip
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
-LICENSE'
+LICENSE
+8f55462f355bbc9ececd609fb1e92750f39aa9baa494f8d0407d8e2b887611fe8b8a83ef78b052b0d1ed46e87338ef4e2c5a27093e6d38bf88f11cf60a6c9f35
+appload
+f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8
+launcherctl.LICENSE'
