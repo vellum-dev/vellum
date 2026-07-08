@@ -59,12 +59,12 @@ launcherctl_appload() {
 			"$srcdir/appload"
 		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-start \
 			"$srcdir/launcherctl.prestart.sh"
-		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-stock \
+		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/post-stock \
 			"$srcdir/launcherctl.poststock.sh"
 		install -Dm644 "$srcdir/launcherctl.LICENSE" \
-			"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+			"$pkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
 		echo "https://github.com/vellum-dev/vellum" > \
-			"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+			"$pkgdir/home/root/.vellum/licenses/$subpkgname/SOURCES"
 	}
 
 	predeinstall() {
