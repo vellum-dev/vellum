@@ -22,6 +22,9 @@ start)
     ;;
 stop)
     systemctl stop xochitl.service
+    if mountpoint -q /etc/systemd/system/xochitl.service.d; then
+        umount -q /etc/systemd/system/xochitl.service.d
+    fi
     /home/root/xovi/scripts/post-stock/launcherctl.poststock.sh
     ;;
 apps)
