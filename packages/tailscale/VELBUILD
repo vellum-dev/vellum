@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
-pkgver=1.96.2
-pkgrel=2
+pkgver=1.98.8
+pkgrel=0
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
@@ -68,6 +68,7 @@ postdeinstall() {
 
 tun() {
 	pkgdesk="Tailscale kernel module support (only install this if you have the kernel module)"
+	depends="tun"
 
 	package() {
 		cd "$srcdir/tailscale"
@@ -78,6 +79,14 @@ tun() {
 
 		install -Dm644 systemd/tailscaled.tun \
 			"$subpkgdir/home/root/.vellum/etc/default/tailscaled"
+	}
+
+	postinstall() {
+		echo "enabling tailscaled service..."
+		systemctl enable tailscaled.service
+
+		echo "restarting tailscaled service..."
+		systemctl restart tailscaled.service
 	}
 
 	postdeinstall() {
@@ -94,10 +103,13 @@ tun() {
 	}
 }
 
-sha512sums='
-7061960e1c3fb6bb5d6bc8626b16b558d6449e9e5e661982499d9e5626d04795ed26e07e85e9a827360d4e6b2b0b309e12f1b3ceb13dac6c5b3ce1308956b165  tailscale_1.96.2_arm.tgz
-f73f424d37f958e9d2bba0efa4878e10ff47da1f613d1babe56ef1c84e738439a2a94e94858075ded26d85a210288f255d3d4394b8e8ad7a9cc342363bba6a04  tailscale_1.96.2_arm64.tgz
-0d6d4be4907d6994e0fe6aa10aee9e168608a41b0c0c32f4770830716312bf92756bb3cc294ad2419f02383317e68043d2e804231f150813af63da62c0556eb0  LICENSE
-b0cbcd5e94001fc8f91ae6bc0dca40bac8f34d92112d2a0ad83189c8e6bb79fe415dce9dda6a554c8094a59f1bfd6bf1109439c47ef5f1d0b3eb522af3a62c95  10-defaults.patch
-c2f12c405d9a63829c0d0a18757f29c8f295dd5de7dcfea3ac5875c0871d6af439cc25edb72c58881f29231c1a254a2488344d57861d1be49123228f8cdf6bd5  10-service.patch
-'
+sha512sums='9e7055e3a0bb352c27f32c37708cfb930635a95a840d5f3063ed88a07e70c9b92c0be05f961ad6ac87c3028ff493ae52244fc6f77ec9a50f8d13ab62ba76d444
+tailscale_1.98.8_arm.tgz
+ee81c36d449a5e80c68c85d96a63e27776a3f5ed789c032eefec4b71922b507d1ab9eb1c86542208121ea537b87704ed8df3faf75237135faf799a8f3e142c19
+tailscale_1.98.8_arm64.tgz
+0d6d4be4907d6994e0fe6aa10aee9e168608a41b0c0c32f4770830716312bf92756bb3cc294ad2419f02383317e68043d2e804231f150813af63da62c0556eb0
+LICENSE
+b0cbcd5e94001fc8f91ae6bc0dca40bac8f34d92112d2a0ad83189c8e6bb79fe415dce9dda6a554c8094a59f1bfd6bf1109439c47ef5f1d0b3eb522af3a62c95
+10-defaults.patch
+c2f12c405d9a63829c0d0a18757f29c8f295dd5de7dcfea3ac5875c0871d6af439cc25edb72c58881f29231c1a254a2488344d57861d1be49123228f8cdf6bd5
+10-service.patch'
