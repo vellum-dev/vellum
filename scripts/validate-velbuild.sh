@@ -38,7 +38,7 @@ fi
 if [ -z "$category" ]; then
     add_error "category is not set"
 else
-    valid_categories="ui fixes utilities apps framework"
+    valid_categories="ui fixes utilities apps framework launchers development"
     for cat in $category; do
         if ! echo "$valid_categories" | grep -qw "$cat"; then
             add_error "category contains invalid value '$cat' (valid: $valid_categories)"
