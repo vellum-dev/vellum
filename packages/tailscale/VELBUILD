@@ -68,7 +68,7 @@ postdeinstall() {
 
 tun() {
 	pkgdesk="Tailscale kernel module support"
-	depends="tun"
+	depends="tun tailscale"
 
 	package() {
 		cd "$srcdir/tailscale"
