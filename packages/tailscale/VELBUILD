@@ -10,7 +10,7 @@ arch="aarch64 armv7"
 license="BSD-3-Clause"
 depends="mount-utils"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/tailscale/v$pkgver/README.md"
-subpackages="$pkgname-tun"
+subpackages="$pkgname-tun:tun"
 
 source="
 https://dl.tailscale.com/stable/tailscale_${pkgver}_arm.tgz
