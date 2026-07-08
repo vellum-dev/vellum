@@ -20,6 +20,8 @@ https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/apploa
 https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/LICENSE
 appload
 launcherctl.LICENSE
+launcherctl.prestart.sh
+launcherctl.poststock.sh
 "
 
 unpack() {
@@ -55,6 +57,10 @@ launcherctl_appload() {
 	package() {
 		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/launcherctl \
 			"$srcdir/appload"
+		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-start \
+			"$srcdir/launcherctl.prestart.sh"
+		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-stock \
+			"$srcdir/launcherctl.poststock.sh"
 		install -Dm644 "$srcdir/launcherctl.LICENSE" \
 			"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
 		echo "https://github.com/vellum-dev/vellum" > \
@@ -75,7 +81,11 @@ a507cbd38079919599cc33d299ac991cbac3974633744133edb0f8761008e0f2320c701a9b433ca7
 appload-arm32.zip
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE
-8f55462f355bbc9ececd609fb1e92750f39aa9baa494f8d0407d8e2b887611fe8b8a83ef78b052b0d1ed46e87338ef4e2c5a27093e6d38bf88f11cf60a6c9f35
+bcee8a5c3cb063601cfe24a717346cc8ad76e80088e3b54bb02152804ed01af66eb418df6e83e8bd928013356cea7629ab7196d247708facec7fa878ab171cb3
 appload
-f48a7cccc84f9ff51168ca431de7db876dae6f39e9cb300c306652c8a1319a4d387a6b25c6af0a065f29322b85886ea765b6de2316fb9db40b6823990247a2a8
-launcherctl.LICENSE'
+d853404bc152a92924de9fa73ede98f4a739404cd8e8721c4b7d6e62493e3035015838533b18781fca5d93aa1fa67bd042b8ead91e88a70aad6bd8186d3317f9
+launcherctl.LICENSE
+9e4ac7d049de071fa0f598be30df3ce86e395dcd145fb8e09d68dfc10e7942b69211d783a01d16b18b6d0074789d01ba1bae9541a5cb1016dfdbeaa85f4f4b9d
+launcherctl.prestart
+e817ff951b231e81125976e88c7b5cd00e91b45c394d9e2d693de2557f2da4faf55cf800b04f69f0e989aaefa5dd05d7c70236e697c02205802f8f47b2b1b26a
+launcherctl.poststock'

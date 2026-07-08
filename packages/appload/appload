@@ -22,9 +22,13 @@ start)
     ;;
 stop)
     systemctl stop xochitl.service
+    /home/root/xovi/scripts/post-stock/launcherctl.poststock.sh
     ;;
 apps)
     find /home/root/xovi/exthome/appload -name external.manifest.json |
+        /usr/bin/xargs -n1 /usr/bin/dirname |
+        xargs -n1 /usr/bin/basename
+    find /home/root/xovi/exthome/appload -name manifest.json |
         /usr/bin/xargs -n1 /usr/bin/dirname |
         xargs -n1 /usr/bin/basename
     ;;
