@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=random-sleep-screen
 pkgver=1.0.7
-pkgrel=2
+pkgrel=3
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Picks random sleep screen from ~/sleepScreens/ folder."
@@ -20,6 +20,8 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/randomSleepScreen.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/randomSleepScreen.qmd
+
+	install -dm755 "$pkgdir"/home/root/sleepScreens
 
 	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
