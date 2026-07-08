@@ -648,9 +648,7 @@ launcherctl() {
     }
     postdeinstall() {
         set -e
-        if [ "$(systemctl --quiet list-unit-files xochitl.service | /bin/grep -c xochitl.service 2>/dev/null)" -ne 1 ]; then
-            systemctl enable --now xochitl
-        fi
+        systemctl enable --now xochitl
     }
 }
 
