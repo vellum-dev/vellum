@@ -67,7 +67,6 @@ postosupgrade() {
 
 predeinstall() {
     /home/root/.vellum/bin/mount-rw
-    systemctl is-active --quiet tailscaled && systemctl stop tailscaled
     modprobe --remove-dependencies -f tun
     modprobe -rf tun
     rm /lib/modules/`uname -r`/tun.ko
