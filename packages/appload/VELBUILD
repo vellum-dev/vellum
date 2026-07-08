@@ -6,7 +6,7 @@ pkgname=appload
 pkgver=0.5.3
 pkgrel=1
 upstream_author="asivery"
-category="framework"
+category="launchers"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
 url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
@@ -62,9 +62,9 @@ launcherctl_appload() {
 		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/post-stock \
 			"$srcdir/launcherctl.poststock.sh"
 		install -Dm644 "$srcdir/launcherctl.LICENSE" \
-			"$pkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
+			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
 		echo "https://github.com/vellum-dev/vellum" > \
-			"$pkgdir/home/root/.vellum/licenses/$subpkgname/SOURCES"
+			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/SOURCES"
 	}
 
 	predeinstall() {

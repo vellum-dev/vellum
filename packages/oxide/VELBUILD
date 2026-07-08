@@ -25,7 +25,7 @@ oxide.tar.gz::https://github.com/$upstream_author/oxide/archive/refs/tags/$pkgve
 "
 readmeurl="https://raw.githubusercontent.com/$upstream_author/oxide/refs/tags/$pkgver/README.md"
 pkgdesc="Launcher application"
-category="apps"
+category="launchers"
 arch="armv7 aarch64"
 depends="
 oxide-display=$pkgver-r$pkgrel
@@ -254,7 +254,7 @@ oxide_display() {
 
 oxide_display_dev() {
     pkgdesc="Oxide display server"
-    category="framework"
+    category="development"
     depends="
     oxide-display=$pkgver-r$pkgrel
     "
@@ -438,7 +438,7 @@ liboxide() {
 
 liboxide_dev() {
     pkgdesc="Shared library for oxide applications"
-    category="framework"
+    category="development"
     depends="
     liboxide=$pkgver-r$pkgrel
     "

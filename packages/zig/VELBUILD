@@ -1,9 +1,9 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=zig
 pkgver=0.16.0
-pkgrel=0
+pkgrel=1
 upstream_author="ziglang"
-category="utilities"
+category="development"
 pkgdesc="A general-purpose programming language and toolchain for maintaining robust, optimal and reusable software"
 url="https://ziglang.org"
 arch="aarch64 armv7"
