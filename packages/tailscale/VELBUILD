@@ -67,7 +67,7 @@ postdeinstall() {
 }
 
 tun() {
-	pkgdesk="Tailscale kernel module support (only install this if you have the kernel module)"
+	pkgdesk="Tailscale kernel module support"
 	depends="tun"
 
 	package() {
@@ -82,11 +82,8 @@ tun() {
 	}
 
 	postinstall() {
-		echo "enabling tailscaled service..."
-		systemctl enable tailscaled.service
-
 		echo "restarting tailscaled service..."
-		systemctl restart tailscaled.service
+		systemctl try-restart tailscaled.service
 	}
 
 	postdeinstall() {
