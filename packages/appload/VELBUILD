@@ -21,7 +21,7 @@ https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/LICENSE
 appload
 launcherctl.LICENSE
 launcherctl.prestart.sh
-launcherctl.poststock.sh
+launcherctl.prestock.sh
 "
 
 unpack() {
@@ -59,8 +59,8 @@ launcherctl_appload() {
 			"$srcdir/appload"
 		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-start \
 			"$srcdir/launcherctl.prestart.sh"
-		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/post-stock \
-			"$srcdir/launcherctl.poststock.sh"
+		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-stock \
+			"$srcdir/launcherctl.prestock.sh"
 		install -Dm644 "$srcdir/launcherctl.LICENSE" \
 			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
 		echo "https://github.com/vellum-dev/vellum" > \
@@ -81,11 +81,11 @@ a507cbd38079919599cc33d299ac991cbac3974633744133edb0f8761008e0f2320c701a9b433ca7
 appload-arm32.zip
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE
-3ac209d2a07034a3b066b2c1d7e807a80718871d8b4f235ef0cb0fefefbcf7d7ab1e451e7dd801bb1e32a8630fe7b2a3c9d012ebddaebd2483438e4d0de57ba3
+a9623d6576203d5b037a01c51bb38e66fc90d8af856c08ffcc34b624add4667b9ea0d036e6552c68170fb4132da348c103adcd82bf7bbd3f6899fe9d7bf15cad
 appload
 d853404bc152a92924de9fa73ede98f4a739404cd8e8721c4b7d6e62493e3035015838533b18781fca5d93aa1fa67bd042b8ead91e88a70aad6bd8186d3317f9
 launcherctl.LICENSE
-9e67dda50808606e3a8f6d462a4bb428c4784a94bd89f1f4b2e1dfc4378d9dc90421b4ea66445ace8436ebf9d4409d795a3ae68a8cf984cebffb05c3f9de8b50
+0484e645348bd9cb3aff5bddb00e14d6c32107359fb8ea95292b653afcf956127e174583666e2a6028f43f3dfde01cdc0dc36e0ba5238f0d623bd5db07fbcfaf
 launcherctl.prestart.sh
-c36541fd9bd4e556ab133028d0116d99c051d967da7e9154fae7437552a419f42a6c4ed019c0fb871037dbc207e86e45500e787f790e2c87c0e3ebce2d39ffd1
-launcherctl.poststock.sh'
+908bcfb522cf1a1ab5613f4a007c94d994987ea1af1650e3baa51f618ebedfe2827cbac0f5832a2a91766f5ef03f0188fed242e1fd28c2373ae409b6c11d69d7
+launcherctl.prestock.sh'
