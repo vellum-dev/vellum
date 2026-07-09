@@ -1,6 +1,6 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=link-from-selection
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=0
 upstream_author="alefaraci"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+_commit="0054787b771b292359867c88b0a2df1b6e996a97"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#linkfromselection"
 donateurl="https://buymeacoffee.com/afaraci"
 source="
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
-0ce4020b49ce7ec6220bc28164960d65696006405147f4ed4d34e62d8da6dbe8a84a3a0836342584ae6928d146d14e2b108668863ca6f7b275449840340910f2  linkFromSelection.qmd
+7052271bc6416013e6c9a32037d39296145ec6ae56b18c9a2f13506ab4e45ebc8fd2f2ec39fb5b5394aae170235f9fc0ce7980d11560dd9b65767ed1e60d608b  linkFromSelection.qmd
 6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
 "
