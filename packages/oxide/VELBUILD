@@ -14,14 +14,14 @@ launcherctl
 launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
-pkgver="3.0"
+pkgver="3.0.1"
 pkgrel=0
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
 url=https://oxide.eeems.codes
 license=MIT
 source="
-oxide.tar.gz::https://github.com/$upstream_author/oxide/archive/refs/tags/$pkgver.tar.gz
+oxide-$pkgver.tar.gz::https://github.com/$upstream_author/oxide/archive/refs/tags/$pkgver.tar.gz
 "
 readmeurl="https://raw.githubusercontent.com/$upstream_author/oxide/refs/tags/$pkgver/README.md"
 pkgdesc="Launcher application"
@@ -678,5 +678,5 @@ launcherctl_oxide() {
         fi
     }
 }
-sha512sums='0efbcf62eaf0fa9f5dcc1bd6710f4c6ec0494bc8c0f11e21e3f692010cc2ed5388ecd4847dac3e129317c78012ce7e3f9a3eedecd4cd0f4a1a696b3bd9325822
-oxide.tar.gz'
+sha512sums='4240a365371e613b73c343f057dadbdbaa5d8cb09cc4ec4b6d2f018cffdfac8a78cd2382234600b17376462db834b855eed2f8f4fea4760d10225f2db98bcc3b
+oxide-3.0.1.tar.gz'
