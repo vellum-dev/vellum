@@ -60,7 +60,12 @@ build() {
         exit 1
         ;;
     esac
-    make FEATURES='sentry debug' release
+    make FEATURES=sentry release
+    find release -type f -print0 | xargs -0 sh -c '
+        for f; do
+            file -b "$f" | grep -q ELF && printf "%s\0" "$f"
+        done
+    ' _ | xargs -0 "$STRIP" --strip-unneeded
 }
 
 package() {
