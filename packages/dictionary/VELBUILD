@@ -1,0 +1,33 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=dictionary
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Adds integrated dictionary, Wikipedia, and translation capabilities for PDFs and EPUBs"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.25 remarkable-os<3.28"
+_commit="878eb9e5883f5b33412b377a78d1c8af63d7701c"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#dictionary"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/dictionary.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/dictionary.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/dictionary.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+7c9bf79d2561caefb7e8e672ee6f2fb3084a3416ebbfcd7efecf1e04ce77cf1d841f9d3b632f5def4eaf5dcd65678eff605eda4af72271615d2103adc9ec035d  dictionary.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
