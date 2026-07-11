@@ -1,14 +1,14 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
 pkgver=0.5.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
 url="https://github.com/$upstream_author/netsurf-reMarkable"
 arch="armv7 aarch64"
 license="GPL-2.0-only"
-depends="appload>=0.5.3"
+depends="launcher"
 
 _commit=125e7e10d044e6eef1fa391a979067fb1c18cb3c
 _dejavuver=2.37

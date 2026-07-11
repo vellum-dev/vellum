@@ -4,7 +4,7 @@ launcherctl-appload:launcherctl_appload
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.5.3
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="launchers"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
@@ -12,6 +12,7 @@ url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
 license="GPL-3.0"
 depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
+provides="launcher"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/README.MD"
 donateurl="https://ko-fi.com/asivery"
 source="

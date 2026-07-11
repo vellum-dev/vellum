@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=koreader
 pkgver=2026.03
-pkgrel=4
+pkgrel=5
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
 url="https://github.com/koreader/koreader"
 arch="aarch64 armv7"
 license="AGPL-3.0"
-depends="appload>=0.4.2"
+depends="launcher"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/README.md"
 
 source="
