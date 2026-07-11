@@ -8,7 +8,7 @@ pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as 
 url="https://github.com/khyryra/vnsee-qtfb"
 license="GPL-3.0"
 arch="aarch64 armv7"
-depends="appload !rmppure"
+depends="!rmppure launcher"
 replaces="vnsee-qtfb-rm1 vnsee-qtfb-rm2 vnsee-qtfb-rmpp vnsee-qtfb-rmppm"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/README.md"
 
