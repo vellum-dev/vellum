@@ -203,7 +203,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.package }}-noarch
-          path: dist/noarch/${{ steps.pkgname.outputs.name }}-*.apk
+          path: dist/noarch/*.apk
           if-no-files-found: error
 
       - &configure-aws-credentials
@@ -256,7 +256,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.package }}-${{ matrix.arch }}
-          path: dist/${{ matrix.arch }}/${{ steps.pkgname.outputs.name }}-*.apk
+          path: dist/${{ matrix.arch }}/*.apk
           if-no-files-found: warn
 
       - *configure-aws-credentials
