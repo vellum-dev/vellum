@@ -1,0 +1,88 @@
+# Vellum package for InkWordle (for the vellum-dev/vellum registry → reManager).
+#
+# NOTE: InkWordle is a TAKEOVER app — its binary links our libquill.so, which is
+# built against reMarkable's proprietary libqsgepaper (pulled from a device) and
+# the ferrari SDK. Neither is available in a public CI, so this package installs
+# the PREBUILT release artifacts (binary + libquill.so + scripts + model) rather
+# than building from source. Confirm this prebuilt approach with the maintainers.
+maintainer="Ritik <ritikrkcr7@gmail.com>"
+pkgname=inkwordle
+_pkgver=0.2.0
+pkgver=$_pkgver
+pkgrel=1
+pkgdesc="Write-by-hand Wordle, recognized on-device (hint clues, no LLM, no network)"
+upstream_author="Rkcr7"
+category="apps"
+url="https://github.com/Rkcr7/inkwordle"
+arch="aarch64"
+license="GPL-3.0-or-later"
+readmeurl="https://raw.githubusercontent.com/Rkcr7/inkwordle/main/README.md"
+
+# Prebuilt release zip (unpacks to an `inkwordle/` folder).
+source="$pkgname-$_pkgver.zip::https://github.com/Rkcr7/inkwordle/releases/download/v$_pkgver/inkwordle-$_pkgver.zip"
+
+# AppLoad is the only direct dep — its VELBUILD carries the remarkable-os>=3.26,<3.28
+# range, which we inherit transitively (registry convention: apps don't re-declare it).
+# Targets the standard Paper Pro (rmpp) only: arch=aarch64 excludes the armv7 rm1/rm2;
+# !rmppure drops the B/W Pure (InkWordle is colour); !rmppm drops the smaller Paper Pro
+# Move (untested — the board layout is fixed to the 1620x2160 Paper Pro panel).
+depends="appload>=0.5.3 !rmppure !rmppm"
+
+# Intentionally installs under /home/root/xovi (an AppLoad app), and the takeover
+# binary rpaths its bundled libquill.so — both normal for reMarkable packages.
+# !strip: the aarch64 binary is prebuilt; don't let a host-arch strip touch it.
+# !tracedeps: the binary links device/SDK libs (libc, Qt, libquill) that aren't
+# apk packages — auto so-dep tracing can't resolve them; deps are declared above.
+options="!fhs !check !strip !tracedeps"
+
+# The release zip unpacks to a top-level inkwordle/ folder (not inkwordle-$ver/),
+# so point builddir there — abuild cd's into it before package().
+builddir="$srcdir/inkwordle"
+
+# No build() — prebuilt artifacts are installed directly.
+
+package() {
+	local D="$pkgdir/home/root/xovi/exthome/appload/inkwordle"
+	cd "$srcdir/inkwordle"
+
+	# license bookkeeping
+	install -Dm644 LICENSE "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "$url" > "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+
+	# executables
+	install -Dm755 inkwordle              "$D/inkwordle"
+	install -Dm755 libquill.so            "$D/libquill.so"
+	install -Dm755 appload-launch.sh      "$D/appload-launch.sh"
+	install -Dm755 inkwordle-takeover.sh  "$D/inkwordle-takeover.sh"
+
+	# data
+	install -Dm644 external.manifest.json "$D/external.manifest.json"
+	install -Dm644 settings.schema.json   "$D/settings.schema.json"
+	install -Dm644 icon.png               "$D/icon.png"
+	install -Dm644 emnist-62.onnx         "$D/emnist-62.onnx"
+	install -Dm644 definitions.tsv        "$D/definitions.tsv"
+	install -Dm644 NOTICE                 "$D/NOTICE"
+}
+
+# AppLoad apps only appear after a launcher refresh (mirrors koreader's note).
+postinstall() {
+	echo ""
+	echo "  InkWordle installed — open AppLoad and tap Reload to see it."
+	echo ""
+}
+
+# On a purge (VELLUM_PURGE=1): remove the app dir wholesale (any runtime files apk
+# didn't track) and the no-repeat word history InkWordle writes to $HOME
+# (/home/root/.inkwordle-history, which lives outside the app dir).
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/inkwordle
+		rm -f /home/root/.inkwordle-history
+	fi
+	echo ""
+	echo "  Refresh AppLoad (Reload) to update the tablet UI."
+	echo ""
+}
+
+sha512sums='1bf016b52966a3040a37158022c0ad2b1cf79c02305574bc2b12baf7111bd76d866d5ef91f334475849273c092dbcbfcf8801bd742e0ca859e99224614806772
+inkwordle-0.2.0.zip'
