@@ -14,7 +14,7 @@ launcherctl
 launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
-pkgver="3.0.2"
+pkgver="3.0.3"
 pkgrel=1
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
@@ -36,8 +36,8 @@ provides="launcher"
 _toolchain=5.7.119
 image() {
     case "$CARCH" in
-    aarch64) echo "eeems/remarkable-toolchain:$_toolchain-rmpp" ;;
-    armv7) echo "eeems/remarkable-toolchain:$_toolchain-rm1" ;;
+    aarch64) echo "ghcr.io/eeems-org/oxide-toolchain:$_toolchain-rmpp" ;;
+    armv7) echo "ghcr.io/eeems-org/oxide-toolchain:$_toolchain-rm1" ;;
     *)
         echo "Invalid CARCH: $CARCH"
         exit 1
@@ -49,18 +49,7 @@ build() {
     _toolchain=5.7.119 # Is not currently passed into build()
     set -e
     cd "$srcdir"/oxide-"$pkgver"
-    case "$CARCH" in
-    aarch64)
-        . /opt/codex/ferrari/"$_toolchain"/environment-setup-cortexa53-crypto-remarkable-linux
-        ;;
-    armv7)
-        . /opt/codex/rm1/"$_toolchain"/environment-setup-cortexa9hf-neon-remarkable-linux-gnueabi
-        ;;
-    *)
-        echo "Invalid CARCH: $CARCH"
-        exit 1
-        ;;
-    esac
+    . "$ENVIRONMENT_SETUP"
     make FEATURES=sentry release
     find release -type f -print0 | xargs -0 sh -c '
         for f; do
@@ -403,6 +392,7 @@ inject_evdev() {
 fbinfo() {
     pkgdesc="Print out framebuffer info"
     category="utilities"
+    depends=""
 
     package() {
         cd "$srcdir"/oxide-"$pkgver"/release
@@ -418,6 +408,7 @@ fbinfo() {
 liboxide() {
     pkgdesc="Shared library for oxide applications"
     category="framework"
+    depends=""
 
     package() {
         cd "$srcdir"/oxide-"$pkgver"/release
@@ -683,5 +674,5 @@ launcherctl_oxide() {
         fi
     }
 }
-sha512sums='f064cca6f9aa62ad0b940c422911aabcb52d9597fdc23d7f87f05717b614f04c187c484d7cc8f4ad0a83c59e85ce67dd99faceb54f70c9d1bbffc66be6a34e14
-oxide-3.0.2.tar.gz'
+sha512sums='9b42d31a368142ce0aef27547f0002609817e32b9eea001b813406b36c30aad531bb539391fd96869d547514f2f9670225dc357dd9a2e12a5b3dd191a78b0591
+oxide-3.0.3.tar.gz'
