@@ -1,0 +1,41 @@
+maintainer="Alessio Faraci <contact@afaraci.com>"
+pkgname=dictionary-wiki-translator
+pkgver=1.0.0
+pkgrel=0
+upstream_author="alefaraci"
+category="ui"
+pkgdesc="Adds integrated dictionary, Wikipedia, and translation capabilities for PDFs and EPUBs"
+url="https://github.com/alefaraci/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.25 remarkable-os<3.28"
+_commit="7d2fceff5a2374c5690c386a1cd361c54db5dbf3"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#dictionary"
+donateurl="https://buymeacoffee.com/afaraci"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/dictionaryWikiTranslator.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+options="!check !fhs"
+
+package() {
+	install -Dm644 "$srcdir"/dictionaryWikiTranslator.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/dictionaryWikiTranslator.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -f /home/root/.config/dictionary-wiki-translator.json
+		rm -rf /home/root/dictionary
+	fi
+}
+
+sha512sums="
+b2faf20fb66660130154920d7ddb1af35527fb8aac8748ba9b27437da9e0ff06aca4c40e68d392555c02b5f9bd2f5c5c9a22f3753ce1c66198b2afbf3448c533  dictionaryWikiTranslator.qmd
+6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
+"
