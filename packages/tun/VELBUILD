@@ -1,15 +1,14 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=tun
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 upstream_author="esclee"
 category="utilities"
 pkgdesc="TUN module for rMP[Pro, Move, Pure], compiled from kernel code released by rM using rM's SDKs"
 url="https://github.com/esclee/tun-package"
 arch="aarch64"
 license="GPL-2.0-or-later"
-depends="mount-utils remarkable-os>=3.27 remarkable-os<3.28 !rm1 !rm2"
-options="!check !fhs !strip !tracedeps"
+depends="mount-utils>=1.2.0 remarkable-os>=3.27 remarkable-os<3.28 !rm1 !rm2"
 
 source="
 https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-ferrari.ko
