@@ -2,14 +2,14 @@ maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=convert-to-text-remover
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Removes the Convert to text option from selection menus and the toolbar."
 url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder !link-from-selection !toc-from-selection remarkable-os>=3.27 remarkable-os<3.28"
 _commit="86e43a4d8d26c49abcc81f149245ff1f52961124"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
