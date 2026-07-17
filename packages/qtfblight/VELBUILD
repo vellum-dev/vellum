@@ -10,7 +10,6 @@ arch="aarch64 armv7"
 license="GPL-3.0-only"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/$pkgver/README.md"
 source="$pkgname-$pkgver.zip::https://github.com/$upstream_author/$pkgname/archive/refs/tags/$pkgver.zip"
-options="!check !fhs !strip !tracedeps"
 depends="oxide-display"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
