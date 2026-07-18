@@ -1,7 +1,10 @@
+subpackages='
+appload-to-oxide:appload_to_oxide
+'
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=qtfblight
 pkgver=0.1.0
-pkgrel=0
+pkgrel=1
 pkgdesc="QTFB compatibility server for reMarkable tablets"
 upstream_author="NoaHimesaka1873"
 category="framework"
@@ -14,35 +17,54 @@ depends="oxide-display"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
-	case "$CARCH" in
-	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-	armv7) . /opt/x-tools/switch-arm.sh ;;
-	*)
-		echo "Invalid CARCH: $CARCH"
-		exit 1
-		;;
-	esac
+  case "$CARCH" in
+  aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+  armv7) . /opt/x-tools/switch-arm.sh ;;
+  *)
+    echo "Invalid CARCH: $CARCH"
+    exit 1
+    ;;
+  esac
 
-	cd "$srcdir/$pkgname-$pkgver"
-	cargo build --release --locked --bins
+  cd "$srcdir/$pkgname-$pkgver"
+  cargo build --release --locked --bins
 
-	mv target/"$CARGO_BUILD_TARGET"/release/qtfblight .
-	mv target/"$CARGO_BUILD_TARGET"/release/appload-to-oxide .
-	"${CROSS_COMPILE}strip" qtfblight appload-to-oxide
+  mv target/"$CARGO_BUILD_TARGET"/release/qtfblight .
+  mv target/"$CARGO_BUILD_TARGET"/release/appload-to-oxide .
+  "${CROSS_COMPILE}strip" qtfblight appload-to-oxide
 }
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/$pkgname-$pkgver"
 
-	install -Dm755 qtfblight \
-		"$pkgdir"/home/root/.vellum/bin/qtfblight
-	install -Dm755 appload-to-oxide \
-		"$pkgdir"/home/root/.vellum/bin/appload-to-oxide
+  install -Dm755 qtfblight \
+    "$pkgdir"/home/root/.vellum/bin/qtfblight
 
-	install -Dm644 LICENSE \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname/archive/refs/tags/$pkgver.zip" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+  install -Dm644 LICENSE \
+    "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+  echo "https://github.com/$upstream_author/$pkgname/archive/refs/tags/$pkgver.zip" > \
+    "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+
+appload_to_oxide() {
+  pkgdesc="Convert AppLoad apps into Oxide application registrations"
+  category="utilities"
+  depends="
+  oxide
+  qtfblight
+  "
+
+  package() {
+    cd "$srcdir/$pkgname-$pkgver"
+
+    install -Dm755 appload-to-oxide \
+      "$subpkgdir"/home/root/.vellum/bin/appload-to-oxide
+
+    install -Dm644 LICENSE \
+      "$subpkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
+    echo "https://github.com/$upstream_author/$pkgname/archive/refs/tags/$pkgver.zip" > \
+      "$subpkgdir/home/root/.vellum/licenses/$subpkgname/SOURCES"
+  }
 }
 
 sha512sums='04a7087a943b39b09152d606291de7b0fa7d030e4ac5ff8838d83264ab8da7fc0acb90c8324df9fc42225fc53e1ec9e2c3a255951dbeb42d57eb7085a2b0f86e
