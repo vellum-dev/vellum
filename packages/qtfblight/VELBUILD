@@ -3,7 +3,7 @@ appload-to-oxide:appload_to_oxide
 '
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=qtfblight
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="QTFB compatibility server for reMarkable tablets"
 upstream_author="NoaHimesaka1873"
@@ -67,5 +67,5 @@ appload_to_oxide() {
 	}
 }
 
-sha512sums='04a7087a943b39b09152d606291de7b0fa7d030e4ac5ff8838d83264ab8da7fc0acb90c8324df9fc42225fc53e1ec9e2c3a255951dbeb42d57eb7085a2b0f86e
-qtfblight-0.1.0.zip'
+sha512sums='488b02b1ed1c2b0ebc8d61a26f15e41f0037405ea33d515663e375770d33c144ff0f8fcb6d35fe0841b509b67a66e9ba0ed59b053c7ee0f221740255f1b6971b
+qtfblight-0.1.1.zip'
