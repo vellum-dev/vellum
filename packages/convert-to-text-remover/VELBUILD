@@ -1,7 +1,7 @@
 maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=convert-to-text-remover
-pkgver=1.1.0
+pkgver=1.2.0
 pkgrel=0
 upstream_author="NohamR"
 category="ui"
@@ -10,7 +10,7 @@ url="https://github.com/NohamR/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="86e43a4d8d26c49abcc81f149245ff1f52961124"
+_commit="8ddf166f0151a55329dd0c1bb9804b23a03db95f"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
 convertToText_remover.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27.3.0/convertToText_remover.qmd
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
-363f8ddce988f6f4b8e9d40bed70c5a74f4315d37a2ebd33d233a6c9f8ff44d94955dc20925d292299338cf3681b8734dec120382f34b5200f656481e5b4fc42  convertToText_remover.qmd
+9beaed617b0ac1cdbac5301dd0a0a1e15e60b114488c5dc294ff9337acb3ddf53abdff6cda90771914e6d4e2c063876eda95a6e258810be5328c1d0c9a0427df  convertToText_remover.qmd
 f0ca1d1c12e36cf1a6ea8a55e96186b2157d168bebf838704f18b9eaea043c98993ea25a8e99e2b704065534dd7f9a5e3a563b856a57d97eef40c057b2df4caa  LICENSE
 "
