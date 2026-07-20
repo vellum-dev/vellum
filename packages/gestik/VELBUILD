@@ -1,6 +1,6 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=gestik
-pkgver=1.1.1
+pkgver=1.1.2
 pkgrel=0
 upstream_author="alefaraci"
 category="ui"
@@ -9,7 +9,7 @@ url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder !gestures-fouzr !gestures-ingatellent !four-finger-change-filter !three-finger-swipe-to-reset-view remarkable-os>=3.25 remarkable-os<3.28"
-_commit="974c07f11c2c48285a59c9ddf428773c2f962d5d"
+_commit="ac44f719293a904c50904515597c8da8b5779cd2"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#gestik"
 donateurl="https://buymeacoffee.com/afaraci"
 source="
@@ -35,6 +35,6 @@ postdeinstall() {
 }
 
 sha512sums="
-3058b754709f803cf0fa28473d8dbac20ee551dc88afff2a4a6e302fb1ac9e250c71a679e5a0f2924a529195874e8c8f24e8472ca79067bd5ca255a105719676  gestik.qmd
+92de946d833e0c4617fca3ecfe70bfe16f0f01301c470107c1b8033c7cfec263fcc34ea98ee17f56cf0921c53e77bfe6d2db8f5b1d9f1527bec603097a0bf574  gestik.qmd
 6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
 "
