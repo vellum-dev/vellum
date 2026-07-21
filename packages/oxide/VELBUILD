@@ -15,7 +15,7 @@ launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
 pkgver="3.1"
-pkgrel=0
+pkgrel=1
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
 url=https://oxide.eeems.codes
@@ -31,6 +31,7 @@ depends="
 oxide-display=$pkgver-r$pkgrel
 liboxide=$pkgver-r$pkgrel
 "
+provides="launcher"
 
 _toolchain=5.7.119
 image() {

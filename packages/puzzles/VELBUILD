@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=puzzles
 pkgver=0.2.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Simon Tatham's Puzzle Package"
 upstream_author="rmkit-dev"
 category="apps"
@@ -14,7 +14,7 @@ https://github.com/$upstream_author/remarkable_puzzles/releases/download/v$pkgve
 rmkit.zip::https://github.com/rmkit-dev/rmkit/archive/fc372b29c6f19e4da645277e1902255e3198b59f.zip
 external.manifest.json
 "
-depends="appload>=0.5.3"
+depends="launcher"
 
 image="ghcr.io/toltec-dev/python:v4.0"
 build() {
