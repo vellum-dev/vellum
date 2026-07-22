@@ -31,25 +31,10 @@ cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
         "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall() {
-    echo ""
-    echo "=================================================="
-    echo "  NOTE: To use reMarkdown, you must refresh AppLoad"
-    echo "=================================================="
-    echo ""
-}
-
 postdeinstall() {
     if [ "$VELLUM_PURGE" = "1" ]; then
         rm -rf /home/root/xovi/exthome/appload/rmd
     fi
-
-    echo ""
-    echo "==============================================="
-    echo "  NOTE: You must refresh AppLoad to see changes "
-    echo "  reflected in the tablet UI "
-    echo "==============================================="
-    echo ""
 }
 
 
