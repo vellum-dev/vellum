@@ -24,8 +24,8 @@ unpack() {
 }
 
 package() {
-    install -d "$pkgdir"/hom/root/xovi/exthome/appload
-    cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
+    install -d "$pkgdir"/home/root/xovi/exthome/appload    
+cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
     install -Dm644 "$srcdir"/LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
     echo "https://github.com/esclee/reMarkdown" > \
         "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
