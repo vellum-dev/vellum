@@ -1,0 +1,61 @@
+maintainer="esclee <5288860+esclee@users.noreply.github.com>"
+pkgname=reMarkdown
+pkgver=0.1.0
+pkgrel=1
+upstream_author="esclee"
+category="apps"
+pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via AppLoad"
+url="https://github.com/esclee/reMarkdown"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload >= 0.5.1"
+
+source="
+https://github.com/$upstream_author/reMarkdown/releases/download/v$pkgver/reMarkdown-arm64-$pkgver.zip
+https://github.com/$upstream_author/reMarkdown/releases/download/v$pkgver/reMarkdown-armv7h-$pkgver.zip
+https://raw.githubusercontent.com/$upstream_author/reMarkdown/refs/heads/main/LICENSE
+"
+
+unpack() {
+    case "$CARCH" in
+    aarch64) unzip -o "$srcdir"/reMarkdown-arm64-v$pkgver.zip -d "$srcdir"/rmd ;;
+    armv7) unzip -o "$srcdir"/reMarkdown-armv7h-v$pkgver.zip -d "$srcdir"/rmd ;;
+    esac
+}
+
+package() {
+    install -d "$pkgdir"/hom/root/xovi/exthome/appload
+    cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
+    install -Dm644 "$srcdir"/LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
+    echo "https://github.com/esclee/reMarkdown" > \
+        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall() {
+    echo ""
+    echo "=================================================="
+    echo "  NOTE: To use reMarkdown, you must refresh AppLoad"
+    echo "=================================================="
+    echo ""
+}
+
+postdeinstall() {
+    if [ "$VELLUM_PURGE" = "1" ]; then
+        rm -rf /home/root/xovi/exthome/appload/rmd
+    fi
+
+    echo ""
+    echo "==============================================="
+    echo "  NOTE: You must refresh AppLoad to see changes "
+    echo "  reflected in the tablet UI "
+    echo "==============================================="
+    echo ""
+}
+
+
+sha512sums='317a34a699020c2d6f5183bfd1007e35b16946fcd4d881eb0f358a040788855b290f458347c66172ad70ef290a1fd3a825941790534789ed9deb1173d25ac620
+reMarkdown-arm64-0.1.0.zip
+d0e6ba47dd6a57762dd87262f34abd229a2cc249af2a40de5591824e9979bb13cca275f77e863461de1d6beded416adfb51e1f6f354dbd7c94941d5fef7d9a8f
+reMarkdown-armv7h-0.1.0.zip
+063896a1f774912f94e2e6c5d099d51897e10629d44610371653c0d6f858b9e3abf6ee4cb06a34d9996e02e83da9690d5d6196ec090da4118f9fd9e5f0d59d4b
+LICENSE'
