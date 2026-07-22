@@ -1,7 +1,7 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=remarkdown
 pkgver=0.1.0
-pkgrel=1
+pkgrel=0
 upstream_author="esclee"
 category="apps"
 pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via AppLoad"
