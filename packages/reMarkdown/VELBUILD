@@ -1,5 +1,5 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
-pkgname=reMarkdown
+pkgname=remarkdown
 pkgver=0.1.0
 pkgrel=1
 upstream_author="esclee"
