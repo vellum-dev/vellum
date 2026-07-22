@@ -8,7 +8,7 @@ pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via
 url="https://github.com/esclee/reMarkdown"
 arch="aarch64 armv7"
 license="MIT"
-depends="appload >= 0.5.1"
+depends="appload>=0.5.1"
 
 source="
 https://github.com/$upstream_author/reMarkdown/releases/download/v$pkgver/reMarkdown-arm64-$pkgver.zip
