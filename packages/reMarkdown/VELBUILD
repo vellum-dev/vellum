@@ -18,8 +18,8 @@ https://raw.githubusercontent.com/$upstream_author/reMarkdown/refs/heads/main/LI
 
 unpack() {
     case "$CARCH" in
-    aarch64) unzip -o "$srcdir"/reMarkdown-arm64-v$pkgver.zip -d "$srcdir"/rmd ;;
-    armv7) unzip -o "$srcdir"/reMarkdown-armv7h-v$pkgver.zip -d "$srcdir"/rmd ;;
+    aarch64) unzip -o "$srcdir"/reMarkdown-arm64-$pkgver.zip -d "$srcdir"/rmd ;;
+    armv7) unzip -o "$srcdir"/reMarkdown-armv7h-$pkgver.zip -d "$srcdir"/rmd ;;
     esac
 }
 
