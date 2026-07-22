@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=entware
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Entware software repository for reMarkable tablets"
 upstream_author="Entware"
 category="utilities"
@@ -78,9 +78,9 @@ postinstall() {
 
 	cat <<'EOF'
 
-======================================================
+=======================================================
                   Entware Installed
-======================================================
+=======================================================
 
   Package management:
 
@@ -94,7 +94,7 @@ postinstall() {
 
     /home/root/.local/share/entware/reenable-entware.sh
 
-======================================================
+=======================================================
 EOF
 
 	if [ "$BASHRC_CHANGED" = true ]; then
@@ -116,9 +116,9 @@ postupgrade() {
 
 	cat <<'EOF'
 
-======================================================
+=======================================================
                   Entware Upgraded
-======================================================
+=======================================================
 
   The opkg package manager has been updated.
   Your installed Entware packages are preserved.
@@ -127,7 +127,7 @@ postupgrade() {
 
     opkg update && opkg upgrade
 
-======================================================
+=======================================================
 
 EOF
 }
@@ -170,9 +170,9 @@ postdeinstall() {
 	elif [ -d "$ENTWARE_DATA" ]; then
 		cat <<'EOF'
 
-======================================================
+=======================================================
     Entware data preserved at /home/root/.entware
-======================================================
+=======================================================
 
   Your Entware packages and settings are still on disk.
 
@@ -184,7 +184,7 @@ postdeinstall() {
 
     vellum install entware
 
-======================================================
+=======================================================
 
 EOF
 	fi

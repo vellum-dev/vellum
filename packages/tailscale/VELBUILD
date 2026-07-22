@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=tailscale
 pkgver=1.98.8
-pkgrel=0
+pkgrel=1
 upstream_author="tailscale"
 category="utilities"
 pkgdesc="Tailscale VPN client"
@@ -59,7 +59,6 @@ package() {
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
-		echo "deleting tailscale config files..."
 		rm -rf \
 			/home/root/.local/var/lib/tailscale \
 			/home/root/.config/tailscale
@@ -72,27 +71,20 @@ tun() {
 
 	package() {
 		cd "$srcdir/tailscale"
-
-		# Reset FLAGS
-		sed '/FLAGS/d' systemd/tailscaled.defaults > systemd/tailscaled.tun
-		echo 'FLAGS=""' >> systemd/tailscaled.tun
+		sed '/FLAGS/d' systemd/tailscaled.defaults >systemd/tailscaled.tun
+		echo 'FLAGS=""' >>systemd/tailscaled.tun
 
 		install -Dm644 systemd/tailscaled.tun \
 			"$subpkgdir/home/root/.vellum/etc/default/tailscaled"
 	}
 
 	postinstall() {
-		echo "restarting tailscaled service..."
 		systemctl try-restart tailscaled.service
 	}
 
 	postdeinstall() {
-		# Restore userspace
-		echo "restoring userspace networking..."
 		sed -i '/FLAGS/d' /home/root/.vellum/etc/default/tailscaled
-		echo 'FLAGS="--tun userspace-networking"' >> /home/root/.vellum/etc/default/tailscaled
-
-		echo "restarting tailscaled service..."
+		echo 'FLAGS="--tun userspace-networking"' >>/home/root/.vellum/etc/default/tailscaled
 		systemctl try-restart tailscaled.service
 	}
 }

@@ -1,7 +1,7 @@
 maintainer="Jarett <jarett@reticulum.us>"
 pkgname=retaskable
 pkgver=1.0.5
-pkgrel=0
+pkgrel=1
 upstream_author="jdkruzr"
 category="utilities"
 pkgdesc="CalDAV task client for reMarkable tablets"
@@ -9,7 +9,6 @@ url="https://github.com/jdkruzr/reTaskable"
 arch="aarch64 armv7"
 license="GPL-3.0-only"
 depends="appload"
-options="!check !fhs !strip !tracedeps"
 subpackages="retaskable-capture:capture"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgver/README.md"
 

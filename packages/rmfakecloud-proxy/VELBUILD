@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmfakecloud-proxy
 pkgver=0.0.10
-pkgrel=1
+pkgrel=2
 pkgdesc="HTTPS proxy for rmfakecloud - redirects reMarkable cloud traffic"
 upstream_author="ddvk"
 category="utilities"
@@ -33,9 +33,9 @@ package() {
 postinstall() {
 	cat <<'EOF'
 
-══════════════════════════════════════════════════════════════════
-                    rmfakecloud-proxy installed
-══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════
+              rmfakecloud-proxy installed
+═══════════════════════════════════════════════════════
 
   To complete setup, run:
 
@@ -43,13 +43,14 @@ postinstall() {
 
   You will be prompted for your rmfakecloud server URL.
 
-  IMPORTANT: You must re-run the installer after each OS update!
+  IMPORTANT: You must re-run the installer after each
+             OS update!
 
   Other commands:
     install.sh setcloud    - Change the cloud URL
     install.sh gencert     - Regenerate certificates
 
-══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════
 
 EOF
 }

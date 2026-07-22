@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=starship
 pkgver=1.24.2
-pkgrel=2
+pkgrel=3
 upstream_author="starship"
 category="utilities"
 pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
@@ -38,16 +38,16 @@ postinstall() {
 	/home/root/.vellum/bin/starship completions bash > \
 		/home/root/.vellum/share/bash-completion/completions/starship
 
-	echo ""
-	echo "==========================================================================="
-	echo "  NOTE: To enable starship, you must add"
-	echo '  `eval "$(starship init bash)"`'
-	echo "  to the end of ~/.bashrc."
-	echo ""
-	echo "  See https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship"
-	echo "  for more information."
-	echo "==========================================================================="
-	echo ""
+	cat <<'EOF'
+======================================================
+  NOTE: To enable starship, you must add
+  `eval "$(starship init bash)"`
+  to the end of your ~/.bashrc
+
+  For more information see:
+  https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
+======================================================
+EOF
 }
 
 postupgrade() {

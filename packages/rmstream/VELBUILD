@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmstream
 pkgver=0.1.5
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="apps"
 pkgdesc="Stream your reMarkable's screen to any device on the local network via HTTP"
@@ -34,24 +34,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/asivery/appload-rmstream/archive/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
-}
-
-postinstall() {
-	echo ""
-	echo "==============================================="
-	echo "  NOTE: You must refresh AppLoad to see changes "
-	echo "  reflected in the tablet UI "
-	echo "==============================================="
-	echo ""
-}
-
-postdeinstall() {
-	echo ""
-	echo "==============================================="
-	echo "  NOTE: You must refresh AppLoad to see changes "
-	echo "  reflected in the tablet UI "
-	echo "==============================================="
-	echo ""
 }
 
 sha512sums='150322f05ad36257e91c20eb15370a620feac125ffcae9a32c6375fe3a102cd1e44e2382c0a26e2f689c608dda6c0a90e9af5718ebbadf148a63b3a56e3249b2

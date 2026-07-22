@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=external-keyboard-qpa
 pkgver=0.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Qt platform plugin for reMarkable e-paper displays with external keyboard support"
@@ -9,7 +9,6 @@ url="https://github.com/rmitchellscott/epaper-qpa"
 arch="aarch64"
 license="LGPL-2.1-only"
 depends="xovi qt-plugin-path"
-options="!check !fhs !strip !tracedeps"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/epaper-qpa/external-keyboard/README.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="

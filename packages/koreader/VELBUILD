@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=koreader
 pkgver=2026.03
-pkgrel=4
+pkgrel=5
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
@@ -38,25 +38,10 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-postinstall() {
-	echo ""
-	echo "=================================================="
-	echo "  NOTE: To use KOReader, you must refresh AppLoad"
-	echo "=================================================="
-	echo ""
-}
-
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/xovi/exthome/appload/koreader
 	fi
-
-	echo ""
-	echo "==============================================="
-	echo "  NOTE: You must refresh AppLoad to see changes "
-	echo "  reflected in the tablet UI "
-	echo "==============================================="
-	echo ""
 }
 
 sha512sums='
