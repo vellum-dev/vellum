@@ -5,25 +5,49 @@ pkgrel=0
 upstream_author="esclee"
 category="apps"
 pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via AppLoad"
-url="https://github.com/esclee/reMarkdown"
+url="https://github.com/$upstream_author/reMarkdown"
 arch="aarch64 armv7"
 license="MIT"
 depends="appload>=0.5.1"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkdown/v$pkgver/README.md"
 
 source="
-https://github.com/$upstream_author/reMarkdown/releases/download/v$pkgver/reMarkdown-arm64-$pkgver.zip
-https://github.com/$upstream_author/reMarkdown/releases/download/v$pkgver/reMarkdown-armv7h-$pkgver.zip
-https://raw.githubusercontent.com/$upstream_author/reMarkdown/refs/heads/main/LICENSE
+reMarkdown-$pkgver.tar.gz::https://github.com/$upstream_author/reMarkdown/archive/refs/tags/v$pkgver.tar.gz
 "
 
-unpack() {
-    case "$CARCH" in
-    aarch64) unzip -o "$srcdir"/reMarkdown-arm64-$pkgver.zip -d "$srcdir"/rmd ;;
-    armv7) unzip -o "$srcdir"/reMarkdown-armv7h-$pkgver.zip -d "$srcdir"/rmd ;;
-    esac
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+}
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y golang-go
+
+	cd "$srcdir"/reMarkdown-"$pkgver"
+	. "$(find /opt/codex -name 'environment-setup-*' -type f | head -n1)"
+	case "$CARCH" in
+	aarch64) arch=arm64 ;;
+	armv7) arch=armv7h ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	PATH="${OECORE_NATIVE_SYSROOT}/usr/libexec:$PATH" \
+		bash -e ./build.sh "$arch"
+	"$STRIP" --strip-unneeded rmd/backend/entry
 }
 
 package() {
+<<<<<<< HEAD
     install -d "$pkgdir"/home/root/xovi/exthome/appload    
 cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
     install -Dm644 "$srcdir"/LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
@@ -35,12 +59,20 @@ postdeinstall() {
     if [ "$VELLUM_PURGE" = "1" ]; then
         rm -rf /home/root/xovi/exthome/appload/rmd
     fi
+=======
+	cd "$srcdir"/reMarkdown-"$pkgver"
+	install -d "$pkgdir"/home/root/xovi/exthome/appload
+	cp -r rmd "$pkgdir"/home/root/xovi/exthome/appload
+	install -Dm644 LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
+	echo "https://github.com/esclee/reMarkdown" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-
-sha512sums='317a34a699020c2d6f5183bfd1007e35b16946fcd4d881eb0f358a040788855b290f458347c66172ad70ef290a1fd3a825941790534789ed9deb1173d25ac620
-reMarkdown-arm64-0.1.0.zip
-d0e6ba47dd6a57762dd87262f34abd229a2cc249af2a40de5591824e9979bb13cca275f77e863461de1d6beded416adfb51e1f6f354dbd7c94941d5fef7d9a8f
-reMarkdown-armv7h-0.1.0.zip
-063896a1f774912f94e2e6c5d099d51897e10629d44610371653c0d6f858b9e3abf6ee4cb06a34d9996e02e83da9690d5d6196ec090da4118f9fd9e5f0d59d4b
-LICENSE'
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/rmd
+	fi
+>>>>>>> 65ff342 (build as part of VELBUILD)
+}
+sha512sums='c9f0d725cb734638d7e2c981692bea217d4e05562cd2c6ab6e30d06c6f7deed1fa28794420978deb47f6a697b0faeb1d4d5e9650e80850de58e659e495b0e3b0
+reMarkdown-0.1.0.tar.gz'
