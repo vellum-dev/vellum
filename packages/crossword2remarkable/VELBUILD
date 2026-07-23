@@ -8,7 +8,7 @@ pkgdesc="A lightweight AppLoad "app" to download the latest New York Times Cross
 url="https://github.com/$upstream_author/crossword2remarkable"
 arch="noarch"
 license="MIT"
-depends="appload librarian"
+depends="appload librarian jq"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/crossword2remarkable/v$pkgver/README.md"
 
 source="
