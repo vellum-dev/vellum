@@ -1,0 +1,47 @@
+maintainer="esclee <5288860+esclee@users.noreply.github.com>"
+pkgname=crossword2remarkable
+pkgver=0.1.0
+pkgrel=0
+upstream_author="esclee"
+category="apps"
+pkgdesc="A lightweight AppLoad "app" to download the latest New York Times Crossword pdf to your reMarkable tablet."
+url="https://github.com/$upstream_author/crossword2remarkable"
+arch="noarch"
+license="MIT"
+depends="appload librarian"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/crossword2remarkable/v$pkgver/README.md"
+
+source="
+crossword2remarkable-$pkgver.tar.gz::https://github.com/$upstream_author/crossword2remarkable/archive/refs/tags/v$pkgver.tar.gz
+LICENSE::https://raw.githubusercontent.com/esclee/crossword2remarkable/refs/tags/v0.1.0/LICENSE
+"
+
+package() {
+	cd "$srcdir"
+	install -d "$pkgdir"/home/root/xovi/exthome/appload
+	cp -r crossword2remarkable-"$pkgver" "$pkgdir"/home/root/xovi/exthome/appload/xword
+	install -Dm644 LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
+	echo "https://github.com/esclee/crossword2remarkable" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall() {
+	cat <<'EOF'
+===========================================================
+ IMPORTANT: You must add your nytimes.com_cookies.txt from
+            your NYTimes account with Games subscription
+            to /home/root/xovi/exthome/appload/xword/
+            for crossword2remarkable to work.
+=======================================================
+
+EOF
+}
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/xword
+	fi
+}
+sha512sums='99cc0bdce4451a8aab8d860c0de42048caae48bf2d59bc45bbb47355bc9a3c58b8d9cae4120bf53fb510b7179a3a1642928410906091b7ed9e2de146fc350185
+crossword2remarkable-0.1.0.tar.gz
+063896a1f774912f94e2e6c5d099d51897e10629d44610371653c0d6f858b9e3abf6ee4cb06a34d9996e02e83da9690d5d6196ec090da4118f9fd9e5f0d59d4b
+LICENSE'
