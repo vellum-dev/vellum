@@ -47,19 +47,6 @@ build() {
 }
 
 package() {
-<<<<<<< HEAD
-    install -d "$pkgdir"/home/root/xovi/exthome/appload    
-cp -r "$srcdir"/rmd "$pkgdir"/home/root/xovi/exthome/appload
-    install -Dm644 "$srcdir"/LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-    echo "https://github.com/esclee/reMarkdown" > \
-        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
-}
-
-postdeinstall() {
-    if [ "$VELLUM_PURGE" = "1" ]; then
-        rm -rf /home/root/xovi/exthome/appload/rmd
-    fi
-=======
 	cd "$srcdir"/reMarkdown-"$pkgver"
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
 	cp -r rmd "$pkgdir"/home/root/xovi/exthome/appload
@@ -72,7 +59,6 @@ postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/xovi/exthome/appload/rmd
 	fi
->>>>>>> 65ff342 (build as part of VELBUILD)
 }
 sha512sums='c9f0d725cb734638d7e2c981692bea217d4e05562cd2c6ab6e30d06c6f7deed1fa28794420978deb47f6a697b0faeb1d4d5e9650e80850de58e659e495b0e3b0
 reMarkdown-0.1.0.tar.gz'
