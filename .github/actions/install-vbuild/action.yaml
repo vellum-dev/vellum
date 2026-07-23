@@ -10,6 +10,6 @@ runs:
         set -e
         curl \
           --location \
-          'https://github.com/Eeems/vbuild/releases/download/0.0.31/vbuild-x86_64-glibc' \
+          'https://github.com/Eeems/vbuild/releases/download/0.0.33/vbuild-x86_64-glibc' \
           --output /usr/local/bin/vbuild
         chmod +x /usr/local/bin/vbuild
