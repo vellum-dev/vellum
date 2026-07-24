@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=doomarkable
 pkgver=0.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="DOOM game"
 upstream_author="LinusCDE"
 category="apps"
@@ -14,7 +14,7 @@ https://github.com/LinusCDE/doomarkable/archive/$pkgver.zip
 external.manifest.aarch64.json
 external.manifest.armv7.json
 "
-depends="appload>=0.5.3 !rmppure !rm2"
+depends="launcher !rmppure !rm2"
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
