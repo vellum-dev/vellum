@@ -9,7 +9,7 @@ url="https://github.com/alefaraci/xovi-qmd-extensions#visiblesleepscreen"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="b449fe50dc0a2469df4244d74efa42703ab7bf70"
+_commit="3d2735d97ab040b2d7de1709eee7a9bb13f306c1"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#visiblesleepscreen"
 source="
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/visibleSleepScreen.qmd
@@ -28,6 +28,6 @@ package() {
 }
 
 sha512sums='
-72c7e7c989d0eeb8593d0c24d3c6b5aabd9b7928ae8a8fbfb52f54d25015f149ba2e718e5ea28457e127079fca4406876e0be28d030e47e09bd471d3357b653b  visibleSleepScreen.qmd
+02f9ff8ca2fcf1357799ec979edf177c48917301bc8619609195c4b925c5dcc56ab34d93d663e8b3830ad046dbe60a70647177b1a5a4735f400cca42865cd316  visibleSleepScreen.qmd
 6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
 '
