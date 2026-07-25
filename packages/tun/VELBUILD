@@ -1,21 +1,70 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=tun
-pkgver=1.0.1
-pkgrel=2
-upstream_author="esclee"
+pkgver=1.0.2
+pkgrel=0
+upstream_author="reMarkable"
 category="utilities"
 pkgdesc="TUN module for rMP[Pro, Move, Pure], compiled from kernel code released by rM using rM's SDKs"
-url="https://github.com/esclee/tun-package"
+url="https://github.com/reMarkable/linux-imx-rm"
 arch="aarch64"
 license="GPL-2.0-or-later"
 depends="mount-utils>=1.2.0 remarkable-os>=3.27 remarkable-os<3.28 !rm1 !rm2"
 
 source="
-https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-ferrari.ko
-https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-chiappa.ko
-https://raw.githubusercontent.com/esclee/tun-package/main/3.27/tun-tatsu.ko
-https://raw.githubusercontent.com/esclee/tun-package/main/LICENSE
+kernel.tar.gz::https://github.com/reMarkable/linux-imx-rm/raw/refs/heads/rmpp_6.12.49_v3.27.x/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a.tar.gz
 "
+
+image() {
+    case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.7.119-rmpp" ;;
+	*)
+	    echo "Invalid CARCH: $CARCH"
+	    exit 1
+	    ;;
+    esac
+}
+
+build() {
+    set -e
+    apt-get update
+    curl \
+    	https://storage.googleapis.com/remarkable-codex-toolchain/3.27.0.97/chiappa/remarkable-production-image-5.7.119-chiappa-public-x86_64-toolchain.sh \
+    	-o install-toolchain.sh
+    echo "f22794bc6bb6729e648a7404a561e870d537818bd62a2f9950522f0cf15b4130  install-toolchain.sh" | sha256sum --check
+    chmod +x install-toolchain.sh
+    ./install-toolchain.sh -y
+    rm install-toolchain.sh
+    curl \
+        https://storage.googleapis.com/remarkable-codex-toolchain/3.27.0.97/tatsu/remarkable-production-image-5.7.119-tatsu-public-x86_64-toolchain.sh \
+        -o install-toolchain.sh
+    echo "165d9f090a8bece2e8df695adb606cd7146c1b76699be3d530c0f23105264dd5  install-toolchain.sh" | sha256sum --check
+    chmod +x install-toolchain.sh
+    ./install-toolchain.sh -y
+    rm install-toolchain.sh
+    cd "$srcdir"/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a
+    . "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
+    make ferrari_defconfig
+    scripts/config --module CONFIG_TUN
+    make modules_prepare
+    make -j$(nproc) modules
+    cp drivers/net/tun.ko $srcdir/tun-ferrari.ko
+    make clean
+    . "$(find /opt/codex/chiappa -name 'environment-setup-*' -type f | head -n1)"
+    make chiappa_defconfig
+    scripts/config --module CONFIG_TUN
+    make modules_prepare
+    make -j$(nproc) modules
+    cp drivers/net/tun.ko $srcdir/tun-chiappa.ko
+    make clean
+    . "$(find /opt/codex/tatsu -name 'environment-setup-*' -type f | head -n1)"
+    make tatsu_defconfig
+    scripts/config --module CONFIG_TUN
+    make modules_prepare
+    make -j$(nproc) modules
+    cp drivers/net/tun.ko $srcdir/tun-tatsu.ko
+    make clean
+}
+
 package() {
     install -Dm644 "$srcdir/tun-chiappa.ko" \
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-chiappa.ko"
@@ -23,12 +72,10 @@ package() {
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-ferrari.ko"
     install -Dm655 "$srcdir/tun-tatsu.ko" \
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-tatsu.ko"
-    install -Dm644 "$srcdir/LICENSE" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+    install -Dm644 "$srcdir"/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a/COPYING \
+        "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
     echo "https://github.com/reMarkable/linux-imx-rm" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-    echo "https://github.com/esclee/tun-package" > \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES-COMPILED"
+        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall() {
@@ -75,11 +122,5 @@ predeinstall() {
     /home/root/.vellum/bin/mount-restore
 }
 
-sha512sums='56ad1ef4268ccd279108d1ee2cdd1fc8ae84bf4a6568ff19206bc4b1e66dc45c43502e45aaab7d1d557717fb3c05e9c853c915a85ea4fe57695456781d7c4966
-tun-ferrari.ko
-b7ba904c4a1c78cedc4fbbb56328cfab7afc7f10ee4a01ab057609ac810ff11a3b7d1d258ef598aa3a0c428fb07b57587206cb008417b63224d0b6d94c75c9e7
-tun-chiappa.ko
-b64a29084244817bd0e04855ae203b3fb64d9621ee3ef74f21eaf904b898886fc8e85848859b54044584c2640d0b95cab85891c31a6580289c7a89060ac3090f
-tun-tatsu.ko
-03f5a11e7ddd8db7222d25efdcbdb839d37a0c62fadc505c0c5cebcf045eb5e85ec3c779d78fc3b7e710b0031aad167e43a1c14cd571954271122a6e381c4ee9
-LICENSE'
+sha512sums='89fdc4b5eea43261545e161ed9ca1ec311a7887251fc3898a58e13d1b951f90dc93477b274f17640c19ae6bffcbe4e1e5bbc2723c8169c3d0ccefa62644fdd80
+kernel.tar.gz'
