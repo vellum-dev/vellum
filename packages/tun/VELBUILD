@@ -16,7 +16,7 @@ kernel.tar.gz::https://github.com/reMarkable/linux-imx-rm/raw/refs/heads/rmpp_6.
 
 image() {
     case "$CARCH" in
-	aarch64) echo "eeems/remarkable-toolchain:5.7.119-rmpp" ;;
+	aarch64) echo "eeems/remarkable-toolchain:5.7.119-aarch64" ;;
 	*)
 	    echo "Invalid CARCH: $CARCH"
 	    exit 1
@@ -26,21 +26,6 @@ image() {
 
 build() {
     set -e
-    apt-get update
-    curl \
-    	https://storage.googleapis.com/remarkable-codex-toolchain/3.27.0.97/chiappa/remarkable-production-image-5.7.119-chiappa-public-x86_64-toolchain.sh \
-    	-o install-toolchain.sh
-    echo "f22794bc6bb6729e648a7404a561e870d537818bd62a2f9950522f0cf15b4130  install-toolchain.sh" | sha256sum --check
-    chmod +x install-toolchain.sh
-    ./install-toolchain.sh -y
-    rm install-toolchain.sh
-    curl \
-        https://storage.googleapis.com/remarkable-codex-toolchain/3.27.0.97/tatsu/remarkable-production-image-5.7.119-tatsu-public-x86_64-toolchain.sh \
-        -o install-toolchain.sh
-    echo "165d9f090a8bece2e8df695adb606cd7146c1b76699be3d530c0f23105264dd5  install-toolchain.sh" | sha256sum --check
-    chmod +x install-toolchain.sh
-    ./install-toolchain.sh -y
-    rm install-toolchain.sh
     cd "$srcdir"/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a
     . "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
     make ferrari_defconfig
