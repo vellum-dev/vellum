@@ -27,11 +27,11 @@ unpack() {
 
 package() {
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
-  install -d "$pkgdir"/home/root/.local/share/applications
+	install -d "$pkgdir"/home/root/.local/share/applications
 	cp -r "$srcdir"/koreader \
 		"$pkgdir"/home/root/xovi/exthome/appload
-  install -Dm644 "$startdir"/KOReader.oxide \
-    "$pkgdir"/home/root/.local/share/applications/KOReader.oxide
+	install -Dm644 "$startdir"/KOReader.oxide \
+		"$pkgdir"/home/root/.local/share/applications/KOReader.oxide
 
 	sed -i 's/hasOTAUpdates = yes/hasOTAUpdates = no/' \
 		"$pkgdir"/home/root/xovi/exthome/appload/koreader/frontend/device/remarkable/device.lua
