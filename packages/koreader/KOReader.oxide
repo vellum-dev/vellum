@@ -1,0 +1,13 @@
+{
+    "bin": "/home/root/xovi/exthome/appload/koreader/koreader.sh",
+    "displayName": "KOReader",
+    "environment": {
+        "KO_USE_BLIGHT": "1"
+    },
+    "flags": [
+        "nopreload"
+    ],
+    "icon": "/home/root/xovi/exthome/appload/koreader/icon.png",
+    "name": "KOReader",
+    "workingDirectory": "/home/root/xovi/exthome/appload/koreader"
+}

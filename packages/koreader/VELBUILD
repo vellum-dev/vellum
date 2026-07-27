@@ -1,7 +1,7 @@
-maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=koreader
-pkgver=2026.03
-pkgrel=5
+pkgver=2026.07
+pkgrel=0
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
@@ -15,6 +15,7 @@ source="
 https://github.com/$upstream_author/koreader/releases/download/v$pkgver/koreader-remarkable-aarch64-v$pkgver.zip
 https://github.com/$upstream_author/koreader/releases/download/v$pkgver/koreader-remarkable-v$pkgver.zip
 https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/COPYING
+KOReader.oxide
 "
 
 unpack() {
@@ -26,8 +27,11 @@ unpack() {
 
 package() {
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
+  install -d "$pkgdir"/home/root/.local/share/applications
 	cp -r "$srcdir"/koreader \
 		"$pkgdir"/home/root/xovi/exthome/appload
+  install -Dm644 "$startdir"/KOReader.oxide \
+    "$pkgdir"/home/root/.local/share/applications/KOReader.oxide
 
 	sed -i 's/hasOTAUpdates = yes/hasOTAUpdates = no/' \
 		"$pkgdir"/home/root/xovi/exthome/appload/koreader/frontend/device/remarkable/device.lua
@@ -44,8 +48,11 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='
-7f9769be37ea0edc74701cf77213dbc18c4be0df3447911d09c41dcf48af10a2633be5cf23abdc9b3f630dab2a16d66d917402db7726a4d1d6374a28ecddd3d0  koreader-remarkable-aarch64-v2026.03.zip
-963e6f47e8e96da222d37420676b5e0ec6adbf348e19023da84d4afe4ded8e112d7f6aa5a07b3f5e1eb504037100336899140622fbc23694dc3fb15d991e66a3  koreader-remarkable-v2026.03.zip
-a0a86214ea153fb07ff35ceec0848dd1703eae22de036a825efc8394e50f65e3044832f3b49cf7e45a39edc470bdf738abc36a3a78ca7df3a6e73c14eaef94a8  COPYING
-'
+sha512sums='3438249f8a9a4282d873a8ff2f58278c3e8b29c63df05255299a472ea1329904a8b78cbad011c8be3a771607f14b0bfe153db50f7d87879af8c8d85852999cff
+koreader-remarkable-aarch64-v2026.07.zip
+ee28886c808345e53e00cbbbc0ac6ba4e48b368737ad966fee342d4cfffa5802eea08a7095aeaeb19282aab816a59726e92b3dcbd767cb62f1e6ac56ff7c9811
+koreader-remarkable-v2026.07.zip
+a0a86214ea153fb07ff35ceec0848dd1703eae22de036a825efc8394e50f65e3044832f3b49cf7e45a39edc470bdf738abc36a3a78ca7df3a6e73c14eaef94a8
+COPYING
+37e4f2bcd7d7f8ddcfb89b51e60e5ffb8a86b5d6ed38233f25d88305836c18d265bc58ddfce584175a5b3261d48e5320ea3ed8e5e471baf67af43713954de858
+KOReader.oxide'
