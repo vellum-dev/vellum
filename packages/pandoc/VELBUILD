@@ -7,6 +7,7 @@ category="utilities"
 pkgdesc="a Haskell library for converting from one markup format to another, and a command-line tool that uses this library"
 url="https://pandoc.org/"
 arch="aarch64"
+depends="!rm1 !rm2"
 license="GPL-2.0-or-later"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/pandoc/$pkgver/README.md"
 
