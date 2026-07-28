@@ -15,7 +15,7 @@ launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
 pkgver="3.1"
-pkgrel=0
+pkgrel=1
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
 url=https://oxide.eeems.codes
@@ -117,9 +117,6 @@ postinstall() {
 postupgrade() {
     set -e
     postinstall
-    if [ -f /home/root/.vellum/bin/update-desktop-database ]; then
-        /home/root/.vellum/bin/update-desktop-database
-    fi
     if systemctl is-active --quiet tarnish; then
         echo "Oxide is currently running and will need to be restarted"
     fi
@@ -304,14 +301,6 @@ oxide_extra() {
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-extra/SOURCES"
     }
-
-    postinstall() {
-        /home/root/.vellum/bin/update-desktop-database
-    }
-
-    postupgrade() {
-        postinstall
-    }
 }
 
 oxide_utils() {
@@ -356,17 +345,12 @@ oxide_utils() {
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-utils/SOURCES"
     }
-
-    postinstall() {
+    triggers='
+    /home/root/.local/share/applications
+    /home/root/xovi/exthome/appload
+    '
+    trigger() {
         /home/root/.vellum/bin/update-desktop-database
-    }
-
-    postupgrade() {
-        postinstall
-    }
-
-    postosupgrade() {
-        postinstall
     }
 }
 
@@ -480,16 +464,6 @@ oxide_tests() {
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-tests/SOURCES"
     }
-
-    postinstall() {
-        if [ -f /home/root/.vellum/bin/update-desktop-database ]; then
-            /home/root/.vellum/bin/update-desktop-database
-        fi
-    }
-
-    postupgrade() {
-        postinstall
-    }
 }
 
 oxide_xovi() {
@@ -507,16 +481,6 @@ oxide_xovi() {
             "$subpkgdir/home/root/.vellum/licenses/oxide-xovi/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-xovi/SOURCES"
-    }
-
-    postinstall() {
-        if [ -f /home/root/.vellum/bin/update-desktop-database ]; then
-            /home/root/.vellum/bin/update-desktop-database
-        fi
-    }
-
-    postupgrade() {
-        postinstall
     }
 }
 
