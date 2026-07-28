@@ -1,0 +1,41 @@
+maintainer="esclee <45214659+0xdeb7ef@users.noreply.github.com>"
+pkgname=pandoc
+pkgver=3.10.1
+pkgrel=0
+upstream_author="jgm"
+category="utilities"
+pkgdesc="a Haskell library for converting from one markup format to another, and a command-line tool that uses this library"
+url="https://pandoc.org/"
+arch="aarch64"
+license="GPL-2.0-or-later"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/pandoc/$pkgver/README.md"
+
+source="
+https://github.com/$upstream_author/pandoc/releases/download/$pkgver/pandoc-$pkgver-linux-arm64.tar.gz
+https://raw.githubusercontent.com/$upstream_author/pandoc/refs/tags/$pkgver/COPYRIGHT
+"
+
+package() {
+	cd "$srcdir/pandoc-$pkgver"/
+	install -Dm744 bin/pandoc \
+		"$pkgdir/home/root/.vellum/bin/pandoc"
+	install -Dm744 bin/pandoc-lua \
+		"$pkgdir/home/root/.vellum/bin/pandoc-lua"
+	install -Dm744 bin/pandoc-server \
+		"$pkgdir/home/root/.vellum/bin/pandoc-server"
+	install -Dm744 share/man/man1/pandoc.1.gz \
+		"$pkgdir/home/root/.vellum/share/man/man1/pandoc.1.gz"
+	install -Dm744 share/man/man1/pandoc-lua.1.gz \
+		"$pkgdir/home/root/.vellum/share/man/man1/pandoc-lua.1.gz"
+	install -Dm744 share/man/man1/pandoc-server.1.gz \
+		"$pkgdir/home/root/.vellum/share/man/man1/pandoc-server.1.gz"
+	install -Dm644 "$srcdir/COPYRIGHT" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYRIGHT"
+	echo "https://github.com/$upstream_author/pandoc/archive/refs/tags/$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+
+sha512sums='53ae7ccfa89e407e5271c6c8fc2df54ae8597f4c3313960ce09b91386c762da3c10641b1270fa69235a9085724712526e50877ea012539885b283ed8edfbea05
+pandoc-3.10.1-linux-arm64.tar.gz
+abcc7ed4fac50e2d857cec5b1a15dd088fa5f1746e4a436ce2f63d28aca8eebde543c25fef756b5bdc0b9350a72ffa5b77e252fd30b56323794f8f4a68b82900
+COPYRIGHT'
