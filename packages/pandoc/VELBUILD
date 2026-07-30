@@ -43,13 +43,6 @@ doc() {
 	}
 }
 
-postdeinstall() {
-	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm "$pkgdir/home/root/.vellum/bin/pandoc-lua"
-		rm "$pkgdir/home/root/.vellum/bin/pandoc-server"
-	fi
-}
-
 sha512sums='53ae7ccfa89e407e5271c6c8fc2df54ae8597f4c3313960ce09b91386c762da3c10641b1270fa69235a9085724712526e50877ea012539885b283ed8edfbea05
 pandoc-3.10.1-linux-arm64.tar.gz
 abcc7ed4fac50e2d857cec5b1a15dd088fa5f1746e4a436ce2f63d28aca8eebde543c25fef756b5bdc0b9350a72ffa5b77e252fd30b56323794f8f4a68b82900
