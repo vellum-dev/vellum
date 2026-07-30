@@ -21,8 +21,8 @@ package() {
 	cd "$srcdir/pandoc-$pkgver"
 	install -Dm744 bin/pandoc \
 		"$pkgdir/home/root/.vellum/bin/pandoc"
-	ln -s "$pkgdir/home/root/.vellum/bin/pandoc" "$pkgdir/home/root/.vellum/bin/pandoc-lua"
-	ln -s "$pkgdir/home/root/.vellum/bin/pandoc" "$pkgdir/home/root/.vellum/bin/pandoc-server"
+	ln -s pandoc "$pkgdir/home/root/.vellum/bin/pandoc-lua"
+	ln -s pandoc "$pkgdir/home/root/.vellum/bin/pandoc-server"
 	install -Dm644 "$srcdir/COPYRIGHT" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYRIGHT"
 	echo "https://github.com/$upstream_author/pandoc/archive/refs/tags/$pkgver.tar.gz" > \
