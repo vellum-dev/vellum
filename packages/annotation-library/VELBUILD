@@ -15,7 +15,6 @@ https://raw.githubusercontent.com/$upstream_author/annotation-library/$_commit/3
 https://github.com/$upstream_author/annotation-library/releases/download/v$pkgver/allhighlights-aarch64
 https://raw.githubusercontent.com/$upstream_author/annotation-library/$_commit/LICENSE
 "
-options='!check'
 
 package() {
 	install -Dm644 "$srcdir"/allHighlights.qmd \
