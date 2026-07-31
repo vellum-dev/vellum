@@ -1,0 +1,33 @@
+maintainer="Kevin Vegda <kevinvegda@gmail.com>"
+pkgname=annotation-library
+pkgver=1.0.0
+pkgrel=0
+upstream_author="kevin-v96"
+category="ui"
+pkgdesc="Highlights index for the native reMarkable reader: list a document's text highlights (by page, in colour) and jump to a highlight's page; plus a library-wide view."
+url="https://github.com/kevin-v96/annotation-library"
+arch="aarch64"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.27 remarkable-os<3.28"
+_commit="a87d838765b4d4b2e9ceadf639374e719804777b"
+source="
+https://raw.githubusercontent.com/$upstream_author/annotation-library/$_commit/3.27/allHighlights.qmd
+https://github.com/$upstream_author/annotation-library/releases/download/v$pkgver/allhighlights-aarch64
+https://raw.githubusercontent.com/$upstream_author/annotation-library/$_commit/LICENSE
+"
+options='!check'
+
+package() {
+	install -Dm644 "$srcdir"/allHighlights.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/allHighlights.qmd
+	install -Dm755 "$srcdir"/allhighlights-aarch64 \
+		"$pkgdir"/home/root/allhighlights
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+1db5fa09f6e4562fdebe94ea2edd960122d7f1976535415be6db2f24123db91258db5a97b171036d0129992039590235f39b12e8a8664e693c9447f65dd7107c  allHighlights.qmd
+05de18d4d9665effddbaac8177a670065e6a07bd28b5fd9201a55beaf0154b049d8e90907b291fa8f10c74e4132f08700212c5220bf088aa47ed60e5882f9f51  allhighlights-aarch64
+900ef9b1d0e1435fb3aad32f035edf8890538292ebb3104af2feb386fb25df134ed0172a0ec542b2c25ff69a39ae62b34ad17e01b3522067a7328abb25aa4fff  LICENSE
+"
