@@ -8,7 +8,7 @@ pkgdesc="Highlights index for the native reMarkable reader, with per-colour filt
 url="https://github.com/kevin-v96/annotation-library"
 arch="aarch64"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder qt-command-executor !rm1 !rm2 !rmppm !rmppure remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder qt-command-executor !rmppm !rmppure remarkable-os>=3.27 remarkable-os<3.28"
 _commit="61bd654634a2745255309999cc7f62d544e390c9"
 source="
 https://raw.githubusercontent.com/$upstream_author/annotation-library/$_commit/3.27/allHighlights.qmd
