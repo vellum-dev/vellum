@@ -10,7 +10,6 @@ arch="aarch64"
 depends="!rm1 !rm2"
 license="GPL-2.0-or-later"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/pandoc/$pkgver/README.md"
-subpackages="$pkgname-doc:doc"
 
 source="
 https://github.com/$upstream_author/pandoc/releases/download/$pkgver/pandoc-$pkgver-linux-arm64.tar.gz
@@ -27,20 +26,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYRIGHT"
 	echo "https://github.com/$upstream_author/pandoc/archive/refs/tags/$pkgver.tar.gz" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-}
-
-doc() {
-	pkgdesc="man pages for pandoc"
-	depends="$pkgname"
-	package() {
-		cd "$srcdir/pandoc-$pkgver"
-		install -Dm744 share/man/man1/pandoc.1.gz \
-			"$subpkgdir/home/root/.vellum/share/man/man1/pandoc.1.gz"
-		install -Dm744 share/man/man1/pandoc-lua.1.gz \
-			"$subpkgdir/home/root/.vellum/share/man/man1/pandoc-lua.1.gz"
-		install -Dm744 share/man/man1/pandoc-server.1.gz \
-			"$subpkgdir/home/root/.vellum/share/man/man1/pandoc-server.1.gz"
-	}
 }
 
 sha512sums='53ae7ccfa89e407e5271c6c8fc2df54ae8597f4c3313960ce09b91386c762da3c10641b1270fa69235a9085724712526e50877ea012539885b283ed8edfbea05
