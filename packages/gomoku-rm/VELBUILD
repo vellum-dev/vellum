@@ -1,0 +1,51 @@
+maintainer="jeffrey <jeffrey@shaojia.fan>"
+pkgname=gomoku-rm
+pkgver=1.0.1
+pkgrel=0
+upstream_author="jiafans"
+category="apps"
+pkgdesc="Gomoku (五子棋) game for reMarkable 2 — pure Rust + libremarkable + AppLoad with self-built Alpha-Beta engine"
+url="https://github.com/jiafans/gomoku-rm"
+license="MIT"
+arch="armv7"
+depends="appload"
+options="!check !fhs !strip !tracedeps"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/gomoku-rm/v$pkgver/README.md"
+
+source="
+https://github.com/$upstream_author/gomoku-rm/releases/download/v$pkgver/gomoku-rm
+https://github.com/$upstream_author/gomoku-rm/releases/download/v$pkgver/icon.png
+https://github.com/$upstream_author/gomoku-rm/releases/download/v$pkgver/external.manifest.json
+https://raw.githubusercontent.com/$upstream_author/gomoku-rm/v$pkgver/LICENSE
+"
+
+package() {
+	install -d "$pkgdir/home/root/xovi/exthome/appload/gomoku"
+	install -Dm755 "$srcdir/gomoku-rm" \
+		"$pkgdir/home/root/xovi/exthome/appload/gomoku/gomoku-rm"
+	install -Dm644 "$srcdir/icon.png" \
+		"$pkgdir/home/root/xovi/exthome/appload/gomoku/icon.png"
+	install -Dm644 "$srcdir/external.manifest.json" \
+		"$pkgdir/home/root/xovi/exthome/appload/gomoku/external.manifest.json"
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/$upstream_author/gomoku-rm/archive/v$pkgver.tar.gz" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+
+postinstall() {
+	echo ""
+	echo "==============================================="
+	echo "  gomoku-rm installed."
+	echo "  Open AppLoad on your rM2 and tap Gomoku."
+	echo "==============================================="
+	echo ""
+}
+
+sha512sums="
+21ef303d73e1c4b847dbfce66a9cc3401a884f654b9a0b10c71a76f8b16aecbca5240b00123894604ee78d4c13c6da13d411ca5a939a4035c15a5f196ae700c6  gomoku-rm
+c86ace22b81747943c9c67116ef9c1ac1f3e2868747d75f2a13ccc659751507c86640ff759e77c561f9beb5f192b4c80b26b21c3a117fbc81d48c7f9289d5c50  icon.png
+a41e88eb172afad10fbb2adbe141e66a33751d363a6c5c08feef84ef0eeeb7c98eccb0151f0d18916550bd147f3146b7416f659bab65cdc6b8cb6108c87a7cde  external.manifest.json
+6df35359bfb6d3e58b8379db511c6c224f7172941820f90df269ad092a0a813900a242adb4e8d611ce252dc92d97e23aa50600aa3d946329d943170718ed7ab6  LICENSE
+"
