@@ -1,6 +1,6 @@
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=koreader
-pkgver=2026.07
+pkgver=2026.07.1
 pkgrel=0
 upstream_author="koreader"
 category="apps"
@@ -48,10 +48,10 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='3438249f8a9a4282d873a8ff2f58278c3e8b29c63df05255299a472ea1329904a8b78cbad011c8be3a771607f14b0bfe153db50f7d87879af8c8d85852999cff
-koreader-remarkable-aarch64-v2026.07.zip
-ee28886c808345e53e00cbbbc0ac6ba4e48b368737ad966fee342d4cfffa5802eea08a7095aeaeb19282aab816a59726e92b3dcbd767cb62f1e6ac56ff7c9811
-koreader-remarkable-v2026.07.zip
+sha512sums='3b14bb9cdb8995cfee14f0a3f30f504ca4cd961a8de7ef2034abac8d5fadea19704fafe25aefd7510819c8238dc5b57c1a0b60431353b0f254f93a636410ba74
+koreader-remarkable-aarch64-v2026.07.1.zip
+9a89f6c0ef571e5c6843fd06706858b39709d5b6b84a27cca11d90722cd41e8ee0bfd1a66b3264c025b3b8a1a2192bcb73f6d9a70f46eb2663bc5121bbfd399d
+koreader-remarkable-v2026.07.1.zip
 a0a86214ea153fb07ff35ceec0848dd1703eae22de036a825efc8394e50f65e3044832f3b49cf7e45a39edc470bdf738abc36a3a78ca7df3a6e73c14eaef94a8
 COPYING
 37e4f2bcd7d7f8ddcfb89b51e60e5ffb8a86b5d6ed38233f25d88305836c18d265bc58ddfce584175a5b3261d48e5320ea3ed8e5e471baf67af43713954de858
