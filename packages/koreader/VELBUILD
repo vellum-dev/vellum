@@ -1,7 +1,7 @@
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=koreader
 pkgver=2026.07.1
-pkgrel=0
+pkgrel=1
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
