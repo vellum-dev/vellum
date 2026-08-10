@@ -12,6 +12,7 @@ stop_all
 touch /tmp/lockscreen_hook.disable
 systemctl reset-failed xochitl.service
 if ! /home/root/.vellum/share/launcherctl/none start; then
+  echo "Failed to start xochitl, removing launcher configuration"
   stop_all
   /home/root/.vellum/bin/launcherctl switch-launcher --start none
 fi
