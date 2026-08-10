@@ -11,13 +11,26 @@ is-active)
 is-enabled)
     systemctl cat xochitl.service | grep LD_PRELOAD | grep -q xovi.so
     ;;
-enable | paused | running)
+paused | running)
+    ;;
+enable)
+    if [ -f xovi/exthome/qt-resource-rebuilder/hashtab ]; then
+        exit 0
+    fi
+    echo "Error: hashtab missing"
+    if [ -t 0 ]; then
+        /home/root/xovi/rebuild_hashtable
+    else
+        echo "Please run xovi/rebuild_hashtable"
+        exit 1
+    fi
     ;;
 disable)
     if mountpoint -q /etc/systemd/system/xochitl.service.d; then
         umount -q /etc/systemd/system/xochitl.service.d
     fi
     rm -f /etc/systemd/system/xochitl.service.d/00-xovi.conf
+    /home/root/xovi/scripts/pre-stock/launcherctl.prestock.sh
     systemctl daemon-reload
     ;;
 logs)
@@ -28,15 +41,12 @@ logs)
     fi
     ;;
 start)
+    "$0" enable
     /home/root/xovi/start
     ;;
 stop)
     systemctl stop xochitl.service
-    if mountpoint -q /etc/systemd/system/xochitl.service.d; then
-        umount -q /etc/systemd/system/xochitl.service.d
-    fi
-    /home/root/xovi/scripts/pre-stock/launcherctl.prestock.sh
-    systemctl daemon-reload
+    "$0" disable
     ;;
 apps)
     find /home/root/xovi/exthome/appload -name external.manifest.json |
