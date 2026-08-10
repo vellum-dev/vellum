@@ -4,7 +4,7 @@ launcherctl-appload:launcherctl_appload
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.5.3
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="launchers"
 pkgdesc="XOVI extension for windowed and fullscreen apps"

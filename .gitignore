@@ -34,3 +34,4 @@ packages/*/*.post-os-upgrade
 packages/*/*.post-upgrade
 packages/*/*.pre-upgrade
 packages/*/*.build.sh
+packages/*/*.trigger
