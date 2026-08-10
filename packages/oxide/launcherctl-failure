@@ -1,8 +1,5 @@
 #!/bin/bash
-/home/root/.vellum/bin/launcherctl stop-launcher
-touch /tmp/lockscreen_hook.disable
-systemctl reset-failed xochitl.service
-if ! /home/root/.vellum/share/launcherctl/none start; then
+stop_all() {
   # Work around appload crashing and needing stop to run to properly disable xovi
   /usr/bin/find /home/root/.vellum/share/launcherctl -maxdepth 1 -type f -executable |
     xargs -rn1 basename |
@@ -10,5 +7,11 @@ if ! /home/root/.vellum/share/launcherctl/none start; then
     while read -r launcher; do
       /home/root/.vellum/share/launcherctl/"$launcher" stop
     done
+}
+stop_all
+touch /tmp/lockscreen_hook.disable
+systemctl reset-failed xochitl.service
+if ! /home/root/.vellum/share/launcherctl/none start; then
+  stop_all
   /home/root/.vellum/bin/launcherctl switch-launcher --start none
 fi

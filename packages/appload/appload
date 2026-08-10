@@ -14,7 +14,7 @@ is-enabled)
 paused | running)
     ;;
 enable)
-    if [ -f xovi/exthome/qt-resource-rebuilder/hashtab ]; then
+    if [ -f /home/root/xovi/exthome/qt-resource-rebuilder/hashtab ]; then
         exit 0
     fi
     echo "Error: hashtab missing"
