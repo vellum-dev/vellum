@@ -9,7 +9,7 @@ is-active)
     cat /proc/"$pid"/environ | tr '\0' '\n' | grep LD_PRELOAD | grep -q xovi.so
     ;;
 is-enabled)
-    systemctl cat xochitl.servide | grep LD_PRELOAD | grep -q xovi.so
+    systemctl cat xochitl.service | grep LD_PRELOAD | grep -q xovi.so
     ;;
 enable | paused | running)
     ;;
