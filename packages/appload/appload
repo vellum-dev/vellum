@@ -11,7 +11,14 @@ is-active)
 is-enabled)
     systemctl cat xochitl.servide | grep LD_PRELOAD | grep -q xovi.so
     ;;
-enable | disable | paused | running)
+enable | paused | running)
+    ;;
+disable)
+    if mountpoint -q /etc/systemd/system/xochitl.service.d; then
+        umount -q /etc/systemd/system/xochitl.service.d
+    fi
+    rm -f /etc/systemd/system/xochitl.service.d/00-xovi.conf
+    systemctl daemon-reload
     ;;
 logs)
     if [ $# -eq 2 ] && [[ "$2" == "-f" ]] || [[ "$2" == "--follow" ]]; then
