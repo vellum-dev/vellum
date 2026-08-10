@@ -14,7 +14,7 @@ launcherctl
 launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
-pkgver="3.1"
+pkgver="3.1.1"
 pkgrel=2
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
@@ -22,7 +22,6 @@ url=https://oxide.eeems.codes
 license=MIT
 source="
 oxide-$pkgver.tar.gz::https://github.com/$upstream_author/oxide/archive/refs/tags/$pkgver.tar.gz
-launcherctl-failure
 "
 readmeurl="https://raw.githubusercontent.com/$upstream_author/oxide/refs/tags/$pkgver/README.md"
 pkgdesc="Launcher application"
@@ -495,7 +494,7 @@ lockscreen_hook() {
         cd "$srcdir"/oxide-"$pkgver"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/usr/lib \
             usr/lib/liblockscreen_hook.so*
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/lockscreen_hook/ \
+        install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/share/lockscreen_hook/ \
             etc/systemd/system/xochitl.service.d/lockscreen_hook.conf
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/lockscreen_hook/ \
             usr/libexec/lockscreen-hook
@@ -561,7 +560,7 @@ launcherctl() {
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/launcherctl
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/sbin \
-            "$srcdir"/launcherctl-failure
+            home/root/.vellum/sbin/launcherctl-failure
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/launcherctl \
             home/root/.vellum/share/launcherctl/none
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.local/share/lockscreen_hook.d \
@@ -638,7 +637,5 @@ launcherctl_oxide() {
         fi
     }
 }
-sha512sums='2c956932c11bad1e2fea2f7c48e0b1be60b6eac4d36fd298cd738a2535e8b8f32e82b5aa3bb177867855733f2127bd7e3a28ab651c74697dfbb6e7daada5ee0a
-oxide-3.1.tar.gz
-85a87560e9d473cb9954d9288f5da3adaf04216b1045b456d87e6b116c883db7fe3e357f981147db3fde9d8a54002761c77ac3484b6ec5f1329df7a1c37227d0
-launcherctl-failure'
+sha512sums='b3ed9cb52485c8ef38d3834299028f11913bdfcd12f50f0658617405a1fe4ea21cae30c4294ff81a51a5c7dbb9171c8657f4c7fc058aff75e27565d40f7f79dd
+oxide-3.1.1.tar.gz'
