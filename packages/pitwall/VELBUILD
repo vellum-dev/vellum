@@ -1,0 +1,55 @@
+maintainer="Yan Khachko <46069139+sijokun@users.noreply.github.com>"
+pkgname=pitwall
+pkgver=1.0.0
+pkgrel=0
+upstream_author="sijokun"
+category="apps"
+pkgdesc="Live Formula 1 timing for AppLoad: positions, intervals, tyres, flags, and race control"
+url="https://github.com/$upstream_author/PitWall"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload"
+_commit="e8828b59c3eb7557d40ffdce726cef4d4fee0cdd"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/PitWall/$_commit/README.md"
+
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/PitWall/archive/$_commit.tar.gz
+"
+builddir="$srcdir/PitWall-$_commit"
+
+image="ghcr.io/toltec-dev/golang:v4.0"
+
+build() {
+	cd "$builddir"
+
+	case "$CARCH" in
+		aarch64) export GOARCH=arm64 ;;
+		armv7) export GOARCH=arm GOARM=7 ;;
+	esac
+
+	GOOS=linux CGO_ENABLED=0 go build \
+		-trimpath -ldflags="-s -w" -o build/pitwall ./cmd/pitwall
+}
+
+package() {
+	install -Dm755 build/pitwall \
+		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/pitwall
+	install -Dm644 external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/external.manifest.json
+	install -Dm644 icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/icon.png
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/sijokun/PitWall/archive/e8828b59c3eb7557d40ffdce726cef4d4fee0cdd.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.config/pitwall
+	fi
+}
+
+sha512sums='e7f0868a91d7bef5a197b475863e069ae737ff1dde286b068e9cf54ae14c0eb38d157a6c15613400f09fded477df24574f7977e6bd4613e49a480fc9161fd9f0
+pitwall-1.0.0.tar.gz'
