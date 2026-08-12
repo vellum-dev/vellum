@@ -1,0 +1,70 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=trmnl-remarkable
+pkgver=2.3.0
+pkgrel=0
+upstream_author="usetrmnl"
+category="apps"
+pkgdesc="TRMNL dashboard client for AppLoad: renders your TRMNL playlist on the tablet"
+url="https://github.com/$upstream_author/$pkgname"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload remarkable-os>=3.26 remarkable-os<3.28"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/v$pkgver/README.md"
+
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.tar.gz
+"
+builddir="$srcdir/$pkgname-$pkgver"
+
+image="ghcr.io/toltec-dev/golang:v4.0"
+
+build() {
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+
+	case "$CARCH" in
+	aarch64) _goarch="arm64" _goarm="" ;;
+	armv7) _goarch="arm" _goarm="7" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$builddir"
+	GOOS=linux GOARCH="$_goarch" GOARM="$_goarm" CGO_ENABLED=0 go build \
+		-buildvcs=false -trimpath -ldflags="-s -w -X main.version=$pkgver" \
+		-o build/backend/entry ./backend/cmd/trmnl-remarkable
+
+	cd "$builddir"/app
+	/usr/lib/qt6/libexec/rcc --binary \
+		-o "$builddir"/build/resources.rcc application.qrc
+}
+
+package() {
+	cd "$builddir"
+	_appdir="$pkgdir"/home/root/xovi/exthome/appload/$pkgname
+
+	install -Dm755 build/backend/entry "$_appdir"/backend/entry
+	install -Dm755 app/scripts/brightness_guard.sh \
+		"$_appdir"/scripts/brightness_guard.sh
+	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
+	install -Dm644 app/manifest.json "$_appdir"/manifest.json
+	install -Dm644 app/icon.png "$_appdir"/icon.png
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 THIRD_PARTY_NOTICES.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/THIRD_PARTY_NOTICES.md
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/trmnl-remarkable
+		rm -rf /home/root/.config/trmnl-remarkable
+	fi
+}
+
+sha512sums='0baec9db8b7408f71cf0a178f3fc86b6a34c940469c6d0e923b9b6422ebfaef81c77b99cb68e0e6d1e1a0cbe47fe3ceb630a0882403330e2e30c385bef791ee6
+trmnl-remarkable-2.3.0.tar.gz'
