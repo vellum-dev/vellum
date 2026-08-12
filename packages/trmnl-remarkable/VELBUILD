@@ -61,8 +61,9 @@ package() {
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -rf /home/root/xovi/exthome/appload/trmnl-remarkable
 		rm -rf /home/root/.config/trmnl-remarkable
+		rm -rf /home/root/.local/share/trmnl-remarkable
+		rm -rf /home/root/.cache/trmnl-remarkable
 	fi
 }
 
