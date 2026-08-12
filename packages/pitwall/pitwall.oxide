@@ -1,0 +1,14 @@
+{
+    "bin": "/home/root/.vellum/bin/qtfblight",
+    "displayName": "Pit Wall",
+    "environment": {
+        "_QTFBLIGHT_COMMAND": "'/home/root/xovi/exthome/appload/pitwall/pitwall' '-speed' '1'"
+    },
+    "flags": [
+        "nopreload"
+    ],
+    "icon": "/home/root/xovi/exthome/appload/pitwall/icon.png",
+    "name": "Pit Wall",
+    "type": "foreground",
+    "workingDirectory": "/home/root/xovi/exthome/appload/pitwall"
+}

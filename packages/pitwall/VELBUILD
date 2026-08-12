@@ -1,3 +1,6 @@
+subpackages='
+pitwall-oxide:pitwall_oxide
+'
 maintainer="Yan Khachko <46069139+sijokun@users.noreply.github.com>"
 pkgname=pitwall
 pkgver=1.0.0
@@ -8,12 +11,13 @@ pkgdesc="Live Formula 1 timing for AppLoad: positions, intervals, tyres, flags, 
 url="https://github.com/$upstream_author/PitWall"
 arch="aarch64 armv7"
 license="MIT"
-depends="appload"
+depends="launcher"
 _commit="e8828b59c3eb7557d40ffdce726cef4d4fee0cdd"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/PitWall/$_commit/README.md"
 
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/PitWall/archive/$_commit.tar.gz
+pitwall.oxide
 "
 builddir="$srcdir/PitWall-$_commit"
 
@@ -45,6 +49,22 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
+pitwall_oxide() {
+	pkgdesc="Oxide application registration for PitWall"
+	depends="qtfblight"
+	install_if="$pkgname=$pkgver-r$pkgrel oxide"
+
+	package() {
+		install -Dm644 "$srcdir"/pitwall.oxide \
+			"$subpkgdir/home/root/.local/share/applications/Pit Wall.oxide"
+
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "https://github.com/sijokun/PitWall/archive/$_commit.tar.gz" > \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+}
+
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/.config/pitwall
@@ -52,4 +72,6 @@ postdeinstall() {
 }
 
 sha512sums='e7f0868a91d7bef5a197b475863e069ae737ff1dde286b068e9cf54ae14c0eb38d157a6c15613400f09fded477df24574f7977e6bd4613e49a480fc9161fd9f0
-pitwall-1.0.0.tar.gz'
+pitwall-1.0.0.tar.gz
+1dc3014f9063cb557ab66bcd7806e00142f4e36f44ad52e2bbbdf0558aaf78e628318c459853bbd5b4e666a520742dd9461418764010a5fd7da821df4e21cc02
+pitwall.oxide'
