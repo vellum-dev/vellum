@@ -14,7 +14,6 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/v$pkgver/
 source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.tar.gz
 "
-builddir="$srcdir/$pkgname-$pkgver"
 
 image="ghcr.io/toltec-dev/golang:v4.0"
 
@@ -42,7 +41,6 @@ build() {
 }
 
 package() {
-	cd "$builddir"
 	_appdir="$pkgdir"/home/root/xovi/exthome/appload/$pkgname
 
 	install -Dm755 build/backend/entry "$_appdir"/backend/entry
