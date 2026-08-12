@@ -268,7 +268,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
              modifies_system: $modifies_system,
              auto_install: (if $install_if_val == "" or $install_if_val == "_" then false else true end),
              released: $now,
-             _origin: (if $origin == "" or $origin == "_" then null else $origin end),
+             origin: (if $origin == "" or $origin == "_" then null else $origin end),
              readmeurl: (if $readmeurl == "" then null else $readmeurl end),
              donateurl: (if $donateurl == "" then null else $donateurl end)
            }' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
@@ -292,14 +292,14 @@ jq '
 ' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
 
 # Compute parent package devices from subpackages
-# If a package has subpackages (other packages with _origin pointing to it),
+# If a package has subpackages (other packages with origin pointing to it),
 # the parent's devices should be the union of all subpackage devices
 echo "Computing parent package devices from subpackages..."
 jq '
   # Build map of parent -> [subpackage devices]
   ([.packages | to_entries[] | .key as $pkg | .value | to_entries[] |
-    select(.value._origin != null and .value._origin != $pkg) |
-    {parent: .value._origin, version: .key, devices: .value.devices}
+    select(.value.origin != null and .value.origin != $pkg) |
+    {parent: .value.origin, version: .key, devices: .value.devices}
   ] | group_by(.parent) | map({
     key: .[0].parent,
     value: (map(.devices) | add | unique)
@@ -331,15 +331,6 @@ jq '
          else empty end
        ] | unique) as $allowed |
       .value.devices = [ (.value.devices // [])[] | select(IN($allowed[])) ]
-    )
-  )
-' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
-
-# Remove temporary _origin field from output
-jq '
-  .packages |= with_entries(
-    .value |= with_entries(
-      .value |= del(._origin)
     )
   )
 ' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
