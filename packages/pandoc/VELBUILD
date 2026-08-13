@@ -1,6 +1,6 @@
 maintainer="esclee <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=pandoc
-pkgver=3.10.1
+pkgver=3.10.2
 pkgrel=0
 upstream_author="jgm"
 category="utilities"
