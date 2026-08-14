@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=trmnl-remarkable
-pkgver=2.3.0
+pkgver=2.4.0
 pkgrel=0
 upstream_author="usetrmnl"
 category="apps"
@@ -65,5 +65,5 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='0baec9db8b7408f71cf0a178f3fc86b6a34c940469c6d0e923b9b6422ebfaef81c77b99cb68e0e6d1e1a0cbe47fe3ceb630a0882403330e2e30c385bef791ee6
-trmnl-remarkable-2.3.0.tar.gz'
+sha512sums='5339fd19f65e2b156a0aab70a20ad9da59686c5277f8d6c4115c48845678a9f540228242d23be55fe419ab8f5b4d0690bf3687ce9b644b01bfa1ac80a3fc7624
+trmnl-remarkable-2.4.0.tar.gz'
