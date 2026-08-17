@@ -94,7 +94,7 @@ package() {
         "$pkgdir$platodir"/external.manifest.json
 }
 postinstall() {
-    local mediadir=/home/root/plato-media
+    mediadir=/home/root/plato-media
     if [ ! -d "$mediadir" ]; then
         mkdir "$mediadir"
         echo ""
