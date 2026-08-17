@@ -1,6 +1,6 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=remarkdown
-pkgver=0.1.0
+pkgver=0.3.0
 pkgrel=0
 upstream_author="esclee"
 category="apps"
@@ -60,5 +60,5 @@ postdeinstall() {
 		rm -rf /home/root/xovi/exthome/appload/rmd
 	fi
 }
-sha512sums='c9f0d725cb734638d7e2c981692bea217d4e05562cd2c6ab6e30d06c6f7deed1fa28794420978deb47f6a697b0faeb1d4d5e9650e80850de58e659e495b0e3b0
-reMarkdown-0.1.0.tar.gz'
+sha512sums='44ddcdb5db9e47552eb7f95d99499b1b657e383bbd62378b1c57e4c8f85a89ca3c03d4454b075b9df7615a0b059e55efe6d82ffa875ba59dff05cd5d9095b1ff
+reMarkdown-0.3.0.tar.gz'
