@@ -85,6 +85,10 @@ package() {
     ln -s "$mediadir" "$pkgdir$platodir"/media
     install -d "$pkgdir"/home/root/.vellum/etc
     ln -s /home/root/.vellum/etc/plato.toml "$pkgdir$platodir"/Settings.toml
+    ln -s libdjvulibre.so "$pkgdir$platodir"/libs/libdjvulibre.so.21
+    ln -s libjpeg.so "$pkgdir$platodir"/libs/libjpeg.so.9
+    ln -s libgumbo.so "$pkgdir$platodir"/libs/libgumbo.so.1
+    ln -s libjbig2dec.so "$pkgdir$platodir"/libs/libjbig2dec.so.0
     install -Dm644 "LICENSE-AGPLv3" \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
     echo "https://github.com/$upstream_author/plato" > \
