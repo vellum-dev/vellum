@@ -20,9 +20,17 @@ image="ghcr.io/toltec-dev/rust:v4.0"
 
 build() {
     set -e
+    cd "$srcdir"/"$pkgname"-"$pkgver"-rm-release-14
     case "$CARCH" in
-    aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-    armv7) . /opt/x-tools/switch-arm.sh ;;
+    aarch64)
+        . /opt/x-tools/switch-aarch64.sh
+        export CFLAGS="-mcpu=cortex-a53+crc+crypto -mbranch-protection=standard -O2 -pipe -g -feliminate-unused-debug-types"
+        sed -i 's/OS=kobo/OS=kobo HAVE_OBJCOPY=yes/' thirdparty/mupdf/build-kobo.sh
+        ;;
+    armv7)
+        . /opt/x-tools/switch-arm.sh
+        export CFLAGS="-mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 -O2 -pipe -g -feliminate-unused-debug-types -gdwarf-4"
+        ;;
     *)
         echo "Invalid CARCH: $CARCH"
         exit 1
@@ -30,16 +38,41 @@ build() {
     esac
     apt-get update
     apt-get install -y \
+        autoconf \
         jq \
+        libtool \
         patchelf \
         unzip \
         wget
-    cd "$srcdir"/"$pkgname"-"$pkgver"-rm-release-14
     sed -i "s/version=.*$/version=\'$(cargo pkgid -p plato | cut -d "#" -f 2 | cut -d ":" -f 2)\'/g" download.sh
     sed -i "s/cross build/cargo build/g" build.sh
-    ./clean.sh
-    ./build.sh
-    ./dist.sh
+    sed -i 's/armv7-unknown-linux-gnueabihf/$CARGO_BUILD_TARGET/g' \
+        build.sh \
+        dist.sh
+    sed -i 's/zlib-1\.3\.1/zlib-1.3.2/g' thirdparty/download.sh
+    sed -i 's/git ls-files/true #/g' thirdparty/download.sh
+    sed -i "s/arm-linux-gnueabihf/${CHOST}/g" \
+        thirdparty/mupdf/kobo.patch \
+        thirdparty/bzip2/Makefile-kobo \
+        thirdparty/*/build-kobo.sh
+    sed -i "s/-mcpu=cortex-a9 -mfpu=neon/${CFLAGS}/g" \
+        thirdparty/mupdf/kobo.patch \
+        thirdparty/bzip2/Makefile-kobo \
+        thirdparty/*/build-kobo.sh
+    sed -i "s/'\${CFLAGS}'/\"\${CFLAGS}\"/g" thirdparty/*/build-kobo.sh
+    sed -i "s/armv7-unknown-linux-gnueabihf/${CARGO_BUILD_TARGET}/" crates/core/build.rs
+    rm mupdf_wrapper/build-kobo.sh
+    ln -s build.sh mupdf_wrapper/build-kobo.sh
+    sh -e ./clean.sh
+    TARGET_OS=Kobo \
+        AR=${CROSS_COMPILE}ar \
+        CC=${CROSS_COMPILE}gcc \
+        CXX=${CROSS_COMPILE}g++ \
+        STRIP=${CROSS_COMPILE}strip \
+        env -u srcdir \
+        sh -e ./build.sh slow
+    STRIP=${CROSS_COMPILE}strip \
+        sh -ex ./dist.sh
 }
 
 package() {
