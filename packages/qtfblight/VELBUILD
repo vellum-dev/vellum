@@ -4,7 +4,7 @@ appload-to-oxide:appload_to_oxide
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=qtfblight
 pkgver=0.1.2
-pkgrel=0
+pkgrel=1
 pkgdesc="QTFB compatibility server for reMarkable tablets"
 upstream_author="NoaHimesaka1873"
 category="framework"
@@ -14,9 +14,11 @@ license="GPL-3.0-only"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/$pkgver/README.md"
 source="$pkgname-$pkgver.zip::https://github.com/$upstream_author/$pkgname/archive/refs/tags/$pkgver.zip"
 depends="oxide-display"
+options='strip'
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
+	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -31,10 +33,10 @@ build() {
 
 	mv target/"$CARGO_BUILD_TARGET"/release/qtfblight .
 	mv target/"$CARGO_BUILD_TARGET"/release/appload-to-oxide .
-	"${CROSS_COMPILE}strip" qtfblight appload-to-oxide
 }
 
 package() {
+	set -e
 	cd "$srcdir/$pkgname-$pkgver"
 
 	install -Dm755 qtfblight \
@@ -55,6 +57,7 @@ appload_to_oxide() {
 	"
 
 	package() {
+		set -e
 		cd "$srcdir/$pkgname-$pkgver"
 
 		install -Dm755 appload-to-oxide \

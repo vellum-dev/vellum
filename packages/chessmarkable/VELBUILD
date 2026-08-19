@@ -2,7 +2,7 @@ maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=chessmarkable
 _pkgver=0.8.1-1
 pkgver=${_pkgver%-*}
-pkgrel=5
+pkgrel=6
 pkgdesc="Chess game"
 upstream_author="LinusCDE"
 category="apps"
@@ -16,6 +16,7 @@ external.manifest.aarch64.json
 external.manifest.armv7.json
 "
 depends="!rmppure launcher"
+options='strip'
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
@@ -28,14 +29,13 @@ build() {
 		exit 1
 		;;
 	esac
-	_pkgver=0.8.1-1 # $_pkgver is not passed through to build() yet
 	cd "$srcdir/$pkgname-$_pkgver"
 	cargo build --release --bin chessmarkable
 	mv target/$CARGO_BUILD_TARGET/release/chessmarkable .
-	"${CROSS_COMPILE}strip" chessmarkable
 }
 
 package() {
+	set -e
 	cd "$srcdir/$pkgname-$_pkgver"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"

@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=zerotier-one
 pkgver=1.16.2
-pkgrel=0
+pkgrel=1
 pkgdesc="A Smart Ethernet Switch for Earth"
 upstream_author="zerotier"
 category="utilities"
@@ -12,10 +12,11 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/ZeroTierOne/$pkgve
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/ZeroTierOne/archive/refs/tags/$pkgver.tar.gz"
 subpackages="zerotier-selftest:selftest"
 systemdunits="ZeroTierOne-$pkgver/debian/zerotier-one.service"
+options='strip'
 
 image="ghcr.io/toltec-dev/base:v4.0"
 build() {
-	set -xe
+	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -52,6 +53,7 @@ build() {
 }
 
 package() {
+	set -e
 	cd "$srcdir/ZeroTierOne-$pkgver"
 	install -Dm644 "LICENSE-MPL.txt" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -63,6 +65,7 @@ package() {
 doc() {
 	pkgdesc="Man files for zerotier-one"
 	package() {
+		set -e
 		mkdir -p "$subpkgdir"/home/root/.vellum/share
 		mv "$pkgdir"/home/root/.vellum/share/. "$subpkgdir"/home/root/.vellum/share
 	}
@@ -70,6 +73,7 @@ doc() {
 selftest() {
 	pkgdesc="Unit test zerotier to ensure that it works as expected on the system"
 	package() {
+		set -e
 		cd "$srcdir/ZeroTierOne-$pkgver"
 		install -Dm755 zerotier-selftest \
 			"$subpkgdir"/home/root/.vellum/bin/zerotier-selftest

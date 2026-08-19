@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=keyd
 pkgver=2.6.0
-pkgrel=0
+pkgrel=1
 pkgdesc="A key remapping daemon for linux"
 upstream_author="rvaiya"
 category="utilities"
@@ -15,8 +15,10 @@ default.conf
 "
 subpackages="$pkgname-doc"
 systemdunits="keyd.service"
+options='strip'
 image="ghcr.io/toltec-dev/base:v4.0"
 build() {
+	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -29,10 +31,10 @@ build() {
 	make PREFIX=/home/root/.vellum CONFIG_DIR=/home/root/.config/keyd "CC=${CROSS_COMPILE}cc"
 	PREFIX=/home/root/.vellum \
 		sed -e "s|@PREFIX@|/home/root/.vellum|" keyd.service.in >"$srcdir"/keyd.service
-	"${CROSS_COMPILE}strip" bin/keyd
 }
 
 package() {
+	set -e
 	cd "$srcdir/$pkgname-${pkgver%-*}"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
@@ -48,6 +50,7 @@ package() {
 }
 doc() {
 	package() {
+		set -e
 		mkdir -p "$subpkgdir"/home/root/.vellum/share/
 		mv "$pkgdir"/home/root/.vellum/share/man/ \
 			"$subpkgdir"/home/root/.vellum/share/man/

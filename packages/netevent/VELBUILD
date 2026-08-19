@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=netevent
 pkgver=2.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Input-Event device cloning utility"
 upstream_author="Blub"
 category="utilities"
@@ -10,9 +10,10 @@ arch="armv7 aarch64"
 license="GPL-2.0-only"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/netevent/${pkgver%-*}/README.md"
 source="$pkgname-${pkgver%-*}.tar.gz::https://github.com/$upstream_author/netevent/archive/refs/tags/${pkgver%-*}.tar.gz"
-
+options='strip'
 image="ghcr.io/toltec-dev/base:v4.0"
 build() {
+	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -24,10 +25,10 @@ build() {
 	cd "$srcdir/$pkgname-${pkgver%-*}"
 	export CXX="${CROSS_COMPILE}g++"
 	make
-	"${CROSS_COMPILE}strip" netevent
 }
 
 package() {
+	set -e
 	cd "$srcdir/$pkgname-${pkgver%-*}"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"

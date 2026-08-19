@@ -1,7 +1,7 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=remarkdown
 pkgver=0.3.0
-pkgrel=0
+pkgrel=1
 upstream_author="esclee"
 category="apps"
 pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via AppLoad"
@@ -14,6 +14,7 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkdown/v$pkgve
 source="
 reMarkdown-$pkgver.tar.gz::https://github.com/$upstream_author/reMarkdown/archive/refs/tags/v$pkgver.tar.gz
 "
+options='strip'
 
 image() {
 	case "$CARCH" in
@@ -43,10 +44,10 @@ build() {
 	esac
 	PATH="${OECORE_NATIVE_SYSROOT}/usr/libexec:$PATH" \
 		bash -e ./build.sh "$arch"
-	"$STRIP" --strip-unneeded rmd/backend/entry
 }
 
 package() {
+	set -e
 	cd "$srcdir"/reMarkdown-"$pkgver"
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
 	cp -r rmd "$pkgdir"/home/root/xovi/exthome/appload
@@ -56,6 +57,7 @@ package() {
 }
 
 postdeinstall() {
+	set -e
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/xovi/exthome/appload/rmd
 	fi

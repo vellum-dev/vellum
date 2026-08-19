@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=bandwhich
 pkgver=0.23.1
-pkgrel=0
+pkgrel=1
 upstream_author="imsnif"
 category="utilities"
 pkgdesc="CLI network utilization tool"
@@ -12,9 +12,11 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/v$pkgver/
 source="
 https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.zip
 "
+options='strip'
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
+	set -e
 	cd "$srcdir"/"$pkgname"-"$pkgver"
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
@@ -26,11 +28,11 @@ build() {
 	esac
 	ls -l
 	cargo build --release
-	"${CROSS_COMPILE}strip" target/"$CARGO_BUILD_TARGET"/release/bandwhich
 	mv target/"$CARGO_BUILD_TARGET"/release/bandwhich .
 }
 
 package() {
+	set -e
 	cd "$srcdir"/"$pkgname"-"$pkgver"
 	install -Dm755 bandwhich \
 		"$pkgdir"/home/root/.vellum/bin/bandwhich

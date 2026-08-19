@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=restream
 pkgver=1.5.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Binary framebuffer capture tool for the reStream script"
 upstream_author="rien"
 category="utilities"
@@ -10,9 +10,10 @@ arch="armv7"
 license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reStream/v$pkgver/README.md"
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/reStream/archive/refs/tags/v$pkgver.tar.gz"
-
+options='strip'
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
+	set -e
 	case "$CARCH" in
 	# aarch64) . /opt/x-tools/switch-aarch64.sh ;;  # Not supported currently
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -23,11 +24,11 @@ build() {
 	esac
 	cd "$srcdir/reStream-$pkgver"
 	cargo build --release --bin restream
-	"${CROSS_COMPILE}strip" target/"$CARGO_BUILD_TARGET"/release/restream
 	mv target/"$CARGO_BUILD_TARGET"/release/restream .
 }
 
 package() {
+	set -e
 	cd "$srcdir/reStream-$pkgver"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"

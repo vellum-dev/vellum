@@ -1,7 +1,7 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
 pkgver=0.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
@@ -39,7 +39,6 @@ build() {
 		exit 1
 		;;
 	esac
-	_commit=125e7e10d044e6eef1fa391a979067fb1c18cb3c # not set in build() when image= is used
 	cd "$srcdir/netsurf-reMarkable-$_commit"
 	# Remove the toolchain's prebuilt shared libevdev so the linker uses the
 	# static one install_dependencies.sh builds instead.

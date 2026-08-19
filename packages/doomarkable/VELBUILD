@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=doomarkable
 pkgver=0.4.2
-pkgrel=2
+pkgrel=3
 pkgdesc="DOOM game"
 upstream_author="LinusCDE"
 category="apps"
@@ -15,9 +15,11 @@ external.manifest.aarch64.json
 external.manifest.armv7.json
 "
 depends="launcher !rmppure !rm2"
+options='strip'
 
 image="ghcr.io/toltec-dev/rust:v4.0"
 build() {
+	set -e
 	case "$CARCH" in
 	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
 	armv7) . /opt/x-tools/switch-arm.sh ;;
@@ -31,10 +33,10 @@ build() {
 	cd "$srcdir/$pkgname-$pkgver"
 	cargo build --release
 	mv target/"$CARGO_BUILD_TARGET"/release/doomarkable .
-	"${CROSS_COMPILE}strip" doomarkable
 }
 
 package() {
+	set -e
 	cd "$srcdir/$pkgname-$pkgver"
 	install -Dm644 "LICENSE" \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
