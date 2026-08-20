@@ -1,0 +1,118 @@
+maintainer="Eeems <eeems@eeems.email>"
+pkgname=plato
+pkgver=0.9.44
+pkgrel=0
+upstream_author="LinusCDE"
+category="utilities"
+pkgdesc="Document reader"
+url="https://github.com/$upstream_author/plato"
+arch="armv7"
+license="AGPL-3.0-or-later"
+depends="launcher"
+
+source="
+https://github.com/LinusCDE/plato/archive/refs/tags/${pkgver%-*}-rm-release-14.zip
+external.manifest.aarch64.json
+external.manifest.armv7.json
+"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+    set -e
+    cd "$srcdir"/"$pkgname"-"$pkgver"-rm-release-14
+    case "$CARCH" in
+    # aarch64) # Does not currently work on aarch64
+    #     . /opt/x-tools/switch-aarch64.sh
+    #     export CFLAGS="-mcpu=cortex-a53+crc+crypto -mbranch-protection=standard -O2 -pipe -g -feliminate-unused-debug-types"
+    #     sed -i 's/OS=kobo/OS=kobo HAVE_OBJCOPY=yes/' thirdparty/mupdf/build-kobo.sh
+    #     ;;
+    armv7)
+        . /opt/x-tools/switch-arm.sh
+        export CFLAGS="-mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 -O2 -pipe -g -feliminate-unused-debug-types -gdwarf-4"
+        ;;
+    *)
+        echo "Invalid CARCH: $CARCH"
+        exit 1
+        ;;
+    esac
+    apt-get update
+    apt-get install -y \
+        autoconf \
+        jq \
+        libtool \
+        patchelf \
+        unzip \
+        wget
+    sed -i "s/version=.*$/version=\'$(cargo pkgid -p plato | cut -d "#" -f 2 | cut -d ":" -f 2)\'/g" download.sh
+    sed -i "s/cross build/cargo build/g" build.sh
+    sed -i 's/armv7-unknown-linux-gnueabihf/$CARGO_BUILD_TARGET/g' \
+        build.sh \
+        dist.sh
+    sed -i 's/zlib-1\.3\.1/zlib-1.3.2/g' thirdparty/download.sh
+    sed -i 's/git ls-files/true #/g' thirdparty/download.sh
+    sed -i "s/arm-linux-gnueabihf/${CHOST}/g" \
+        thirdparty/mupdf/kobo.patch \
+        thirdparty/bzip2/Makefile-kobo \
+        thirdparty/*/build-kobo.sh
+    sed -i "s/-mcpu=cortex-a9 -mfpu=neon/${CFLAGS}/g" \
+        thirdparty/mupdf/kobo.patch \
+        thirdparty/bzip2/Makefile-kobo \
+        thirdparty/*/build-kobo.sh
+    sed -i "s/'\${CFLAGS}'/\"\${CFLAGS}\"/g" thirdparty/*/build-kobo.sh
+    sed -i "s/armv7-unknown-linux-gnueabihf/${CARGO_BUILD_TARGET}/" crates/core/build.rs
+    rm mupdf_wrapper/build-kobo.sh
+    ln -s build.sh mupdf_wrapper/build-kobo.sh
+    sh -e ./clean.sh
+    TARGET_OS=Kobo \
+        AR=${CROSS_COMPILE}ar \
+        CC=${CROSS_COMPILE}gcc \
+        CXX=${CROSS_COMPILE}g++ \
+        STRIP=${CROSS_COMPILE}strip \
+        env -u srcdir \
+        sh -e ./build.sh slow
+    STRIP=${CROSS_COMPILE}strip \
+        sh -ex ./dist.sh
+}
+
+package() {
+    cd "$srcdir"/"$pkgname"-"$pkgver"-rm-release-14
+    local platodir=/home/root/xovi/exthome/appload/plato
+    local mediadir=/home/root/plato-media
+    install -d "$pkgdir$platodir"
+    cp -r ./dist/. "$pkgdir$platodir"
+    rmdir "$pkgdir$platodir"/media
+    ln -s "$mediadir" "$pkgdir$platodir"/media
+    install -d "$pkgdir"/home/root/.vellum/etc
+    ln -s /home/root/.vellum/etc/plato.toml "$pkgdir$platodir"/Settings.toml
+    ln -s libdjvulibre.so "$pkgdir$platodir"/libs/libdjvulibre.so.21
+    ln -s libjpeg.so "$pkgdir$platodir"/libs/libjpeg.so.9
+    ln -s libgumbo.so "$pkgdir$platodir"/libs/libgumbo.so.1
+    ln -s libjbig2dec.so "$pkgdir$platodir"/libs/libjbig2dec.so.0
+    install -Dm644 "LICENSE-AGPLv3" \
+        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+    echo "https://github.com/$upstream_author/plato" > \
+        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+    install -Dm644 \
+        "$startdir"/external.manifest."$CARCH".json \
+        "$pkgdir$platodir"/external.manifest.json
+}
+postinstall() {
+    mediadir=/home/root/plato-media
+    if [ ! -d "$mediadir" ]; then
+        mkdir "$mediadir"
+        echo ""
+        echo "Place your media files for plato in '$mediadir'"
+        echo ""
+    fi
+
+}
+postupgrade() {
+    postinstall
+}
+sha512sums='9fa910f15a551f8839b838e40de2b2c23959cebf1c303a417a9f1dd4822a7567a44b1f9ee64e3342635f1360bf08fa8760fa919eafe55feba62456a8a854c8f9
+0.9.44-rm-release-14.zip
+cede01c676b01c3b0f1c062678451eab591ccd77c130a41414b12299350455d400750fbdddc263bf3db674df6ca1365485df9d0f793d8175553ff42f1e076e3f
+external.manifest.aarch64.json
+051c0f904f2620b392d198801ea57d1e835ab8a5dca912c96a87321d151d48f909e0333d12820610a95ac9a5a6a5a452a7c05a775bebc82523d3fc588776114e
+external.manifest.armv7.json'
