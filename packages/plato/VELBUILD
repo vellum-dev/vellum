@@ -6,7 +6,7 @@ upstream_author="LinusCDE"
 category="utilities"
 pkgdesc="Document reader"
 url="https://github.com/$upstream_author/plato"
-arch="armv7 aarch64"
+arch="armv7"
 license="AGPL-3.0-or-later"
 depends="launcher"
 
@@ -22,11 +22,11 @@ build() {
     set -e
     cd "$srcdir"/"$pkgname"-"$pkgver"-rm-release-14
     case "$CARCH" in
-    aarch64)
-        . /opt/x-tools/switch-aarch64.sh
-        export CFLAGS="-mcpu=cortex-a53+crc+crypto -mbranch-protection=standard -O2 -pipe -g -feliminate-unused-debug-types"
-        sed -i 's/OS=kobo/OS=kobo HAVE_OBJCOPY=yes/' thirdparty/mupdf/build-kobo.sh
-        ;;
+    # aarch64) # Does not currently work on aarch64
+    #     . /opt/x-tools/switch-aarch64.sh
+    #     export CFLAGS="-mcpu=cortex-a53+crc+crypto -mbranch-protection=standard -O2 -pipe -g -feliminate-unused-debug-types"
+    #     sed -i 's/OS=kobo/OS=kobo HAVE_OBJCOPY=yes/' thirdparty/mupdf/build-kobo.sh
+    #     ;;
     armv7)
         . /opt/x-tools/switch-arm.sh
         export CFLAGS="-mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 -O2 -pipe -g -feliminate-unused-debug-types -gdwarf-4"
