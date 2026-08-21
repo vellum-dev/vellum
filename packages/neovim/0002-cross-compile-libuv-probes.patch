@@ -1,0 +1,16 @@
+diff --git a/cmake/FindLibuv.cmake b/cmake/FindLibuv.cmake
+--- a/cmake/FindLibuv.cmake
++++ b/cmake/FindLibuv.cmake
+@@ -37,6 +37,12 @@ if(HAVE_LIBSENDFILE)
+   list(APPEND LIBUV_LIBRARIES sendfile)
+ endif()
+ 
++# These optional libraries belong to non-Linux libuv backends. Cross CMake
++# probes can otherwise inherit their cached host results and add invalid flags.
++if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++  list(REMOVE_ITEM LIBUV_LIBRARIES kstat kvm nsl perfstat sendfile)
++endif()
++
+ if(WIN32)
+   # check_library_exists() does not work for Win32 API calls in X86 due to name
+   # mangling calling conventions

@@ -1,0 +1,80 @@
+maintainer="Florian Labarre <4939807+flolbr@users.noreply.github.com>"
+pkgname=neovim
+pkgver=0.12.4
+pkgrel=0
+pkgdesc="Hyperextensible Vim-based text editor"
+upstream_author="neovim"
+category="apps"
+url="https://neovim.io"
+arch="armv7"
+license="Apache-2.0"
+depends="!rm1"
+readmeurl="https://raw.githubusercontent.com/neovim/neovim/v$pkgver/README.md"
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/neovim/neovim/archive/refs/tags/v$pkgver.tar.gz
+0001-cross-compile-luajit-hostcc.patch
+0002-cross-compile-libuv-probes.patch
+0003-disable-luajit-bytecode-embedding.patch
+"
+options="!check strip"
+image="ghcr.io/toltec-dev/base:v4.0"
+
+build() {
+	set -e
+	. /opt/x-tools/switch-arm.sh
+	apt-get update
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		gcc-multilib gettext luajit qemu-user
+
+	cat > "$srcdir/arm-luajit" <<'EOF'
+#!/bin/sh
+case "$1" in
+*/gen_unicode_tables.lua) exec /usr/bin/luajit "$@" ;;
+esac
+exec qemu-arm -L /opt/x-tools/arm-remarkable-linux-gnueabihf/arm-remarkable-linux-gnueabihf/sysroot "$ARM_LUAJIT" -joff "$@"
+EOF
+	cat > "$srcdir/arm-nvim" <<'EOF'
+#!/bin/sh
+exec qemu-arm -L /opt/x-tools/arm-remarkable-linux-gnueabihf/arm-remarkable-linux-gnueabihf/sysroot "$ARM_NVIM" "$@"
+EOF
+	cat > "$srcdir/rm2-toolchain.cmake" <<EOF
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR arm)
+set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+set(CMAKE_SYSROOT /opt/x-tools/arm-remarkable-linux-gnueabihf/arm-remarkable-linux-gnueabihf/sysroot)
+set(CMAKE_FIND_ROOT_PATH "\${CMAKE_SYSROOT}" "$builddir/.deps/usr")
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+EOF
+	chmod +x "$srcdir/arm-luajit" "$srcdir/arm-nvim"
+
+	export ARM_LUAJIT="$builddir/.deps/usr/bin/luajit"
+	export ARM_NVIM="$builddir/build/bin/nvim"
+	export HOSTCC="gcc-12 -m32"
+	cd "$builddir"
+	make CMAKE_BUILD_TYPE=Release \
+		CMAKE_EXTRA_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$srcdir/rm2-toolchain.cmake -DCMAKE_INSTALL_PREFIX=/home/root/.vellum -DLUA_PRG=$srcdir/arm-luajit -DLUA_GEN_PRG=$srcdir/arm-luajit -DNVIM_HOST_PRG=$srcdir/arm-nvim" \
+		DEPS_CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$srcdir/rm2-toolchain.cmake"
+	DESTDIR="$srcdir/stage" cmake --install build
+}
+
+package() {
+	mkdir -p "$pkgdir"
+	cp -a "$srcdir/stage/." "$pkgdir/"
+
+	install -Dm644 "$builddir/LICENSE.txt" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	echo "https://github.com/neovim/neovim/tree/v$pkgver" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+}
+
+sha512sums="
+24656352a4d4785068640a3c53246bbfaf14c2d2e59f9ec8348399db17bc4104032ae62e56797038a65fc086d893dac1ce692a5eb4d186226b65f4cf694c835e  neovim-0.12.4.tar.gz
+5b6100495bb049048e902cac6747649491486959e44d304fbef818f92226754226db914f879692fbe2822d2f21cb91817075d553d66114a2bd9a8ae91829acd5  0001-cross-compile-luajit-hostcc.patch
+74d008a31d27064b36f97cfd5f46e5086fd5b6566651dddaf305505b3211cefe3b0b4560e140c56fec5866210c6c659ba15df0d5d696dfcd79e7fc6c91d4890e  0002-cross-compile-libuv-probes.patch
+3c7f73d3d165325a813cf1596f49c591ac309f9d5f62bb319cf91c8135ddb56eaa02931f41dd188d3d6f97b97b19876727c524bedbd87e6ad593b0463d9383f4  0003-disable-luajit-bytecode-embedding.patch
+"

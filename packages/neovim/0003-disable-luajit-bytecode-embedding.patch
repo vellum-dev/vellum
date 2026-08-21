@@ -1,0 +1,12 @@
+diff --git a/src/nvim/CMakeLists.txt b/src/nvim/CMakeLists.txt
+--- a/src/nvim/CMakeLists.txt
++++ b/src/nvim/CMakeLists.txt
+@@ -641,7 +641,7 @@ add_custom_command(
+ 
+ add_custom_command(
+   OUTPUT ${VIM_MODULE_FILE}
+-  COMMAND ${LUA_PRG} ${CHAR_BLOB_GENERATOR} ${LUA_BLOB_COMPILE_FLAG} ${VIM_MODULE_FILE}
++  COMMAND ${LUA_PRG} ${CHAR_BLOB_GENERATOR} ${VIM_MODULE_FILE}
+       # NB: vim._init_packages and vim.inspect must be be first and second ones
+       # respectively, otherwise --luamod-dev won't work properly.
+       ${LUA_INIT_PACKAGES_MODULE_SOURCE} "vim._init_packages"

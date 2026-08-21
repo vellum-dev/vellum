@@ -1,0 +1,12 @@
+diff --git a/cmake.deps/cmake/BuildLuajit.cmake b/cmake.deps/cmake/BuildLuajit.cmake
+--- a/cmake.deps/cmake/BuildLuajit.cmake
++++ b/cmake.deps/cmake/BuildLuajit.cmake
+@@ -70,7 +70,7 @@ endif()
+ 
+ elseif(UNIX)
+   BuildLuajit(INSTALL_COMMAND ${BUILDCMD_UNIX}
+-    CC=${DEPS_C_COMPILER} PREFIX=${DEPS_INSTALL_DIR}
++    CC=${DEPS_C_COMPILER} HOST_CC=$ENV{HOSTCC} PREFIX=${DEPS_INSTALL_DIR}
+     ${DEPLOYMENT_TARGET} install)
+ 
+ elseif(MINGW)
