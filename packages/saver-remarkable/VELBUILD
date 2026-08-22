@@ -1,0 +1,89 @@
+maintainer="Paul <70213368+LostPaul@users.noreply.github.com>"
+pkgname=saver-remarkable
+pkgver=0.1.0
+pkgrel=0
+upstream_author="Saver-app"
+category="utilities"
+pkgdesc="Saver client for todos, bookmarks, and habits on reMarkable tablets"
+url="https://github.com/$upstream_author/saver-remarkable"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload>=0.5.3 !rm1 !rmppm !rmppure"
+subpackages="saver-remarkable-capture:capture"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/saver-remarkable/v$pkgver/README.md"
+
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/saver-remarkable/archive/refs/tags/v$pkgver.tar.gz"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
+
+	case "$CARCH" in
+	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$srcdir"/saver-remarkable-"$pkgver"
+	cargo build --release --locked --target "$CARGO_BUILD_TARGET"
+	mv target/"$CARGO_BUILD_TARGET"/release/saver-remarkable .
+	rcc --binary -o packaging/appload/resources.rcc packaging/appload/app.qrc
+}
+
+package() {
+	set -e
+	cd "$srcdir"/saver-remarkable-"$pkgver"
+	install -Dm755 saver-remarkable \
+		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/backend/entry
+	install -Dm644 packaging/appload/manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/manifest.json
+	install -Dm644 packaging/appload/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/icon.png
+	install -Dm644 packaging/appload/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/resources.rcc
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	set -e
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.config/saver-remarkable
+	fi
+}
+
+capture() {
+	category="ui"
+	pkgdesc="Saver sidebar entry and handwriting-to-todo capture"
+	depends="
+	saver-remarkable
+	qt-resource-rebuilder
+	!convert-to-text-remover
+	remarkable-os>=3.26
+	remarkable-os<3.28
+	"
+
+	package() {
+		cd "$srcdir"/saver-remarkable-"$pkgver"
+		install -Dm644 packaging/qmldiff/saver-sidebar.qmd \
+			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/saver-sidebar.qmd
+		install -Dm644 packaging/qmldiff/saver-selection.qmd \
+			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/saver-selection.qmd
+
+		install -Dm644 LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/saver-remarkable-capture/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/saver-remarkable-capture/SOURCES
+	}
+}
+
+sha512sums='154f9fad58a5aaa4357727aeb4a26aea11c9428318df7cc9d631f933e2558fa07edfbcda8653044d16f47b9ca12bb42a8171dfda114bfd3dc434bc2d2d05daf6
+saver-remarkable-0.1.0.tar.gz'
