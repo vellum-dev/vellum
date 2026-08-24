@@ -1,6 +1,6 @@
 maintainer="Paul <70213368+LostPaul@users.noreply.github.com>"
 pkgname=saver-remarkable
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=0
 upstream_author="Saver-app"
 category="utilities"
@@ -67,7 +67,9 @@ capture() {
 	depends="
 	saver-remarkable
 	qt-resource-rebuilder
+	qt-command-executor
 	!convert-to-text-remover
+	!retaskable-capture
 	remarkable-os>=3.26
 	remarkable-os<3.28
 	"
@@ -85,5 +87,5 @@ capture() {
 	}
 }
 
-sha512sums='154f9fad58a5aaa4357727aeb4a26aea11c9428318df7cc9d631f933e2558fa07edfbcda8653044d16f47b9ca12bb42a8171dfda114bfd3dc434bc2d2d05daf6
-saver-remarkable-0.1.0.tar.gz'
+sha512sums='91561c53de9d2761133898f1920101d8477fa578f9987c667e131c33bbfea5374abf405802104fa2a43b90faa463bacb8829f037ab9479639b4f362ad00d0807
+saver-remarkable-0.1.1.tar.gz'
