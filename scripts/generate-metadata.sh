@@ -291,28 +291,55 @@ jq '
   )
 ' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
 
+# Propagate parent device exclusions to subpackages
+# Only the parent carries the !device deps, so a subpackage is kept on a device
+# only if its parent supports that device too.
+echo "Propagating parent device exclusions to subpackages..."
+jq '
+  # Build map of package + version -> devices
+  ([.packages | to_entries[] | .key as $pkg | .value | to_entries[] |
+    {key: "\($pkg)\t\(.key)", value: (.value.devices // [])}
+  ] | from_entries) as $own |
+
+  # Narrow subpackages to the devices their parent supports
+  .packages |= with_entries(
+    .key as $pkg |
+    .value |= with_entries(
+      .key as $ver |
+      .value.origin as $parent |
+      ($own["\($parent)\t\($ver)"] // []) as $parent_devices |
+      if $parent != null and $parent != $pkg and ($parent_devices | length) > 0 then
+        .value.devices = [(.value.devices // [])[] | select(IN($parent_devices[]))]
+      else . end
+    )
+  )
+' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
+
 # Compute parent package devices from subpackages
-# If a package has subpackages (other packages with origin pointing to it),
-# the parent's devices should be the union of all subpackage devices
+# A parent whose subpackages are per-device splits carries no device deps of its
+# own, so the union of its subpackages is what it really supports. Matched per
+# version: subpackages of one version say nothing about another.
 echo "Computing parent package devices from subpackages..."
 jq '
-  # Build map of parent -> [subpackage devices]
+  # Build map of parent + version -> [subpackage devices]
   ([.packages | to_entries[] | .key as $pkg | .value | to_entries[] |
     select(.value.origin != null and .value.origin != $pkg) |
     {parent: .value.origin, version: .key, devices: .value.devices}
-  ] | group_by(.parent) | map({
-    key: .[0].parent,
+  ] | group_by("\(.parent)\t\(.version)") | map({
+    key: "\(.[0].parent)\t\(.[0].version)",
     value: (map(.devices) | add | unique)
-  }) | from_entries) as $parent_devices |
+  }) | from_entries) as $sub_devices |
 
   # Update parent packages with computed devices
   .packages |= with_entries(
     .key as $pkg |
-    if $parent_devices[$pkg] then
-      .value |= with_entries(
-        .value.devices = $parent_devices[$pkg]
-      )
-    else . end
+    .value |= with_entries(
+      .key as $ver |
+      ($sub_devices["\($pkg)\t\($ver)"]) as $union |
+      if $union then
+        .value.devices = [(.value.devices // [])[] | select(IN($union[]))]
+      else . end
+    )
   )
 ' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
 
