@@ -61,11 +61,11 @@ These packages are auto-installed on every `vellum` command and allows extension
 
 ## Contributing
 
+Pull requests and issues must be opened by a person, not by an agent acting on its own. If a pull request description is written by an LLM, we will assume that the pull request was opened by an agent, and it will be closed.
+
 ### Attribution
 
 Commits must be authored and co-authored by people. Do not add `Co-Authored-By:` trailers that name an assistant, agent, or bot, and do not commit from a bot account.
-
-Pull requests and issues must be opened by a person, not by an agent acting on its own.
 
 ### Adding a new package
 
