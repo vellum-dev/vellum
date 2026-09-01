@@ -1,6 +1,6 @@
 maintainer="Paul <70213368+LostPaul@users.noreply.github.com>"
 pkgname=saver-remarkable
-pkgver=0.1.1
+pkgver=0.2.0
 pkgrel=0
 upstream_author="Saver-app"
 category="utilities"
@@ -8,7 +8,7 @@ pkgdesc="Saver client for todos, bookmarks, and habits on reMarkable tablets"
 url="https://github.com/$upstream_author/saver-remarkable"
 arch="aarch64 armv7"
 license="MIT"
-depends="appload>=0.5.3 !rm1 !rmppm !rmppure"
+depends="appload>=0.5.3 !rmppm"
 subpackages="saver-remarkable-capture:capture"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/saver-remarkable/v$pkgver/README.md"
 
@@ -65,7 +65,7 @@ capture() {
 	category="ui"
 	pkgdesc="Saver sidebar entry and handwriting-to-todo capture"
 	depends="
-	saver-remarkable
+	saver-remarkable=$pkgver-r$pkgrel
 	qt-resource-rebuilder
 	qt-command-executor
 	!convert-to-text-remover
@@ -87,5 +87,5 @@ capture() {
 	}
 }
 
-sha512sums='91561c53de9d2761133898f1920101d8477fa578f9987c667e131c33bbfea5374abf405802104fa2a43b90faa463bacb8829f037ab9479639b4f362ad00d0807
-saver-remarkable-0.1.1.tar.gz'
+sha512sums='3365892ca74636a6092444ef40fb22b0a3d3212e70b303fb82738d83cad43e3b6a68674702119adb9f24a72234914988c32e44a7931a83f77b549f0509aec1c2
+saver-remarkable-0.2.0.tar.gz'
