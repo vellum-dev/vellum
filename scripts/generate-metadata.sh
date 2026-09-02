@@ -70,7 +70,7 @@ for velbuild in packages/*/VELBUILD; do
     [ -f "$velbuild" ] || continue
 
     unset pkgname pkgver pkgrel upstream_author category maintainer status \
-          readmeurl donateurl subpackages url arch license depends options \
+          readmeurl donateurl changelogurl subpackages url arch license depends options \
           source pkgdesc
     . "$velbuild"
     _cat="${category:-other}"
@@ -79,7 +79,7 @@ for velbuild in packages/*/VELBUILD; do
     _status="${status:-maintained}"
     _modsys="false"
     grep -q '^postosupgrade()' "$velbuild" && _modsys="true"
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
         "${pkgname:?pkgname missing}" \
         "$_cat" \
         "$_auth" \
@@ -88,6 +88,7 @@ for velbuild in packages/*/VELBUILD; do
         "$readmeurl" \
         "$donateurl" \
         "$_status" \
+        "$changelogurl" \
         >>"$WORKDIR/apkbuild-meta.tsv"
     for subpkg in $subpackages; do
         subpkg_name="${subpkg%%:*}"
@@ -108,7 +109,7 @@ for velbuild in packages/*/VELBUILD; do
         ' "$velbuild")
         subpkg_cat="${subpkg_cat:-$_cat}"
 
-        printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+        printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
             "$subpkg_name" \
             "$subpkg_cat" \
             "$_auth" \
@@ -117,6 +118,7 @@ for velbuild in packages/*/VELBUILD; do
             "$readmeurl" \
             "$donateurl" \
             "$_status" \
+            "$changelogurl" \
             >>"$WORKDIR/apkbuild-meta.tsv"
     done
 done
@@ -127,7 +129,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     if [ -z "$apkbuild_line" ] && [ -n "$origin" ] && [ "$origin" != "_" ] && [ "$origin" != "$pkg" ]; then
         apkbuild_line=$(grep -E "^${origin}	" "$WORKDIR/apkbuild-meta.tsv" 2>/dev/null | head -1 || true)
     fi
-    [ -z "$apkbuild_line" ] && apkbuild_line="$pkg	other	unknown	unknown	false			deprecated"
+    [ -z "$apkbuild_line" ] && apkbuild_line="$pkg	other	unknown	unknown	false			deprecated	"
 
     category=$(echo "$apkbuild_line" | cut -f2)
     author=$(echo "$apkbuild_line" | cut -f3)
@@ -136,6 +138,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
     readmeurl=$(echo "$apkbuild_line" | cut -f6)
     donateurl=$(echo "$apkbuild_line" | cut -f7)
     status=$(echo "$apkbuild_line" | cut -f8)
+    changelogurl=$(echo "$apkbuild_line" | cut -f9)
     [ -z "$modifies_system" ] && modifies_system="false"
 
     # Use APKINDEX maintainer as fallback
@@ -236,6 +239,7 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
             --arg url "$url" \
             --arg readmeurl "$readmeurl" \
             --arg donateurl "$donateurl" \
+            --arg changelogurl "$changelogurl" \
             --arg status "${status:-maintained}" \
             --arg os_min "${os_min:-}" \
             --arg os_max "${os_max:-}" \
@@ -270,7 +274,8 @@ while IFS='	' read -r pkg ver desc url lic deps arch provides install_if origin 
              released: $now,
              origin: (if $origin == "" or $origin == "_" then null else $origin end),
              readmeurl: (if $readmeurl == "" then null else $readmeurl end),
-             donateurl: (if $donateurl == "" then null else $donateurl end)
+             donateurl: (if $donateurl == "" then null else $donateurl end),
+             changelogurl: (if $changelogurl == "" then null else $changelogurl end)
            }' "$METADATA_FILE" >tmp.json && mv tmp.json "$METADATA_FILE"
     fi
 

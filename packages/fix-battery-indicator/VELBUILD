@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-battery-indicator
-pkgver=1.0.1
-pkgrel=2
+pkgver=1.0.2
+pkgrel=0
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Fixes battery icon not updating after charging while device is asleep"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="59bb593608babe147312fbb424d8472858ac8ab7"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#fixbatteryindicator"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/fix-battery-indicator.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/fixBatteryIndicator.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/fixBatteryIndicator.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='ba084cd9d0877dfebdda10066cf2615dcdf6326f70714954debb073ba0f93331eacff8fc601b63589455daa64de104b753c2d7d4121349e65d3e1e198b209fc6
+sha512sums='a5a45e9d4cd6bfb93b1a0740b803c8eb9c9abcedc77eca3c05d813d5a879aebbb4c1cb4cc233647b705da4efa3921289f0f63ac039f64d548ef796ddd9be41f4
 fixBatteryIndicator.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

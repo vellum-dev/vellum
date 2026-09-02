@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bluetooth-settings
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -8,13 +8,15 @@ pkgdesc="Adds a Bluetooth settings page for pairing and managing Bluetooth keybo
 url="https://github.com/rmitchellscott/xovi-bluetoothsettings"
 arch="noarch"
 license="GPL-3.0-only"
-depends="!rm1 !rm2 qt-resource-rebuilder qt-command-executor remarkable-os>=3.27 remarkable-os<3.28"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/README.md"
+depends="!rm1 !rm2 qt-resource-rebuilder qt-command-executor remarkable-os>=3.28 remarkable-os<3.29"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/v$pkgver/README.md"
+_changelog_commit="f760e59445a4474d9c581fe0214eced0f92473e5"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$pkgver/bluetoothSettings.qmd
 https://github.com/$upstream_author/xovi-bluetoothsettings/releases/download/v$pkgver/bluetooth.rcc
-https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/main/LICENSE
+https://raw.githubusercontent.com/$upstream_author/xovi-bluetoothsettings/v$pkgver/LICENSE
 "
 options='strip tracedeps'
 
@@ -30,7 +32,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-bluetoothsettings" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='e03549d2d77942e470b93fd792cf3a89ec3d0d5adeb762b00a7ae241edc1078dac4d1aba0c88b73850ba25dd8f5d6b1441e3e15e38ba83038a9580e8aa5e9a8b
+sha512sums='2747ad57517461d1d7ca183bca8658ffc1952088ad410b42b85c35a895bf951f673fcae7d27810bf7535426c826083f0d8d2d11d04a0c86aec27cd93f22f9b1b
 bluetoothSettings.qmd
 45849b0bd74f7d29a2abaa142f6539301a9ef065be3283f78781197f45e499b1ba3f0b0a9fc2c6f0fb93ca3763f8f8ca3085f7c62543792fad1fd93f29f711a8
 bluetooth.rcc

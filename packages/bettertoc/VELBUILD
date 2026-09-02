@@ -1,20 +1,21 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
-pkgver=1.4.2
-pkgrel=1
+pkgver=1.5.0
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.27 remarkable-os<3.28"
-_commit="3d8b320fe288f1887b60f1c5996764dff0892e8e"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#bettertoc"
+depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.28 remarkable-os<3.29"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/README.md"
+_changelog_commit="1006c9c306d593e0e4beb07c8539c9daef152569"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/betterToc.qmd
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+https://github.com/$upstream_author/xovi-bettertoc/releases/download/v$pkgver/betterToc.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/LICENSE
 "
 options='strip tracedeps'
 
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='334745b84c2249fab102d7daffa8880a2ce323d4d4118d23aa1403b2666c9cff6075f02712a1043002236535671d424c22f2f7f94d17040ffd8cc520b1d4482a
+sha512sums='1ceb0f0c83146f7099c93842e5eb5fbf7bbbdc74d40384fec7450614c93060c8177470c79c76dd29e512acd29d4e94cd1760260db59cb7e157a76644bf3ecd6a
 betterToc.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

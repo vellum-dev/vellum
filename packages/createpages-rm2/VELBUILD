@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=createpages-rm2
 pkgver=1.0.4
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Overrides new page creation to use reMarkable 2 dimensions."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder !createpages-paperpro remarkable-os>=3.26 remarkable-os<3.28"
-_commit="edc9cefdb2ee2dde0fb495f76ac845a7e26e049e"
+depends="qt-resource-rebuilder !createpages-paperpro remarkable-os>=3.26 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#createpagesrm2size"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/createpages-rm2.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/createPagesRM2Size.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/createPagesRM2Size.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='
-52cd62a7e8115f9cf1bf071e553e1788965932293a4c29a4c15ce32c617de28cd69c5acb8084d8f3079781f8c321f0059ac4f36c53928c6bf1965c1ab014c9d7  createPagesRM2Size.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-'
+sha512sums='79b6c9f5d8660b6bc64ecef3308e1f4ed9e25de277e9ca9de7f301189c44d4847202134e1bdc11664d724aae678ea6c9a380457894441e8a7320d8d3a00d5169
+createPagesRM2Size.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'

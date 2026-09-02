@@ -1,15 +1,17 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pdfium
-pkgver=0.1.0
-pkgrel=4
+pkgver=0.2.0
+pkgrel=0
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="xovi extension to expose xochitl's libpdfium."
 url="https://github.com/rmitchellscott/rm-pdfium"
 arch="aarch64 armv7"
 license="GPL-3.0-only"
-depends="xovi-message-broker>=18 xovi-message-broker<20 remarkable-os>=3.26 remarkable-os<3.28"
+depends="xovi-message-broker>=18 xovi-message-broker<20 remarkable-os>=3.26 remarkable-os<3.29"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-pdfium/v$pkgver/README.md"
+_changelog_commit="46d515d03ef184d1280f015f24b6645d1b67b588"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-pdfium/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://github.com/$upstream_author/rm-pdfium/releases/download/v$pkgver/rm-pdfium-aarch64.so
@@ -32,9 +34,9 @@ package() {
 	echo "https://github.com/rmitchellscott/$pkgname/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='6ec4343b064564d8509e93a9805b2b71e02fcbd44661c9cb98d8977b5cad6818e6baba5cc06b9408b421d7c32e4a9b805d256d6ca061b40e9d0e398271949fe3
+sha512sums='90dec6c7f34a959c9f6a9664ff9af151427f09632152def7d28187693106ffe78e7099bcdd82206b2885fa9df275f6ecf6f8bd66159a83c0817aa2a5902a0fe8
 rm-pdfium-aarch64.so
-979f5d67fa08452907e959ef44596eb8dd7e4f3fdc808e5cf5cee975b89b34013d7d884224d17444dd9bd691e093f3069da9c295defd74f9937ed1faef089314
+a9970420f8bad432fcc77987f44bc63de9c937d20c12e2fa585286314b56b2ec7bdefc27a6aef51a76e558109404edb0081662dc141f283727e3227fad33f90d
 rm-pdfium-armv7.so
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

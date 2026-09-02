@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=create-document-from-pages
 pkgver=2.0.1
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds an option to the Page Overview More menu to create a new document from selected pages."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<20 rm-pdfium<1.0.0 remarkable-os>=3.27 remarkable-os<3.28"
-_commit="59bb593608babe147312fbb424d8472858ac8ab7"
+depends="qt-resource-rebuilder librarian<1.0.0 qt-command-executor<20 rm-pdfium<1.0.0 remarkable-os>=3.27 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#createdocumentfrompages"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/create-document-from-pages.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/createDocumentFromPages.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/createDocumentFromPages.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='878d8fb3106714875553597c4fd08d0d4c3439ae2df6cc7d1ad02333025131e3bb583d10653b664e495163b33d88256062307cb70f04d90cf36b69c6cd07c600
+sha512sums='86e55cb081c80e462509fb876f1266d89d7b4ce8bec61d03c8f0c2df1176b9168d8eeb7a38ee4c5327cd6589a59a94ec3f2b62c672e1f827875fa87c3312e8c8
 createDocumentFromPages.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

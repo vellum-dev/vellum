@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-hyperlink-back-button
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Hides the Back button when clicking PDF hyperlinks."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
-_commit="95223b96928596eaacb8416f6b72c083baf582db"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#hidehyperlinkbackbutton"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/hide-hyperlink-back-button.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/hideHyperlinkBackButton.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/hideHyperlinkBackButton.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="strip tracedeps"
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='bc0d3de34cf3537e44d10a525abe1be4705b5e5d804b8e062b79e1f33da223a5b7972efeb3c19d3f33cbfde93a38cbc523ef2820b7b5a68661b4ed2adb308d10
+sha512sums='434fbc48f6791a17b7384008a9df5ba4269e25ff479d22f385b48c94e3b930cd4879a3f83dc97e2879fa3844f9c3de744b53960bc8f5c70505bf32b741ef8f0c
 hideHyperlinkBackButton.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

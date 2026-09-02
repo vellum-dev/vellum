@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=settings-rmsync-restart
 pkgver=1.0.0
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the cloud settings page to restart sync service."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder>=17 qt-command-executor remarkable-os>=3.22.4.2 remarkable-os<3.28"
-_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+depends="qt-resource-rebuilder>=17 qt-command-executor remarkable-os>=3.22.4.2 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#settingsrmsyncrestart"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/settings-rmsync-restart.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.25/settingsRmSyncRestart.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/settingsRmSyncRestart.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="strip tracedeps"
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-c852994e9a13e0dd63ae0c8e69426f3f45add1de0e049b7307359baffcc5e310314d2a18e3f52cb34797f07cd8b7e8d80fd86c668a2a482380e1685df1210405  settingsRmSyncRestart.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
+sha512sums='d31f65d3c8157e438eb1b9091ea65ac776f5ac4a78b23141f61b5a28867620da94e4a04eb1cd54abd7632743d45fa20270baf633d1f7556fb5d70a24a4100c37
+settingsRmSyncRestart.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'

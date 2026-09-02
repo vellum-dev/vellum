@@ -1,16 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-remapper
-pkgver=0.2.1
-pkgrel=1
+pkgver=0.2.2
+pkgrel=0
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Remaps stylus input events with configurable presets, pressure curves, and position offsets."
 url="https://github.com/rmitchellscott/rm-stylus-remapper"
 arch="aarch64 armv7"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-stylus-remapper/v$pkgver/README.md"
+_changelog_commit="c047e23e5d166a91982d3bd9a70993a89ee8629c"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-stylus-remapper/$_changelog_commit/CHANGELOG.md"
 source="
 https://github.com/$upstream_author/rm-stylus-remapper/releases/download/v$pkgver/stylus-remapper-aarch64.tar.gz
 https://github.com/$upstream_author/rm-stylus-remapper/releases/download/v$pkgver/stylus-remapper-armv7.tar.gz
@@ -58,11 +60,11 @@ predeinstall() {
 	killall stylus-remapper 2>/dev/null
 }
 
-sha512sums='0d010a05e96b04d21044b7dcc80f8d4ee7986129a5eddd107bfec2ad01e4514dfbcb23b34a050e529a590ba39e0cf91b2da37a97d8e2b0e23137dda5578d48ee
+sha512sums='af95cbe163b046bdcb2ff4b85e0fe2b96f2613dd0bed1903c11e47f9b62855004b724196c864f861b1d9be3e5ac034129514450097bcb23d012f3db976450f17
 stylus-remapper-aarch64.tar.gz
-0d72ce2c5744573fc6b1dba3f247a1c407433333191629913ab3cedcc27cdfbae1b0d57f27d01376a9afd19bb5c6731be2d8045fb4cdd84ed746928a01393e18
+6402294b3e7d68ffa84f12baa76a35d4284ad9c60b3209acab211c25c369ec2cfe31d198b8d0aece03fed73334e28642fc45070e8a60b99485bbf7a9b3a2e556
 stylus-remapper-armv7.tar.gz
-c85444e91c53b4db7dd3847bca814a7e6279faf3b8a8b1b16ea1ec0fd139e5682575983ddb7c45ed373523d41fd0b02b2b0b9aab78df3fc6042dacb14ba3fade
+406ebf0c6c36cfb2dd342e194fb2872384efe95bbc76e945dc90a5b55f3a386bab67e9ac8884305e010ca4b04850bc7fa21d750d71646badf7c29d8747ff25fd
 stylusRemapperSettings.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

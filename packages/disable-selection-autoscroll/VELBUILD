@@ -1,19 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-selection-autoscroll
 pkgver=1.0.0
-pkgrel=5
+pkgrel=6
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Disables the auto scrolling when moving a selection added in 3.24."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="MIT"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.28"
-_commit="ead06ef6874d24c571dbbf5a01b79940784cac7c"
+depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.29"
+_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#disableselectionautoscroll"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/disable-selection-autoscroll.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.24/disableSelectionAutoScroll.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/disableSelectionAutoScroll.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -27,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums="
-ad0509611b25398945653b7f5b92566634efa6f153eebee2b5a52381258dd5ae3e610fc5b827fb4cfa3f1d8af5a75f57dab68db2df4cc7e2b5fdc6608d09cd10  disableSelectionAutoScroll.qmd
-b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95  LICENSE
-"
+sha512sums='3fbfc99f2af645f08eeaa60894667ce0971e4af1ef507017fbcf46051b5c2387786f6d53cfdd2d13bbdf84bb50971703b8a2c4ea0bf0aa24af49b83bf65a2f5d
+disableSelectionAutoScroll.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
