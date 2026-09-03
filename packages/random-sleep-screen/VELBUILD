@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=random-sleep-screen
-pkgver=1.0.7
-pkgrel=3
+pkgver=1.0.8
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Picks random sleep screen from ~/sleepScreens/ folder."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rmppure remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/randomSleepScreen.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/randomSleepScreen.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="strip tracedeps"
@@ -28,7 +28,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='7375795daccf1862ff0bb5c8ec736b8c1e4ccd0fced8db11c50a15d764f13fd858c28e3a2b1d2ddab13beb6088e659ebc7cbfd6a64f39aeb72a066bfde809d20
+sha512sums='97988bfb9d5f6a76895caa64efa3d38bce6dd25d4d356d2d659feb8cfa77cd7d2513965abf0278677e796ef4998307899aef7396bf672e55609e5c9535942d52
 randomSleepScreen.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
 LICENSE.md'

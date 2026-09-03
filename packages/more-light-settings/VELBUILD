@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=more-light-settings
-pkgver=1.0.2
-pkgrel=2
+pkgver=1.0.3
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Provides additional light intensity settings beyond the default options."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !fewer-light-steps !rm1 !rm2 !rmppm !rmppure remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder !fewer-light-steps !rm1 !rm2 !rmppm !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/moreLightSettings.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/moreLightSettings.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="strip tracedeps"
@@ -27,6 +27,6 @@ package() {
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='
-adef6872e0231de090240e2b54eab632556c91ec6a245b7e8a0f01cc208e232a85f29876a2a8ec0ec6d143db8266a844af1e647486a1e4458c922c7ffd296150  moreLightSettings.qmd
+0547ff14c17b85ce6202d38ab5aeb86a6a225fa0cf4ffde13f4310fbd646e53311a57155969807f48760e0e3fde6c31a6f7a700c2500d617bf5f6fb2325279da  moreLightSettings.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '

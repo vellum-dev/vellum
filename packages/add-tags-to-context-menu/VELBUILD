@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-tags-to-context-menu
-pkgver=1.0.2
-pkgrel=1
+pkgver=1.0.3
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Add a tag directly from the selection context menu. Handwriting requires Connect/rmfakecloud."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/addTagsToContextMenu.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/addTagsToContextMenu.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options='strip tracedeps'
@@ -26,7 +26,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='11143b0fa67027aa2a591a871783eab1d8be0f3c91515aa413a42d8f353bda5feb1115fec4cefbe57b21975fdb3e9ae9c2b627f88c718a8682f82fd83bfdf2f7
+sha512sums='755c67beeb357a04e3a3b29499b866f9c6c9c1876adb95dc8e18f0e552842e8d47094eba89f02bfa7691fc93bc00901de228d3be5030abfa3410f619bfd1ca71
 addTagsToContextMenu.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
 LICENSE.md'

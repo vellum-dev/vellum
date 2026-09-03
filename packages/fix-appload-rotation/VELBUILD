@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-appload-rotation
-pkgver=1.0.1
-pkgrel=1
+pkgver=1.0.2
+pkgrel=0
 upstream_author="ingatellent"
 category="fixes"
 pkgdesc="Fixes rotation issues with the appload app."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="appload remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder appload remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/fixApploadRotation.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/fixApploadRotation.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options='strip tracedeps'
@@ -26,7 +26,7 @@ package() {
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
-sha512sums='884242f16cb49d6c6dc73b5745976a49a7832f4993b3a805dd99e930846f6a72e3c6ce132355d62a335aace5a97d374b722c8509ea002f0050177b4c4e02d022
+sha512sums='f350c9888629b6b161ce0b4c45a60e15fe370c4d89b847bd83daa6629f851ec3a8b9504ef600fabb5fda4564e1b220350eb51a2074e2d3a3c12e16e4a4a93549
 fixApploadRotation.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
 LICENSE.md'

@@ -1,32 +1,32 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-finished-button
-pkgver=1.0.3
-pkgrel=1
+pkgver=1.0.4
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
-pkgdesc="Adds a Finished button when selecting documents, moving them to the first subfolder in the current folder"
+pkgdesc="Adds a Completed button when selecting documents, moving them to the first subfolder in the current folder"
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/addFinishedButton.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/addCompletedButton.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options='strip tracedeps'
 
 package() {
-	install -Dm644 "$srcdir"/addFinishedButton.qmd \
-		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/addFinishedButton.qmd
+	install -Dm644 "$srcdir"/addCompletedButton.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/addCompletedButton.qmd
 
 	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='95e0cc6061085e8f79265fad6354841643c4e6d701aa98921b9b8146cd5966bcabf6fcf28a9775b26b2cbf5522c7b1741cf62df028655a98a18e2de70e31502c
-addFinishedButton.qmd
+sha512sums='5db601f2ef4144062a31445ac0e0aa8b743bba1e2cf9560c82023f4b11e7ad01777a3a4370701d27872538e8c80d89d0c54ca09674990fba9e60e27c2c42e756
+addCompletedButton.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
 LICENSE.md'

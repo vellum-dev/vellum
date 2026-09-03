@@ -1,18 +1,18 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=navigate-using-arrow-keys
-pkgver=1.0.2
-pkgrel=1
+pkgver=1.0.3
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
-pkgdesc="Keyboard arrow key navigation: left/right for pages, up/down for scrolling."
+pkgdesc="Keyboard navigation: left/right for pages, up/down and PgUp/PgDn for scrolling."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.27 remarkable-os<3.28"
-_commit="9e15cbb9308186c70d49f8608d24cb56e6ca6c1f"
+depends="qt-resource-rebuilder scroll-screen-up-or-down remarkable-os>=3.28 remarkable-os<3.29"
+_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/navigateUsingArrowKeys.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/navigateUsingArrowKeys.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="strip tracedeps"
@@ -50,7 +50,7 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='ebd9c19df4a8ce15a04070f6c42ce5845fae3639cf66b645547538faae78331e518805aaa90d9c2d2c27833d93820e1b2d4267d232e46b58fb2d1bdd6ff6e76b
+sha512sums='85719383ced72417cc9be4f405789a9638c05fb39141b55c01c0945320eef7b0cb5220ff11f6e0002374e43ea9cdcd06cf5995a7cc95d28baea539763b9f23d1
 navigateUsingArrowKeys.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
 LICENSE.md'

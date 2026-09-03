@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=enable-all-colors
 pkgver=1.0.3
-pkgrel=2
+pkgrel=3
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Enables full color selection on rM1 and rM2."
