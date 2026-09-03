@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=19.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -126,7 +126,7 @@ message_broker() {
 
 framebuffer_spy() {
 	pkgdesc="Module for exposing the address of the system framebuffer"
-	depends="$pkgname remarkable-os<3.28"
+	depends="$pkgname remarkable-os<3.29"
 
 	package() {
 		install -Dm644 "$srcdir"/xovi/inactive-extensions/framebuffer-spy.so \
@@ -137,7 +137,7 @@ framebuffer_spy() {
 webserver_remote() {
 	category="utilities"
 	pkgdesc="Exposes the USB webserver to all interfaces with connection confirmation dialog"
-	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<20.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.28"
+	depends="$pkgname xovi-message-broker>=18.0.0 xovi-message-broker<20.0.0 qt-resource-rebuilder remarkable-os>=3.23 remarkable-os<3.29"
 
 	package() {
 		install -Dm644 "$srcdir"/xovi/inactive-extensions/webserver-remote.so \
