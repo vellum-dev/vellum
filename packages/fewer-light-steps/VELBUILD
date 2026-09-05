@@ -1,7 +1,8 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+status="unmaintained"
 pkgname=fewer-light-steps
 pkgver=1.0.3
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Changes 5-level light slider to 4-level."

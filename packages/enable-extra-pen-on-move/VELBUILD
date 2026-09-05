@@ -1,25 +1,25 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-extra-pen-on-move
-pkgver=1.0.1
-pkgrel=3
+pkgver=1.0.2
+pkgrel=0
 upstream_author="ingatellent"
 category="ui"
-pkgdesc="Adds extra pen slot to toolbar (RMPPM only, requires qt-resource-rebuilder v16+)."
+pkgdesc="Adjusts priority of second pen slot so that it shows on the short screen edge as well."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.26 remarkable-os<3.28"
-_commit="d52184111dbe0520f3f0442a630389c5dca6ad4d"
+depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+_commit="957b8eebdd0bd7ce64070eab4e3e9bd6bb41b658"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.26/enableExtraPenOnMove.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/enableSecondaryPenOnMove.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options='strip tracedeps'
 
 package() {
-	install -Dm644 "$srcdir"/enableExtraPenOnMove.qmd \
-		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/enableExtraPenOnMove.qmd
+	install -Dm644 "$srcdir"/enableSecondaryPenOnMove.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/enableSecondaryPenOnMove.qmd
 
 	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
@@ -27,6 +27,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-3dfad3b7f8c3c9b2af74873484a775e569c450c1b28ef6d6ed42e929a2db6ff05d07e734d0163132cc74a4b533e661229a3a0d3a300090ce4605e8c9bad6661e  enableExtraPenOnMove.qmd
+0e5a4abfddb78239ea4bdc17348282de6bc27e386c74ff4093a2798ba6aff8991d782fa35d8a5c020f054be9e840f009da2f9cf91f059617e71af8be1024a7e3  enableSecondaryPenOnMove.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '
