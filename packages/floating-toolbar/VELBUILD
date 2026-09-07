@@ -1,19 +1,19 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=floating-toolbar
-pkgver=2.0.5
-pkgrel=2
+pkgver=2.0.6
+pkgrel=0
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and layers."
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.27 remarkable-os<3.28"
-_commit="0e05187f0707e28f6079171ebb442f705893a369"
+depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.28 remarkable-os<3.29"
+_commit="5db4cb6d1e5d43f8ea8484c77ab08b8a15f2640a"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.27/floating.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/floating.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 options="strip tracedeps"
@@ -37,7 +37,7 @@ postdeinstall() {
 	fi
 }
 
-sha512sums='d77b8537d9f2de009b6857c898c1c46a0f85cacb6b59350aabc08109b9b52cd4ab4a771bf3d49a57798942b32812bd502ae83bf0e6e04deae398f5ced22e01d7
+sha512sums='fa4b8434b8b868f39a1a508b26afd6f9e889dac94add98e9c69ce15aa1a3af7f7520627d9f2e5c759235d1c781a390aea5c93461dfcf1f5cd4e65fa91303690e
 floating.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
