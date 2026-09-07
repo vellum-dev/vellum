@@ -1,0 +1,60 @@
+maintainer="fairlygood <irilonbrowser@fairlygood.net>"
+pkgname=irilon
+pkgver=1.0.1
+pkgrel=0
+upstream_author="fairlygood"
+category="apps"
+pkgdesc="Gemini protocol browser for reMarkable tablets"
+url="https://github.com/fairlygood/rm-irilon-browser"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-irilon-browser/v$pkgver/README.md"
+
+source="
+https://github.com/$upstream_author/rm-irilon-browser/releases/download/v$pkgver/irilon-$pkgver-arm64.zip
+https://github.com/$upstream_author/rm-irilon-browser/releases/download/v$pkgver/irilon-$pkgver-armv7.zip
+https://raw.githubusercontent.com/$upstream_author/rm-irilon-browser/v$pkgver/LICENSE
+"
+
+unpack() {
+	case "$CARCH" in
+	aarch64) archive="$srcdir/irilon-$pkgver-arm64.zip" ;;
+	armv7) archive="$srcdir/irilon-$pkgver-armv7.zip" ;;
+	esac
+	unzip -q -o "$archive" -d "$srcdir/_unpacked"
+	mkdir -p "$srcdir/app"
+	cp -a "$srcdir"/_unpacked/irilon-*/. "$srcdir/app/"
+}
+
+package() {
+	install -Dm644 "$srcdir/app/manifest.json" \
+		"$pkgdir"/home/root/xovi/exthome/appload/irilon/manifest.json
+	install -Dm644 "$srcdir/app/resources.rcc" \
+		"$pkgdir"/home/root/xovi/exthome/appload/irilon/resources.rcc
+	install -Dm644 "$srcdir/app/icon.png" \
+		"$pkgdir"/home/root/xovi/exthome/appload/irilon/icon.png
+	install -Dm755 "$srcdir/app/backend/entry" \
+		"$pkgdir"/home/root/xovi/exthome/appload/irilon/backend/entry
+
+	install -Dm644 "$srcdir/LICENSE" \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/$upstream_author/rm-irilon-browser/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+predeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -f /home/root/.irilon-settings.json
+		rm -f /home/root/.gemini-certificates.json
+	fi
+}
+
+sha512sums='
+85356c07aefe78c24a803f5e597c5a0dc93c55c36e8dd57dfac3e41f355a156feed98c7bdcf92124816cbb8d9f12dedfea17d267545c922a1c58730001b3d4a4
+irilon-1.0.1-arm64.zip
+c8532553324ba7d1ca428399839d3ec565548b96fd5bba22efc648d2dfdf8b9d24f9c4237d40a074e131891efe0ea5b3ee2816f4c00268f4717801f84d81e95c
+irilon-1.0.1-armv7.zip
+9ed7504d5b7dca23ad816e6fff2562d17acd262ecab104917fd44ff907ad04a795ca467374e0ebc1fbd3c7739540e4b76f3556c1377f4ee6a73bdaa045e08011
+LICENSE
+'
