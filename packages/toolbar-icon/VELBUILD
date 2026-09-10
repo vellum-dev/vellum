@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=toolbar-icon
 pkgver=1.1.1
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds an icon with current tool, thickness, and colour in place of the toolbar-expand button while the toolbar is hidden."
