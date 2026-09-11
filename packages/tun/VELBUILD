@@ -1,6 +1,6 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=tun
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=0
 upstream_author="reMarkable"
 category="utilities"
@@ -8,15 +8,15 @@ pkgdesc="TUN module for rMP[Pro, Move, Pure], compiled from kernel code released
 url="https://github.com/reMarkable/linux-imx-rm"
 arch="aarch64"
 license="GPL-2.0-or-later"
-depends="mount-utils>=1.2.0 remarkable-os>=3.27 remarkable-os<3.28 !rm1 !rm2"
+depends="mount-utils>=1.2.0 remarkable-os>=3.28 remarkable-os<3.29 !rm1 !rm2"
 
 source="
-kernel.tar.gz::https://github.com/reMarkable/linux-imx-rm/raw/refs/heads/rmpp_6.12.49_v3.27.x/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a.tar.gz
+kernel.tar.gz::https://github.com/reMarkable/linux-imx-rm/raw/refs/heads/rmpp_6.12.49_v3.28.x/linux-imx-rel-5.8-xenu-3.28.0.172-2418a6dae57b.tar.gz
 "
 
 image() {
     case "$CARCH" in
-	aarch64) echo "eeems/remarkable-toolchain:5.7.119-aarch64" ;;
+	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
 	*)
 	    echo "Invalid CARCH: $CARCH"
 	    exit 1
@@ -26,7 +26,7 @@ image() {
 
 build() {
     set -e
-    cd "$srcdir"/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a
+    cd "$srcdir"/linux-imx-rel-5.8-xenu-3.28.0.172-2418a6dae57b
     . "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
     make ferrari_defconfig
     scripts/config --module CONFIG_TUN
@@ -57,7 +57,7 @@ package() {
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-ferrari.ko"
     install -Dm655 "$srcdir/tun-tatsu.ko" \
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-tatsu.ko"
-    install -Dm644 "$srcdir"/linux-imx-rel-5.7-wd-3.27.2.1-f21cbcc9ed9a/COPYING \
+    install -Dm644 "$srcdir"/linux-imx-rel-5.8-xenu-3.28.0.172-2418a6dae57b/COPYING \
         "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
     echo "https://github.com/reMarkable/linux-imx-rm" > \
         "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
@@ -107,5 +107,5 @@ predeinstall() {
     /home/root/.vellum/bin/mount-restore
 }
 
-sha512sums='89fdc4b5eea43261545e161ed9ca1ec311a7887251fc3898a58e13d1b951f90dc93477b274f17640c19ae6bffcbe4e1e5bbc2723c8169c3d0ccefa62644fdd80
+sha512sums='4b75366e68421aa99eaf6dc9866a9a6e835e05306b90e1c9b1a1e171697bf6e394780c6d89da52b7546648d9db7b95e030046a185c2d415482f5b3ecbd9690d0
 kernel.tar.gz'
