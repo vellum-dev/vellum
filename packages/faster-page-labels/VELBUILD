@@ -1,6 +1,6 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=faster-page-labels
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=0
 upstream_author="alefaraci"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Auto-hides the page-number label ~1.25s after a page turn"
 url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="3bae56d51fd4f14b4bde87f2cfbc292af25ae9f6"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#fasterpagelabels"
 donateurl="https://buymeacoffee.com/afaraci"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/fasterPageLabels.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/fasterPageLabels.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'

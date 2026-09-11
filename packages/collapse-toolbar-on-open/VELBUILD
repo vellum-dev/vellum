@@ -1,6 +1,6 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=collapse-toolbar-on-open
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=0
 upstream_author="alefaraci"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Opens every document with the toolbar collapsed"
 url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.27 remarkable-os<3.28"
-_commit="7c035706ac184ebaf6faaca01d40cf1d2391210f"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="3bae56d51fd4f14b4bde87f2cfbc292af25ae9f6"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#collapsetoolbaronopen"
 donateurl="https://buymeacoffee.com/afaraci"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/collapseToolbarOnOpen.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/collapseToolbarOnOpen.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -28,6 +28,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
-c3a4b2763906fcf564bdca1af50f765578e6662a1ca7e559ecf8ef3909c2c97997becdd6d783069a13ec88f80c7beae2347c0330f6ea781c7f4da0cadc69b71b  collapseToolbarOnOpen.qmd
+71f7db9226f31a0f7badf385206dcc987a10c4e378b0fbad4cb0da1d33ee9b4324c68aa4b03fb709115fc3479c61b48985247ad23d53fd8dddd97c78451b60ca  collapseToolbarOnOpen.qmd
 6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
 "

@@ -1,6 +1,6 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=dictionary-wiki-translator
-pkgver=1.0.1
+pkgver=1.1.0
 pkgrel=0
 upstream_author="alefaraci"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Adds integrated dictionary, Wikipedia, and translation capabilities for
 url="https://github.com/alefaraci/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.25 remarkable-os<3.28"
-_commit="ac44f719293a904c50904515597c8da8b5779cd2"
+depends="qt-resource-rebuilder qt-command-executor remarkable-os>=3.28 remarkable-os<3.29"
+_commit="3bae56d51fd4f14b4bde87f2cfbc292af25ae9f6"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#dictionary"
 donateurl="https://buymeacoffee.com/afaraci"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.27/dictionaryWikiTranslator.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/dictionaryWikiTranslator.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="!check !fhs"
@@ -36,6 +36,6 @@ postdeinstall() {
 }
 
 sha512sums="
-4d3e8971c4cd1a15a0e8db30eb52461c0a9ee08ca6995b13854efe49131cd6c1669785ad830ef70d83895332b20a6f555ffdd39115b119e4934aa273010cd6b5  dictionaryWikiTranslator.qmd
+b073290da663a9178ec7152ecaf7add0df872f239a3910f29bc386b76e11c936c4d0bd076f798c7c3afcf4f05ced71bc92ba0bdeeece6a0e72ae21bf9def49bc  dictionaryWikiTranslator.qmd
 6dbfcd77cdf7d1b8bede7d6c7b2d61943033da1bdd675a419af2f183798f7ece774fa9ae0b189d92200065704be2ba11fa0966e3f1d6edf9ffbb1b61cf60c73e  LICENSE
 "
