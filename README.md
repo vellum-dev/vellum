@@ -61,7 +61,7 @@ These packages are auto-installed on every `vellum` command and allows extension
 
 ## Contributing
 
-Pull requests and issues must be opened by a person, not by an agent acting on its own. If a pull request description is written by an LLM, we will assume that the pull request was opened by an agent, and it will be closed.
+Pull requests and issues must be opened by a person, not by an agent acting on its own. If a pull request description is written by an LLM, we will assume that the pull request was opened by an agent, and it will be closed. This also applies to any followup comments made to any issue or PR.
 
 ### Attribution
 
