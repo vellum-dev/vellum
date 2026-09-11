@@ -1,0 +1,55 @@
+maintainer="astafan8 <astafan8@users.noreply.github.com>"
+pkgname=remarkable-calendar-notes
+pkgver=0.1.26
+pkgrel=0
+upstream_author="astafan8"
+category="apps"
+pkgdesc="Read-only calendar with persistent handwritten notes per date, for AppLoad"
+url="https://github.com/astafan8/remarkable-calendar-notes"
+arch="armv7"
+license="MIT"
+depends="appload>=0.5.3 remarkable-os>=3.26 remarkable-os<3.28"
+_commit="94983f2081b6b16d875a40411ca4666497ee3db5"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/$pkgname/v$pkgver/README.md"
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/$pkgname/archive/$_commit.tar.gz"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	case "$CARCH" in
+	armv7) . /opt/x-tools/switch-arm.sh ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+	cd "$srcdir"/"$pkgname"-"$_commit"
+	cargo build --release --locked -p calnotes-app --target "$CARGO_BUILD_TARGET"
+	mv target/"$CARGO_BUILD_TARGET"/release/"$pkgname" .
+}
+
+package() {
+	set -e
+	cd "$srcdir"/"$pkgname"-"$_commit"
+	install -Dm755 "$pkgname" \
+		"$pkgdir"/home/root/xovi/exthome/appload/"$pkgname"/"$pkgname"
+	install -Dm644 assets/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/"$pkgname"/icon.png
+	install -Dm644 external.manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/"$pkgname"/external.manifest.json
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.local/share/remarkable-calendar-notes
+	fi
+}
+
+sha512sums="
+4e8ef28035f6b7e674430f1ed4e10a1f728e8bf8911cd857ab2e9aaeddb3f4f4eb296dc414df9b11299da531e026d359a07ba5dff4ad1ef3cc9a0b10f9d061bb  remarkable-calendar-notes-0.1.26.tar.gz
+"
