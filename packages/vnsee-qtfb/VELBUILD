@@ -85,9 +85,9 @@ postinstall() {
 	cat <<'EOF'
 ======================================================
   NOTE: You have to update your connection parameters
-		in
+        in
   ~/xovi/exthome/appload/vnsee-*/external.manifest.json
-		Where * is the different vnsee display modes.
+        Where * is the different vnsee display modes.
 ======================================================
 EOF
 }
