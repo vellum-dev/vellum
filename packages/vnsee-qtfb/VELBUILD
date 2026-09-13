@@ -1,41 +1,83 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=vnsee-qtfb
-pkgver=1.1.0
-pkgrel=6
-upstream_author="khyryra"
+pkgver=1.1.1
+pkgrel=0
+upstream_author="asivery"
 category="apps"
 pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as a second screen"
-url="https://github.com/khyryra/vnsee-qtfb"
+url="https://github.com/asivery/vnsee"
 license="GPL-3.0"
 arch="aarch64 armv7"
 depends="!rmppure launcher"
 replaces="vnsee-qtfb-rm1 vnsee-qtfb-rm2 vnsee-qtfb-rmpp vnsee-qtfb-rmppm"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/README.md"
+_commit="704af75bb5f053f052683d2db8d5ddfe4f50a7d2"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/vnsee/$_commit/README.md"
 
 source="
-https://github.com/$upstream_author/vnsee-qtfb/releases/download/v$pkgver/vnsee-rm2.zip
-https://github.com/$upstream_author/vnsee-qtfb/releases/download/v$pkgver/vnsee-ferrari.zip
-https://raw.githubusercontent.com/$upstream_author/vnsee-qtfb/v$pkgver/LICENSE.md
+https://raw.githubusercontent.com/$upstream_author/vnsee/$_commit/LICENSE.md
 "
+options='strip'
 
-unpack() {
+prepare() {
+	default_prepare
+	mkdir -p "$srcdir/vnsee-$_commit"
+	cd "$srcdir/vnsee-$_commit"
+	git config set --global advice.defaultBranchName false
+	git init
+	git remote add origin https://github.com/asivery/vnsee.git
+	git fetch --depth 1 origin $_commit
+	git checkout $_commit
+	git submodule update --init --recursive
+}
+
+image() {
 	case "$CARCH" in
-	armv7) unzip -o "$srcdir"/vnsee-rm2.zip -d "$srcdir" ;;
-	aarch64) unzip -o "$srcdir"/vnsee-ferrari.zip -d "$srcdir" ;;
+	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
 	esac
+}
+
+build() {
+	set -e
+
+	cd "$srcdir"/vnsee-"$_commit"
+	. "$(find /opt/codex -name 'environment-setup-*' -type f | head -n1)"
+	case "$CARCH" in
+	aarch64) arch=arm64 ;;
+	armv7) arch=armv7h ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	mkdir build
+	cd build
+
+	PATH="${OECORE_NATIVE_SYSROOT}/usr/libexec:$PATH" \
+		cmake -S .. -B . -DCMAKE_BUILD_TYPE=Release
+
+	PATH="${OECORE_NATIVE_SYSROOT}/usr/libexec:$PATH" \
+		cmake --build .
+
+	chmod +x dist/vnsee/vnsee
 }
 
 package() {
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
 
 	for n in "" -0 -1 -2 -3; do
-		cp -r "$srcdir"/vnsee$n \
+		cp -r "$srcdir"/vnsee-"$_commit"/build/dist/vnsee$n \
 			"$pkgdir"/home/root/xovi/exthome/appload/vnsee$n
 	done
 
 	install -Dm644 "$srcdir"/LICENSE.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/khyryra/vnsee-qtfb/archive/v$pkgver.tar.gz" > \
+	echo "https://github.com/asivery/vnsee/archive/$_commit.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
@@ -43,9 +85,9 @@ postinstall() {
 	cat <<'EOF'
 ======================================================
   NOTE: You have to update your connection parameters
-        in
+		in
   ~/xovi/exthome/appload/vnsee-*/external.manifest.json
-        Where * is the different vnsee display modes.
+		Where * is the different vnsee display modes.
 ======================================================
 EOF
 }
@@ -65,8 +107,5 @@ postdeinstall() {
 	fi
 }
 
-sha512sums="
-12372589ae6e220b9fd80323889797d932c41062a45ffa960e07ecfd81ded97125fbf6aee87ee7917a0b97cb3898a5658615b3bd4478a6c736803e7fe1ca512f  vnsee-rm2.zip
-3ca1a84e4e42c06219eecb456963e5fad3b135dfe41bf9cea3d321f9347d8a19f20868ec0aabf120431135ceb8fe04f011ddcbda3fdc8be449224e33523e1d5e  vnsee-ferrari.zip
-d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686  LICENSE.md
-"
+sha512sums='d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE.md'
