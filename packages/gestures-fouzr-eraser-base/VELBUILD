@@ -1,38 +1,35 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
-pkgname=gesture-colour-settings
-pkgver=1.0.12
+pkgname=gestures-fouzr-eraser-base
+pkgver=1.0.0
 pkgrel=0
 upstream_author="FouzR"
 category="ui"
-pkgdesc="Gesture and Accessibility menu for colour preferences."
+pkgdesc="Function to add eraser swapping. Not standalone"
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
-_commit="d898cf9271cc20682d1c08e23c4b513f3c301fec"
+depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.28 remarkable-os<3.29"
+_commit="f6e17d50441e18519c81769f0a4dae443d87fba7"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/gesture_colors_fouzr.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/swap_erase.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 
 
 package() {
-	install -Dm644 "$srcdir"/gesture_colors_fouzr.qmd \
-		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/gesture_colors_fouzr.qmd
+	install -Dm644 "$srcdir"/swap_erase.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/swap_erase.qmd
 
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	echo "https://github.com/FouzR/xovi-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-postdeinstall() {
-	if [ "$VELLUM_PURGE" = "1" ]; then
-		rm -f /home/root/colorSet.json
-	fi
-}
-sha512sums='66ebed59046522ac1644851aadcb55ab0754fc771925feb091c86d3687209dab9be97bc5fcdceb8bebd2ed30d256e177210f3af45a4d5c58db1deff88d58b194
-gesture_colors_fouzr.qmd
+
+
+sha512sums='0ceec323d44b0a6ff43d8e1bb18dadcde30559b421b52c7533bb94454ea19666ce7490304ff73fea5b218bb1a5ce8dee2979f6c0da931f47bd4e444074c8b8c2
+swap_erase.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
