@@ -17,7 +17,6 @@ source="
 rm-ebook-fit-to-height-$pkgver.tar.gz::https://github.com/$upstream_author/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz
 xovi-0.3.3.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v0.3.3.tar.gz
 "
-options="!check"
 builddir="$srcdir/rm-ebook-fit-to-height-$pkgver"
 
 image() {
