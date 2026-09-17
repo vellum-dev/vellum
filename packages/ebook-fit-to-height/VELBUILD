@@ -9,13 +9,14 @@ url="https://github.com/rmitchellscott/rm-ebook-fit-to-height"
 arch="aarch64"
 license="GPL-3.0-only"
 depends="xovi !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+_xovi_ver="0.3.3"
 _commit="cc3c6543926f6e34925ce69c390bc1cb6c8fcb85"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/README.md"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 rm-ebook-fit-to-height-$pkgver.tar.gz::https://github.com/$upstream_author/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz
-xovi-0.3.3.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v0.3.3.tar.gz
+xovi-$_xovi_ver.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v$_xovi_ver.tar.gz
 "
 builddir="$srcdir/rm-ebook-fit-to-height-$pkgver"
 
@@ -35,7 +36,7 @@ build() {
 	cd "$builddir"
 	make ebook-fit-to-height.so \
 		CC_AARCH64="$CC" \
-		XOVI_REPO="$srcdir/xovi-0.3.3" \
+		XOVI_REPO="$srcdir/xovi-$_xovi_ver" \
 		VERSION="v$pkgver"
 }
 
