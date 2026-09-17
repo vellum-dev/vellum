@@ -1,0 +1,55 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=ebook-fit-to-height
+pkgver=0.1.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="fixes ui"
+pkgdesc="Show ebooks fit-to-height on the Paper Pro Move, matching 3.27 behavior on later versions."
+url="https://github.com/rmitchellscott/rm-ebook-fit-to-height"
+arch="aarch64"
+license="GPL-3.0-only"
+depends="xovi !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+_xovi_ver="0.3.3"
+_commit="cc3c6543926f6e34925ce69c390bc1cb6c8fcb85"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/README.md"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/CHANGELOG.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+rm-ebook-fit-to-height-$pkgver.tar.gz::https://github.com/$upstream_author/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz
+xovi-$_xovi_ver.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v$_xovi_ver.tar.gz
+"
+builddir="$srcdir/rm-ebook-fit-to-height-$pkgver"
+
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+}
+
+build() {
+	set -e
+	. "$(find /opt/codex/chiappa -name 'environment-setup-*' -type f | head -n1)"
+	cd "$builddir"
+	make ebook-fit-to-height.so \
+		CC_AARCH64="$CC" \
+		XOVI_REPO="$srcdir/xovi-$_xovi_ver" \
+		VERSION="v$pkgver"
+}
+
+package() {
+	install -Dm644 "$builddir"/ebook-fit-to-height.so \
+		"$pkgdir"/home/root/xovi/extensions.d/ebook-fit-to-height.so
+
+	install -Dm644 "$builddir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='e256b5d82a3e73b08208d745ab20c0313b08687d64307d48ab5651a479ab0b8eb52508cf6cc36fb48320eb1e8697776a738e9337987855d9693294f1906f26db
+rm-ebook-fit-to-height-0.1.0.tar.gz
+d03861fab5b7954bd1b649cb443cf9ef36811014cb8602386119ed985304b899606a7d4669bcca27c4da9b81de868fb575c5fdb8c1fb26b942719cba8921ca0c
+xovi-0.3.3.tar.gz'
