@@ -3,21 +3,21 @@ launcherctl-appload:launcherctl_appload
 '
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
-pkgver=0.5.3
-pkgrel=3
+pkgver=0.6.0
+pkgrel=0
 upstream_author="asivery"
 category="launchers"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
 url="https://github.com/asivery/rm-appload"
 arch="aarch64 armv7"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.28"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
 provides="launcher"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/README.MD"
 donateurl="https://ko-fi.com/asivery"
 source="
-https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-aarch64.zip
-https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-arm32.zip
+https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-aarch64.tar.gz
+https://github.com/$upstream_author/rm-appload/releases/download/v$pkgver/appload-arm32.tar.gz
 https://raw.githubusercontent.com/$upstream_author/rm-appload/v$pkgver/LICENSE
 appload
 launcherctl.LICENSE
@@ -27,8 +27,8 @@ launcherctl.prestock.sh
 
 unpack() {
 	case "$CARCH" in
-	aarch64) unzip -o "$srcdir"/appload-aarch64.zip -d "$srcdir" ;;
-	armv7) unzip -o "$srcdir"/appload-arm32.zip -d "$srcdir" ;;
+	aarch64) tar -xzf "$srcdir"/appload-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/appload-arm32.tar.gz -C "$srcdir" ;;
 	esac
 }
 
@@ -76,10 +76,10 @@ launcherctl_appload() {
 	}
 }
 
-sha512sums='9ff48f5b5ebcf134ce4f212ea812dfc17dc35daf0630316dd3ec2e332efe479eba25643d7e24d54e7410208f49bdedd4da1378cdef788da161879d7324a04929
-appload-aarch64.zip
-a507cbd38079919599cc33d299ac991cbac3974633744133edb0f8761008e0f2320c701a9b433ca74c71610fc79a8b5307ed5a57680d42edad9bc05084dc986c
-appload-arm32.zip
+sha512sums='754c5add1c34e73642c3ba823b0e9333165cf32bd2aea2331b38301f3c357954ec2f764c71409be38dfbdca20c3077c9eda0189c22af6344154c9d22b1f4b076
+appload-aarch64.tar.gz
+ec34d2dd714a0f997ee9fd8488b8d87acb1a20a768486315c20912e3489cb84c056a8c013d328f79223e417e184401f761597b6c8fa3fa4d85f30c0605c7b40a
+appload-arm32.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE
 5bf4dbf779b0d1f9f48598d99af58db50d37e8ff2d4c31f2e60ec52839f5782f22cb8526a38d39154a56762e2589e807380b9312e4d121d3cd7e86cfba53e22b
