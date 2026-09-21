@@ -1,0 +1,33 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=tags-button-to-menu
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Moves the Tags button from the document toolbar into the more menu"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="d1689b48dd0eea49dc25f0cbd763733ef924ee2d"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#tags-button-to-menu"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/tags-button-to-menu.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/tags-button-to-menu.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+
+package() {
+	install -Dm644 "$srcdir"/tags-button-to-menu.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/tags-button-to-menu.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='f55d7b9b4d69c85849f9e866ad6ec2f1effd1fff7eff776faec7520483eebed40a24bbb987fe79566344303f624d82150ce63bdbac1a976047874a33362eef0b
+tags-button-to-menu.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
