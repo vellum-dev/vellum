@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="utilities"
@@ -103,7 +103,7 @@ predeinstall() {
 	/home/root/.vellum/bin/mount-restore
 }
 
-sha512sums='e204d64777999f23c5bcc44e145493bbb497dcd55e8074ebe8a27adf7b102a2b3d374debf1852e7b49781820652bec55e19f0deaaccceb31bdca821963bf8536
-tripletap-1.1.0.tar.gz
+sha512sums='a13c81d29b1d746481626c201675bca342165eed30a3b9f65be072699beea1fd80fc13a7afd8615e79f07f4b254b87882a473e372cda8b1d1bc9e8b39c35ad21
+tripletap-1.1.1.tar.gz
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
