@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmfakecloud-proxy
-pkgver=0.0.10
-pkgrel=2
+pkgver=0.0.11
+pkgrel=0
 pkgdesc="HTTPS proxy for rmfakecloud - redirects reMarkable cloud traffic"
 upstream_author="ddvk"
 category="utilities"
@@ -71,7 +71,7 @@ predeinstall() {
 }
 
 sha512sums="
-01ba8b26833bfed4be77eae01ba02661d0d42034c55d5593b41841979709bf6d50fc18a7ba67d5058b8b578a4af5e137224033bc0c7c24ab97ed543156d941ea  installer-rmpro.sh
-a7b00d5c19c5146df9e77f2a41ec2b0e3fc8a01142942ad13a69f6724c21b3cdb6cfd2ddc36ddb3aafbbec8468ded1c58725758c346d453271e7ffca61b34669  installer-rm12.sh
+ebacbcf612f1943361b99d860b64690ab1dbe6b67a32bc524a3206d0d12f566a62cbfc7ec9820dc373b6ba2e3c3975439f3437f605c9921420bf41feaff38d25  installer-rmpro.sh
+b5759578c3bcde34c25db1258ee4475289ac4f22e68273157ae755884caff70fbac4e53862f4e2114e9576b383b98d413541265cd8bc5aa3e8660f8ab9eb9029  installer-rm12.sh
 301894039600f7de8c2dad0be29bc5d0e4f975671a1dd7ce9974731daaa43c83a60f5b7d28bc368423d63e8965f04961800284d0269011a1ae536202ec98ca2e  LICENSE
 "
