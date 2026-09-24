@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
-pkgver=1.5.0
+pkgver=1.5.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -10,14 +10,13 @@ arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.28 remarkable-os<3.29"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/README.md"
-_changelog_commit="1006c9c306d593e0e4beb07c8539c9daef152569"
+_changelog_commit="10a60fb6c081e7ae6039529fc1462392af2cef49"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 https://github.com/$upstream_author/xovi-bettertoc/releases/download/v$pkgver/betterToc.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/LICENSE
 "
-options='strip tracedeps'
 
 package() {
 	install -Dm644 "$srcdir"/betterToc.qmd \
@@ -28,7 +27,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='1ceb0f0c83146f7099c93842e5eb5fbf7bbbdc74d40384fec7450614c93060c8177470c79c76dd29e512acd29d4e94cd1760260db59cb7e157a76644bf3ecd6a
+sha512sums='94db0d20cc2401ed812c3f1b9c501c513c6f752b5172983efcc3db9bec12362c0d66d3c8583df3f29053cf25a5b87fcd2e6595d2e693268a9ca5e54dcb8d5d4f
 betterToc.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
