@@ -1,0 +1,33 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=link-touch-targets
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Makes PDF and ebook hyperlinks easier to tap"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="67d39e943d8fda30936ad7f51a30f59f0292a9f8"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#link-touch-targets"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/link-touch-targets.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/link-touch-targets.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+
+package() {
+	install -Dm644 "$srcdir"/link-touch-targets.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/link-touch-targets.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='4c653c28308c1e078eeb6224eeaeccceaec1a618c03ae1efbbf666ac514fea36f87e7be1f8dac4033774a8986c12e1dd5bb27a5d29c2b1aad12c3dc56116e2f0
+link-touch-targets.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'

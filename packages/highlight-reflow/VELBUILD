@@ -1,0 +1,59 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=highlight-reflow
+pkgver=0.1.1
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui fixes"
+pkgdesc="Keep EPUB highlights on their text when the book reflows after a layout change."
+url="https://github.com/rmitchellscott/rm-highlight-reflow"
+arch="aarch64 armv7"
+license="GPL-3.0-only"
+depends="xovi qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_xovi_ver="0.3.3"
+_commit="575f6b6256358c8e9f53ebaf155c0e6637afe3e6"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-highlight-reflow/$_commit/README.md"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-highlight-reflow/$_commit/CHANGELOG.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+rm-highlight-reflow-$pkgver.tar.gz::https://github.com/$upstream_author/rm-highlight-reflow/archive/refs/tags/v$pkgver.tar.gz
+xovi-$_xovi_ver.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v$_xovi_ver.tar.gz
+"
+builddir="$srcdir/rm-highlight-reflow-$pkgver"
+
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
+	armv7) echo "eeems/remarkable-toolchain:latest-rm1" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+}
+
+build() {
+	set -e
+	export LC_ALL=C.UTF-8
+	case "$CARCH" in
+	aarch64) . "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)" ;;
+	armv7) . "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)" ;;
+	esac
+	export XOVI_REPO="$srcdir/xovi-$_xovi_ver"
+	cd "$builddir"
+	qmake6
+	make
+}
+
+package() {
+	install -Dm644 "$builddir"/highlight-reflow.so \
+		"$pkgdir"/home/root/xovi/extensions.d/highlight-reflow.so
+
+	install -Dm644 "$builddir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/rm-highlight-reflow/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='eecf96b27425fea8763de116a1b0386bdeeb43f945c96e7385eceb1d8eea62d15a51f13141ec8444774efc0f6bd512d68c8ea8dd2d6301002f5908c2adfcf236
+rm-highlight-reflow-0.1.1.tar.gz
+d03861fab5b7954bd1b649cb443cf9ef36811014cb8602386119ed985304b899606a7d4669bcca27c4da9b81de868fb575c5fdb8c1fb26b942719cba8921ca0c
+xovi-0.3.3.tar.gz'

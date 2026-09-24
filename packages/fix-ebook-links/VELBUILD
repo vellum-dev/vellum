@@ -1,0 +1,67 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=fix-ebook-links
+pkgver=0.1.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="fixes"
+pkgdesc="Make links inside ebooks work: printed tables of contents, footnotes and cross-references."
+url="https://github.com/rmitchellscott/rm-fix-ebook-links"
+arch="aarch64 armv7"
+license="GPL-3.0-only"
+depends="xovi remarkable-os>=3.28 remarkable-os<3.29"
+_xovi_ver="0.3.3"
+_commit="5f27979377bdd953806038283075de870a7f3ea2"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-fix-ebook-links/$_commit/README.md"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-fix-ebook-links/$_commit/CHANGELOG.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+rm-fix-ebook-links-$pkgver.tar.gz::https://github.com/$upstream_author/rm-fix-ebook-links/archive/refs/tags/v$pkgver.tar.gz
+xovi-$_xovi_ver.tar.gz::https://github.com/asivery/xovi/archive/refs/tags/v$_xovi_ver.tar.gz
+"
+builddir="$srcdir/rm-fix-ebook-links-$pkgver"
+
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.8.203-armv7" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+}
+
+build() {
+	set -e
+	cd "$builddir"
+	case "$CARCH" in
+	aarch64)
+		. "$(find /opt/codex/chiappa -name 'environment-setup-*' -type f | head -n1)"
+		make fix-ebook-links-aarch64.so \
+			CXX_AARCH64="$CXX" \
+			XOVI_REPO="$srcdir/xovi-$_xovi_ver" \
+			VERSION="v$pkgver"
+		;;
+	armv7)
+		. "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)"
+		make fix-ebook-links-armv7.so \
+			CXX_ARMV7="$CXX" \
+			XOVI_REPO="$srcdir/xovi-$_xovi_ver" \
+			VERSION="v$pkgver"
+		;;
+	esac
+}
+
+package() {
+	install -Dm644 "$builddir"/fix-ebook-links-$CARCH.so \
+		"$pkgdir"/home/root/xovi/extensions.d/fix-ebook-links.so
+
+	install -Dm644 "$builddir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/rmitchellscott/rm-fix-ebook-links/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='a8dcda4e7e327565674a7290ce5105a0d14b902b22d9445db007957ed341c1b7a331e4680f015d47564e7ad5773686ab7e96dbafc4b662e30ac51d1155bdd424
+rm-fix-ebook-links-0.1.0.tar.gz
+d03861fab5b7954bd1b649cb443cf9ef36811014cb8602386119ed985304b899606a7d4669bcca27c4da9b81de868fb575c5fdb8c1fb26b942719cba8921ca0c
+xovi-0.3.3.tar.gz'
