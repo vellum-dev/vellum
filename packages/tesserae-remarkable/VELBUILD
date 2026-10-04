@@ -1,0 +1,72 @@
+maintainer="Carl Partridge <carl@partridge.works>"
+pkgname=tesserae-remarkable
+pkgver=0.1.0
+pkgrel=0
+upstream_author="partridgeworks"
+_repo="tesserae.remarkable"
+category="apps"
+pkgdesc="Tesserae e-ink dashboard client for AppLoad: shows frames from a self-hosted Tesserae server"
+url="https://github.com/$upstream_author/$_repo"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload remarkable-os>=3.20 remarkable-os<3.28"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/$_repo/v$pkgver/README.md"
+
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/$_repo/archive/refs/tags/v$pkgver.tar.gz
+"
+builddir="$srcdir/$_repo-$pkgver"
+
+image="ghcr.io/toltec-dev/golang:v4.0"
+
+build() {
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+
+	case "$CARCH" in
+	aarch64) _goarch="arm64" _goarm="" ;;
+	armv7) _goarch="arm" _goarm="7" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$builddir"
+	GOOS=linux GOARCH="$_goarch" GOARM="$_goarm" CGO_ENABLED=0 go build \
+		-buildvcs=false -trimpath -ldflags="-s -w -X main.version=$pkgver" \
+		-o build/backend/entry ./backend/cmd/tesserae-remarkable
+
+	cd "$builddir"/app
+	/usr/lib/qt6/libexec/rcc --binary \
+		-o "$builddir"/build/resources.rcc application.qrc
+}
+
+package() {
+	_appdir="$pkgdir"/home/root/xovi/exthome/appload/$pkgname
+
+	install -Dm755 build/backend/entry "$_appdir"/backend/entry
+	install -Dm755 app/scripts/brightness_guard.sh \
+		"$_appdir"/scripts/brightness_guard.sh
+	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
+	install -Dm644 app/manifest.json "$_appdir"/manifest.json
+	install -Dm644 app/icon.png "$_appdir"/icon.png
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 THIRD_PARTY_NOTICES.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/THIRD_PARTY_NOTICES.md
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.config/tesserae-remarkable
+		rm -rf /home/root/.local/share/tesserae-remarkable
+		rm -rf /home/root/.cache/tesserae-remarkable
+	fi
+}
+
+sha512sums="
+d5ef4ff649a4aab6a394d789c4407797b7d78da2d798c3b21d407d3a4abfd9c22c16e364e40f7f391ae81bf0bed5a5b4a7307dea3963f79cfbeded0a8df5ad4f  tesserae-remarkable-0.1.0.tar.gz
+"
