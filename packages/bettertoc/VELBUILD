@@ -1,11 +1,11 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
 pkgver=1.5.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
-url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+url="https://github.com/rmitchellscott/xovi-bettertoc"
 arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.28 remarkable-os<3.29"
@@ -24,7 +24,7 @@ package() {
 
 	install -Dm644 "$srcdir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
+	echo "$url" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='94db0d20cc2401ed812c3f1b9c501c513c6f752b5172983efcc3db9bec12362c0d66d3c8583df3f29053cf25a5b87fcd2e6595d2e693268a9ca5e54dcb8d5d4f
