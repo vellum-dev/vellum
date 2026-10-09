@@ -1,7 +1,7 @@
 maintainer="Jarett <jarett@reticulum.us>"
 pkgname=retaskable
-pkgver=1.0.5
-pkgrel=1
+pkgver=1.1.0
+pkgrel=0
 upstream_author="jdkruzr"
 category="utilities"
 pkgdesc="CalDAV task client for reMarkable tablets"
@@ -70,6 +70,7 @@ capture() {
 	xovi-message-broker
 	!convert-to-text-remover
 	remarkable-os>=3.27
+	remarkable-os<3.28
 	"
 
 	package() {
@@ -85,5 +86,5 @@ capture() {
 	}
 }
 
-sha512sums='95919755fde6c5362de9dd48c81435b9037174a7a5c71c14291930c878d2f06000f93a5afd570197ad01c9eb5c993533c2a04bcfe8adeae443e06c9242c7def8
-retaskable-1.0.5.tar.gz'
+sha512sums='8d7daccfae17dcd6bc1fb01c3c2fb8c6e1ca1a80c2046f6e24ba0f5488b4e763e16647acfec7155020fcbc0080dfb78b17a906f75214b1b4aa384a2a201cb92a
+retaskable-1.1.0.tar.gz'
