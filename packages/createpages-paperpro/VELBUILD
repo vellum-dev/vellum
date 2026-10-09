@@ -1,13 +1,13 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=createpages-paperpro
 pkgver=1.0.4
-pkgrel=4
+pkgrel=5
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Overrides new page creation to use Paper Pro dimensions."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
-license="MIT"
+license="GPL-3.0-only"
 depends="qt-resource-rebuilder !createpages-rm2 remarkable-os>=3.26 remarkable-os<3.29"
 _commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#createpagespaperprosize"
