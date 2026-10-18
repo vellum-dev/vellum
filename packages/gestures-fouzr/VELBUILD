@@ -1,9 +1,10 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-fouzr
 pkgver=1.0.11
-pkgrel=2
+pkgrel=3
 upstream_author="FouzR"
 category="ui"
+status="unmaintained"
 pkgdesc="Adds four-finger document drawer, and multiple swipe gestures to control pen settings."
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
@@ -16,7 +17,7 @@ source="
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.27/gestures.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
-options="strip tracedeps"
+
 
 package() {
 	install -Dm644 "$srcdir"/gestures.qmd \
