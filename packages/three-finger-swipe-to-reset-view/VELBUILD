@@ -1,19 +1,19 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=three-finger-swipe-to-reset-view
 pkgver=1.0.1
-pkgrel=3
+pkgrel=4
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Swipe down with three fingers to reset pan and zoom to 100%."
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.29"
+depends="qt-resource-rebuilder remarkable-os>=3.26 remarkable-os<3.30"
 replaces="gesture-reset-view"
-_commit="071e6c6873f064f560ff1a364381c7c6deb173d8"
+_commit="17720f5bc49d6b6ddab1897c5672913981fb5fd4"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/threeFingerSwipeToResetView.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/threeFingerSwipeToResetView.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options="strip tracedeps"

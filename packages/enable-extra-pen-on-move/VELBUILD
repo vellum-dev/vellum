@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-extra-pen-on-move
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=0
 upstream_author="ingatellent"
 category="ui"
@@ -8,11 +8,11 @@ pkgdesc="Adjusts priority of second pen slot so that it shows on the short scree
 url="https://github.com/ingatellent/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-2.0"
-depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.28 remarkable-os<3.29"
-_commit="957b8eebdd0bd7ce64070eab4e3e9bd6bb41b658"
+depends="qt-resource-rebuilder !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.29 remarkable-os<3.30"
+_commit="17720f5bc49d6b6ddab1897c5672913981fb5fd4"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/enableSecondaryPenOnMove.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/enableSecondaryPenOnMove.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
 "
 options='strip tracedeps'
@@ -27,6 +27,6 @@ package() {
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
-0e5a4abfddb78239ea4bdc17348282de6bc27e386c74ff4093a2798ba6aff8991d782fa35d8a5c020f054be9e840f009da2f9cf91f059617e71af8be1024a7e3  enableSecondaryPenOnMove.qmd
+785ffedd618f71fc203cd0e98fcdd41010ddd8ab389b5cfb93bd216c2bcfda09c823e00fc34e9d3d8d23b3020e10809fef5226b4742bd7435bf782a47b55cc24  enableSecondaryPenOnMove.qmd
 aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
 '
