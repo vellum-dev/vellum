@@ -1,20 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-selection-autoscroll
-pkgver=1.0.0
-pkgrel=7
+pkgver=1.0.1
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Disables the auto scrolling when moving a selection added in 3.24."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder remarkable-os>=3.24 remarkable-os<3.29"
-_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
+depends="qt-resource-rebuilder remarkable-os>=3.29 remarkable-os<3.30"
+_commit="84bf9eb8629d09ddd523a7895fde9d86208c7035"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#disableselectionautoscroll"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/disable-selection-autoscroll.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/disableSelectionAutoScroll.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/disableSelectionAutoScroll.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -28,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='3fbfc99f2af645f08eeaa60894667ce0971e4af1ef507017fbcf46051b5c2387786f6d53cfdd2d13bbdf84bb50971703b8a2c4ea0bf0aa24af49b83bf65a2f5d
+sha512sums='97e14c96e764f630edc6010ad5d06abf51d8ba769260857c5a6a271a95c0b0d38cbe70ede705de21222717c8ac075a3dd121edec6fb23ecd20d7cbff1c395aa2
 disableSelectionAutoScroll.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

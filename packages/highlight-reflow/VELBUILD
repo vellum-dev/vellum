@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=highlight-reflow
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui fixes"
@@ -8,9 +8,9 @@ pkgdesc="Keep EPUB highlights on their text when the book reflows after a layout
 url="https://github.com/rmitchellscott/rm-highlight-reflow"
 arch="aarch64 armv7"
 license="GPL-3.0-only"
-depends="xovi qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+depends="xovi qt-resource-rebuilder remarkable-os>=3.29 remarkable-os<3.30"
 _xovi_ver="0.3.3"
-_commit="575f6b6256358c8e9f53ebaf155c0e6637afe3e6"
+_commit="98d5baf92df8d80ca37551334d6ba618a21ac51d"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-highlight-reflow/$_commit/README.md"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-highlight-reflow/$_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
@@ -53,7 +53,7 @@ package() {
 	echo "https://github.com/rmitchellscott/rm-highlight-reflow/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='eecf96b27425fea8763de116a1b0386bdeeb43f945c96e7385eceb1d8eea62d15a51f13141ec8444774efc0f6bd512d68c8ea8dd2d6301002f5908c2adfcf236
-rm-highlight-reflow-0.1.1.tar.gz
+sha512sums='de486d6d28832d99965c05f1dff9d2fad2dc73ea42043c024d408a7f80d68252f17eb0a9cbe5ca0df523e94fa5c8125c59c943fc136c5ac098bb1c88b8208902
+rm-highlight-reflow-0.1.2.tar.gz
 d03861fab5b7954bd1b649cb443cf9ef36811014cb8602386119ed985304b899606a7d4669bcca27c4da9b81de868fb575c5fdb8c1fb26b942719cba8921ca0c
 xovi-0.3.3.tar.gz'

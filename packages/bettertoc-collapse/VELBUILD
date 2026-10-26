@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc-collapse
-pkgver=1.1.1
+pkgver=1.1.2
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -8,13 +8,13 @@ pkgdesc="Adds chevrons to collapse / expand ToC entries based on indent."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !rmhacks bettertoc>=1.4.0 bettertoc<1.6.0 remarkable-os>=3.28 remarkable-os<3.29"
-_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
+depends="qt-resource-rebuilder !rmhacks bettertoc>=1.4.0 bettertoc<1.6.0 remarkable-os>=3.29 remarkable-os<3.30"
+_commit="84bf9eb8629d09ddd523a7895fde9d86208c7035"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#bettertoccollapse"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/bettertoc-collapse.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/betterTocCollapse.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/betterTocCollapse.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -28,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='c844bdcd6a49d6fb00872449b2c11e5dc8ff78c81b6239ec3088fe2f66767077698b89d2d6addaddbd0dbe0de40e3a183a1347a7c9b0e512ab887b9d678a2ad0
+sha512sums='93c1a806368392c8e9a9b7b68b05d2b19cf7e31f64626df67548d3313d057eb5892aed75c7111a069dd4cc3016287884f8057ba7ab0caa1a1fd35ffec349f2d0
 betterTocCollapse.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
