@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=librarian
-pkgver=0.4.1
+pkgver=0.4.2
 pkgrel=0
 upstream_author="rmitchellscott"
 category="framework"
@@ -8,9 +8,9 @@ pkgdesc="Document library management extension"
 url="https://github.com/rmitchellscott/rm-librarian"
 arch="aarch64 armv7"
 license="GPL-3.0-or-later"
-depends="xovi-message-broker>=18 xovi-message-broker<20 remarkable-os>=3.28 remarkable-os<3.29"
+depends="xovi-message-broker>=18 xovi-message-broker<20 remarkable-os>=3.29 remarkable-os<3.30"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-librarian/v$pkgver/README.md"
-_changelog_commit="7d0fe08678203c129b9d848419da2a7e96a2abe5"
+_changelog_commit="5b68a00616cc99089d27d3be3ede6ea9d0fa6243"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-librarian/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
@@ -34,9 +34,9 @@ package() {
 	echo "https://github.com/rmitchellscott/rm-librarian/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='4fd89d9cfd3ddefc70bf7c1174e449af63048d7b3c0a44c8bdd83b1c7e01bd5b5f7f50a2e0cdf5cbd42c3f9f51f361599a00cc0703eab85ffd11e193a7aeb1d1
+sha512sums='c4f2e7aa771edf366102d56046d9d755c337b32b627f0a2acada0b49d986de5fa62280781cc60733565c3ba5b32e31696fb6adf734e4ee851be55fdc5c7f77fa
 librarian-aarch64.so
-2d021ee135a421adb36986a923bef26d5a83562b7d7020c4ba3db4efcef064b706f073b9a640c382bae6ae0d4fd117d78703de41d47d9395e47f510cd6db00c8
+142dfc04497e992d6eb8669f4ccfd63c7d532c52a3b917b3901a5f4eb20d7fd2fc1faae2c5ae105fe957b4b5b88c7d2a15457698a5738530e599b604d76dfa32
 librarian-armv7.so
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

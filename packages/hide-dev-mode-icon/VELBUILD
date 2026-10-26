@@ -1,20 +1,20 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-dev-mode-icon
-pkgver=1.0.2
-pkgrel=8
+pkgver=1.0.3
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Hides the developer mode icon next to the battery icon."
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !rm1 !rm2 remarkable-os>=3.24 remarkable-os<3.29"
-_commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
+depends="qt-resource-rebuilder !rm1 !rm2 remarkable-os>=3.29 remarkable-os<3.30"
+_commit="84bf9eb8629d09ddd523a7895fde9d86208c7035"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#hidedevmodeicon"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/hide-dev-mode-icon.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.28/hideDevModeIcon.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/hideDevModeIcon.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
 "
 options="strip tracedeps"
@@ -28,7 +28,7 @@ package() {
 	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='af10d894e237abd8068a46cbf1ece6696f74641bcf983cd150a7f2d647771adb6c98812dd38fdbeb8e4172f00628f00eeba5c3ef51c8cd294223006bf545547f
+sha512sums='392c231b57160c7e59f7430223ed57979c8a70651769687da02e0e134bdc910c4d02e9e47de03c8fb92c6da5807b3d165a85d37db2f0cf5bcfa0beda68d9d5cc
 hideDevModeIcon.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

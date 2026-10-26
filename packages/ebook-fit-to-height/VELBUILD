@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=ebook-fit-to-height
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=0
 upstream_author="rmitchellscott"
 category="fixes ui"
@@ -8,9 +8,9 @@ pkgdesc="Show ebooks fit-to-height on the Paper Pro Move, matching 3.27 behavior
 url="https://github.com/rmitchellscott/rm-ebook-fit-to-height"
 arch="aarch64"
 license="GPL-3.0-only"
-depends="xovi !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.28 remarkable-os<3.29"
+depends="xovi !rm1 !rm2 !rmpp !rmppure remarkable-os>=3.29 remarkable-os<3.30"
 _xovi_ver="0.3.3"
-_commit="cc3c6543926f6e34925ce69c390bc1cb6c8fcb85"
+_commit="f1e4ecc89c585f9efe453c153cf2004319a69956"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/README.md"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/rm-ebook-fit-to-height/$_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
@@ -49,7 +49,7 @@ package() {
 	echo "https://github.com/rmitchellscott/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='e256b5d82a3e73b08208d745ab20c0313b08687d64307d48ab5651a479ab0b8eb52508cf6cc36fb48320eb1e8697776a738e9337987855d9693294f1906f26db
-rm-ebook-fit-to-height-0.1.0.tar.gz
+sha512sums='e0b3b4fdd07c7b097e6a8aaa91ace090d8568ba4fcc23e70a580ae5cd505344f7d2d85c4730db54ac86774c12dae71257d2e37a2b1584e33fea546a8d7fd6954
+rm-ebook-fit-to-height-0.1.1.tar.gz
 d03861fab5b7954bd1b649cb443cf9ef36811014cb8602386119ed985304b899606a7d4669bcca27c4da9b81de868fb575c5fdb8c1fb26b942719cba8921ca0c
 xovi-0.3.3.tar.gz'

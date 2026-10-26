@@ -1,16 +1,16 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
-pkgver=1.5.1
-pkgrel=1
+pkgver=1.5.2
+pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
 url="https://github.com/rmitchellscott/xovi-bettertoc"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.28 remarkable-os<3.29"
+depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.29 remarkable-os<3.30"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/README.md"
-_changelog_commit="10a60fb6c081e7ae6039529fc1462392af2cef49"
+_changelog_commit="c6f2e62c579ca64428ca2528951024df53e949d8"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
@@ -27,7 +27,7 @@ package() {
 	echo "$url" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='94db0d20cc2401ed812c3f1b9c501c513c6f752b5172983efcc3db9bec12362c0d66d3c8583df3f29053cf25a5b87fcd2e6595d2e693268a9ca5e54dcb8d5d4f
+sha512sums='032e4597ea8de633bfd12bf4e063fdf07aa3796d3533c416220827931a52409dddb2a9c543ef4754bde2cbac70c4d1c282735c1f9f30ce754353bb83e060a254
 betterToc.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

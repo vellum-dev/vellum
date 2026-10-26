@@ -1,14 +1,14 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=default-template
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Set a default template used for new notebooks, pages, and quicksheets"
 url="https://github.com/rmitchellscott/xovi-qmd-extensions"
 arch="noarch"
 license="GPL-3.0-only"
-depends="qt-resource-rebuilder !quicksheet-use-template remarkable-os>=3.27 remarkable-os<3.29"
+depends="qt-resource-rebuilder !quicksheet-use-template remarkable-os>=3.27 remarkable-os<3.30"
 _commit="34d505c412a28ae60eb031de5f6bd83e2e3ead2b"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#defaulttemplate"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/default-template.md"
