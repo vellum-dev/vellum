@@ -1,0 +1,53 @@
+maintainer="Nick Greenfield <349306564+nickgeenfield@users.noreply.github.com>"
+pkgname=fourcolour
+pkgver=1.5.2
+pkgrel=0
+upstream_author="nickgeenfield"
+category="apps"
+pkgdesc="Colour comic reader (CBZ/CBR) for the reMarkable Paper Pro"
+url="https://github.com/nickgeenfield/FourColour"
+arch="aarch64"
+license="MIT"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/FourColour/v$pkgver/README.md"
+
+source="
+https://github.com/$upstream_author/FourColour/releases/download/v$pkgver/fourcolour-$pkgver-appload.tar.gz
+https://raw.githubusercontent.com/$upstream_author/FourColour/v$pkgver/LICENSE
+"
+
+package() {
+	install -Dm644 "$srcdir"/rm-comics/manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/manifest.json
+	install -Dm644 "$srcdir"/rm-comics/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/resources.rcc
+	install -Dm644 "$srcdir"/rm-comics/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/icon.png
+	install -Dm755 "$srcdir"/rm-comics/backend/entry \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/backend/entry
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/nickgeenfield/FourColour/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall() {
+	mkdir -p /home/root/comics
+}
+
+postupgrade() {
+	postinstall
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.local/share/rm-comics
+	fi
+}
+
+sha512sums="
+31bb0158451d793bea781842fc202b7b46db17ff77f28ea03362a2df19941902560a43c5c077f06e51c825f9331113a0397be62beb2c3934361cc0a4d1b209e5  fourcolour-1.5.2-appload.tar.gz
+2615e2c57f2cc13fc480a9843cf80e5dfe8ad05ef3b915c215fb3935f3c28a3e188dc64c8b4659ca04435771621d710d2a27ce44ad86b08e47728efc9c33b7ce  LICENSE
+"
+
