@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=puzzles
 pkgver=0.2.4
-pkgrel=4
+pkgrel=5
 pkgdesc="Simon Tatham's Puzzle Package"
 upstream_author="rmkit-dev"
 category="apps"
