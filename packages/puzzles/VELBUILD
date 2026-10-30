@@ -14,7 +14,7 @@ https://github.com/$upstream_author/remarkable_puzzles/releases/download/v$pkgve
 rmkit.zip::https://github.com/rmkit-dev/rmkit/archive/fc372b29c6f19e4da645277e1902255e3198b59f.zip
 external.manifest.json
 "
-depends="launcher"
+depends="launcher remarkable-os<3.28.0.172"
 
 image="ghcr.io/toltec-dev/python:v4.0"
 build() {
