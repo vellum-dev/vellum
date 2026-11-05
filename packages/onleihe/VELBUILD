@@ -44,7 +44,6 @@ build() {
 package() {
 	_appdir="$pkgdir"/home/root/xovi/exthome/appload/rm-onleihe
 
-	cd "$builddir"
 	install -Dm755 build/backend/entry "$_appdir"/backend/entry
 	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
 	install -Dm644 app/manifest.json "$_appdir"/manifest.json
