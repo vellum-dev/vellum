@@ -1,0 +1,41 @@
+maintainer="mr_marco <marco_meier2210@hotmail.com>"
+pkgname=onleihe
+pkgver=0.2.2
+pkgrel=0
+upstream_author="method-marco"
+category="apps"
+pkgdesc="Borrow e-books from your library's Onleihe and read them in KOReader"
+url="https://github.com/$upstream_author/rm-onleihe"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-onleihe/v$pkgver/README.md"
+source="
+https://github.com/$upstream_author/rm-onleihe/releases/download/v$pkgver/rm-onleihe-aarch64.tar.gz
+https://github.com/$upstream_author/rm-onleihe/releases/download/v$pkgver/rm-onleihe-armv7.tar.gz
+"
+
+unpack() {
+	case "$CARCH" in
+	aarch64) tar -xzf "$srcdir"/rm-onleihe-aarch64.tar.gz -C "$srcdir" ;;
+	armv7) tar -xzf "$srcdir"/rm-onleihe-armv7.tar.gz -C "$srcdir" ;;
+	esac
+}
+
+package() {
+	_dest="$pkgdir"/home/root/xovi/exthome/appload/rm-onleihe
+	install -Dm644 "$srcdir"/rm-onleihe/manifest.json "$_dest"/manifest.json
+	install -Dm644 "$srcdir"/rm-onleihe/icon.png "$_dest"/icon.png
+	install -Dm644 "$srcdir"/rm-onleihe/resources.rcc "$_dest"/resources.rcc
+	install -Dm755 "$srcdir"/rm-onleihe/backend/entry "$_dest"/backend/entry
+
+	install -Dm644 "$srcdir"/rm-onleihe/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/$upstream_author/rm-onleihe/archive/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums='da7210abdbe0dd2669fb8a0497d75a5a7e2fc55c1fb895029abbc670f48719b2e6f592afcfe8437f2ca22782a649b93b9cd5564ccfe36bfffdef8c93caa220ff
+rm-onleihe-aarch64.tar.gz
+39cf5a8e7eb3b52ac4dd4e68207bf07c5275e56b515d7fa48fe3697eabeb6c3c5ac6c704a3094956f15d427bec4cdae19037b815ebad59c037589e569bb56fee
+rm-onleihe-armv7.tar.gz'
