@@ -1,0 +1,70 @@
+maintainer="Nick Greenfield <349306564+nickgeenfield@users.noreply.github.com>"
+pkgname=fourcolour
+pkgver=1.5.2
+pkgrel=0
+upstream_author="nickgeenfield"
+category="apps"
+pkgdesc="Colour comic reader (CBZ/CBR) for the reMarkable Paper Pro"
+url="https://github.com/nickgeenfield/FourColour"
+arch="aarch64"
+license="MIT"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/FourColour/v$pkgver/README.md"
+
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/FourColour/archive/refs/tags/v$pkgver.tar.gz"
+builddir="$srcdir/FourColour-$pkgver"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+
+	. /opt/x-tools/switch-aarch64.sh
+
+	cd "$builddir"/app/backend
+	cargo build --release --locked --target "$CARGO_BUILD_TARGET"
+	mv target/"$CARGO_BUILD_TARGET"/release/rmcomics-backend "$builddir"/entry
+	cp "$HOME"/.cargo/registry/src/*/unrar_sys-*/vendor/unrar/license.txt \
+		"$builddir"/LICENSE-UNRAR
+
+	cd "$builddir"/app
+	/usr/lib/qt6/libexec/rcc --binary -o "$builddir"/resources.rcc application.qrc
+}
+
+package() {
+	install -Dm644 "$builddir"/app/manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/manifest.json
+	install -Dm644 "$builddir"/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/resources.rcc
+	install -Dm644 "$builddir"/assets/icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/icon.png
+	install -Dm755 "$builddir"/entry \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/backend/entry
+
+	install -Dm644 "$builddir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$builddir"/LICENSE-UNRAR \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE-UNRAR
+	echo "$url/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postinstall() {
+	mkdir -p /home/root/comics
+}
+
+postupgrade() {
+	postinstall
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/.local/share/rm-comics
+		rm -rf /home/root/.cache/rm-comics
+	fi
+}
+
+sha512sums='314f48601fb41b0971b0fcf201a13ef6946cab20f989632688c72fbcc16d9a7b11c7103094c5c62e63e8e9c24d8daecb03c70865cd568792a028fb0accdbc680
+fourcolour-1.5.2.tar.gz'
