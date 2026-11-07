@@ -11,24 +11,43 @@ license="MIT"
 depends="appload"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/FourColour/v$pkgver/README.md"
 
-source="
-https://github.com/$upstream_author/FourColour/releases/download/v$pkgver/fourcolour-$pkgver-appload.tar.gz
-https://raw.githubusercontent.com/$upstream_author/FourColour/v$pkgver/LICENSE
-"
+source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/FourColour/archive/refs/tags/v$pkgver.tar.gz"
+builddir="$srcdir/FourColour-$pkgver"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+
+	. /opt/x-tools/switch-aarch64.sh
+
+	cd "$builddir"/app/backend
+	cargo build --release --locked --target "$CARGO_BUILD_TARGET"
+	mv target/"$CARGO_BUILD_TARGET"/release/rmcomics-backend "$builddir"/entry
+	cp "$HOME"/.cargo/registry/src/*/unrar_sys-*/vendor/unrar/license.txt \
+		"$builddir"/LICENSE-UNRAR
+
+	cd "$builddir"/app
+	/usr/lib/qt6/libexec/rcc --binary -o "$builddir"/resources.rcc application.qrc
+}
 
 package() {
-	install -Dm644 "$srcdir"/rm-comics/manifest.json \
+	install -Dm644 "$builddir"/app/manifest.json \
 		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/manifest.json
-	install -Dm644 "$srcdir"/rm-comics/resources.rcc \
+	install -Dm644 "$builddir"/resources.rcc \
 		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/resources.rcc
-	install -Dm644 "$srcdir"/rm-comics/icon.png \
+	install -Dm644 "$builddir"/assets/icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/icon.png
-	install -Dm755 "$srcdir"/rm-comics/backend/entry \
+	install -Dm755 "$builddir"/entry \
 		"$pkgdir"/home/root/xovi/exthome/appload/rm-comics/backend/entry
 
-	install -Dm644 "$srcdir"/LICENSE \
+	install -Dm644 "$builddir"/LICENSE \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/nickgeenfield/FourColour/archive/v$pkgver.tar.gz" > \
+	install -Dm644 "$builddir"/LICENSE-UNRAR \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE-UNRAR
+	echo "$url/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
@@ -43,11 +62,9 @@ postupgrade() {
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
 		rm -rf /home/root/.local/share/rm-comics
+		rm -rf /home/root/.cache/rm-comics
 	fi
 }
 
-sha512sums="
-31bb0158451d793bea781842fc202b7b46db17ff77f28ea03362a2df19941902560a43c5c077f06e51c825f9331113a0397be62beb2c3934361cc0a4d1b209e5  fourcolour-1.5.2-appload.tar.gz
-2615e2c57f2cc13fc480a9843cf80e5dfe8ad05ef3b915c215fb3935f3c28a3e188dc64c8b4659ca04435771621d710d2a27ce44ad86b08e47728efc9c33b7ce  LICENSE
-"
-
+sha512sums='314f48601fb41b0971b0fcf201a13ef6946cab20f989632688c72fbcc16d9a7b11c7103094c5c62e63e8e9c24d8daecb03c70865cd568792a028fb0accdbc680
+fourcolour-1.5.2.tar.gz'
