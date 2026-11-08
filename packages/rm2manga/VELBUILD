@@ -1,0 +1,38 @@
+maintainer="Tung Le <levuxuantung@gmail.com>"
+pkgname=rm2manga
+pkgver=1.0
+pkgrel=0
+upstream_author="tle2721"
+category="apps"
+pkgdesc="Native Mihon-style manga reader & downloader for reMarkable 2 (AppLoad)"
+url="https://github.com/tle2721/remarkable2.MangaReader"
+arch="armv7"
+license="GPL-3.0"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/main/README.md"
+donateurl="https://ko-fi.com/tle2721"
+
+source="
+https://github.com/$upstream_author/remarkable2.MangaReader/releases/download/v$pkgver/rm2manga-v$pkgver.tar.gz
+https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/main/LICENSE
+"
+
+unpack() {
+	tar -xzf "$srcdir"/rm2manga-v$pkgver.tar.gz -C "$srcdir"
+}
+
+package() {
+	install -d "$pkgdir"/home/root/xovi/exthome/appload
+	cp -r "$srcdir"/rm2manga \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/$upstream_author/remarkable2.MangaReader/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums='88f515af49b613b944cef2545086e7af5483f5eaa77346e4eb30e458d053ecafe5602c77c1ab0ed62114c99c3686a6afc8dd34a058c2c9828868f968fdfd89a0
+rm2manga-v1.0.tar.gz
+4fdeebd3b3ead52116d20a63b5d7abc9ef4481531cea57483a69e931fac464fe9eb0b9fc68968501715f9881a354f4879d2b5956d4d7b92f11c87b16f99893e2
+LICENSE'
