@@ -1,0 +1,32 @@
+maintainer="Zorglub <164264951+Zorglub35@users.noreply.github.com>"
+pkgname=four-finger-swipe-for-last-doc
+pkgver=1.0.0
+pkgrel=0
+upstream_author="ingatellent"
+category="ui"
+pkgdesc="Swipe right with four fingers to open the previously opened document."
+url="https://github.com/ingatellent/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-2.0"
+depends="qt-resource-rebuilder ingatellent-settings remarkable-os>=3.28 remarkable-os<3.30"
+_commit="d8d50987c5b3263d82f6386ed475d3bfa5a87909"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/fourFingerSwipeForLastDoc.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE.md
+"
+options="strip tracedeps"
+
+package() {
+	install -Dm644 "$srcdir"/fourFingerSwipeForLastDoc.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fourFingerSwipeForLastDoc.qmd
+
+	install -Dm644 "$srcdir"/LICENSE.md \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums="
+ccf9a8280d03cd8fc56dd62d546f49c973eee991db3cabb3e08acdc2e269325fedd52a3c7b85ec77944c47e8df60bc6b6e32004f007a7403bef7db1bd004a126  fourFingerSwipeForLastDoc.qmd
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  LICENSE.md
+"
