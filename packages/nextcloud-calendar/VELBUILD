@@ -1,0 +1,38 @@
+maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
+pkgname=nextcloud-calendar
+pkgver=0.1.8
+pkgrel=0
+upstream_author="Ampleforth"
+category="apps"
+pkgdesc="Nextcloud calendar and tasks for reMarkable 2"
+url="https://github.com/Ampleforth/remarkable2-nextcloudCalendar"
+arch="armv7"
+license="GPL-3.0-only"
+depends="rm2 appload>=0.5.3"
+options="!check !fhs !strip"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2-nextcloudCalendar/v$pkgver/README.md"
+_archive="remarkable2-nextcloudCalendar-v$pkgver-rm2-armv7"
+source="$url/releases/download/v$pkgver/$_archive.tar.gz"
+builddir="$srcdir/$_archive"
+
+package() {
+	local bundle="$builddir/nextcloud-calendar"
+	local dest="$pkgdir/home/root/xovi/exthome/appload/nextcloud-calendar"
+	local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
+
+	install -Dm755 "$bundle/backend/entry" "$dest/backend/entry"
+	for file in manifest.json resources.rcc icon.png; do
+		install -Dm644 "$bundle/$file" "$dest/$file"
+	done
+
+	for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
+		install -Dm644 "$bundle/$file" "$notices/$file"
+	done
+	for file in "$bundle"/licenses/*; do
+		install -Dm644 "$file" "$notices/licenses/${file##*/}"
+	done
+	printf '%s\n' "$url/releases/tag/v$pkgver" > "$notices/SOURCES"
+}
+
+sha512sums='ed3d9502bb8fc0cd581274cde4221735fee05cd79c8e7c07fd54e73dfed0b591a5e4204ffc14e60032cc0ae69bd4d401e6b81cae453a484c71d10458ac0a8c42
+ remarkable2-nextcloudCalendar-v0.1.8-rm2-armv7.tar.gz'
