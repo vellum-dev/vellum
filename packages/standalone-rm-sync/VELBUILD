@@ -1,0 +1,57 @@
+maintainer="Nathaniel van Diepen <eeems@eeems.email>"
+pkgname=standalone-rm-sync
+pkgver=0.1
+pkgrel=0
+pkgdesc="Make the rm-sync service run standalone"
+upstream_author="vellum-dev"
+category="fixes"
+url="https://vellum.delivery/"
+arch="aarch64 armv7"
+license="MIT"
+depends="remarkable-os>=3.28 remarkable-os<3.29"
+source="
+rm-sync.service
+"
+
+package() {
+	install -Dm644 "$srcdir"/rm-sync.service \
+		"$pkgdir"/home/root/.vellum/share/standalone-rm-sync/rm-sync.service
+}
+postinstall() {
+	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
+		/home/root/.vellum/bin/mount-rw
+		cp /home/root/.vellum/share/standalone-rm-sync/rm-sync.service \
+			/etc/systemd/system/rm-sync.service
+		systemctl daemon-reload
+		systemctl restart rm-sync.service
+		systemctl enable rm-sync.service
+		/home/root/.vellum/bin/mount-restore
+	fi
+}
+postupgrade() {
+	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
+		/home/root/.vellum/bin/mount-rw
+		cp /home/root/.vellum/share/standalone-rm-sync/rm-sync.service \
+			/etc/systemd/system/rm-sync.service
+		systemctl daemon-reload
+		systemctl restart rm-sync.service
+		systemctl enable rm-sync.service
+		/home/root/.vellum/bin/mount-restore
+	fi
+}
+postosupgrade() {
+	if [ "$SKIP_SYSTEMD_HANDLING" != "1" ]; then
+		cp /home/root/.vellum/share/standalone-rm-sync/rm-sync.service \
+			/etc/systemd/system/rm-sync.service
+		systemctl daemon-reload
+		systemctl restart rm-sync.service
+		systemctl enable rm-sync.service
+	fi
+}
+predeinstall() {
+	systemctl disable rm-sync.service
+	rm -f /etc/systemd/system/rm-sync.service
+	systemctl daemon-reload
+}
+sha512sums='b6fa74c1e26c1dbf2c73b1baa279c11efe0406560e9aa512cdf9fe26b48bb42ec1faf3350a39da734550be06dc3f472b6a16106d7e78a837ca439b3ccdd5c15c
+rm-sync.service'
