@@ -161,6 +161,10 @@ Device compatibility is also declared in `depends=`. apk ANDs these, so these sh
 mypackage-1.0.0  depends="!rm1 !rm2"     # Compatible with Paper Pro and Move only
 ```
 
+### Unmaintained Packages
+
+If a package does not support any of the last three stable reMarkable minor OS versions, the Vellum maintainers may set `status="unmaintained"` in its VELBUILD. To change it back, open a PR that adds support for the current OS.
+
 ### Package Scripts
 
 Packages can include lifecycle scripts. These are added as functions in the VELBUILD:
