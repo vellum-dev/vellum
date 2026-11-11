@@ -30,6 +30,7 @@ arch="armv7 aarch64"
 depends="
 oxide-display=$pkgver-r$pkgrel
 liboxide=$pkgver-r$pkgrel
+standalone-rm-sync
 "
 provides="launcher"
 options='strip'
