@@ -74,6 +74,10 @@ Commits must be authored and co-authored by people. Do not add `Co-Authored-By:`
 3. Test it
 4. Submit a PR
 
+### Building from source
+
+Packages should be built from source where possible. Set `image` to a toolchain image (e.g. `ghcr.io/toltec-dev/base:v4.0`) and source the cross toolchain for `$CARCH` in `build()`. See [`packages/keyd/VELBUILD`](packages/keyd/VELBUILD) for an example.
+
 ### VELBUILD template for QMD extensions
 
 ```sh
