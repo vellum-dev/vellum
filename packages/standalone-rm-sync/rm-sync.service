@@ -1,0 +1,17 @@
+[Unit]
+Description=reMarkable Document Sync
+After=dbus.socket
+StartLimitIntervalSec=60
+StartLimitBurst=4
+After=home.mount
+
+[Service]
+Type=simple
+BusName=no.remarkable.sync
+ExecStart=/usr/bin/rm-sync
+Restart=on-failure
+RestartForceExitStatus=SIGHUP SIGINT SIGTERM SIGPIPE
+Nice=19
+
+[Install]
+WantedBy=multi-user.target
