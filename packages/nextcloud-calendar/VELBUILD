@@ -1,0 +1,47 @@
+maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
+pkgname=nextcloud-calendar
+pkgver=0.1.8
+pkgrel=0
+upstream_author="Ampleforth"
+category="apps"
+pkgdesc="Nextcloud calendar and tasks for reMarkable 2"
+url="https://github.com/Ampleforth/remarkable2-nextcloudCalendar"
+arch="armv7"
+license="GPL-3.0-only"
+depends="appload>=0.5.3"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2-nextcloudCalendar/v$pkgver/README.md"
+source="$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+builddir="$srcdir/remarkable2-nextcloudCalendar-$pkgver"
+image="ghcr.io/toltec-dev/golang:v4.0"
+
+build() {
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin
+
+	cd "$builddir"
+	GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC=/usr/lib/qt6/libexec/rcc \
+		./scripts/build.sh
+}
+
+package() {
+	local bundle="$builddir/dist/nextcloud-calendar"
+	local dest="$pkgdir/home/root/xovi/exthome/appload/nextcloud-calendar"
+	local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
+	local file
+
+	install -Dm755 "$bundle/backend/entry" "$dest/backend/entry"
+	for file in manifest.json resources.rcc icon.png; do
+		install -Dm644 "$bundle/$file" "$dest/$file"
+	done
+
+	for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
+		install -Dm644 "$bundle/$file" "$notices/$file"
+	done
+	for file in "$bundle"/licenses/*; do
+		install -Dm644 "$file" "$notices/licenses/${file##*/}"
+	done
+	printf '%s\n' "$url/releases/tag/v$pkgver" > "$notices/SOURCES"
+}
+
+sha512sums='fe1b016cfc6f0d8c000648ae25b223044bb1d340f8008408911fc09e5607fb1f4398266bc10bb08f80b1e75d5f50a483336d294ff9b04ba4da93c94cace5d4b1
+ nextcloud-calendar-0.1.8.tar.gz'
