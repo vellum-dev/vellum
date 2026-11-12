@@ -1,6 +1,6 @@
 maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
 pkgname=nextcloud-calendar
-pkgver=0.1.8
+pkgver=0.1.9
 pkgrel=0
 upstream_author="Ampleforth"
 category="apps"
@@ -43,5 +43,5 @@ package() {
 	printf '%s\n' "$url/releases/tag/v$pkgver" > "$notices/SOURCES"
 }
 
-sha512sums='fe1b016cfc6f0d8c000648ae25b223044bb1d340f8008408911fc09e5607fb1f4398266bc10bb08f80b1e75d5f50a483336d294ff9b04ba4da93c94cace5d4b1
- nextcloud-calendar-0.1.8.tar.gz'
+sha512sums='82fa624fa3470a92b10f9be4a20364bd2a0186211946b8911d4533a9969dcfad37734c6ded6291b3a4bfa6fda6f2ae6323c8634379b23f9615e23e81855daab3
+ nextcloud-calendar-0.1.9.tar.gz'
