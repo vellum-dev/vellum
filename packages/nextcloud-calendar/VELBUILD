@@ -1,6 +1,6 @@
 maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
 pkgname=nextcloud-calendar
-pkgver=0.1.8
+pkgver=0.1.9
 pkgrel=0
 upstream_author="Ampleforth"
 category="apps"
