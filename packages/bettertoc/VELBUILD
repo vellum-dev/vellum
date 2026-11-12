@@ -1,6 +1,6 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=0
 upstream_author="rmitchellscott"
 category="ui"
@@ -10,7 +10,7 @@ arch="noarch"
 license="GPL-3.0-only"
 depends="qt-resource-rebuilder !rmhacks remarkable-os>=3.29 remarkable-os<3.30"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/README.md"
-_changelog_commit="c6f2e62c579ca64428ca2528951024df53e949d8"
+_changelog_commit="3bd09578a63b0efa58777301bc84db74c3cc8dfa"
 changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/$_changelog_commit/CHANGELOG.md"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
@@ -27,7 +27,7 @@ package() {
 	echo "$url" > \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
-sha512sums='032e4597ea8de633bfd12bf4e063fdf07aa3796d3533c416220827931a52409dddb2a9c543ef4754bde2cbac70c4d1c282735c1f9f30ce754353bb83e060a254
+sha512sums='848d80d49444f20e3a5960d901f6e3930bbda08231fc8264a1897ba96f1a402bdaf5bc636575d9d2815566f4bbc4698a82d4144ba3b08118fb459be7f893a5eb
 betterToc.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
