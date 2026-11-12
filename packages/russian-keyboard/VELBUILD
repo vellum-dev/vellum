@@ -1,0 +1,32 @@
+maintainer="Viktor Ivanov <18232879+vivimage@users.noreply.github.com>"
+pkgname=russian-keyboard
+pkgver=1.0.0
+pkgrel=0
+upstream_author="vivimage"
+category="ui"
+pkgdesc="Adds a Russian layout to the on-screen keyboard."
+url="https://github.com/vivimage/remarkable-russian-keyboard"
+arch="noarch"
+license="MIT"
+depends="!rm1 !rm2 !rmpp !rmppm qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="288acd3429e0997be6e6c4c131b57d6939a19eb7"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/README.md"
+source="
+https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/russian-keyboard.rcc
+https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/LICENSE
+"
+options="strip tracedeps"
+
+package() {
+	install -Dm644 "$srcdir"/russian-keyboard.rcc \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/russian-keyboard.rcc
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/vivimage/remarkable-russian-keyboard" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+b6fdaa7cbd904cc7d1cb3e81b8c66d412148b5617a1ca62db1f27e92259aeb5cb9fb4e4770de6598269b99a45a009ff338bff56cf74e7a8a0b7b5fbb2ebf2680  russian-keyboard.rcc
+7b2b3a477d1eb0b88dc410e19a568d7889025fb6175994bdadc055261a704f4d1c93f4eac98d234f22a9bf814504de61f8f2719f860b2d3ba0cecbb0fb30e4d4  LICENSE
+'
