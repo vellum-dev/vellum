@@ -14,8 +14,8 @@ launcherctl
 launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
-pkgver="3.1.2"
-pkgrel=2
+pkgver="3.2"
+pkgrel=0
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
 url=https://oxide.eeems.codes
@@ -30,11 +30,12 @@ arch="armv7 aarch64"
 depends="
 oxide-display=$pkgver-r$pkgrel
 liboxide=$pkgver-r$pkgrel
+standalone-rm-sync
 "
 provides="launcher"
 options='strip'
 
-_toolchain=5.7.119
+_toolchain=5.8.203
 image() {
     case "$CARCH" in
     aarch64) echo "ghcr.io/eeems-org/oxide-toolchain:$_toolchain-rmpp" ;;
@@ -98,7 +99,7 @@ package() {
     # Keyd configuration
     install -o root -g root -Dm644 -t "$pkgdir"/home/root/.config/keyd \
         home/root/.config/keyd/oxide.conf
-    install -Dm644 ../LICENSE.md \
+    install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
     echo "https://github.com/Eeems/oxide" > \
         "$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
@@ -137,11 +138,11 @@ postosupgrade() {
 
 predeinstall() {
     set -e
-    if [ "$(systemctl --quiet list-unit-files tarnish.service | /bin/grep -c tarnish.service 2>/dev/null)" -eq 1 ]; then
-        if systemctl --quiet is-active tarnish.service 2>/dev/null; then
+    if [ "$(systemctl --quiet list-unit-files tarnish.service | /bin/grep -c tarnish.service 2> /dev/null)" -eq 1 ]; then
+        if systemctl --quiet is-active tarnish.service 2> /dev/null; then
             systemctl stop tarnish.service
         fi
-        if systemctl --quiet is-enabled tarnish.service 2>/dev/null; then
+        if systemctl --quiet is-enabled tarnish.service 2> /dev/null; then
             systemctl disable tarnish.service
         fi
     fi
@@ -163,8 +164,8 @@ oxide_display() {
     category="framework"
     depends="
     liboxide=$pkgver-r$pkgrel
-    remarkable-os>=3.27.1.0
-    remarkable-os<3.28
+    remarkable-os>=3.28.0.172
+    remarkable-os<3.29
     "
 
     package() {
@@ -177,14 +178,16 @@ oxide_display() {
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/blight
         # Client
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
-            home/root/.vellum/lib/libblight_client.so*
+        mkdir -p "$subpkgdir"/home/root/.vellum/lib
+        cp -a home/root/.vellum/lib/libblight_client.so* \
+            "$subpkgdir"/home/root/.vellum/lib/
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/blight-client
         # QPA
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib/plugins/platforms \
-            home/root/.vellum/lib/plugins/platforms/liboxide.so*
-        install -Dm644 ../LICENSE.md \
+        mkdir -p "$subpkgdir"/home/root/.vellum/lib/plugins/platforms
+        cp -a home/root/.vellum/lib/plugins/platforms/liboxide.so* \
+            "$subpkgdir"/home/root/.vellum/lib/plugins/platforms/
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-display/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-display/SOURCES"
@@ -220,11 +223,11 @@ oxide_display() {
 
     predeinstall() {
         set -e
-        if [ "$(systemctl --quiet list-unit-files blight.service | /bin/grep -c blight.service 2>/dev/null)" -eq 1 ]; then
-            if systemctl --quiet is-active blight.service 2>/dev/null; then
+        if [ "$(systemctl --quiet list-unit-files blight.service | /bin/grep -c blight.service 2> /dev/null)" -eq 1 ]; then
+            if systemctl --quiet is-active blight.service 2> /dev/null; then
                 systemctl stop blight.service
             fi
-            if systemctl --quiet is-enabled blight.service 2>/dev/null; then
+            if systemctl --quiet is-enabled blight.service 2> /dev/null; then
                 systemctl disable blight.service
             fi
         fi
@@ -262,7 +265,7 @@ oxide_display_dev() {
             home/root/.vellum/include/libblight_protocol.h
         cp -ar home/root/.vellum/include/libblight_protocol/ \
             "$subpkgdir"/home/root/.vellum/include/
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-display-dev/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-display-dev/SOURCES"
@@ -294,7 +297,7 @@ oxide_extra() {
             home/root/.local/share/applications/codes.eeems.ether.oxide
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.local/share/icons/oxide/48x48/apps \
             home/root/.local/share/icons/oxide/48x48/apps/ether.png
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-extra/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-extra/SOURCES"
@@ -338,7 +341,7 @@ oxide_utils() {
             home/root/.vellum/bin/xdg-settings
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/xdg-icon-resource
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-utils/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-utils/SOURCES"
@@ -363,7 +366,7 @@ inject_evdev() {
         cd "$srcdir"/oxide-"$pkgver"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/inject_evdev
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/inject-evdev/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/inject-evdev/SOURCES"
@@ -379,7 +382,7 @@ fbinfo() {
         cd "$srcdir"/oxide-"$pkgver"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/fbinfo
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/fbinfo/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/fbinfo/SOURCES"
@@ -393,12 +396,11 @@ liboxide() {
 
     package() {
         cd "$srcdir"/oxide-"$pkgver"/release
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
-            home/root/.vellum/lib/liboxide.so*
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
-            home/root/.vellum/lib/libblight.so*
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
-            home/root/.vellum/lib/libblight_protocol.so*
+        mkdir -p "$subpkgdir"/home/root/.vellum/lib
+        cp -a home/root/.vellum/lib/liboxide.so* \
+            home/root/.vellum/lib/libblight.so* \
+            home/root/.vellum/lib/libblight_protocol.so* \
+            "$subpkgdir"/home/root/.vellum/lib/
         if [ -f home/root/.vellum/lib/libsentry.so ]; then
             install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
                 home/root/.vellum/lib/libsentry.so
@@ -406,7 +408,7 @@ liboxide() {
             install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib \
                 home/root/.vellum/lib/libcpptrace.so
         fi
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/liboxide/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/liboxide/SOURCES"
@@ -430,7 +432,7 @@ liboxide_dev() {
             home/root/.vellum/include/liboxide.h
         cp -ar home/root/.vellum/include/liboxide/ \
             "$subpkgdir"/home/root/.vellum/include/
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/liboxide-dev/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/liboxide-dev/SOURCES"
@@ -457,7 +459,7 @@ oxide_tests() {
             home/root/.vellum/bin/test_app
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.local/share/applications \
             home/root/.local/share/applications/test_app.oxide
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-tests/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-tests/SOURCES"
@@ -475,7 +477,7 @@ oxide_xovi() {
         cd "$srcdir"/oxide-"$pkgver"/release
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.local/share/applications \
             home/root/.local/share/applications/xovi.oxide
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/oxide-xovi/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/oxide-xovi/SOURCES"
@@ -486,18 +488,19 @@ lockscreen_hook() {
     pkgdesc="Run scripts after unlock"
     category="framework"
     depends='
-    remarkable-os>=3.27.1.0
-    remarkable-os<3.28
+    remarkable-os>=3.28
+    remarkable-os<3.29
     '
     package() {
         cd "$srcdir"/oxide-"$pkgver"/release
-        install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/usr/lib \
-            usr/lib/liblockscreen_hook.so*
+        mkdir -p "$subpkgdir"/home/root/.vellum/usr/lib
+        cp -a usr/lib/liblockscreen_hook.so* \
+            "$subpkgdir"/home/root/.vellum/usr/lib/
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/share/lockscreen_hook/ \
             etc/systemd/system/xochitl.service.d/lockscreen_hook.conf
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/lockscreen_hook/ \
             usr/libexec/lockscreen-hook
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/lockscreen-hook/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/lockscreen-hook/SOURCES"
@@ -570,7 +573,7 @@ launcherctl() {
             home/root/.local/share/lockscreen_hook.d/success
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/share/launcherctl/systemd \
             etc/systemd/system/launcherctl-failure.service
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/launcherctl/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/launcherctl/SOURCES"
@@ -623,7 +626,7 @@ launcherctl_oxide() {
         cd "$srcdir"/oxide-"$pkgver"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/launcherctl \
             home/root/.vellum/share/launcherctl/oxide
-        install -Dm644 ../LICENSE.md \
+        install -Dm644 "$srcdir"/oxide-"$pkgver"/LICENSE.md \
             "$subpkgdir/home/root/.vellum/licenses/launcherctl-oxide/LICENSE"
         echo "https://github.com/Eeems/oxide" > \
             "$subpkgdir/home/root/.vellum/licenses/launcherctl-oxide/SOURCES"
@@ -636,5 +639,5 @@ launcherctl_oxide() {
         fi
     }
 }
-sha512sums='f57008c76799b2ded0d217cea5a74601c04433868da023afe89ff39027aa81d156011ee54e6918fa105905131b1607f6978bfac73ef3b5ee5492c25adebbeb9a
-oxide-3.1.2.tar.gz'
+sha512sums='4236388b496d1203a15d8cea71629aa3cad6242513cc30569d239908bcce686f55360d0cf44e070cb665186a5333e242998e9b8b4aa7c3440e0ccb9a097edadf
+oxide-3.2.tar.gz'
