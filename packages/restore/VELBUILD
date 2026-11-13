@@ -1,12 +1,12 @@
 maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
 pkgname=restore
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=0
 upstream_author="Ampleforth"
 category="apps"
 pkgdesc="Native Anna's Archive search and EPUB/PDF downloads"
 url="https://github.com/Ampleforth/reStore"
-arch="armv7"
+arch="aarch64 armv7"
 license="GPL-3.0-only"
 depends="appload>=0.5.3"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reStore/v$pkgver/README.md"
@@ -19,27 +19,37 @@ build() {
 	apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin python3 python3-bs4 libarchive-tools
 	cd "$builddir"
 	GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC=/usr/lib/qt6/libexec/rcc \
-		RESTORE_ARCHIVE=0 ./scripts/build.sh
+		RESTORE_ARCH="$CARCH" RESTORE_ARCHIVE=0 ./scripts/build.sh
 }
 
 package() {
-	local bundle="$builddir/dist/archive-books"
-	local dest="$pkgdir/home/root/xovi/exthome/appload/archive-books"
-	local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
-	local file
-	install -Dm755 "$bundle/backend/entry" "$dest/backend/entry"
-	for file in manifest.json resources.rcc icon.png README.md; do
-		install -Dm644 "$bundle/$file" "$dest/$file"
-	done
-	mkdir -p "$dest/runtime"
-	cp -a "$bundle/runtime/." "$dest/runtime/"
-	for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
-		install -Dm644 "$bundle/$file" "$notices/$file"
-	done
-	for file in "$bundle"/licenses/*; do
-		install -Dm644 "$file" "$notices/licenses/${file##*/}"
-	done
-	printf '%s\n' "$url/releases/tag/v$pkgver" > "$notices/SOURCES"
+	install -Dm755 "$builddir/dist/$CARCH/archive-books/backend/entry" \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/backend/entry"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/manifest.json" \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/manifest.json"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/resources.rcc" \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/resources.rcc"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/icon.png" \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/icon.png"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/README.md" \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/README.md"
+	mkdir -p "$pkgdir/home/root/xovi/exthome/appload/archive-books/runtime"
+	cp -a "$builddir/dist/$CARCH/archive-books/runtime/." \
+		"$pkgdir/home/root/xovi/exthome/appload/archive-books/runtime/"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/LICENSE" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/LICENSE.upstream.md" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE.upstream.md"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/THIRD_PARTY_NOTICES.md" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/THIRD_PARTY_NOTICES.md"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/licenses/LICENSE-DejaVu.txt" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/licenses/LICENSE-DejaVu.txt"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/licenses/LICENSE-Noto.txt" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/licenses/LICENSE-Noto.txt"
+	install -Dm644 "$builddir/dist/$CARCH/archive-books/licenses/Go-BSD-3-Clause.txt" \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/licenses/Go-BSD-3-Clause.txt"
+	echo "https://github.com/$upstream_author/reStore" > \
+		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
-sha512sums='aaa48b4439b03133bfb006f50df98fc83a303fc60d1b27fd1fb83cc91b2bcaa13129e2a5d1c307b6b82df97b31bd19955d2d88f1a53b25b957e8d93cece4edb4  restore-0.1.0.tar.gz'
+sha512sums='e39dd114e88a275b684f1b5dc6529777fcb5f0ae53d1cfe2bfff0859c7767390943ea2d361623003ce5ba8f08bc1958b88e69541cdfbe338461f0f0521c515f5  restore-0.1.1.tar.gz'
