@@ -1,0 +1,68 @@
+maintainer="Constantine Chrysostomou <2927161+cchrysostomou@users.noreply.github.com>"
+pkgname=nytcrossword
+pkgver=0.3.0
+pkgrel=0
+upstream_author="cchrysostomou"
+category="apps"
+pkgdesc="Access your NYT crossword puzzle account from remarkable. Download puzzles to your device"
+url="https://github.com/cchrysostomou/xovi-nytcrossword"
+arch="aarch64"
+license="MIT Apache-2.0 Zlib BSD-3-Clause IJG BSD-2-Clause GPL-3.0-or-later WITH GCC-exception-3.1"
+depends="appload qt-command-executor librarian curl jq remarkable-os>=3.28 remarkable-os<3.29 !xovi-nytcrossword"
+options="!fhs !strip"
+_commit="3f256421135665101e5f8835bf38646843835f2e"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-nytcrossword/$_commit/README.md"
+source="https://github.com/cchrysostomou/xovi-nytcrossword/releases/download/v0.3.0/xovi-nytcrossword-0.3.0-aarch64.tar.gz"
+builddir="$srcdir"
+
+check() {
+    set -e
+    test -s "$srcdir/home/root/xovi/exthome/appload/nyt-crossword/resources.rcc"
+    test -s "$srcdir/home/root/xovi/exthome/qt-resource-rebuilder/nytQuickDownload.qmd"
+    test -x "$srcdir/home/root/xovi-nytcrossword/tools/bin/qpdf"
+    test -s "$srcdir/home/root/.vellum/licenses/xovi-nytcrossword/SOURCES"
+    test ! -e "$srcdir/home/root/xovi-nytcrossword/config.env"
+    test ! -e "$srcdir/home/root/xovi-nytcrossword/state"
+}
+
+package() {
+    set -e
+    mkdir -p "$pkgdir/home"
+    cp -a "$srcdir/home/root" "$pkgdir/home/"
+    mv "$pkgdir/home/root/.vellum/licenses/xovi-nytcrossword" \
+        "$pkgdir/home/root/.vellum/licenses/$pkgname"
+}
+
+preinstall() {
+    set -e
+    for tool in bash flock stat; do
+        if ! command -v "$tool" >/dev/null 2>&1; then
+            echo "NYT Crossword: required firmware tool missing: $tool" >&2
+            exit 1
+        fi
+    done
+}
+
+preupgrade() {
+    preinstall
+}
+
+postinstall() {
+    set -e
+    echo "NYT Crossword: open Settings and save your NYT-S cookie."
+    echo "Restart xochitl with XOVI to load the Quick Settings patch."
+}
+
+postupgrade() {
+    postinstall
+}
+
+postdeinstall() {
+    set -e
+    if [ "${VELLUM_PURGE:-0}" = 1 ]; then
+        rm -f /home/root/xovi-nytcrossword/config.env
+        rm -rf /home/root/xovi-nytcrossword/state
+    fi
+}
+
+sha512sums="8d2b86112631791c80d3afbc0cadbaaf255a5a593cf22829c8c6c8226449134fb90548029a922eaf6d4c02b64c9351550f39a88431b68ca356499b7d098b5c95  xovi-nytcrossword-$pkgver-aarch64.tar.gz"
