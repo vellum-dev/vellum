@@ -1,0 +1,61 @@
+maintainer="Tung Le <levuxuantung@gmail.com>"
+pkgname=rm2manga
+_pkgver=1.0
+pkgver=1.0.0
+pkgrel=0
+upstream_author="tle2721"
+category="apps"
+pkgdesc="Manga reader and downloader for reMarkable 2"
+url="https://github.com/tle2721/remarkable2.MangaReader"
+arch="armv7"
+license="GPL-3.0-only"
+depends="appload !rm1"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/v$_pkgver/README.md"
+donateurl="https://ko-fi.com/tle2721"
+_license_commit="ad8f956e1dac7703d312bb3b044d53ab53cebdc2"
+
+source="
+$pkgname-$_pkgver.tar.gz::https://github.com/$upstream_author/remarkable2.MangaReader/archive/refs/tags/v$_pkgver.tar.gz
+https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/$_license_commit/LICENSE
+"
+options="strip"
+image="ghcr.io/toltec-dev/base:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
+
+	. /opt/x-tools/switch-arm.sh
+	cd "$srcdir"/remarkable2.MangaReader-"$_pkgver"
+
+	mkdir -p dist/rm2manga/backend
+	"${CROSS_COMPILE}g++" -std=c++17 -O2 -Wall -Wextra -pthread -ldl \
+		-Ibackend/src backend/src/main.cpp \
+		-o dist/rm2manga/backend/entry
+	rcc --binary --no-compress --format-version 2 \
+		-o dist/rm2manga/resources.rcc application.qrc
+}
+
+package() {
+	set -e
+	cd "$srcdir"/remarkable2.MangaReader-"$_pkgver"
+	install -Dm755 dist/rm2manga/backend/entry \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/backend/entry
+	install -Dm644 dist/rm2manga/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/resources.rcc
+	install -Dm644 manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/manifest.json
+	install -Dm644 icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/icon.png
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums='c000eb0e72b07c08bc7871565f01f10baa7b05586c12e33e8bf869f6ba1fa970a668cee395eef75cf1dd916c2f2a7322bb7d0647e818fa8364cb6a2226dd6179
+rm2manga-1.0.tar.gz
+4fdeebd3b3ead52116d20a63b5d7abc9ef4481531cea57483a69e931fac464fe9eb0b9fc68968501715f9881a354f4879d2b5956d4d7b92f11c87b16f99893e2
+LICENSE'
