@@ -31,7 +31,6 @@ package() {
 	for file in manifest.json resources.rcc icon.png README.md; do
 		install -Dm644 "$bundle/$file" "$dest/$file"
 	done
-	# Preserve executable modes and Debian symlinks; never package live state.
 	mkdir -p "$dest/runtime"
 	cp -a "$bundle/runtime/." "$dest/runtime/"
 	for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
