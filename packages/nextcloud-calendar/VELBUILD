@@ -10,8 +10,8 @@ arch="armv7 aarch64"
 license="GPL-3.0-only"
 depends="appload>=0.5.3"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkable-nextcloudCalendar/v$pkgver/README.md"
-source="$url/releases/download/v$pkgver/nextcloud-calendar-$pkgver-source.tar.gz"
-builddir="$srcdir/nextcloud-calendar-$pkgver-source"
+source="$pkgname-$pkgver-source-git.tar.gz::$url/archive/refs/tags/v$pkgver-source.tar.gz"
+builddir="$srcdir/reMarkable-nextcloudCalendar-$pkgver-source"
 image="ghcr.io/toltec-dev/golang:v4.0"
 
 build() {
@@ -68,9 +68,9 @@ package() {
 		"$notices/licenses/reTaskable-GPL-3.0-only.txt"
 	install -Dm644 "$bundle/licenses/rrule-go-MIT.txt" \
 		"$notices/licenses/rrule-go-MIT.txt"
-	echo "$url/releases/download/v$pkgver/nextcloud-calendar-$pkgver-source.tar.gz" > \
+	echo "$url/archive/refs/tags/v$pkgver-source.tar.gz" > \
 		"$notices/SOURCES"
 }
 
-sha512sums='ec502d1a74c37f5b006635ad7440149752c79bb22a5b2d8b923df3bab2e4818b713f280dc88da624858197bc645861a33dd2520d28acf731c71e8b526832e2ba
- nextcloud-calendar-0.3.1-source.tar.gz'
+sha512sums='ebcc6dcd780329a8a1318af2c1dfa6f57b5355387edf59c3011e15767e2d4bd7a17b854d0c2ac54109560a2263f8a20532c233aad3fe91a6330c4a8ce1f63937
+ nextcloud-calendar-0.3.1-source-git.tar.gz'
