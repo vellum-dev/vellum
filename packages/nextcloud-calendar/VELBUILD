@@ -15,43 +15,61 @@ builddir="$srcdir/nextcloud-calendar-$pkgver-source"
 image="ghcr.io/toltec-dev/golang:v4.0"
 
 build() {
-    apt-get update
-    apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin python3
-    cd "$builddir"
-    case "$CARCH" in
-        armv7) _target=arm ;;
-        aarch64) _target=arm64 ;;
-        *) echo "Unsupported CARCH: $CARCH" >&2; return 1 ;;
-    esac
-    GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC="${RCC:-/usr/lib/qt6/libexec/rcc}" \
-        CALENDAR_GOARCH="$_target" ./scripts/build.sh
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin python3
+	cd "$builddir"
+	case "$CARCH" in
+		armv7) _target=arm ;;
+		aarch64) _target=arm64 ;;
+		*) echo "Unsupported CARCH: $CARCH" >&2; return 1 ;;
+	esac
+	GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC="${RCC:-/usr/lib/qt6/libexec/rcc}" \
+		CALENDAR_GOARCH="$_target" ./scripts/build.sh
 }
 
 package() {
-    case "$CARCH" in
-        armv7) _output=nextcloud-calendar ;;
-        aarch64) _output=nextcloud-calendar-arm64 ;;
-        *) return 1 ;;
-    esac
-    local bundle="$builddir/dist/$_output"
-    local dest="$pkgdir/home/root/xovi/exthome/appload/nextcloud-calendar"
-    local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
-    local file
-    install -Dm755 "$bundle/backend/entry" "$dest/backend/entry"
-    for file in manifest.json resources.rcc icon.png VERSION architecture SOURCE.txt LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
-        install -Dm644 "$bundle/$file" "$dest/$file"
-    done
-    for file in "$bundle"/licenses/*; do
-        install -Dm644 "$file" "$dest/licenses/${file##*/}"
-        install -Dm644 "$file" "$notices/licenses/${file##*/}"
-    done
-    for file in "$bundle"/xovi/*.qmd; do
-        install -Dm644 "$file" "$dest/xovi/${file##*/}"
-    done
-    for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
-        install -Dm644 "$bundle/$file" "$notices/$file"
-    done
-    printf '%s\n' "$url/releases/download/v$pkgver/nextcloud-calendar-$pkgver-source.tar.gz" > "$notices/SOURCES"
+	case "$CARCH" in
+		armv7) _output=nextcloud-calendar ;;
+		aarch64) _output=nextcloud-calendar-arm64 ;;
+		*) return 1 ;;
+	esac
+	local bundle="$builddir/dist/$_output"
+	local dest="$pkgdir/home/root/xovi/exthome/appload/nextcloud-calendar"
+	local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
+
+	install -Dm755 "$bundle/backend/entry" \
+		"$dest/backend/entry"
+	install -Dm644 "$bundle/manifest.json" \
+		"$dest/manifest.json"
+	install -Dm644 "$bundle/resources.rcc" \
+		"$dest/resources.rcc"
+	install -Dm644 "$bundle/icon.png" \
+		"$dest/icon.png"
+	install -Dm644 "$bundle/VERSION" \
+		"$dest/VERSION"
+	install -Dm644 "$bundle/architecture" \
+		"$dest/architecture"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarLauncher.qmd" \
+		"$dest/xovi/nextcloudCalendarLauncher.qmd"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarSend.qmd" \
+		"$dest/xovi/nextcloudCalendarSend.qmd"
+
+	install -Dm644 "$bundle/LICENSE" \
+		"$notices/LICENSE"
+	install -Dm644 "$bundle/LICENSE.upstream.md" \
+		"$notices/LICENSE.upstream.md"
+	install -Dm644 "$bundle/THIRD_PARTY_NOTICES.md" \
+		"$notices/THIRD_PARTY_NOTICES.md"
+	install -Dm644 "$bundle/licenses/Go-BSD-3-Clause.txt" \
+		"$notices/licenses/Go-BSD-3-Clause.txt"
+	install -Dm644 "$bundle/licenses/go-ical-MIT.txt" \
+		"$notices/licenses/go-ical-MIT.txt"
+	install -Dm644 "$bundle/licenses/reTaskable-GPL-3.0-only.txt" \
+		"$notices/licenses/reTaskable-GPL-3.0-only.txt"
+	install -Dm644 "$bundle/licenses/rrule-go-MIT.txt" \
+		"$notices/licenses/rrule-go-MIT.txt"
+	echo "$url/releases/download/v$pkgver/nextcloud-calendar-$pkgver-source.tar.gz" > \
+		"$notices/SOURCES"
 }
 
 sha512sums='ec502d1a74c37f5b006635ad7440149752c79bb22a5b2d8b923df3bab2e4818b713f280dc88da624858197bc645861a33dd2520d28acf731c71e8b526832e2ba
