@@ -14,7 +14,7 @@ launcherctl
 launcherctl-oxide:launcherctl_oxide
 '
 pkgname=oxide
-pkgver="3.2"
+pkgver="3.2.1"
 pkgrel=0
 upstream_author="Eeems-Org"
 maintainer="Eeems <eeems@eeems.email>"
@@ -639,5 +639,5 @@ launcherctl_oxide() {
         fi
     }
 }
-sha512sums='4236388b496d1203a15d8cea71629aa3cad6242513cc30569d239908bcce686f55360d0cf44e070cb665186a5333e242998e9b8b4aa7c3440e0ccb9a097edadf
-oxide-3.2.tar.gz'
+sha512sums='7df542cc42ec6c91cd66899032a30a27fd8fe9db8b2b904a2dca9663914a5d576bdc8cc4e0591b82d4e96095b4a705af1d99537e2043c921b025c046927ea03c
+oxide-3.2.1.tar.gz'
