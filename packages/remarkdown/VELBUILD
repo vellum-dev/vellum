@@ -16,27 +16,22 @@ reMarkdown-$pkgver.tar.gz::https://github.com/$upstream_author/reMarkdown/archiv
 "
 options='strip'
 
-image() {
-	case "$CARCH" in
-	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
-	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
-	*)
-		echo "Invalid CARCH: $CARCH"
-		exit 1
-		;;
-	esac
+image(){
+	echo "eeems/vellum-toolchain:6.0.112-$CARCH"
 }
 
 build() {
 	set -e
-	apt-get update
-	apt-get install -y golang-go
-
 	cd "$srcdir"/reMarkdown-"$pkgver"
-	. "$(find /opt/codex -name 'environment-setup-*' -type f | head -n1)"
 	case "$CARCH" in
-	aarch64) arch=arm64 ;;
-	armv7) arch=armv7h ;;
+	aarch64)
+		arch=arm64
+		. "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
+		;;
+	armv7)
+		arch=armv7h
+		. "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)"
+		;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1

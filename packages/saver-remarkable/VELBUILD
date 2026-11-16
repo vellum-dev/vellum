@@ -14,23 +14,26 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/saver-remarkable/v
 
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/saver-remarkable/archive/refs/tags/v$pkgver.tar.gz"
 
-image="ghcr.io/toltec-dev/rust:v4.0"
+image(){
+	echo "eeems/vellum-toolchain:6.0.112-$CARCH"
+}
 
 build() {
 	set -e
-	apt-get update
-	apt-get install -y --no-install-recommends qt6-base-dev
-	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
-
 	case "$CARCH" in
-	aarch64) . /opt/x-tools/switch-aarch64.sh ;;
-	armv7) . /opt/x-tools/switch-arm.sh ;;
+	aarch64)
+		arch=arm64
+		. "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
+		;;
+	armv7)
+		arch=armv7h
+		. "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)"
+		;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
 		;;
 	esac
-
 	cd "$srcdir"/saver-remarkable-"$pkgver"
 	cargo build --release --locked --target "$CARGO_BUILD_TARGET"
 	mv target/"$CARGO_BUILD_TARGET"/release/saver-remarkable .
@@ -71,6 +74,7 @@ capture() {
 	"
 
 	package() {
+		set -e
 		cd "$srcdir"/saver-remarkable-"$pkgver"
 		install -Dm644 packaging/qmldiff/saver-sidebar.qmd \
 			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/saver-sidebar.qmd
