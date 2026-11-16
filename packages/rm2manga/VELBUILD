@@ -1,6 +1,6 @@
 maintainer="Tung Le <levuxuantung@gmail.com>"
 pkgname=rm2manga
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=0
 upstream_author="tle2721"
 category="apps"
@@ -8,7 +8,7 @@ pkgdesc="Manga reader and downloader"
 url="https://github.com/tle2721/remarkable2.MangaReader"
 arch="aarch64 armv7"
 license="GPL-3.0-only"
-depends="appload"
+depends="appload curl"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/v$pkgver/README.md"
 donateurl="https://ko-fi.com/tle2721"
 
@@ -57,5 +57,11 @@ package() {
 	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
-sha512sums='5cebfcbcb1a91bedc8cb126f1ea7e5501a7d32222e49d1a7008e61abbac8fb78b02fec160bf5feaef0375b10086f2cfe5a5730e5441a00b04119deb20cc4e4d9
-rm2manga-1.0.1.tar.gz'
+predeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/rm2manga/data
+	fi
+}
+
+sha512sums='88699cf452793fa8d1c89a2eadfd59f764a3a1722539f14f9d9d759eeb7fcc562f2833358944e4d934498fa70863eb28d7447d5c50bc9297df561134b066e5d9
+rm2manga-1.0.2.tar.gz'
