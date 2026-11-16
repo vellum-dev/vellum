@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=qt-plugin-path
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Sets QT_PLUGIN_PATH for xochitl to find plugins in .vellum/lib/plugins"
@@ -20,5 +20,5 @@ package() {
 		"$pkgdir"/home/root/xovi/services/xochitl.service/qt-plugin-path.conf
 }
 
-sha512sums='b1cf19d2b60a82b4c81bb2b47146a0e4424472db49bb380aca0fe0685182098b6eac3aed820131580059d93c76c0da5c41e2425c6d885ac5f38f0f2d0141d6b0
+sha512sums='3409464a1f5251ce26e24c5f9f9da3658bf0b4b2ac34e54aeac16abc55a5db399c521597bb5fe78b6842edfc5877f5824b02d7304ad47d34977d33c2c3f9a5c1
 qt-plugin-path.conf'
