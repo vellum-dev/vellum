@@ -22,10 +22,12 @@ build() {
 	case "$CARCH" in
 	aarch64)
 		cd "$srcdir"/reTaskable-"$pkgver"/app
+		. "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
 		./build-rmpp.sh
 		;;
 	armv7)
 		cd "$srcdir"/reTaskable-"$pkgver"/app
+		. "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)"
 		./build-rm.sh
 		;;
 	*)
