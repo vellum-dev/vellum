@@ -1,47 +1,78 @@
 maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
 pkgname=nextcloud-calendar
-pkgver=0.1.9
+pkgver=0.3.2
 pkgrel=0
 upstream_author="Ampleforth"
 category="apps"
-pkgdesc="Nextcloud calendar and tasks for reMarkable 2"
-url="https://github.com/Ampleforth/remarkable2-nextcloudCalendar"
-arch="armv7"
+pkgdesc="Nextcloud calendar and tasks"
+url="https://github.com/Ampleforth/reMarkable-nextcloudCalendar"
+arch="armv7 aarch64"
 license="GPL-3.0-only"
 depends="appload>=0.5.3"
-readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2-nextcloudCalendar/v$pkgver/README.md"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkable-nextcloudCalendar/v$pkgver/README.md"
 source="$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
-builddir="$srcdir/remarkable2-nextcloudCalendar-$pkgver"
+builddir="$srcdir/reMarkable-nextcloudCalendar-$pkgver"
 image="ghcr.io/toltec-dev/golang:v4.0"
 
 build() {
 	apt-get update
-	apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin
-
+	apt-get install -y --no-install-recommends qt6-base-dev librsvg2-bin python3
 	cd "$builddir"
-	GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC=/usr/lib/qt6/libexec/rcc \
-		./scripts/build.sh
+	case "$CARCH" in
+		armv7) _target=arm ;;
+		aarch64) _target=arm64 ;;
+		*) echo "Unsupported CARCH: $CARCH" >&2; return 1 ;;
+	esac
+	GOFLAGS=-mod=vendor GOTOOLCHAIN=auto RCC="${RCC:-/usr/lib/qt6/libexec/rcc}" \
+		CALENDAR_GOARCH="$_target" ./scripts/build.sh
 }
 
 package() {
-	local bundle="$builddir/dist/nextcloud-calendar"
+	case "$CARCH" in
+		armv7) _output=nextcloud-calendar ;;
+		aarch64) _output=nextcloud-calendar-arm64 ;;
+		*) return 1 ;;
+	esac
+	local bundle="$builddir/dist/$_output"
 	local dest="$pkgdir/home/root/xovi/exthome/appload/nextcloud-calendar"
 	local notices="$pkgdir/home/root/.vellum/licenses/$pkgname"
-	local file
 
-	install -Dm755 "$bundle/backend/entry" "$dest/backend/entry"
-	for file in manifest.json resources.rcc icon.png; do
-		install -Dm644 "$bundle/$file" "$dest/$file"
-	done
+	install -Dm755 "$bundle/backend/entry" \
+		"$dest/backend/entry"
+	install -Dm644 "$bundle/manifest.json" \
+		"$dest/manifest.json"
+	install -Dm644 "$bundle/resources.rcc" \
+		"$dest/resources.rcc"
+	install -Dm644 "$bundle/icon.png" \
+		"$dest/icon.png"
+	install -Dm644 "$bundle/VERSION" \
+		"$dest/VERSION"
+	install -Dm644 "$bundle/architecture" \
+		"$dest/architecture"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarLauncher.qmd" \
+		"$dest/xovi/nextcloudCalendarLauncher.qmd"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarSend.qmd" \
+		"$dest/xovi/nextcloudCalendarSend.qmd"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarLauncher-3.29.1.0.qmd" \
+		"$dest/xovi/nextcloudCalendarLauncher-3.29.1.0.qmd"
 
-	for file in LICENSE LICENSE.upstream.md THIRD_PARTY_NOTICES.md; do
-		install -Dm644 "$bundle/$file" "$notices/$file"
-	done
-	for file in "$bundle"/licenses/*; do
-		install -Dm644 "$file" "$notices/licenses/${file##*/}"
-	done
-	printf '%s\n' "$url/releases/tag/v$pkgver" > "$notices/SOURCES"
+	install -Dm644 "$bundle/LICENSE" \
+		"$notices/LICENSE"
+	install -Dm644 "$bundle/LICENSE.upstream.md" \
+		"$notices/LICENSE.upstream.md"
+	install -Dm644 "$bundle/THIRD_PARTY_NOTICES.md" \
+		"$notices/THIRD_PARTY_NOTICES.md"
+	install -Dm644 "$bundle/licenses/Go-BSD-3-Clause.txt" \
+		"$notices/licenses/Go-BSD-3-Clause.txt"
+	install -Dm644 "$bundle/licenses/go-ical-MIT.txt" \
+		"$notices/licenses/go-ical-MIT.txt"
+	install -Dm644 "$bundle/licenses/reTaskable-GPL-3.0-only.txt" \
+		"$notices/licenses/reTaskable-GPL-3.0-only.txt"
+	install -Dm644 "$bundle/licenses/rrule-go-MIT.txt" \
+		"$notices/licenses/rrule-go-MIT.txt"
+	echo "$url/archive/refs/tags/v$pkgver.tar.gz" > \
+		"$notices/SOURCES"
 }
 
-sha512sums='82fa624fa3470a92b10f9be4a20364bd2a0186211946b8911d4533a9969dcfad37734c6ded6291b3a4bfa6fda6f2ae6323c8634379b23f9615e23e81855daab3
- nextcloud-calendar-0.1.9.tar.gz'
+sha512sums='04da5c3f21a35aef0befc700dae43ed0739c55d3f7e03c10750f661ebe7c474814452b38faf4d80e101909035a878a76de14a4498d567cbb4b58c901f0b38be4
+ nextcloud-calendar-0.3.2.tar.gz'
