@@ -150,6 +150,7 @@ jobs:
 
       - name: Lint VELBUILD files
         run: |
+          podman pull ghcr.io/eeems/vbuild-builder:main
           PACKAGES="${{ needs.setup.outputs.packages }}"
           if [ "$PACKAGES" == "all" ] || [ -z "$PACKAGES" ]; then
             ./scripts/lint-packages.sh --apkbuild-lint
