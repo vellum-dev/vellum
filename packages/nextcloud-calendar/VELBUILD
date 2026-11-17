@@ -5,7 +5,7 @@ pkgrel=1
 upstream_author="Ampleforth"
 category="apps"
 pkgdesc="Nextcloud calendar and tasks for reMarkable 2"
-url="https://github.com/Ampleforth/remarkable2-nextcloudCalendar"
+url="https://github.com/Ampleforth/remarkable-nextcloudCalendar"
 arch="armv7"
 license="GPL-3.0-only"
 depends="appload>=0.5.3"
