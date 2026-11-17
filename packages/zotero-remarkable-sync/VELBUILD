@@ -1,0 +1,79 @@
+maintainer="Constantine Chrysostomou <2927161+cchrysostomou@users.noreply.github.com>"
+pkgname=zotero-remarkable-sync
+pkgver=0.1.0
+pkgrel=0
+upstream_author="cchrysostomou"
+category="apps"
+pkgdesc="Sync Zotero PDFs and reMarkable annotations using Zotero Storage or WebDAV"
+url="https://github.com/cchrysostomou/xovi-zotero-bridge"
+arch="aarch64"
+license="MIT AGPL-3.0-only GPL-2.0-or-later LGPL-2.1-or-later Apache-2.0 BSD-3-Clause BSD-2-Clause LicenseRef-unRAR"
+depends="appload qt-command-executor librarian curl remarkable-os>=3.28 remarkable-os<3.29"
+options="!fhs !strip"
+_commit="5d0da0a130a67aea3d4fd5229e2e87565f5be6fe"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-zotero-bridge/$_commit/README.md"
+source="https://github.com/cchrysostomou/xovi-zotero-bridge/releases/download/v0.1.0/xovi-zotero-bridge-0.1.0-aarch64.tar.gz"
+builddir="$srcdir"
+
+check() {
+	set -e
+	test -s "$srcdir/home/root/xovi/exthome/appload/zotero-library/resources.rcc"
+	for patch in zoteroQuickSync zoteroBridgeSettings zoteroSendToZotero; do
+		test -s "$srcdir/home/root/xovi/exthome/qt-resource-rebuilder/$patch.qmd"
+	done
+	for tool in jq 7zz zotbridge-localgeta; do
+		test -x "$srcdir/home/root/xovi-zotero-bridge/bin/$tool"
+	done
+	test -s "$srcdir/home/root/.vellum/licenses/$pkgname/SOURCES"
+	test -s "$srcdir/home/root/.vellum/licenses/$pkgname/helper-source.tar.gz"
+	test ! -e "$srcdir/home/root/xovi-zotero-bridge/config.toml"
+	test ! -e "$srcdir/home/root/xovi-zotero-bridge/zotbridge-state.db"
+	test ! -e "$srcdir/home/root/xovi-zotero-bridge/zotbridge-state.db.json"
+}
+
+package() {
+	set -e
+	mkdir -p "$pkgdir/home"
+	cp -a "$srcdir/home/root" "$pkgdir/home/"
+}
+
+preinstall() {
+	set -e
+	for tool in bash flock stat unzip dd wc mv sleep; do
+		if ! command -v "$tool" >/dev/null 2>&1; then
+			echo "Zotero Bridge: required firmware tool missing: $tool" >&2
+			exit 1
+		fi
+	done
+	if [ ! -x /lib/ld-linux-aarch64.so.1 ]; then
+		echo "Zotero Bridge: 7zz requires the firmware's ARM64 glibc loader." >&2
+		exit 1
+	fi
+	for library in libpthread.so.0 libdl.so.2 libstdc++.so.6 libm.so.6 libgcc_s.so.1 libc.so.6; do
+		found=0
+		for directory in /lib /usr/lib /lib64 /usr/lib64; do
+			if [ -r "$directory/$library" ]; then found=1; break; fi
+		done
+		if [ "$found" = 0 ]; then
+			echo "Zotero Bridge: required firmware library missing: $library" >&2
+			exit 1
+		fi
+	done
+}
+
+preupgrade() {
+	preinstall
+}
+
+postinstall() {
+	set -e
+	echo "Zotero Bridge: restart xochitl with XOVI to load the app and patches."
+	echo "Open Settings > Zotero Bridge to save your library and storage credentials."
+	echo "Configuration and bridge state are preserved on removal, including purge."
+}
+
+postupgrade() {
+	postinstall
+}
+
+sha512sums="3cf05734f3a860dc68e88248db31bda132cc5914fd45027d2138f2eb9bae7184899867e91aca9685ea425837549538005a7aee988203e4541946986855eb72c3  xovi-zotero-bridge-$pkgver-aarch64.tar.gz"
