@@ -56,7 +56,6 @@ package() {
 	set -e
 	cd "$srcdir/ZeroTierOne-$pkgver"
 	DESTDIR="$pkgdir" make install
-	cp LICENSE-MPL.txt "$srcdir"/LICENSE
 }
 doc() {
 	pkgdesc="Man files for zerotier-one"

@@ -32,7 +32,6 @@ package() {
 	mkdir -p "$pkgdir/home/root/.vellum/lib"
 	cp -r "lib" "$pkgdir/home/root/.vellum/lib/$pkgname"
 	install -Dm744 zig "$pkgdir/home/root/.vellum/bin/$pkgname"
-	cp LICENSE "$srcdir"/LICENSE
 }
 
 doc() {
