@@ -1,6 +1,6 @@
 maintainer="Ampleforth <213837259+Ampleforth@users.noreply.github.com>"
 pkgname=nextcloud-calendar
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=0
 upstream_author="Ampleforth"
 category="apps"
@@ -10,8 +10,8 @@ arch="armv7 aarch64"
 license="GPL-3.0-only"
 depends="appload>=0.5.3"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/reMarkable-nextcloudCalendar/v$pkgver/README.md"
-source="$pkgname-$pkgver-source-git.tar.gz::$url/archive/refs/tags/v$pkgver-source.tar.gz"
-builddir="$srcdir/reMarkable-nextcloudCalendar-$pkgver-source"
+source="$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
+builddir="$srcdir/reMarkable-nextcloudCalendar-$pkgver"
 image="ghcr.io/toltec-dev/golang:v4.0"
 
 build() {
@@ -53,6 +53,8 @@ package() {
 		"$dest/xovi/nextcloudCalendarLauncher.qmd"
 	install -Dm644 "$bundle/xovi/nextcloudCalendarSend.qmd" \
 		"$dest/xovi/nextcloudCalendarSend.qmd"
+	install -Dm644 "$bundle/xovi/nextcloudCalendarLauncher-3.29.1.0.qmd" \
+		"$dest/xovi/nextcloudCalendarLauncher-3.29.1.0.qmd"
 
 	install -Dm644 "$bundle/LICENSE" \
 		"$notices/LICENSE"
@@ -68,9 +70,9 @@ package() {
 		"$notices/licenses/reTaskable-GPL-3.0-only.txt"
 	install -Dm644 "$bundle/licenses/rrule-go-MIT.txt" \
 		"$notices/licenses/rrule-go-MIT.txt"
-	echo "$url/archive/refs/tags/v$pkgver-source.tar.gz" > \
+	echo "$url/archive/refs/tags/v$pkgver.tar.gz" > \
 		"$notices/SOURCES"
 }
 
-sha512sums='ebcc6dcd780329a8a1318af2c1dfa6f57b5355387edf59c3011e15767e2d4bd7a17b854d0c2ac54109560a2263f8a20532c233aad3fe91a6330c4a8ce1f63937
- nextcloud-calendar-0.3.1-source-git.tar.gz'
+sha512sums='04da5c3f21a35aef0befc700dae43ed0739c55d3f7e03c10750f661ebe7c474814452b38faf4d80e101909035a878a76de14a4498d567cbb4b58c901f0b38be4
+ nextcloud-calendar-0.3.2.tar.gz'
