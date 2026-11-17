@@ -116,7 +116,6 @@ if [ "$RUN_APKBUILD_LINT" = "true" ]; then
     set -e
     cpus=$(nproc)
     echo "$PACKAGES" |
-        xargs -n1 |
         xargs -P "$((cpus * 2))" -I {} \
             bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
 fi
