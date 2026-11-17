@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -75,29 +75,6 @@ if [ -z "$PACKAGES" ]; then
     fi
 fi
 
-run_apkbuild_lint() {
-    local pkg_path="$1"
-
-    if command -v apkbuild-lint >/dev/null 2>&1; then
-        SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint "$pkg_path/APKBUILD" 2>&1
-    elif command -v podman >/dev/null 2>&1; then
-        podman run --rm \
-            -v "$pkg_path:/src:ro" \
-            -w "/src" \
-            ghcr.io/eeems/vbuild-builder:main \
-            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
-    elif command -v docker >/dev/null 2>&1; then
-        docker run --rm \
-            -v "$pkg_path:/src:ro" \
-            -w "/src" \
-            ghcr.io/eeems/vbuild-builder:main \
-            sh -c "SKIP_AL8=1 SKIP_AL7=1 SKIP_AL28=1 apkbuild-lint APKBUILD" 2>&1
-    else
-        echo "  (apkbuild-lint skipped - install atools, podman, or docker)"
-        return 0
-    fi
-}
-
 if [ "$RUN_APKBUILD_LINT" = "true" ]; then
     echo "Generating APKBUILD..."
     echo ""
@@ -116,12 +93,50 @@ if [ "$RUN_APKBUILD_LINT" = "true" ]; then
     set -e
     cpus=$(nproc)
     echo "$PACKAGES" |
+        xargs -n1 |
         xargs -P "$((cpus * 2))" -I {} \
             bash -c "cp -r '$REPO_ROOT/packages/{}' '$work_dir' && vbuild -C '$work_dir/{}' gen"
 fi
 
 echo "Linting packages..."
 echo ""
+
+if [ "$RUN_APKBUILD_LINT" = "true" ]; then
+    set +e
+    lint_tmp=$(mktemp -d)
+    ret=$?
+    trap 'rm -rf $lint_tmp' EXIT
+    if [ $ret -ne 0 ]; then
+        echo "Fatal Error: Failed to create lint output directory" 2>&1
+        exit $ret
+    fi
+    set -e
+    cpus=$(nproc)
+    echo "$PACKAGES" | \
+        xargs -P "$((cpus * 2))" -I {} \
+            sh -c '
+                pkg=$1
+                tmp=$2
+                script_dir=$3
+                work_dir=$4
+                "$script_dir/apkbuild-lint.sh" "$work_dir/$pkg/APKBUILD" >"$tmp/$pkg.out" 2>&1
+                printf "%s\n" "$?" >"$tmp/$pkg.status"
+            ' _ {} "$lint_tmp" "$SCRIPT_DIR" "$work_dir"
+    declare -A lint_status
+    declare -A lint_output
+    for pkg in $PACKAGES; do
+        if [ -f "$lint_tmp/$pkg.status" ]; then
+            lint_status[$pkg]=$(cat "$lint_tmp/$pkg.status")
+        else
+            lint_status[$pkg]=0
+        fi
+        if [ -f "$lint_tmp/$pkg.out" ]; then
+            lint_output[$pkg]=$(cat "$lint_tmp/$pkg.out")
+        else
+            lint_output[$pkg]=""
+        fi
+    done
+fi
 
 for pkg in $PACKAGES; do
     VELBUILD_PATH="$REPO_ROOT/packages/$pkg/VELBUILD"
@@ -134,7 +149,7 @@ for pkg in $PACKAGES; do
     pkg_status="pass"
     pkg_warned=false
     validate_output=""
-    lint_output=""
+    lint_result=""
 
     status=0
     result=$("$SCRIPT_DIR/validate-velbuild.sh" "$VELBUILD_PATH" 2>&1) || status=$?
@@ -148,9 +163,9 @@ for pkg in $PACKAGES; do
     fi
 
     if [ "$RUN_APKBUILD_LINT" = "true" ]; then
-        lint_status=0
-        lint_output=$(run_apkbuild_lint "$work_dir/$pkg") || lint_status=$?
-        if [ $lint_status -ne 0 ]; then
+        lint_rc="${lint_status[$pkg]:-0}"
+        lint_result="${lint_output[$pkg]:-}"
+        if [ "$lint_rc" -ne 0 ]; then
             pkg_status="fail"
         fi
     fi
@@ -172,9 +187,9 @@ for pkg in $PACKAGES; do
     esac
 
     [ -n "$validate_output" ] && echo "$validate_output"
-    if [ -n "$lint_output" ]; then
+    if [ -n "$lint_result" ]; then
         echo "  apkbuild-lint:"
-        echo "$lint_output" | sed 's/^/    /'
+        echo "$lint_result" | sed 's/^/    /'
     fi
 done
 
