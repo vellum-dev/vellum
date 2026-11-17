@@ -35,7 +35,6 @@ unpack() {
 package() {
 	install -Dm644 "$srcdir"/appload.so \
 		"$pkgdir"/home/root/xovi/extensions.d/appload.so
-
 	install -Dm644 "$srcdir"/shims/qtfb-shim.so \
 		"$pkgdir"/home/root/shims/qtfb-shim.so
 	install -Dm644 "$srcdir"/shims/qtfb-shim-32bit.so \
@@ -57,6 +56,8 @@ launcherctl_appload() {
 			"$srcdir/launcherctl.prestart.sh"
 		install -o root -g root -Dm755 -t "$subpkgdir"/home/root/xovi/scripts/pre-stock \
 			"$srcdir/launcherctl.prestock.sh"
+		install -Dm644 "$srcdir/launcherctl.LICENSE" \
+			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
 	}
 
 	predeinstall() {
