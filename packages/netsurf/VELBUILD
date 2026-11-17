@@ -1,7 +1,7 @@
 maintainer="maicrohard <maicrohard@proton.me>"
 pkgname=netsurf
 pkgver=0.5.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Lightweight web browser"
 upstream_author="MaicroNotHard"
 category="apps"
@@ -50,11 +50,6 @@ build() {
 
 package() {
 	cd "$srcdir/netsurf-reMarkable-$_commit"
-	install -Dm644 LICENSE \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/netsurf-reMarkable" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 build/netsurf/nsfb \
 		"$pkgdir"/home/root/xovi/exthome/appload/netsurf/netsurf
 	install -Dm644 "$startdir"/external.manifest.json \

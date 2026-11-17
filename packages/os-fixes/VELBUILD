@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=os-fixes
 pkgver=0.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Fix systemd service startup issues on some devices"
 upstream_author="vellum-dev"
 category="fixes"
@@ -11,6 +11,7 @@ license="MIT"
 depends="!rmppure remarkable-os>=3.27.1.0"
 source="
 service-overrides.conf
+LICENSE
 "
 replaces="rmpp-fixes"
 provides="rmpp-fixes"
@@ -87,4 +88,6 @@ predeinstall() {
 	systemctl daemon-reload
 }
 sha512sums='b8131a0cfab85a6d57853f2cab9f0c454084142bef5967ee0cbb4dd2845abe71c040a3ac2b4c81724a537fef3443e3fe12d74dd99f88eb19c756602aa451ef32
-service-overrides.conf'
+service-overrides.conf
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95
+LICENSE'

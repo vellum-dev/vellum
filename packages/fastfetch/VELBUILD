@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=fastfetch
 pkgver=2.58.0_git11
-pkgrel=4
+pkgrel=5
 upstream_author="fastfetch-cli"
 category="utilities"
 pkgdesc="A maintained, feature-rich and performance oriented, neofetch like system information tool."
@@ -28,11 +28,6 @@ package() {
 
 	install -Dm644 "$srcdir"/fastfetch.bash \
 		"$pkgdir"/home/root/.vellum/share/bash-completion/completions/fastfetch
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	install -Dm644 "$srcdir"/SOURCES \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 
 	install -d "$pkgdir"/home/root/.local/share/$pkgname/presets/examples
 	install -m644 "$srcdir"/presets/*.jsonc \

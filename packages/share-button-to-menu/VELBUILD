@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=share-button-to-menu
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Moves the Share button from the document toolbar into the more menu"
@@ -21,11 +21,6 @@ https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/
 package() {
 	install -Dm644 "$srcdir"/share-button-to-menu.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/share-button-to-menu.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='da973f4662af342fab26009a507d0bfd399e16fc7f864ce5c6eeb34ad80c88efc65aee72fd0f3f8ad6f19eee311541a4ad55742e977c7dacb503b240448df266
 share-button-to-menu.qmd

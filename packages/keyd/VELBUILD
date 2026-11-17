@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=keyd
 pkgver=2.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A key remapping daemon for linux"
 upstream_author="rvaiya"
 category="utilities"
@@ -36,11 +36,6 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/$pkgname-${pkgver%-*}"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	make PREFIX=/home/root/.vellum CONFIG_DIR=/home/root/.config/keyd DESTDIR="$pkgdir" install
 	install -Dm644 "$startdir"/default.conf \
 		"$pkgdir"/home/root/.config/keyd/default.conf

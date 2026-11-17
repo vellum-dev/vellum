@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-shot
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Screenshot extension for xovi framework"
@@ -26,11 +26,6 @@ package() {
 
 	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/rm-shot.so
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-shot/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='f83b260313f06f8a5e2abcae732dda376c9e5f70dc9083ce9173829b51e9590b10a2c3c3e774e3ae722d75b68cb5cb6b3fad8a2cc0d06cb784654bf4ad54aab0
 rm-shot-aarch64.so

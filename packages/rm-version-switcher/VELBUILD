@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-version-switcher
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Interactive CLI tool for switching between installed reMarkable OS versions"
@@ -33,11 +33,6 @@ package() {
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/rm-version-switcher
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-version-switcher/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='e1d93bd3d04dbaa98f99563b2c35910ff0c9792e897bf33dcf6ed69789a5e7fc3a04e713ea8195ff2b7a2a68e734434cdd2c6df9855416ea8c10fdc15947332f
 rm-version-switcher-aarch64.tar.gz

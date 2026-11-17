@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="unmaintained"
 pkgname=extend-list-title-width
 pkgver=1.0.0
-pkgrel=6
+pkgrel=7
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Removes extra right margin for titles in list view to fill more of the available space."
@@ -24,11 +24,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/extendListTitleWidth.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/extendListTitleWidth.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 59caedc54696e821da87f69a7ad0d11f6179b9ef1c3abd7f5ba05e417ed958ec5a02d6e6e017db65b95cbd6cd8eacf24f08166ad730cb92a9e46e5e8c4f9fc0b  extendListTitleWidth.qmd

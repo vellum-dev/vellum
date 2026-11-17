@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=tripletap
 pkgver=1.1.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Start xovi by triple-pressing the power button"
@@ -50,11 +50,6 @@ package() {
 	install -Dm755 migrate-to-config.sh "$install_dir/migrate-to-config.sh"
 
 	echo "$pkgver" >"$install_dir/version.txt"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/xovi-tripletap/archive/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 preupgrade() {

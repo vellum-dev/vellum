@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pokemon
 pkgver=0.2.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Display the Pokemon sprite matching your reMarkable firmware codename"
@@ -26,11 +26,6 @@ package() {
 
 	install -Dm755 "$srcdir/$bin_file" \
 		"$pkgdir/home/root/.vellum/bin/rm-pokemon"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/rmitchellscott/rm-pokemon/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 sha512sums="

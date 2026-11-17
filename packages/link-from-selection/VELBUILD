@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=link-from-selection
 pkgver=1.2.2
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="On-page links from a lasso selection: jump to a page in this or another document"
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/linkFromSelection.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/linkFromSelection.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 469dea6e313a5bed25687134f4763b1de8b0df2807be1c84a01b909cad2d21bc26b386a5e3009b7577c6cb840d75c02ba58f131cf24c103e09311f9b8ac11ac2  linkFromSelection.qmd

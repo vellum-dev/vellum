@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=collapse-toolbar-on-open
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Opens every document with the toolbar collapsed"
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/collapseToolbarOnOpen.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/collapseToolbarOnOpen.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 71f7db9226f31a0f7badf385206dcc987a10c4e378b0fbad4cb0da1d33ee9b4324c68aa4b03fb709115fc3479c61b48985247ad23d53fd8dddd97c78451b60ca  collapseToolbarOnOpen.qmd

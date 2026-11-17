@@ -1,7 +1,7 @@
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=koreader
 pkgver=2026.07.1
-pkgrel=1
+pkgrel=2
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
@@ -14,7 +14,7 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/
 source="
 https://github.com/$upstream_author/koreader/releases/download/v$pkgver/koreader-remarkable-aarch64-v$pkgver.zip
 https://github.com/$upstream_author/koreader/releases/download/v$pkgver/koreader-remarkable-v$pkgver.zip
-https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/COPYING
+LICENSE::https://raw.githubusercontent.com/$upstream_author/koreader/v$pkgver/COPYING
 KOReader.oxide
 "
 
@@ -35,11 +35,6 @@ package() {
 
 	sed -i 's/hasOTAUpdates = yes/hasOTAUpdates = no/' \
 		"$pkgdir"/home/root/xovi/exthome/appload/koreader/frontend/device/remarkable/device.lua
-
-	install -Dm644 "$srcdir"/COPYING \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://github.com/koreader/koreader/archive/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {
@@ -53,6 +48,6 @@ koreader-remarkable-aarch64-v2026.07.1.zip
 9a89f6c0ef571e5c6843fd06706858b39709d5b6b84a27cca11d90722cd41e8ee0bfd1a66b3264c025b3b8a1a2192bcb73f6d9a70f46eb2663bc5121bbfd399d
 koreader-remarkable-v2026.07.1.zip
 a0a86214ea153fb07ff35ceec0848dd1703eae22de036a825efc8394e50f65e3044832f3b49cf7e45a39edc470bdf738abc36a3a78ca7df3a6e73c14eaef94a8
-COPYING
+LICENSE
 37e4f2bcd7d7f8ddcfb89b51e60e5ffb8a86b5d6ed38233f25d88305836c18d265bc58ddfce584175a5b3261d48e5320ea3ed8e5e471baf67af43713954de858
 KOReader.oxide'

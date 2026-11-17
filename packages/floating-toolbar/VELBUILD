@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=floating-toolbar
 pkgver=2.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Floating toolbar for quick access to your favourite tools, presets, and layers."
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/floating.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/floating.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

@@ -2,7 +2,7 @@ maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=chessmarkable
 _pkgver=0.8.1-1
 pkgver=${_pkgver%-*}
-pkgrel=6
+pkgrel=7
 pkgdesc="Chess game"
 upstream_author="LinusCDE"
 category="apps"
@@ -37,11 +37,6 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/$pkgname-$_pkgver"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 chessmarkable \
 		"$pkgdir"/home/root/xovi/exthome/appload/chessmarkable/chessmarkable
 	install -Dm644 icon.png \

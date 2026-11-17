@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=selection-stuff
 pkgver=1.0.4
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds the ability to select everything above the line."
@@ -20,11 +20,6 @@ LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_co
 package() {
 	install -Dm644 "$srcdir/selectionStuff.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/selectionStuff.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='e0261658d3b5089c5b241788b0a7b5e5b1ab768f7c8b0a6ba60d0f6622c744fb3e0314061c83009d077ab94e57bcdc06dd6a5fbc94f2df4a71baaed847dfd072
 selectionStuff.qmd

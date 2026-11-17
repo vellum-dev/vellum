@@ -1,7 +1,7 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=tun
 pkgver=1.0.3
-pkgrel=0
+pkgrel=1
 upstream_author="reMarkable"
 category="utilities"
 pkgdesc="TUN module for rMP[Pro, Move, Pure], compiled from kernel code released by rM using rM's SDKs"
@@ -57,10 +57,7 @@ package() {
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-ferrari.ko"
     install -Dm655 "$srcdir/tun-tatsu.ko" \
         "$pkgdir/home/root/.vellum/bin/lib/modules/tun-tatsu.ko"
-    install -Dm644 "$srcdir"/linux-imx-rel-5.8-xenu-3.28.0.172-2418a6dae57b/COPYING \
-        "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-    echo "https://github.com/reMarkable/linux-imx-rm" > \
-        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+    cp "$srcdir"/linux-imx-rel-5.8-xenu-3.28.0.172-2418a6dae57b/COPYING "$srcdir"/LICENSE
 }
 
 postinstall() {

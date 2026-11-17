@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-diagonal-eraser
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds a diagonal-up gesture on the left/right edge to switch between eraser and pen"
@@ -21,11 +21,6 @@ https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICE
 package() {
 	install -Dm644 "$srcdir"/diagonalerase.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/diagonalerase.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 

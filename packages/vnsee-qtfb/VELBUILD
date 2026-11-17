@@ -1,7 +1,7 @@
 maintainer="Interloper <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=vnsee-qtfb
 pkgver=1.1.1
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="apps"
 pkgdesc="VNC client for the reMarkable tablet allowing you to use the device as a second screen"
@@ -74,11 +74,6 @@ package() {
 		cp -r "$srcdir"/vnsee-"$_commit"/build/dist/vnsee$n \
 			"$pkgdir"/home/root/xovi/exthome/appload/vnsee$n
 	done
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/asivery/vnsee/archive/$_commit.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall() {

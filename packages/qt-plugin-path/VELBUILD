@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=qt-plugin-path
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Sets QT_PLUGIN_PATH for xochitl to find plugins in .vellum/lib/plugins"
@@ -9,10 +9,10 @@ url="https://github.com/rmitchellscott/epaper-qpa"
 arch="noarch"
 license="MIT"
 depends="xovi-extensions"
-options="!check !fhs"
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 qt-plugin-path.conf
+LICENSE
 "
 
 package() {
@@ -21,4 +21,6 @@ package() {
 }
 
 sha512sums='3409464a1f5251ce26e24c5f9f9da3658bf0b4b2ac34e54aeac16abc55a5db399c521597bb5fe78b6842edfc5877f5824b02d7304ad47d34977d33c2c3f9a5c1
-qt-plugin-path.conf'
+qt-plugin-path.conf
+b7a86c9fc7a740ff680037b0e6b646ccd70e4e74fef78669b8ba92e18b873e4673fbba064272c595d13bc016288cd4a0532cd974534b7fef43a5b065f24add95
+LICENSE'

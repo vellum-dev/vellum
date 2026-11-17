@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=btop
 pkgver=1.4.6
-pkgrel=4
+pkgrel=5
 upstream_author="aristocratos"
 category="utilities"
 pkgdesc="A monitor of resources"
@@ -30,11 +30,6 @@ package() {
 	install -d "$pkgdir"/home/root/.vellum/share/$pkgname/themes
 	install -m644 "$srcdir"/themes/*.theme \
 		"$pkgdir"/home/root/.vellum/share/$pkgname/themes/
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/aristocratos/btop/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then

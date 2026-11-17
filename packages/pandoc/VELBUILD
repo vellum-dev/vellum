@@ -1,7 +1,7 @@
 maintainer="esclee <45214659+0xdeb7ef@users.noreply.github.com>"
 pkgname=pandoc
 pkgver=3.12.1
-pkgrel=0
+pkgrel=1
 upstream_author="jgm"
 category="utilities"
 pkgdesc="a Haskell library for converting from one markup format to another, and a command-line tool that uses this library"
@@ -13,7 +13,7 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/pandoc/$pkgver/REA
 
 source="
 https://github.com/$upstream_author/pandoc/releases/download/$pkgver/pandoc-$pkgver-linux-arm64.tar.gz
-https://raw.githubusercontent.com/$upstream_author/pandoc/refs/tags/$pkgver/COPYRIGHT
+LICENSE::https://raw.githubusercontent.com/$upstream_author/pandoc/refs/tags/$pkgver/COPYRIGHT
 "
 
 package() {
@@ -22,13 +22,9 @@ package() {
 		"$pkgdir/home/root/.vellum/bin/pandoc"
 	ln -s pandoc "$pkgdir/home/root/.vellum/bin/pandoc-lua"
 	ln -s pandoc "$pkgdir/home/root/.vellum/bin/pandoc-server"
-	install -Dm644 "$srcdir/COPYRIGHT" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYRIGHT"
-	echo "https://github.com/$upstream_author/pandoc/archive/refs/tags/$pkgver.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 sha512sums='1a0c12ec4e82143d1a11e3af3465a6b24a9e6c373e3e58e29fd36a81ff45f97edd64c34366c9b01bcf49cd2f6e53b618e0df78f6bf30696f96a674d1c9edea31
 pandoc-3.12.1-linux-arm64.tar.gz
 abcc7ed4fac50e2d857cec5b1a15dd088fa5f1746e4a436ce2f63d28aca8eebde543c25fef756b5bdc0b9350a72ffa5b77e252fd30b56323794f8f4a68b82900
-COPYRIGHT'
+LICENSE'

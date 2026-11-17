@@ -4,7 +4,7 @@ pitwall-oxide:pitwall_oxide
 maintainer="Yan Khachko <a@slnk.icu>"
 pkgname=pitwall
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="sijokun"
 category="apps"
 pkgdesc="Live Formula 1 timing for AppLoad: positions, intervals, tyres, flags, and race control"
@@ -42,11 +42,6 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/external.manifest.json
 	install -Dm644 icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/$pkgname/icon.png
-
-	install -Dm644 LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/sijokun/PitWall/archive/$_commit.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 pitwall_oxide() {
@@ -57,11 +52,6 @@ pitwall_oxide() {
 	package() {
 		install -Dm644 "$srcdir"/pitwall.oxide \
 			"$subpkgdir/home/root/.local/share/applications/Pit Wall.oxide"
-
-		install -Dm644 "$builddir"/LICENSE \
-			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
-		echo "https://github.com/sijokun/PitWall/archive/$_commit.tar.gz" > \
-			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
 	}
 }
 

@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=starship
 pkgver=1.24.2
-pkgrel=3
+pkgrel=4
 upstream_author="starship"
 category="utilities"
 pkgdesc="The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
@@ -27,11 +27,6 @@ unpack() {
 package() {
 	install -Dm755 "$srcdir"/starship \
 		"$pkgdir"/home/root/.vellum/bin/starship
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/starship/starship/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall() {

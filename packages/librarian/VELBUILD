@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=librarian
 pkgver=0.4.2
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Document library management extension"
@@ -28,11 +28,6 @@ package() {
 
 	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/librarian.so
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-librarian/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='c4f2e7aa771edf366102d56046d9d755c337b32b627f0a2acada0b49d986de5fa62280781cc60733565c3ba5b32e31696fb6adf734e4ee851be55fdc5c7f77fa
 librarian-aarch64.so

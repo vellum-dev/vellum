@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=default-template
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Set a default template used for new notebooks, pages, and quicksheets"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/defaultTemplate.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/defaultTemplate.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='12e8d541c89e392e64c25e0e88d23a88523162712ce69e417b407ed579150f81996f8b07835c2a95e218fe2ca1b1583b07c68181609ea6da1cb89d8ce713754b
 defaultTemplate.qmd

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rm-pdfium
 pkgver=0.2.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="xovi extension to expose xochitl's libpdfium."
@@ -28,11 +28,6 @@ package() {
 
 	install -Dm644 "$srcdir"/$so_file \
 		"$pkgdir"/home/root/xovi/extensions.d/rm-pdfium.so
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/$pkgname/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='ba42bb9e1d772465879573c12976132faaf9af4c415dda5a5a3b805df8c116c6956b4e84f94c23bde25c01ef1485de5fa105039ebf70436abc8ea0aa69b5a45f
 rm-pdfium-aarch64.so

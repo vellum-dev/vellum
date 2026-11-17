@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=sort-templates-recent
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Sort the template selector by most recently used"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/sortTemplatesRecent.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/sortTemplatesRecent.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='0585e15634f82a8cdb3c4f60f8fdf78d769932ca1ba3b1c4362152ed18ca9177a725ceeed4833e8e1ff811f1d1a181e05be16efe366366f9801514a7890a8865
 sortTemplatesRecent.qmd

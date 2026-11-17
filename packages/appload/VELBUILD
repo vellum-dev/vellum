@@ -4,7 +4,7 @@ launcherctl-appload:launcherctl_appload
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=appload
 pkgver=0.6.0
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="launchers"
 pkgdesc="XOVI extension for windowed and fullscreen apps"
@@ -35,16 +35,10 @@ unpack() {
 package() {
 	install -Dm644 "$srcdir"/appload.so \
 		"$pkgdir"/home/root/xovi/extensions.d/appload.so
-
 	install -Dm644 "$srcdir"/shims/qtfb-shim.so \
 		"$pkgdir"/home/root/shims/qtfb-shim.so
 	install -Dm644 "$srcdir"/shims/qtfb-shim-32bit.so \
 		"$pkgdir"/home/root/shims/qtfb-shim-32bit.so
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/asivery/rm-appload/archive/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 launcherctl_appload() {
@@ -64,8 +58,6 @@ launcherctl_appload() {
 			"$srcdir/launcherctl.prestock.sh"
 		install -Dm644 "$srcdir/launcherctl.LICENSE" \
 			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/LICENSE"
-		echo "https://github.com/vellum-dev/vellum" > \
-			"$subpkgdir/home/root/.vellum/licenses/$subpkgname/SOURCES"
 	}
 
 	predeinstall() {

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=createpages-rm2
 pkgver=1.0.4
-pkgrel=6
+pkgrel=7
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Overrides new page creation to use reMarkable 2 dimensions."
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/createPagesRM2Size.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/createPagesRM2Size.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='79b6c9f5d8660b6bc64ecef3308e1f4ed9e25de277e9ca9de7f301189c44d4847202134e1bdc11664d724aae678ea6c9a380457894441e8a7320d8d3a00d5169
 createPagesRM2Size.qmd

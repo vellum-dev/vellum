@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-remapper
 pkgver=0.2.2
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Remaps stylus input events with configurable presets, pressure curves, and position offsets."
@@ -49,11 +49,6 @@ SCRIPT
 killall stylus-remapper 2>/dev/null
 SCRIPT
 	chmod 755 "$pkgdir"/home/root/xovi/scripts/pre-stock/stylus-remapper.sh
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/$upstream_author/rm-stylus-remapper/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 predeinstall() {

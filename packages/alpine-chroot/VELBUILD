@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=alpine-chroot
 pkgver=0.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A minimal alpine chroot for the reMarkable tablet"
 upstream_author="Eeems"
 category="utilities"
@@ -23,11 +23,6 @@ package() {
 	mkdir -p "$pkgdir"/home/root/.vellum/lib/
 	ln -s "/home/root/.local/share/alpine" \
 		"$pkgdir"/home/root/.vellum/lib/alpine-chroot
-
-	install -Dm644 LICENSE \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 preinstall() {
 	/opt/bin/opkg install lsof

@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=fav-tag-button
 pkgver=1.0.8
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds buttons to the navigator search/new note button that lets you open the favourites and tagged view with a click."
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/favTagButton.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/favTagButton.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='395a7d15b0829174dbe4db3fbb8e54d13d285d3fb2725e292747e85afbe621e08ded21b0750d86a2e9fa9e788646d0458f5c4ecccad209329c39ba14a4dc2ac3
 favTagButton.qmd

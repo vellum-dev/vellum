@@ -1,7 +1,7 @@
 maintainer="esclee <5288860+esclee@users.noreply.github.com>"
 pkgname=remarkdown
 pkgver=0.3.0
-pkgrel=1
+pkgrel=2
 upstream_author="esclee"
 category="apps"
 pkgdesc="A lightweight Markdown editor for the reMarkable tablet, to be used via AppLoad"
@@ -51,9 +51,6 @@ package() {
 	cd "$srcdir"/reMarkdown-"$pkgver"
 	install -d "$pkgdir"/home/root/xovi/exthome/appload
 	cp -r rmd "$pkgdir"/home/root/xovi/exthome/appload
-	install -Dm644 LICENSE "$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://github.com/esclee/reMarkdown" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

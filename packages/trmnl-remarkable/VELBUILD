@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=trmnl-remarkable
 pkgver=2.4.0
-pkgrel=0
+pkgrel=1
 upstream_author="usetrmnl"
 category="apps"
 pkgdesc="TRMNL dashboard client for AppLoad: renders your TRMNL playlist on the tablet"
@@ -49,12 +49,8 @@ package() {
 	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
 	install -Dm644 app/manifest.json "$_appdir"/manifest.json
 	install -Dm644 app/icon.png "$_appdir"/icon.png
-
-	install -Dm644 LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
 	install -Dm644 THIRD_PARTY_NOTICES.md \
 		"$pkgdir"/home/root/.vellum/licenses/$pkgname/THIRD_PARTY_NOTICES.md
-	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

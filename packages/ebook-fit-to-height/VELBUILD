@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=ebook-fit-to-height
 pkgver=0.1.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Show ebooks fit-to-height on the Paper Pro Move, matching 3.27 behavior on later versions."
@@ -43,11 +43,6 @@ build() {
 package() {
 	install -Dm644 "$builddir"/ebook-fit-to-height.so \
 		"$pkgdir"/home/root/xovi/extensions.d/ebook-fit-to-height.so
-
-	install -Dm644 "$builddir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-ebook-fit-to-height/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='e0b3b4fdd07c7b097e6a8aaa91ace090d8568ba4fcc23e70a580ae5cd505344f7d2d85c4730db54ac86774c12dae71257d2e37a2b1584e33fea546a8d7fd6954
 rm-ebook-fit-to-height-0.1.1.tar.gz

@@ -1,7 +1,7 @@
 maintainer="Jarett <jarett@reticulum.us>"
 pkgname=retaskable
 pkgver=1.0.5
-pkgrel=1
+pkgrel=2
 upstream_author="jdkruzr"
 category="utilities"
 pkgdesc="CalDAV task client for reMarkable tablets"
@@ -54,10 +54,6 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/manifest.json
 	install -Dm644 app/"$_output"/icon.png \
 		"$pkgdir"/home/root/xovi/exthome/appload/retaskable/icon.png
-
-	install -Dm644 LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 capture() {
@@ -78,10 +74,6 @@ capture() {
 			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/retaskableSend.qmd
 		install -Dm644 app/xovi/retaskableJump.qmd \
 			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/retaskableJump.qmd
-
-		install -Dm644 LICENSE \
-			"$subpkgdir"/home/root/.vellum/licenses/retaskable-capture/LICENSE
-		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/retaskable-capture/SOURCES
 	}
 }
 

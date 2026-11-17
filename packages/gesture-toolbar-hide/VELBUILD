@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="unmaintained"
 pkgname=gesture-toolbar-hide
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Single-finger swipe from toolbar edge to hide the toolbar"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/gestureToolbarHide.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestureToolbarHide.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 a4680b416f7be3bf91983b9682582a4d024a51721039c0ac37cfd4a4909ea1d8957f182af96b75b6f08a7d6b1f25f493a0cb013c7337ed4c59636ff1922d50cf  gestureToolbarHide.qmd

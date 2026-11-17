@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=dictionary-wiki-translator
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Adds integrated dictionary, Wikipedia, and translation capabilities for PDFs and EPUBs"
@@ -21,11 +21,6 @@ options="!check !fhs"
 package() {
 	install -Dm644 "$srcdir"/dictionaryWikiTranslator.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/dictionaryWikiTranslator.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

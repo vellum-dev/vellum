@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=delay-stroke-screen-refresh
 pkgver=1.0.1
-pkgrel=4
+pkgrel=5
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Delays color stroke refresh by 10 seconds of inactivity."
@@ -20,11 +20,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/delayStrokeScreenRefresh.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/delayStrokeScreenRefresh.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
 be255a16b9e76c81ca564b9a33225638282e4eaf65dc39551a52ed1128c8127c9bdfaef18fdc7a701eba2cb51ef7ddba03ca3cfd91f3f73244cd530ab2533863  delayStrokeScreenRefresh.qmd

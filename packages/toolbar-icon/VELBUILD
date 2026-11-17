@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=toolbar-icon
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds an icon with current tool, thickness, and colour in place of the toolbar-expand button while the toolbar is hidden."
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/toolbar_icon.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/toolbar_icon.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='4db7324309d201e934ebc22996b0402d2e18a3b65f6f43430c3e7736c4d6507e3d7285b5edd549b5a79ffeecb61aec898a14e86019a7591ee3fad2dbf54ae777
 toolbar_icon.qmd

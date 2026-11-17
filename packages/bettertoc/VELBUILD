@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bettertoc
 pkgver=1.5.3
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds the ability to add, delete, and edit Table of Contents entries in notebooks, PDFs, and EPUBs."
@@ -21,11 +21,6 @@ https://raw.githubusercontent.com/$upstream_author/xovi-bettertoc/v$pkgver/LICEN
 package() {
 	install -Dm644 "$srcdir"/betterToc.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/betterToc.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='848d80d49444f20e3a5960d901f6e3930bbda08231fc8264a1897ba96f1a402bdaf5bc636575d9d2815566f4bbc4698a82d4144ba3b08118fb459be7f893a5eb
 betterToc.qmd

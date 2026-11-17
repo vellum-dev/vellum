@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=external-keyboard-qpa
 pkgver=0.1.1
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Qt platform plugin for reMarkable e-paper displays with external keyboard support"
@@ -13,16 +13,15 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/epaper-qpa/externa
 donateurl="https://buymeacoffee.com/rmitchellscott"
 source="
 libepaper.so::https://github.com/$upstream_author/epaper-qpa/releases/download/v$pkgver/libepaper.so
+LICENSE
 "
 
 package() {
 	install -Dm644 "$srcdir"/libepaper.so \
 		"$pkgdir"/home/root/.vellum/lib/plugins/platforms/libepaper.so
-
-	install -d "$pkgdir"/home/root/.vellum/licenses/$pkgname
-	echo "https://github.com/$upstream_author/epaper-qpa" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 sha512sums='8be224c9c7eb6db341fc8272b20883b04d996185b6f32d15aff41651074c5563d06db1469b3711dc9f01da1521d49cbd7d3c93911b02e2c9e76a6de0099d95a2
-libepaper.so'
+libepaper.so
+570daf54c74dcc88498a775cea9fb7902b2915fd8d5f496c7633bbb89bdf877694b4208a456d5ce97865291d99f2973d94ea2c0067fb8ca9860a5b960f02d4dd
+LICENSE'

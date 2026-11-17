@@ -2,7 +2,7 @@ maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=uncompress-dock
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Replaces the More menu in the document dock with dedicated notebook, folder, and quick sheet buttons."
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/uncompressDock.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/uncompressDock.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 745dab2e884d1efb4cd3b757433951736f17abcd72b2b493e2c661e48e058fefe91d6d7c4f1085b5897bac8d957267c3b82024cdf5be377992688c2039c16780  uncompressDock.qmd

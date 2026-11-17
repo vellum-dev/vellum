@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=faster-page-labels
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Auto-hides the page-number label ~1.25s after a page turn"
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/fasterPageLabels.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fasterPageLabels.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 9b9494188209ef13554e49dc6b424617c3e90eb4ee9ad81a5d2bef8c6cca82afb07d941ac7099a1fc55b4e7433dff9fc93ed83c70daf05f2c47641226288590c  fasterPageLabels.qmd

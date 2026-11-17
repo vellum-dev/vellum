@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=netevent
 pkgver=2.2.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Input-Event device cloning utility"
 upstream_author="Blub"
 category="utilities"
@@ -30,11 +30,6 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/$pkgname-${pkgver%-*}"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -D -m 755 netevent "$pkgdir"/home/root/.vellum/bin/netevent
 }
 sha512sums='bd993529d69b18a1774042f61fe891fedba96d2d630dbe066c9d9b88d18268eaad49062c76f688712a927e495f29e7b176da64676c6ef6109b2e92117ef00e1b

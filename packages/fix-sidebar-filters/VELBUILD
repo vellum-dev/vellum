@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-sidebar-filters
 pkgver=1.0.1
-pkgrel=2
+pkgrel=3
 upstream_author="ingatellent"
 category="ui fixes"
 pkgdesc="Fix highlighting selected filter in navigator sidebar"
@@ -20,11 +20,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/fixFilters.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fixFilters.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 8ac546d709cc16dd018a75a1791983fef5b7cd83b2775bc4b7e674f1b2c67ae934330510e6380398548b63fed8c95edf68edd86b4d90febae29f12c5294d6b5b  fixFilters.qmd

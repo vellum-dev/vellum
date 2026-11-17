@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=dock-buttons
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Adds My Files / Favorites / Tags / Trash shortcut buttons to the homepage dock"
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/dockButtons.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/dockButtons.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 08e44df7cdf3d2acd2daa61cdb3b57c23aa39765ea3679e5f522ca177bc0e3df49d2aead6fe1998e48250ecad3176a5dc915235a81ee52ca9e50ca41792fe794  dockButtons.qmd

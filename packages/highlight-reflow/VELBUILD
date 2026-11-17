@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=highlight-reflow
 pkgver=0.1.2
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui fixes"
 pkgdesc="Keep EPUB highlights on their text when the book reflows after a layout change."
@@ -23,7 +23,7 @@ builddir="$srcdir/rm-highlight-reflow-$pkgver"
 image() {
 	case "$CARCH" in
 	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
-	armv7) echo "eeems/remarkable-toolchain:latest-rm1" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.8.203-rm1" ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
@@ -47,11 +47,6 @@ build() {
 package() {
 	install -Dm644 "$builddir"/highlight-reflow.so \
 		"$pkgdir"/home/root/xovi/extensions.d/highlight-reflow.so
-
-	install -Dm644 "$builddir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-highlight-reflow/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='de486d6d28832d99965c05f1dff9d2fad2dc73ea42043c024d408a7f80d68252f17eb0a9cbe5ca0df523e94fa5c8125c59c943fc136c5ac098bb1c88b8208902
 rm-highlight-reflow-0.1.2.tar.gz

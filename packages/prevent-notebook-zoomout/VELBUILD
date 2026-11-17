@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=prevent-notebook-zoomout
 pkgver=1.1.2
-pkgrel=2
+pkgrel=3
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Forces notebook pages to start at 1x zoom with optional horizontal offset in portrait mode"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/preventNotebookZoomOut.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/preventNotebookZoomOut.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='8c1f20128e4422280e1bc4371739fb338570c992aff39408e99cb0d2b15ce894a75eb452d30fb5f8b6e0f202194311bae64d50432872dc79301a892021bae666
 preventNotebookZoomOut.qmd

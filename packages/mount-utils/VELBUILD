@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=mount-utils
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="vellum-dev"
 category="utilities"
 pkgdesc="Commands to toggle reMarkable filesystem between read-write and read-only"
@@ -21,13 +21,9 @@ package() {
 
 	install -Dm755 "$srcdir/mount-restore" \
 		"$pkgdir/home/root/.vellum/bin/mount-restore"
-	
+
 	install -Dm755 "$srcdir/depmod-noorphan" \
 		"$pkgdir/home/root/.vellum/bin/depmod-noorphan"
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/vellum" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='e4cad11cfe1d612188008bba4f8742ceec5dce45c8413deb838732048d81de4459c9835bd8ac55d0a27ef71917e0b7c098eaef1276c81c3f7c9c485f694b65cd
 mount-rw

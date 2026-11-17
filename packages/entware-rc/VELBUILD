@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=entware-rc
 pkgver=0.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Manage entware installed services"
 upstream_author="toltec-dev"
 category="utilities"
@@ -20,11 +20,6 @@ entware-rc@.service
 '
 
 package() {
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/toltec/tree/stable/package/entware-rc" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -D -m 755 -t "$pkgdir"/home/root/.vellum/bin/ \
 		"$srcdir"/rcctl
 }

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-battery-indicator
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Fixes battery icon not updating after charging while device is asleep"
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/fixBatteryIndicator.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fixBatteryIndicator.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='a5a45e9d4cd6bfb93b1a0740b803c8eb9c9abcedc77eca3c05d813d5a879aebbb4c1cb4cc233647b705da4efa3921289f0f63ac039f64d548ef796ddd9be41f4
 fixBatteryIndicator.qmd

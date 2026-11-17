@@ -1,7 +1,7 @@
 maintainer="Paul <70213368+LostPaul@users.noreply.github.com>"
 pkgname=saver-remarkable
 pkgver=0.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="Saver-app"
 category="utilities"
 pkgdesc="Saver client for todos, bookmarks, and habits on reMarkable tablets"
@@ -48,10 +48,6 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/icon.png
 	install -Dm644 packaging/appload/resources.rcc \
 		"$pkgdir"/home/root/xovi/exthome/appload/com.saverapp.remarkable/resources.rcc
-
-	install -Dm644 LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {
@@ -80,10 +76,6 @@ capture() {
 			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/saver-sidebar.qmd
 		install -Dm644 packaging/qmldiff/saver-selection.qmd \
 			"$subpkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/saver-selection.qmd
-
-		install -Dm644 LICENSE \
-			"$subpkgdir"/home/root/.vellum/licenses/saver-remarkable-capture/LICENSE
-		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/saver-remarkable-capture/SOURCES
 	}
 }
 

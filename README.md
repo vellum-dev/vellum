@@ -102,11 +102,6 @@ options="!check !fhs"
 package() {
 	install -Dm644 "$srcdir"/myextension.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/myextension.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/you/repo" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 <checksum>  myextension.qmd
