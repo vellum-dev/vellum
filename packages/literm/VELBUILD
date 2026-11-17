@@ -15,7 +15,7 @@ donateurl="https://ko-fi.com/asivery"
 source="
 https://github.com/$upstream_author/rm-literm/releases/download/v$pkgver/literm-aarch64.so
 https://github.com/$upstream_author/rm-literm/releases/download/v$pkgver/literm-arm32.so
-https://raw.githubusercontent.com/$upstream_author/rm-literm/v$pkgver/COPYING
+LICENSE::https://raw.githubusercontent.com/$upstream_author/rm-literm/v$pkgver/COPYING
 "
 
 package() {
@@ -38,8 +38,9 @@ postdeinstall() {
 	fi
 }
 
-sha512sums="
-79fd366412ba23fbc8d5cd12ac004a034c248d8023ef73026bfa28c2d80d7307de390313e7492d9028e9c651fe04f1f50168ece20d5be69e7e84c1142bdbe123  literm-aarch64.so
-e9252726cd9bc26e0990c5a60b6d60858aeff67b146b2770bad42b9a9c002f95798618b897eeafda5f6b1e2ba93d365485761cc45fc12d11f9d21a666742c6d8  literm-arm32.so
-aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957  COPYING
-"
+sha512sums='79fd366412ba23fbc8d5cd12ac004a034c248d8023ef73026bfa28c2d80d7307de390313e7492d9028e9c651fe04f1f50168ece20d5be69e7e84c1142bdbe123
+literm-aarch64.so
+e9252726cd9bc26e0990c5a60b6d60858aeff67b146b2770bad42b9a9c002f95798618b897eeafda5f6b1e2ba93d365485761cc45fc12d11f9d21a666742c6d8
+literm-arm32.so
+aee80b1f9f7f4a8a00dcf6e6ce6c41988dcaedc4de19d9d04460cbfb05d99829ffe8f9d038468eabbfba4d65b38e8dbef5ecf5eb8a1b891d9839cda6c48ee957
+LICENSE'

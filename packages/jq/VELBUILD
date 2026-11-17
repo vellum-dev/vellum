@@ -13,7 +13,7 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/jq/jq-$pkgver/READ
 source="
 https://github.com/$upstream_author/jq/releases/download/jq-$pkgver/jq-linux-arm64
 https://github.com/$upstream_author/jq/releases/download/jq-$pkgver/jq-linux-armhf
-https://raw.githubusercontent.com/$upstream_author/jq/refs/heads/master/COPYING
+LICENSE::https://raw.githubusercontent.com/$upstream_author/jq/refs/heads/master/COPYING
 "
 
 package() {
@@ -25,8 +25,6 @@ package() {
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/jq
-
-	cp "$srcdir"/COPYING "$srcdir"/LICENSE
 }
 sha512sums="
 b1cdef9b4165362ba17f66b3b59e0dcc3c6d96be66768f66cef2aa7224e06b50c6cdf40ce4d63272ed5ec2d4a8392ab28e5a154ecdfa5b27f6c521868342e57a  jq-linux-arm64

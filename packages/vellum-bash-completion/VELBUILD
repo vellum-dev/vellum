@@ -10,6 +10,7 @@ arch="noarch"
 license="GPL-2.0-only"
 source="
 https://github.com/vellum-dev/apk-tools/releases/download/v$pkgver/_apk
+https://github.com/vellum-dev/apk-tools/raw/refs/tags/v3.0.3/LICENSE
 "
 options="strip tracedeps"
 
@@ -71,6 +72,7 @@ EOF
 	install -Dm644 "$srcdir/vellum" \
 		"$pkgdir/home/root/.vellum/share/bash-completion/completions/vellum"
 }
-sha512sums="
-c9ae7004ae2002250d7164ea2fa7daea1e95dd0ee0a56bd81eaa55bfb4b03b49d604b78e6f8abfc7c40bc0d46f71c2db5c26dbdbbdc4b6317ad4cd51506c3ea7  _apk
-"
+sha512sums='c9ae7004ae2002250d7164ea2fa7daea1e95dd0ee0a56bd81eaa55bfb4b03b49d604b78e6f8abfc7c40bc0d46f71c2db5c26dbdbbdc4b6317ad4cd51506c3ea7
+_apk
+525357680d66703ecdca95f5adee2f26a1b9f4a9fdcc5599bce63c650659332f520c8dfa1e5f49793dbb5c6b24d93a00abe7fa1f7c113fb7da377628ec6d5623
+LICENSE'

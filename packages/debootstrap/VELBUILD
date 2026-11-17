@@ -23,6 +23,7 @@ package() {
 	make DESTDIR="$pkgdir"/home/root/.vellum/ install
 	sed -i 's|DEBOOTSTRAP_DIR=/usr/share/debootstrap|DEBOOTSTRAP_DIR=/home/root/.vellum/usr/share/debootstrap|' \
 		"$pkgdir"/home/root/.vellum/bin/debootstrap
+	cp debian/copyright "$srcdir"/LICENSE
 }
 sha512sums='
 dd73fec98a592daccadc17b36449a53ea5ee580380fb10da069843d3c8885096a0f9a7f13c2afc6ddc14c38d8a826180f925e1c96630bd5312ea557f4f3e2229

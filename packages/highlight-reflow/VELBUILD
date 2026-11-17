@@ -23,7 +23,7 @@ builddir="$srcdir/rm-highlight-reflow-$pkgver"
 image() {
 	case "$CARCH" in
 	aarch64) echo "eeems/remarkable-toolchain:5.8.203-aarch64" ;;
-	armv7) echo "eeems/remarkable-toolchain:latest-rm1" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.8.203-rm1" ;;
 	*)
 		echo "Invalid CARCH: $CARCH"
 		exit 1
