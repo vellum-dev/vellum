@@ -43,35 +43,46 @@ jobs:
           if [ "${{ github.event.inputs.rebuild_all }}" == "true" ]; then
             echo "Rebuild all requested - building all packages"
             echo "packages=all" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event_name }}" == "push" ]; then
-            BEFORE="${{ github.event.before }}"
-            if ! git cat-file -e "$BEFORE" 2>/dev/null; then
-              echo "Before commit not accessible (likely force-push), using HEAD~1"
-              BEFORE="HEAD~1"
-            fi
-            CHANGED=$(git diff --name-only "$BEFORE" ${{ github.sha }} | \
-              grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
-            if [ -z "$CHANGED" ]; then
-              echo "No package changes detected"
-              echo "packages=" >> $GITHUB_OUTPUT
-            else
-              echo "Changed packages: $CHANGED"
-              echo "packages=$CHANGED" >> $GITHUB_OUTPUT
-            fi
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | \
-              grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
-            if [ -z "$CHANGED" ]; then
-              echo "No package changes detected"
-              echo "packages=" >> $GITHUB_OUTPUT
-            else
-              echo "Changed packages: $CHANGED"
-              echo "packages=$CHANGED" >> $GITHUB_OUTPUT
-            fi
-          else
-            # workflow_dispatch without rebuild_all - build all
-            echo "packages=all" >> $GITHUB_OUTPUT
+            exit 0
           fi
+          case "${{ github.event_name }}" in
+            push)
+              BEFORE="${{ github.event.before }}"
+              if ! git cat-file -e "$BEFORE" 2>/dev/null; then
+                echo "Before commit not accessible (likely force-push), using HEAD~1"
+                BEFORE="HEAD~1"
+              fi
+              CHANGED=$(git diff --name-only "$BEFORE" ${{ github.sha }} | \
+                grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
+              if [ -z "$CHANGED" ]; then
+                echo "No package changes detected"
+                echo "packages=" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+            ;;
+            pull_request)
+              CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | \
+                grep '^packages/' | cut -d/ -f2 | grep -v '[*?\[\]]' | sort -u | tr '\n' ' ' || echo "")
+              if [ -z "$CHANGED" ]; then
+                echo "No package changes detected"
+                echo "packages=" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+            ;;
+            *)
+              # workflow_dispatch without rebuild_all - build all
+              echo "packages=all" >> $GITHUB_OUTPUT
+              exit 0
+            ;;
+          esac
+          declare -a PACKAGES
+          for package in $CHANGED;do
+            if [ -f packages/"$package"/VELBUILD ];then
+              PACKAGES+=("$package")
+            fi
+          done
+          echo "Changed packages: $PACKAGES"
+          echo "packages=${PACKAGES[@]}" >> $GITHUB_OUTPUT
 
       - name: Generate package matrix
         id: generate-matrix
