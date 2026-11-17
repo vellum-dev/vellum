@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=bat
 pkgver=0.26.1
-pkgrel=2
+pkgrel=3
 upstream_author="sharkdp"
 category="utilities"
 pkgdesc="A cat(1) clone with wings."
@@ -28,11 +28,7 @@ unpack() {
 package() {
 	install -Dm755 "$srcdir"/bat \
 		"$pkgdir"/home/root/.vellum/bin/bat
-
-	install -Dm644 "$srcdir"/LICENSE-MIT \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/sharkdp/bat/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+	cp "$srcdir"/LICENSE-MIT "$srcdir"/LICENSE
 }
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then

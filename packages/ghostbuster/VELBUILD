@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=ghostbuster
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="5-finger tap to perform a full screen refresh."
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/ghostbuster.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/ghostbuster.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='bf8d2fddb01886994edff011d56700201a55be7a9a26964644d28dac6b05b456e449c384a0b2b8ec5a51bf906d97acef5997c3c99d813da3561281367cd2bacf
 ghostbuster.qmd

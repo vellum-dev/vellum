@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi-extensions
 pkgver=19.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="asivery"
 category="framework"
 pkgdesc="Extensions for xovi framework"
@@ -59,11 +59,6 @@ package() {
 	install -d "$pkgdir"/home/root/xovi/services/xochitl.service
 	ln -s /home/root/xovi/extensions.d "$pkgdir"/home/root/xovi/services/xochitl.service/extensions.d
 	ln -s /home/root/xovi/exthome "$pkgdir"/home/root/xovi/services/xochitl.service/exthome
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/asivery/rm-xovi-extensions/archive/refs/tags/$_release.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 qt_resource_rebuilder() {

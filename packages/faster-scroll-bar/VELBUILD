@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=faster-scroll-bar
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Auto-hides the document scrollbar ~0.35s after you stop scrolling"
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/fasterScrollBar.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fasterScrollBar.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 3eadc819c4efc3b88f39c8e4cefd759f070d81394e70d44d527df676d43f14cca699ddff54c93ddf50f172617ffce57902836d4f8238de7650fc60af317dee45  fasterScrollBar.qmd

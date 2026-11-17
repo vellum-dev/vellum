@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=zerotier-one
 pkgver=1.16.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A Smart Ethernet Switch for Earth"
 upstream_author="zerotier"
 category="utilities"
@@ -55,12 +55,8 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/ZeroTierOne-$pkgver"
-	install -Dm644 "LICENSE-MPL.txt" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	DESTDIR="$pkgdir" make install
+	cp LICENSE-MPL.txt "$srcdir"/LICENSE
 }
 doc() {
 	pkgdesc="Man files for zerotier-one"

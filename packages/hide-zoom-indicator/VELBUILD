@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=hide-zoom-indicator
 pkgver=1.0.3
-pkgrel=8
+pkgrel=9
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Auto-hides zoom indicator after 4 seconds"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/hideZoomIndicator.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/hideZoomIndicator.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='b18d0f6d97c9763aebe56bf5a5f5e73da6b5d1fa84e61560f604ef5bebaa0f6be4d1e2452942de39199c8e10eac951adf94d2367f4b33660e4def98b138471fe
 hideZoomIndicator.qmd

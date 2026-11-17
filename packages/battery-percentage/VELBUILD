@@ -2,7 +2,7 @@ maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=battery-percentage
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Shows the battery percentage next to the battery icon in the main view header."
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir/batteryPercentage.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/batteryPercentage.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 572481c9cd779abe092b14034fcdb04cfba537fb21e83f51dd27084d63493602a5051894f86ffddc1b59b361ef5a6af7ec44c991f26cdec53bf916f8942e5b5c  batteryPercentage.qmd

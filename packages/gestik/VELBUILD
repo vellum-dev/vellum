@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=gestik
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Configurable multi-finger gestures for tool switching or action you want"
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/gestik.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/gestik.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

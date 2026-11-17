@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=os-fixes
 pkgver=0.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Fix systemd service startup issues on some devices"
 upstream_author="vellum-dev"
 category="fixes"

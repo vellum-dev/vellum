@@ -1,7 +1,7 @@
 maintainer="fairlygood <irilonbrowser@fairlygood.net>"
 pkgname=irilon
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="fairlygood"
 category="apps"
 pkgdesc="Gemini protocol browser for reMarkable tablets"
@@ -36,11 +36,6 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/appload/irilon/icon.png
 	install -Dm755 "$srcdir/app/backend/entry" \
 		"$pkgdir"/home/root/xovi/exthome/appload/irilon/backend/entry
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/$upstream_author/rm-irilon-browser/archive/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 predeinstall() {

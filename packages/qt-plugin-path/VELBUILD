@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=qt-plugin-path
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="framework"
 pkgdesc="Sets QT_PLUGIN_PATH for xochitl to find plugins in .vellum/lib/plugins"

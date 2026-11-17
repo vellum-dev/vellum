@@ -1,7 +1,7 @@
 maintainer="Noa Himesaka <himesaka@noa.codes>"
 pkgname=koreader
 pkgver=2026.07.1
-pkgrel=1
+pkgrel=2
 upstream_author="koreader"
 category="apps"
 pkgdesc="An ebook reader application supporting PDF, DjVu, EPUB, FB2 and many more formats."
@@ -36,10 +36,7 @@ package() {
 	sed -i 's/hasOTAUpdates = yes/hasOTAUpdates = no/' \
 		"$pkgdir"/home/root/xovi/exthome/appload/koreader/frontend/device/remarkable/device.lua
 
-	install -Dm644 "$srcdir"/COPYING \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://github.com/koreader/koreader/archive/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+	cp "$srcdir"/COPYING "$srcdir"/LICENSE
 }
 
 postdeinstall() {

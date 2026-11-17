@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-light-indicator-gap
 pkgver=1.0.0
-pkgrel=8
+pkgrel=9
 upstream_author="rmitchellscott"
 category="fixes ui"
 pkgdesc="Removes the gap reserved for the frontlight icon when the light is off on Paper Pro and Paper Pro Move."
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/fixLightIndicatorGap.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fixLightIndicatorGap.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='db900470a8f045e110ec32487eaa9dd9e18c0d69bbb3e7ce162207ae5e3767f6a01136f47c4ba7ab46d989cb7fe580a0f516757a3bede25c763a06ce0fcdf886
 fixLightIndicatorGap.qmd

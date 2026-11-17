@@ -1,7 +1,7 @@
 maintainer="Wajsar Josef <Wajsar.Josef@hotmail.com>"
 pkgname=xovi-settings-main
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="PepikVaio"
 category="framework"
 pkgdesc="Add settings to your extension. The extension will do nothing unless you add additional files."
@@ -20,11 +20,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/xovi_Settings_Main.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/xovi_Settings_Main.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/PepikVaio/reMarkable_Xovi_Extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 sha512sums="

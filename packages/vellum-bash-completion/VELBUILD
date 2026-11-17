@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum-bash-completion
 pkgver=3.0.3
-pkgrel=3
+pkgrel=4
 upstream_author="vellum-dev"
 category="utilities"
 pkgdesc="Bash completion for vellum package manager"

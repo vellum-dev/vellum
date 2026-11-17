@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=less
 pkgver=692
-pkgrel=1
+pkgrel=2
 upstream_author="gwsw"
 category="utilities"
 pkgdesc="File pager"
@@ -25,11 +25,6 @@ unpack() {
 package() {
 	install -Dm755 "$srcdir"/less \
 		"$pkgdir"/home/root/.vellum/bin/less
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	install -Dm644 "$srcdir"/SOURCES \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 2d86c9a5e9e586a0aef6aaacb9343daa8db7874b8c006fa657914597e462505fed07a8bfb966c361e204301c3cd893bc27db9ff566f9cbc9d7f5fa0f03850e96  less-aarch64.tar.gz

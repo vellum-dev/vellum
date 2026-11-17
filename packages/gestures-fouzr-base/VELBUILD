@@ -1,7 +1,7 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-fouzr-base
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Base package for gestures. Does not contain any gestures"
@@ -20,11 +20,6 @@ https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICE
 package() {
 	install -Dm644 "$srcdir"/gesture_base_fouzr.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/gesture_base_fouzr.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 

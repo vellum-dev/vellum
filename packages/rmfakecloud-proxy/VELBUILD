@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmfakecloud-proxy
 pkgver=0.0.11
-pkgrel=0
+pkgrel=1
 pkgdesc="HTTPS proxy for rmfakecloud - redirects reMarkable cloud traffic"
 upstream_author="ddvk"
 category="utilities"
@@ -25,9 +25,6 @@ package() {
 		install -Dm755 "$srcdir/installer-rm12.sh" "$pkgdir/home/root/rmfakecloud/install.sh"
 		;;
 	esac
-
-	install -Dm644 "$srcdir/LICENSE" "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/rmfakecloud-proxy" >"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 postinstall() {

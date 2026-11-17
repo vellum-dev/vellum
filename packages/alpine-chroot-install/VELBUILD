@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=alpine-chroot-install
 pkgver=0.14.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Install Alpine Linux in chroot with a breeze."
 upstream_author="alpinelinux"
 category="utilities"
@@ -15,10 +15,6 @@ https://raw.githubusercontent.com/$upstream_author/alpine-chroot-install/v$pkgve
 "
 package() {
 	cd "$srcdir"
-	install -Dm644 LICENSE \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/alpine-chroot-install" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 	install -Dm755 alpine-chroot-install \
 		"$pkgdir/home/root/.vellum/bin/alpine-chroot-install"
 }

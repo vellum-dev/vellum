@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=literm
 pkgver=0.1.7
-pkgrel=1
+pkgrel=2
 upstream_author="asivery"
 category="apps"
 pkgdesc="A terminal emulator using QtQuick."
@@ -30,11 +30,6 @@ package() {
 		"$pkgdir"/home/root/xovi/extensions.d/$pkgname.so
 
 	install -d "$pkgdir"/home/root/.config/$pkgname
-
-	install -Dm644 "$srcdir"/COPYING \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://github.com/asivery/rm-literm/archive/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

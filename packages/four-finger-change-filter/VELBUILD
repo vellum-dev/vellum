@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=four-finger-change-filter
 pkgver=1.0.1
-pkgrel=4
+pkgrel=5
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Four-finger tap to toggle contrast filter in PDF/EPUB documents."
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/fourFingerChangeFilter.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/fourFingerChangeFilter.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
 a21ce3509a2d0b7ead813cf8cc2423f5dc0f7c8b75cacbd2a4589ea2be0997cd3b77108f2df10bd28d9f5849f6946ea0bacf1e9773c43a45f5545b17fb431e4d  fourFingerChangeFilter.qmd

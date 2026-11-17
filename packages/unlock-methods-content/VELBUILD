@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=unlock-methods-content
 pkgver=1.0.2
-pkgrel=8
+pkgrel=9
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Bypasses subscription check for using on-device Methods templates and documents."
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/unlockMethodsContent.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/unlockMethodsContent.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='78a50be4171c7433d6de47d0eaf1461495513dcfa988dfe54a674a5922434a9521bebe5fbcd215d4606e72df0bd077c01b7cf26a66a6e794c906e41b6538e87f
 unlockMethodsContent.qmd

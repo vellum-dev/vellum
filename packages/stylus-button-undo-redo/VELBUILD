@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=stylus-button-undo-redo
 pkgver=1.0.0
-pkgrel=7
+pkgrel=8
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Double-click stylus button to undo, triple-click to redo."
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/stylusButtonUndoRedo.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/stylusButtonUndoRedo.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='8ed2a5dec3ab80b00e7278a83ededcf93e2532dd19f1a180dd1a0c68abebb5f37bd857a6c091d866c363d40380e7ad3662b8a77703edf3abcf6e02d002dc220d
 stylusButtonUndoRedo.qmd

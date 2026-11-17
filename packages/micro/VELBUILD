@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=micro
 pkgver=2.0.14
-pkgrel=1
+pkgrel=2
 upstream_author="zyedidia"
 category="apps"
 pkgdesc="Modern and intuitive terminal-based text editor"
@@ -32,13 +32,9 @@ unpack() {
 
 package() {
 	cd "$srcdir/$pkgname-$pkgver"
-	install -Dm644 LICENSE \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
+	install -Dm744 micro "$pkgdir/home/root/.vellum/bin/micro"
 	install -Dm644 LICENSE-THIRD-PARTY \
 		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE-THIRD-PARTY"
-	install -Dm744 micro "$pkgdir/home/root/.vellum/bin/micro"
-	echo "https://github.com/zyedidia/micro/archive/$_release.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 e2dd648d0e026110cc7f8e9105ff7e1bab1196a3462ba09d188ad924c02af6b1d53e2c8a4ce02d4fd625058d09c56d999826a7cbee49c20dc18411d1a9f205b7  micro-2.0.14-armv7.tar.gz

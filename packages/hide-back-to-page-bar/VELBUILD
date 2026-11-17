@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=hide-back-to-page-bar
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Hides the native Back-to-page-N bar shown after following a PDF hyperlink"
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/hideBackToPageBar.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/hideBackToPageBar.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 ef7774506438886b5aca21669b805e347e19c642600aed0e1d35b4560e4ad98af517638880070c1cbd4419ac608097e89c6a58b033f6f2db4f73a7f44be22215  hideBackToPageBar.qmd

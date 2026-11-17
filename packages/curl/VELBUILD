@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=curl
 pkgver=8.11.0
-pkgrel=3
+pkgrel=4
 upstream_author="curl"
 category="utilities"
 pkgdesc="URL retrival utility and library"
@@ -25,11 +25,6 @@ package() {
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/curl
-
-	install -Dm644 "$srcdir"/COPYING \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://curl.se/download/curl-$pkgver.tar.xz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='923485ee8b31cc69736d0504b6281819a337469b7398555139e2fdae830add2d24fe27d0aaf5a9b17e97cf25437d836bd484babd4a065c6d5d5656cb4234a990
 curl-aarch64

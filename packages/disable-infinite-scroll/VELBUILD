@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-infinite-scroll
 pkgver=1.1.3
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Disables infinite scroll by limiting zooming and scrolling to page boundaries."
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/disableInfiniteScroll.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/disableInfiniteScroll.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 sha512sums='79376f4de223b8461c39fbf395802dd6ed44bc7f62bedf6799781ac7a97e8dd63bb1f6dc6ea6ff52da3b437e59ed0a401c29f765af7bd57c674dcac2abba6ddc

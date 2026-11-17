@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=add-finished-button
 pkgver=1.0.5
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Adds a Completed button when selecting documents, moving them to the first subfolder in the current folder"
@@ -20,11 +20,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/addCompletedButton.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/addCompletedButton.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='63f78135ce007728ac39a6a38cd10a5e3b3e763db51495e935ed2eee5467ee71c599abcd1f6c196ae219cc16adfccb92e9a0e1259a76b61b0c0e4e7535d9d9b7
 addCompletedButton.qmd

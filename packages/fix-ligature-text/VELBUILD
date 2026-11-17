@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-ligature-text
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="fixes"
 pkgdesc="Fix the text behind ligatures in generated PDFs so selecting, searching and exporting keeps every letter."
@@ -55,11 +55,6 @@ build() {
 package() {
 	install -Dm644 "$builddir"/fix-ligature-text-$CARCH.so \
 		"$pkgdir"/home/root/xovi/extensions.d/fix-ligature-text.so
-
-	install -Dm644 "$builddir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-fix-ligature-text/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='5f843c636fe922a6e6e5c69d6e9a4c81dfc8849c6176e0de5a0b63af781e7a966f07ab54b12e6b3c480729eb63a36c8aaf0e29acd6c1d50de80bcda4d7c9d0bc
 rm-fix-ligature-text-0.1.0.tar.gz

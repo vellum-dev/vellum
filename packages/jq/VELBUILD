@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=jq
 pkgver=1.8.1
-pkgrel=2
+pkgrel=3
 upstream_author="jqlang"
 category="utilities"
 pkgdesc="Command-line JSON processor"
@@ -26,10 +26,7 @@ package() {
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/jq
 
-	install -Dm644 "$srcdir"/COPYING \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/COPYING
-	echo "https://github.com/jqlang/jq/archive/refs/tags/jq-$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+	cp "$srcdir"/COPYING "$srcdir"/LICENSE
 }
 sha512sums="
 b1cdef9b4165362ba17f66b3b59e0dcc3c6d96be66768f66cef2aa7224e06b50c6cdf40ce4d63272ed5ec2d4a8392ab28e5a154ecdfa5b27f6c521868342e57a  jq-linux-arm64

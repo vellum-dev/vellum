@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=white-ebook-margins
 pkgver=1.0.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Plain white margins instead of dithered overlays when reading ebooks"
@@ -22,11 +22,6 @@ options="tracedeps"
 package() {
 	install -Dm644 "$srcdir"/white-ebook-margins.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/white-ebook-margins.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='da6fafc6e14b5f8888053f2d4a63ea877a467acc052102f14ed8bb94b1ab2ffa58c5511af0e2a13019126a90f3cf0615d11143bdbb5ca0ddbd6775943bf129a0
 white-ebook-margins.qmd

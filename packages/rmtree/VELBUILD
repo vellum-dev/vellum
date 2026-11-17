@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmtree
 pkgver=1.0.1
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="utilities"
 pkgdesc="Display reMarkable document hierarchy in tree format"
@@ -33,11 +33,6 @@ package() {
 
 	install -Dm755 "$srcdir"/$bin_file \
 		"$pkgdir"/home/root/.vellum/bin/rmtree
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rmtree/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='6633e47946d5d072e38c7d3cab1be8e2d14b93f082ce8e2de9c63e7e04a31e230ed18ccd4f16a1e5cee883adc8e5c4bf690141dd2df46f6c056067e09e9d3b51
 rmtree-aarch64.tar.gz

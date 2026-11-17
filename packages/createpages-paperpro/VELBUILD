@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=createpages-paperpro
 pkgver=1.0.4
-pkgrel=6
+pkgrel=7
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Overrides new page creation to use Paper Pro dimensions."
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/createPagesPaperProSize.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/createPagesPaperProSize.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='7745629280c0ab683cace30ed01f5a4b47db1ae6debad01d3d639f0552a28cb4087ee53a649dd3342abab867439930a48354c11339c9b2d8b3ffaf1972221ab2
 createPagesPaperProSize.qmd

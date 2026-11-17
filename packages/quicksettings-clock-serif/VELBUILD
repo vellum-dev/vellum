@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksettings-clock-serif
 pkgver=1.1.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a clock to the quick settings menu"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/quickSettingsClockSerif.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/quickSettingsClockSerif.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='2bf728e25c0e46729a7a487fff17be6e6a4e8708eb64f427c1eab0ff581f041a96a51087471337bc57aeb07f68ad3fb6ca9dc8f50a897f689f8f85a17602cd78
 quickSettingsClockSerif.qmd

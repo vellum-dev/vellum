@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-appload-rotation
 pkgver=1.0.2
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="fixes"
 pkgdesc="Fixes rotation issues with the appload app."
@@ -20,11 +20,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir/fixApploadRotation.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/fixApploadRotation.qmd"
-
-	install -Dm644 "$srcdir/LICENSE.md" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='f350c9888629b6b161ce0b4c45a60e15fe370c4d89b847bd83daa6629f851ec3a8b9504ef600fabb5fda4564e1b220350eb51a2074e2d3a3c12e16e4a4a93549
 fixApploadRotation.qmd

@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.codes>"
 pkgname=tilem
 pkgver=0.1.4
-pkgrel=3
+pkgrel=4
 upstream_author="timower"
 category="apps"
 pkgdesc="A TI-84+ calculator emulator for the remarkable."
@@ -66,11 +66,6 @@ build() {
 }
 
 package() {
-	install -Dm644 "$srcdir"/rM2-stuff-"$pkgver"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/"$pkgname"/LICENSE
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 "$srcdir"/install/bin/tilem \
 		"$pkgdir"/home/root/xovi/exthome/appload/tilem/tilem
 	install -Dm644 "$srcdir"/install/etc/draft/icons/tilem.png \

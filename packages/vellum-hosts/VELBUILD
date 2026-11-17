@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum-hosts
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 upstream_author="vellum-dev"
 category="utilities"
 pkgdesc="Adds packages.vellum.delivery IP addresses to /etc/hosts"
@@ -17,14 +17,7 @@ LICENSE
 package() {
 	local install_dir="$pkgdir/home/root/.local/share/vellum-hosts"
 	mkdir -p "$install_dir"
-
 	install -Dm755 "$srcdir/update-hosts.sh" "$install_dir/update-hosts.sh"
-
-	mkdir -p "$pkgdir/home/root/.vellum/licenses/$pkgname"
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/vellum" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 
 postinstall(){

@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="unmaintained"
 pkgname=selection-erase
 pkgver=1.0.3
-pkgrel=4
+pkgrel=5
 upstream_author="FouzR"
 category="ui"
 pkgdesc="Adds the ability to delete a stroke once selected by the selection tool."
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/selectionErase.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/selectionErase.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/FouzR/xovi-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 c7676191fb9cc7d0fc47095a0f9c26e1dd82239b8ac0eef5b5d7997965a2ddc7bbcfb875731b1a3dec228959c892ecb2cf71f3277df5227e06d1c06751bf2975  selectionErase.qmd

@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=settings-rmsync-restart
 pkgver=1.0.0
-pkgrel=7
+pkgrel=8
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a button to the cloud settings page to restart sync service."
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/settingsRmSyncRestart.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/settingsRmSyncRestart.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='d31f65d3c8157e438eb1b9091ea65ac776f5ac4a78b23141f61b5a28867620da94e4a04eb1cd54abd7632743d45fa20270baf633d1f7556fb5d70a24a4100c37
 settingsRmSyncRestart.qmd

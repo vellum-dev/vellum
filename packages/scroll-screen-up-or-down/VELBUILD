@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=scroll-screen-up-or-down
 pkgver=1.0.1
-pkgrel=4
+pkgrel=5
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Screen scrolling with page change at boundaries. Prerequisite for tap and arrow key navigation."
@@ -20,11 +20,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/scrollScreenUpOrDown.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/ingatellent/scrollScreenUpOrDown.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall() {

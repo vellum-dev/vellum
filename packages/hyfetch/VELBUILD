@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status=unmaintained
 pkgname=hyfetch
 pkgver=2.0.5_git6
-pkgrel=5
+pkgrel=6
 upstream_author="hykilpikonna"
 category="utilities"
 pkgdesc="Neofetch with LGBTQ+ pride flags!"
@@ -26,11 +26,6 @@ unpack() {
 package() {
 	install -Dm755 "$srcdir"/hyfetch \
 		"$pkgdir"/home/root/.vellum/bin/hyfetch
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	install -Dm644 "$srcdir"/SOURCES \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postinstall() {

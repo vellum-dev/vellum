@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=puzzles
 pkgver=0.2.4
-pkgrel=5
+pkgrel=6
 pkgdesc="Simon Tatham's Puzzle Package"
 upstream_author="rmkit-dev"
 category="apps"
@@ -46,11 +46,6 @@ build() {
 
 package() {
 	cd "$srcdir/$pkgname-source"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/remarkable_puzzles" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 build/release/puzzles \
 		"$pkgdir"/home/root/xovi/exthome/appload/puzzles/puzzles
 	install -Dm644 config/* \

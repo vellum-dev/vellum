@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=entware
 pkgver=1.0.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Entware software repository for reMarkable tablets"
 upstream_author="Entware"
 category="utilities"
@@ -54,11 +54,6 @@ package() {
 		install -Dm755 "$srcdir/libpthread-2.27.so.armv7" "$lib_dir/libpthread-2.27.so"
 		;;
 	esac
-
-	install -Dm644 "$srcdir/COPYING" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/COPYING"
-	echo "https://github.com/$upstream_author/Entware" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 postinstall() {
 	/home/root/.local/share/entware/install-entware.sh

@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=hide-title-quick-browse
 pkgver=1.1.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Hides the document-title bar shown while the quick-browse page-slider is up"
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/hideTitleQuickBrowse.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/hideTitleQuickBrowse.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 47dfc6fbb06b375855a95b9cb6962d4fb77ea4bc4c58122516a29f7c5c42eec7681afc8677fa30c143e83cc3dc3135acd5332594e7754989b013d233ecd87028  hideTitleQuickBrowse.qmd

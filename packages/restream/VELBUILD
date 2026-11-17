@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=restream
 pkgver=1.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Binary framebuffer capture tool for the reStream script"
 upstream_author="rien"
 category="utilities"
@@ -30,10 +30,6 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/reStream-$pkgver"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 
 	install -Dm755 restream "$pkgdir"/home/root/.vellum/bin/restream
 }

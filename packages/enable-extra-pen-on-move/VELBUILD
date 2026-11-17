@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=enable-extra-pen-on-move
 pkgver=1.0.3
-pkgrel=0
+pkgrel=1
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Adjusts priority of second pen slot so that it shows on the short screen edge as well."
@@ -20,11 +20,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/enableSecondaryPenOnMove.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/enableSecondaryPenOnMove.qmd
-
-	install -Dm644 "$srcdir"/LICENSE.md \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='
 785ffedd618f71fc203cd0e98fcdd41010ddd8ab389b5cfb93bd216c2bcfda09c823e00fc34e9d3d8d23b3020e10809fef5226b4742bd7435bf782a47b55cc24  enableSecondaryPenOnMove.qmd

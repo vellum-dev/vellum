@@ -1,7 +1,7 @@
 maintainer="Alessio Faraci <contact@afaraci.com>"
 pkgname=nav-history
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="alefaraci"
 category="ui"
 pkgdesc="Back & Forward navigation through your visited-page history"
@@ -21,11 +21,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/navHistory.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/navHistory.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "$url" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums="
 08b5772f1a744a62e8d554e8efff5d226ca908c24e193435afe9e906d8b7c5e715808ef5a2a6fd44a56169f4a84b854a8189c54d1f5d6afaf95d130fef0bd0fc  navHistory.qmd

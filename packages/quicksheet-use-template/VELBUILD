@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=quicksheet-use-template
 pkgver=1.0.1
-pkgrel=6
+pkgrel=7
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Use the last page's template when adding a quicksheet page"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir"/quicksheetUseTemplate.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/quicksheetUseTemplate.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='a2f6cdfed4fe03a2dfc8f66d5407184bf149f0761bb9f19c058408d3b5239f01c9b6c376c12ad36604d2149afae70aa8af734d0672cfa7ac5ed6cc134ea112c0
 quicksheetUseTemplate.qmd

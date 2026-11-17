@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=bluetooth-settings
 pkgver=0.2.1
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Adds a Bluetooth settings page for pairing and managing Bluetooth keyboards."
@@ -26,11 +26,6 @@ package() {
 
 	install -Dm644 "$srcdir"/bluetooth.rcc \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/bluetooth.rcc
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-bluetoothsettings" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='2747ad57517461d1d7ca183bca8658ffc1952088ad410b42b85c35a895bf951f673fcae7d27810bf7535426c826083f0d8d2d11d04a0c86aec27cd93f22f9b1b
 bluetoothSettings.qmd

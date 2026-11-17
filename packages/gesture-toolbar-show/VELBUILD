@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="unmaintained"
 pkgname=gesture-toolbar-show
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Single-finger swipe from toolbar edge to show the toolbar"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/gestureToolbarShow.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestureToolbarShow.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 4a2b31aafcbd07d6201778285f600b52c6aacbfcea0cbca94518c6d15bad44e34231bac48d9533ff685eb0131fd6748286f08df8140f4e251892844bd198790f  gestureToolbarShow.qmd

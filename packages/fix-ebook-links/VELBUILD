@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=fix-ebook-links
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 upstream_author="rmitchellscott"
 category="fixes"
 pkgdesc="Make links inside ebooks work: printed tables of contents, footnotes and cross-references."
@@ -55,11 +55,6 @@ build() {
 package() {
 	install -Dm644 "$builddir"/fix-ebook-links-$CARCH.so \
 		"$pkgdir"/home/root/xovi/extensions.d/fix-ebook-links.so
-
-	install -Dm644 "$builddir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/rm-fix-ebook-links/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='a8dcda4e7e327565674a7290ce5105a0d14b902b22d9445db007957ed341c1b7a331e4680f015d47564e7ad5773686ab7e96dbafc4b662e30ac51d1155bdd424
 rm-fix-ebook-links-0.1.0.tar.gz

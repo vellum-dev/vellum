@@ -2,7 +2,7 @@ maintainer="NohamR <noham@noh.am>"
 status="maintained"
 pkgname=convert-to-text-remover
 pkgver=1.2.0
-pkgrel=0
+pkgrel=1
 upstream_author="NohamR"
 category="ui"
 pkgdesc="Removes the Convert to text option from selection menus and the toolbar."
@@ -21,11 +21,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir/convertToText_remover.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/convertToText_remover.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/NohamR/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 9beaed617b0ac1cdbac5301dd0a0a1e15e60b114488c5dc294ff9337acb3ddf53abdff6cda90771914e6d4e2c063876eda95a6e258810be5328c1d0c9a0427df  convertToText_remover.qmd

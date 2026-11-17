@@ -2,7 +2,7 @@ maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 status="unmaintained"
 pkgname=gesture-reset-view
 pkgver=1.0.0
-pkgrel=3
+pkgrel=4
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Three-finger swipe down to reset pan and zoom (returns to 100% zoom, top of page)"
@@ -22,11 +22,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/gestureResetView.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestureResetView.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 bb55474221bb11631272eb9c6dc57c67d92447b9de622c54cb47cb157ae555acb0dedb705043f2b5d1cb0accfd43733abe1034fc300b2c8cb5d5897bcec93a32  gestureResetView.qmd

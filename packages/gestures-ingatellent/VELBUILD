@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=gestures-ingatellent
 pkgver=1.0.3
-pkgrel=1
+pkgrel=2
 upstream_author="ingatellent"
 category="ui"
 pkgdesc="Multi-gesture support for toolbar, navigation, and view controls."
@@ -20,11 +20,6 @@ options="strip tracedeps"
 package() {
 	install -Dm644 "$srcdir/gestures.qmd" \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/gestures.qmd"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/ingatellent/xovi-qmd-extensions" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums="
 37cb72ba64213afcf4374b7c7473591f470175c66deb4985106abe6f5402a799084d47c3c39606e041e5ec0360c0c8457011f05cf9bc83f04a9e27e8f298d5ce  gestures.qmd

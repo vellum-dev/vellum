@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=doomarkable
 pkgver=0.4.2
-pkgrel=3
+pkgrel=4
 pkgdesc="DOOM game"
 upstream_author="LinusCDE"
 category="apps"
@@ -38,11 +38,6 @@ build() {
 package() {
 	set -e
 	cd "$srcdir/$pkgname-$pkgver"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 \
 		doomarkable \
 		"$pkgdir"/home/root/xovi/exthome/appload/doomarkable/doomarkable

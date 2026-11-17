@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmhacks
 pkgver=0.0.11_pre4_git4
-pkgrel=2
+pkgrel=3
 upstream_author="asivery"
 category="ui"
 pkgdesc="reMarkable hacks in QMD format"
@@ -25,11 +25,6 @@ package() {
 	mkdir -p "$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks"
 	cp -r rmHacks/* \
 		"$pkgdir/home/root/xovi/exthome/qt-resource-rebuilder/rmHacks/"
-
-	install -Dm644 "$srcdir/rm-hacks-qmd-$_commit/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/asivery/rm-hacks-qmd/archive/$_commit.tar.gz" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='5b053632dc96e40f84265cf425aa82c8e3b6d46fd5cba9dc96df72051a4eba1308240ebc96401a05b6aaa50f61ae71fe275136d56080fa264dda594e78ce4705
 rm-hacks-qmd-69f905c2747da6bfc6fa79f7c505d43d559acbf2.tar.gz'

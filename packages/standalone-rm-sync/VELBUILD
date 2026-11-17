@@ -1,7 +1,7 @@
 maintainer="Nathaniel van Diepen <eeems@eeems.email>"
 pkgname=standalone-rm-sync
 pkgver=0.1
-pkgrel=0
+pkgrel=1
 pkgdesc="Make the rm-sync service run standalone"
 upstream_author="vellum-dev"
 category="fixes"

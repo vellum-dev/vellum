@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=vellum
 pkgver=0.3.1
-pkgrel=0
+pkgrel=1
 _apk_ver=3.0.3
 upstream_author="vellum-dev"
 category="utilities"
@@ -39,11 +39,6 @@ package() {
 
 	install -Dm755 "$srcdir/$apk_file" \
 		"$pkgdir/home/root/.vellum/bin/apk.vellum"
-
-	install -Dm644 "$srcdir/LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/vellum-cli" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
 }
 sha512sums='b1c4fd3cdab5df7efe4eb69462ae58704a387a860d771503642516f65d47b44de8497a38118c1a0e43b194fed4de3790098224de2fec7d96826d35ca715e89e3
 vellum-aarch64

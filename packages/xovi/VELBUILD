@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=xovi
 pkgver=0.3.3
-pkgrel=2
+pkgrel=3
 upstream_author="asivery"
 category="framework"
 pkgdesc="Core xovi framework for reMarkable tablets"
@@ -27,11 +27,6 @@ package() {
 	esac
 
 	install -Dm644 "$srcdir"/$xovi_so "$pkgdir"/home/root/xovi/xovi.so
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/asivery/xovi/archive/refs/tags/v$pkgver.tar.gz" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 
 postdeinstall() {

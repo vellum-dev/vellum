@@ -1,7 +1,7 @@
 maintainer="Eeems <eeems@eeems.email>"
 pkgname=plato
 pkgver=0.9.44
-pkgrel=0
+pkgrel=1
 upstream_author="LinusCDE"
 category="utilities"
 pkgdesc="Document reader"
@@ -89,13 +89,10 @@ package() {
     ln -s libjpeg.so "$pkgdir$platodir"/libs/libjpeg.so.9
     ln -s libgumbo.so "$pkgdir$platodir"/libs/libgumbo.so.1
     ln -s libjbig2dec.so "$pkgdir$platodir"/libs/libjbig2dec.so.0
-    install -Dm644 "LICENSE-AGPLv3" \
-        "$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-    echo "https://github.com/$upstream_author/plato" > \
-        "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
     install -Dm644 \
         "$startdir"/external.manifest."$CARCH".json \
         "$pkgdir$platodir"/external.manifest.json
+    cp LICENSE-AGPLv3 "$srcdir"/LICENSE
 }
 postinstall() {
     mediadir=/home/root/plato-media

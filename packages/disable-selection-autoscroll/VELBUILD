@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=disable-selection-autoscroll
 pkgver=1.0.1
-pkgrel=0
+pkgrel=1
 upstream_author="rmitchellscott"
 category="ui"
 pkgdesc="Disables the auto scrolling when moving a selection added in 3.24."
@@ -22,11 +22,6 @@ options='strip tracedeps'
 package() {
 	install -Dm644 "$srcdir"/disableSelectionAutoScroll.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/disableSelectionAutoScroll.qmd
-
-	install -Dm644 "$srcdir"/LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	echo "https://github.com/rmitchellscott/xovi-qmd-extensions" > \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
 }
 sha512sums='97e14c96e764f630edc6010ad5d06abf51d8ba769260857c5a6a271a95c0b0d38cbe70ede705de21222717c8ac075a3dd121edec6fb23ecd20d7cbff1c395aa2
 disableSelectionAutoScroll.qmd
