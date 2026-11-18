@@ -1,7 +1,7 @@
 maintainer="Mitchell Scott <mitchell@scottlabs.io>"
 pkgname=rmfakecloud-proxy
 pkgver=0.0.11
-pkgrel=1
+pkgrel=2
 pkgdesc="HTTPS proxy for rmfakecloud - redirects reMarkable cloud traffic"
 upstream_author="ddvk"
 category="utilities"
@@ -11,23 +11,63 @@ license="MIT"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rmfakecloud-proxy/v$pkgver/README.md"
 
 source="
-	installer-rmpro.sh::https://github.com/$upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rmpro.sh
-	installer-rm12.sh::https://github.com/$upstream_author/rmfakecloud-proxy/releases/download/v$pkgver/installer-rm12.sh
-	LICENSE::https://raw.githubusercontent.com/$upstream_author/rmfakecloud-proxy/master/LICENSE
+	"https://github.com/ddvk/rmfakecloud-proxy/archive/v$pkgver.zip"
+	rmfakecloudctl
+	rmfakecloud-proxy.service
 "
 
+
+image(){
+	echo eeems/vellum-toolchain:6.0.112-$CARCH
+}
+
+build() {
+	cd "$srcdir/$pkgname-$pkgver"
+	eval "$(go env)"
+	cat > version.go << GO
+package main
+const Version = "rmfakecloud-proxy ${_upver%-*} ($GOOS-$GOARCH) $GOVERSION\n$_url"
+GO
+	GOARCH=arm GOARM=7 go build -ldflags="-w -s" -o "$srcdir"/rmfakecloud-proxy
+}
+
 package() {
-	case "$CARCH" in
-	aarch64)
-		install -Dm755 "$srcdir/installer-rmpro.sh" "$pkgdir/home/root/rmfakecloud/install.sh"
-		;;
-	armv7)
-		install -Dm755 "$srcdir/installer-rm12.sh" "$pkgdir/home/root/rmfakecloud/install.sh"
-		;;
-	esac
+	install -Dm755 "$srcdir/rmfakecloudctl" \
+		"$pkgdir/home/root/.vellum/bin/rmfakecloudctl"
+	install -Dm755 "$srcdir"/rmfakecloud-proxy \
+		"$pkgdir/home/root/.vellum/bin/rmfakecloud-proxy"
+	install -Dm644 "$srcdir/rmfakecloud-proxy.service" \
+		"$pkgdir/home/root/.vellum/share/rmfakecloud-proxy/rmfakecloud-proxy.service"
 }
 
 postinstall() {
+	set -e
+	/home/root/.vellum/bin/mount-rw
+	postosupgrade
+	/home/root/.vellum/bin/mount-restore
+}
+
+postupgrade() {
+	set -e
+	postinstall
+}
+
+postosupgrade() {
+	set -e
+	bash -ec '
+	source /home/root/.vellum/bin/rmfakecloudctl
+	install-service
+	if systemctl is-enabled -q rmfakecloud-proxy.service; then
+		install-certificates
+		systemctl enable --now rmfakecloud-proxy
+		install-hosts
+	else
+		uninstall-certificates
+		systemctl disable rmfakecloud-proxy.service
+		uninstall-hosts
+	fi
+	'
+	/home/root/.vellum/bin/rmfakecloudctl status
 	cat <<'EOF'
 
 ═══════════════════════════════════════════════════════
@@ -35,40 +75,26 @@ postinstall() {
 ═══════════════════════════════════════════════════════
 
   To complete setup, run:
+    rmfakecloudctl set-upstream <url>
+    rmfakecloudctl enable
 
-    /home/root/rmfakecloud/install.sh install
-
-  You will be prompted for your rmfakecloud server URL.
-
-  IMPORTANT: You must re-run the installer after each
-             OS update!
-
-  Other commands:
-    install.sh setcloud    - Change the cloud URL
-    install.sh gencert     - Regenerate certificates
-
-═══════════════════════════════════════════════════════
-
-EOF
-}
-
-postosupgrade() {
-	cat <<'EOF'
-
-  rmfakecloud-proxy requires manual re-configuration.
-  Run: /home/root/rmfakecloud/install.sh install
-
+  To check the current status run:
+    rmfakecloudctl status
 EOF
 }
 
 predeinstall() {
-	if [ -x /home/root/rmfakecloud/install.sh ]; then
-		/home/root/rmfakecloud/install.sh uninstall || true
+	/home/root/.vellum/bin/rmfakecloudctl disable
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.vellum/etc/rmfakecloud-proxy \
+			/home/root/.vellum/var/rmfakecloud-proxy
 	fi
 }
 
-sha512sums="
-ebacbcf612f1943361b99d860b64690ab1dbe6b67a32bc524a3206d0d12f566a62cbfc7ec9820dc373b6ba2e3c3975439f3437f605c9921420bf41feaff38d25  installer-rmpro.sh
-b5759578c3bcde34c25db1258ee4475289ac4f22e68273157ae755884caff70fbac4e53862f4e2114e9576b383b98d413541265cd8bc5aa3e8660f8ab9eb9029  installer-rm12.sh
-301894039600f7de8c2dad0be29bc5d0e4f975671a1dd7ce9974731daaa43c83a60f5b7d28bc368423d63e8965f04961800284d0269011a1ae536202ec98ca2e  LICENSE
-"
+sha512sums='35da4180a5e300b2ced91c7924a9f7383a1a05d41af25b1b864c919882c2476f7f71a536ddf874954cd63f69d352bdcc2c2ff3377649854ed422880f6ab43c1f
+v0.0.11.zip
+4962f9d249f186278257a4383475a501c1a441a1751c04130513dffa4be093f7b5f6e979e047addca96295babb06004b3008b26ffb8bbd95e7c0f0348666acc8
+rmfakecloudctl
+e08796ec55a545b21fd928976baf4a31e89696b62e5e272964deef03fdc15a866a2425023a0bf5691f0de4f0eb5d48be11cc9d4b8780566718072e58166ee306
+rmfakecloud-proxy.service'
