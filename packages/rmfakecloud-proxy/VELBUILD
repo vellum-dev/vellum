@@ -85,6 +85,11 @@ EOF
 
 predeinstall() {
 	/home/root/.vellum/bin/rmfakecloudctl disable
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf \
+			/home/root/.vellum/etc/rmfakecloud-proxy \
+			/home/root/.vellum/var/rmfakecloud-proxy
+	fi
 }
 
 sha512sums='35da4180a5e300b2ced91c7924a9f7383a1a05d41af25b1b864c919882c2476f7f71a536ddf874954cd63f69d352bdcc2c2ff3377649854ed422880f6ab43c1f
