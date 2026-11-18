@@ -1,0 +1,67 @@
+maintainer="mr_marco <marco_meier2210@hotmail.com>"
+pkgname=onleihe
+pkgver=0.2.3
+pkgrel=0
+upstream_author="method-marco"
+category="apps"
+pkgdesc="Borrow e-books from your library's Onleihe and read them in KOReader"
+url="https://github.com/$upstream_author/rm-onleihe"
+arch="aarch64 armv7"
+license="MIT"
+depends="appload"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-onleihe/v$pkgver/README.md"
+
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rm-onleihe/archive/refs/tags/v$pkgver.tar.gz
+"
+builddir="$srcdir/rm-onleihe-$pkgver"
+
+image="ghcr.io/toltec-dev/golang:v4.0"
+
+build() {
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+
+	case "$CARCH" in
+	aarch64) _goarch="arm64" _goarm="" ;;
+	armv7) _goarch="arm" _goarm="7" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$builddir"/backend
+	GOOS=linux GOARCH="$_goarch" GOARM="$_goarm" CGO_ENABLED=0 go build \
+		-buildvcs=false -trimpath -ldflags="-s -w -X main.version=$pkgver" \
+		-o "$builddir"/build/backend/entry .
+
+	cd "$builddir"/app
+	/usr/lib/qt6/libexec/rcc --binary \
+		-o "$builddir"/build/resources.rcc application.qrc
+}
+
+package() {
+	_appdir="$pkgdir"/home/root/xovi/exthome/appload/rm-onleihe
+
+	install -Dm755 build/backend/entry "$_appdir"/backend/entry
+	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
+	install -Dm644 app/manifest.json "$_appdir"/manifest.json
+	install -Dm644 app/icon.png "$_appdir"/icon.png
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+postdeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		# settings, session token and saved .acsm licence files
+		rm -rf /home/root/.config/rm-onleihe
+		# default download folder (a custom folder set in the app is left alone)
+		rm -rf /home/root/onleihe
+	fi
+}
+
+sha512sums='88a4c3c577db9c5f9dda0600716f57234b215e79d1060aa1513f1496fb8940a5079fdeb595d64cdabfb9a02c0a47290fb2efddc6c58e4c84a359e13e52433bd6
+onleihe-0.2.3.tar.gz'
