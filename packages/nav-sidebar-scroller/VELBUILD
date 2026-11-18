@@ -1,0 +1,28 @@
+maintainer="Mitchell Scott <mitchell@scottlabs.io>"
+pkgname=nav-sidebar-scroller
+pkgver=1.0.0
+pkgrel=0
+upstream_author="rmitchellscott"
+category="ui"
+pkgdesc="Makes the main sidebar scrollable"
+url="https://github.com/rmitchellscott/xovi-qmd-extensions"
+arch="noarch"
+license="GPL-3.0-only"
+depends="qt-resource-rebuilder remarkable-os>=3.29 remarkable-os<3.30"
+_commit="2d07760a42cc8d92c7b2427f598c898585bdd243"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/README.md#nav-sidebar-scroller"
+changelogurl="https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/changelogs/nav-sidebar-scroller.md"
+donateurl="https://buymeacoffee.com/rmitchellscott"
+source="
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/3.29/nav-sidebar-scroller.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-qmd-extensions/$_commit/LICENSE
+"
+
+package() {
+	install -Dm644 "$srcdir"/nav-sidebar-scroller.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/nav-sidebar-scroller.qmd
+}
+sha512sums='571242690b608646c8c3ff1da34685be16c5416524037db4c2f4e317de58a82ee3efc26b7b307b191c1262d00c889637ffcaf7496aea37b6cad9bec4afb8fd7a
+nav-sidebar-scroller.qmd
+d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
+LICENSE'
