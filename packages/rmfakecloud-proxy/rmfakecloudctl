@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+PATH=$PATH:/home/root/.vellum/bin
+
 # Path where the certificate authority key and proxy TLS certificate are stored
 data_dir=/home/root/.vellum/var/rmfakecloud-proxy
 
