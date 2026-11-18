@@ -1,0 +1,204 @@
+maintainer="Rafael de Bem <rafael.bem@debem.dev>"
+pkgname=debem-games
+pkgver=0.1.2
+pkgrel=0
+upstream_author="debemtech"
+category="apps"
+pkgdesc="Chess, Sudoku, Mahjong, Blackjack, Solitaire, and Crossword"
+url="https://github.com/$upstream_author/remarkable-games"
+arch="aarch64 armv7"
+license="GPL-3.0-only"
+depends="
+appload
+debem-chess
+debem-sudoku
+debem-mahjong
+debem-blackjack
+debem-solitaire
+debem-crossword
+"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-games/v$pkgver/README.md"
+
+subpackages="
+debem-chess:_chess
+debem-sudoku:_sudoku
+debem-mahjong:_mahjong
+debem-blackjack:_blackjack
+debem-solitaire:_solitaire
+debem-crossword:_crossword
+"
+
+_stockfish=sf_19
+_net=nn-1a298aa575a0.nnue
+source="
+remarkable-games-$pkgver.tar.gz::https://github.com/$upstream_author/remarkable-games/archive/refs/tags/v$pkgver.tar.gz
+Stockfish-$_stockfish.tar.gz::https://github.com/official-stockfish/Stockfish/archive/refs/tags/$_stockfish.tar.gz
+$_net::https://tests.stockfishchess.org/api/nn/$_net
+"
+builddir="$srcdir/remarkable-games-$pkgver"
+options="strip"
+
+image() {
+	case "$CARCH" in
+	aarch64) echo "eeems/remarkable-toolchain:5.6.75-rmpp" ;;
+	armv7) echo "eeems/remarkable-toolchain:5.6.75-rm1" ;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+}
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y golang-go
+	. "$(find /opt/codex -name 'environment-setup-*' -type f | head -n1)"
+	case "$CARCH" in
+	aarch64)
+		_device=rmpp
+		_sfarch=armv8
+		;;
+	armv7)
+		_device=rm2
+		_sfarch=armv7-neon
+		;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$srcdir/Stockfish-$_stockfish/src"
+	cp "$srcdir/$_net" .
+	sed -i '/LDFLAGS += -latomic/d' Makefile
+	make -j"$(nproc)" build ARCH="$_sfarch" COMP=gcc CXX="$CXX"
+
+	cd "$builddir"
+	for game in chess sudoku mahjong blackjack solitaire crossword; do
+		RCC="$OECORE_NATIVE_SYSROOT/usr/libexec/rcc" \
+		STOCKFISH_BIN="$srcdir/Stockfish-$_stockfish/src/stockfish" \
+		GOTOOLCHAIN=local \
+			./build.sh "$game" "$_device"
+		mv "build/$game-$_device" "build/$game"
+	done
+}
+
+package() {
+	install -Dm644 "$builddir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+_chess() {
+	pkgdesc="Chess against Stockfish or a friend, with save slots and a PGN viewer"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/chess "$subpkgdir"/home/root/xovi/exthome/appload/chess
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		install -Dm644 "$srcdir/Stockfish-$_stockfish/Copying.txt" \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE.stockfish
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+		echo "https://github.com/official-stockfish/Stockfish" >> \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/chess
+		fi
+	}
+}
+
+_sudoku() {
+	pkgdesc="Sudoku with notes, colors and four difficulties"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/sudoku "$subpkgdir"/home/root/xovi/exthome/appload/sudoku
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/sudoku
+		fi
+	}
+}
+
+_mahjong() {
+	pkgdesc="Mahjong solitaire"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/mahjong "$subpkgdir"/home/root/xovi/exthome/appload/mahjong
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/mahjong
+		fi
+	}
+}
+
+_blackjack() {
+	pkgdesc="Blackjack against the dealer, played in landscape"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/blackjack "$subpkgdir"/home/root/xovi/exthome/appload/blackjack
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/blackjack
+		fi
+	}
+}
+
+_solitaire() {
+	pkgdesc="Klondike and FreeCell solitaire, played in landscape"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/solitaire "$subpkgdir"/home/root/xovi/exthome/appload/solitaire
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/solitaire
+		fi
+	}
+}
+
+_crossword() {
+	pkgdesc="Crosswords written with the pen, free puzzles in English and Portuguese"
+	depends="appload"
+	package() {
+		install -d "$subpkgdir"/home/root/xovi/exthome/appload
+		cp -r "$builddir"/build/crossword "$subpkgdir"/home/root/xovi/exthome/appload/crossword
+		install -Dm644 "$builddir"/LICENSE \
+			"$subpkgdir"/home/root/.vellum/licenses/$subpkgname/LICENSE
+		echo "$url" > "$subpkgdir"/home/root/.vellum/licenses/$subpkgname/SOURCES
+	}
+	postdeinstall() {
+		if [ "$VELLUM_PURGE" = "1" ]; then
+			rm -rf /home/root/.config/crossword
+		fi
+	}
+}
+
+sha512sums='14743c6ea3f6e8ffe47b16a9f759c7ca196118daa20e85ea9b3d2d476a365d9cef2007d6c44e6de0207e70d8942761befcae7b585dff5e08b758078fcdf5b590
+remarkable-games-0.1.2.tar.gz
+93030781bfcc8396190db4e41c905928b937e94f1738f92e4f15399c00b42214e693686ad0c021e764def6fe3a83b4f0cb8017eb6cc0c4631e4cbc12ac99aebc
+Stockfish-sf_19.tar.gz
+136a0f9725da7b692894a080d03d61bbfc67dcabf2f869b008891dbf042dfacb74c75df12a48bb9a9c736ce3accd670a55afae5ee40f090a0b86558e459c70bb
+nn-1a298aa575a0.nnue'
