@@ -14,7 +14,6 @@ source="
 https://github.com/$upstream_author/folly/archive/$_commit.zip
 external.manifest.json
 "
-options="!check !fhs !strip !tracedeps"
 depends="appload>=0.5.3"
 
 image="ghcr.io/toltec-dev/rust:v3.3"
@@ -44,11 +43,6 @@ build() {
 
 package() {
 	cd "$srcdir"/"$pkgname"-"$_commit"
-	install -Dm644 "LICENSE" \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/LICENSE"
-	echo "https://github.com/$upstream_author/$pkgname" > \
-		"$pkgdir/home/root/.vellum/licenses/$pkgname/SOURCES"
-
 	install -Dm755 \
 		folly \
 		"$pkgdir"/home/root/xovi/exthome/appload/folly/folly
