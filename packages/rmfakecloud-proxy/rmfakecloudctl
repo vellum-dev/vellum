@@ -252,10 +252,14 @@ subjectKeyIdentifier = hash
 subjectAltName=@san
 [ san ]
 DNS.1 = *.appspot.com
-DNS.2 = my.remarkable.com
-DNS.3 = internal.cloud.remarkable.com
-DNS.4 = ping.remarkable.com
-DNS.5 = *.remarkable.com
+DNS.2 = *.remarkable.com
+DNS.3 = *.cloud.remarkable.com
+DNS.4 = *.cloud.remarkable.engineering
+DNS.5 = *.rmfakecloud.localhost
+DNS.6 = *.internal.cloud.remarkable.com
+DNS.7 = *.tectonic.remarkable.com
+DNS.8 = *.ping.remarkable.com
+DNS.9 = *.internal.tctn.cloud.remarkable.com
 CSR
 
         openssl req -new -config "$csr" \
@@ -289,23 +293,37 @@ uninstall-certificates() {
 install-hosts() {
     uninstall-hosts
     cat << EOF >> "$hosts_path"
+$proxy_listen backtrace-proxy.cloud.remarkable.engineering
+$proxy_listen dev.internal.cloud.remarkable.com
+$proxy_listen dev.ping.remarkable.com
+$proxy_listen dev.tectonic.remarkable.com
+$proxy_listen eu.internal.tctn.cloud.remarkable.com
+$proxy_listen eu.tectonic.remarkable.com
 $proxy_listen hwr-production-dot-remarkable-production.appspot.com
-$proxy_listen service-manager-production-dot-remarkable-production.appspot.com
+$proxy_listen internal.cloud.remarkable.com
 $proxy_listen local.appspot.com
 $proxy_listen my.remarkable.com
-$proxy_listen internal.cloud.remarkable.com
 $proxy_listen ping.remarkable.com
+$proxy_listen service-manager-production-dot-remarkable-production.appspot.com
+$proxy_listen webapp-prod.cloud.remarkable.engineering
 EOF
 }
 
 # Remove all static host entries redirecting the cloud to the proxy
 uninstall-hosts() {
+    sed -i '/ backtrace-proxy.cloud.remarkable.engineering$/d' "$hosts_path"
+    sed -i '/ dev.internal.cloud.remarkable.com$/d' "$hosts_path"
+    sed -i '/ dev.ping.remarkable.com$/d' "$hosts_path"
+    sed -i '/ dev.tectonic.remarkable.com$/d' "$hosts_path"
+    sed -i '/ eu.internal.tctn.cloud.remarkable.com$/d' "$hosts_path"
+    sed -i '/ eu.tectonic.remarkable.com$/d' "$hosts_path"
     sed -i '/ hwr-production-dot-remarkable-production.appspot.com$/d' "$hosts_path"
-    sed -i '/ service-manager-production-dot-remarkable-production.appspot.com$/d' "$hosts_path"
+    sed -i '/ internal.cloud.remarkable.com$/d' "$hosts_path"
     sed -i '/ local.appspot.com$/d' "$hosts_path"
     sed -i '/ my.remarkable.com$/d' "$hosts_path"
-    sed -i '/ internal.cloud.remarkable.com$/d' "$hosts_path"
     sed -i '/ ping.remarkable.com$/d' "$hosts_path"
+    sed -i '/ service-manager-production-dot-remarkable-production.appspot.com$/d' "$hosts_path"
+    sed -i '/ webapp-prod.cloud.remarkable.engineering$/d' "$hosts_path"
 }
 
 install-service() {
