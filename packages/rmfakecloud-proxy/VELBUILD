@@ -67,7 +67,7 @@ postosupgrade() {
 		uninstall-hosts
 	fi
 	'
-	rmfakecloudctl status
+	/home/root/.vellum/bin/rmfakecloudctl status
 	cat <<'EOF'
 
 ═══════════════════════════════════════════════════════
