@@ -14,22 +14,20 @@ readmeurl="https://raw.githubusercontent.com/$upstream_author/reTaskable/v$pkgve
 
 source="$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/reTaskable/archive/refs/tags/v$pkgver.tar.gz"
 
-image="ghcr.io/toltec-dev/rust:v4.0"
+image(){
+	echo "eeems/vellum-toolchain:6.0.112-$CARCH"
+}
 
 build() {
-	apt-get update
-	apt-get install -y --no-install-recommends qt6-base-dev
-	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
-
 	case "$CARCH" in
 	aarch64)
-		. /opt/x-tools/switch-aarch64.sh
 		cd "$srcdir"/reTaskable-"$pkgver"/app
+		. "$(find /opt/codex/ferrari -name 'environment-setup-*' -type f | head -n1)"
 		./build-rmpp.sh
 		;;
 	armv7)
-		. /opt/x-tools/switch-arm.sh
 		cd "$srcdir"/reTaskable-"$pkgver"/app
+		. "$(find /opt/codex/rm1 -name 'environment-setup-*' -type f | head -n1)"
 		./build-rm.sh
 		;;
 	*)
