@@ -474,7 +474,7 @@ set the upstream server."
              fi
             if ! is-enabled; then
                 echo "rmfakecloud-proxy is not enabled"
-            elif [ "$1" == "-f" ] || [ "$1" == "--follow" ]; then
+            elif (($# > 0)) && [ "$1" == "-f" ] || [ "$1" == "--follow" ]; then
                 journalctl -fau rmfakecloud-proxy.service
             elif (($# > 0)); then
                 echo "Unknown argument $1"
