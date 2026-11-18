@@ -311,8 +311,14 @@ uninstall-hosts() {
 install-service() {
     mkdir -p /etc/systemd/system
     rm -f /var/volatile/etc/systemd/system/rmfakecloud-proxy.service
-    cp -a /home/root/.vellum/share/rmfakecloud-proxy/systemd/system/rmfakecloud-proxy.service \
+    cp -a /home/root/.vellum/share/rmfakecloud-proxy/rmfakecloud-proxy.service \
         /etc/systemd/system/
+    systemctl daemon-reload
+}
+
+uninstall-service() {
+    systemctl disable --now rmfakecloud-proxy
+    rm -f /var/volatile/etc/systemd/system/rmfakecloud-proxy.service
     systemctl daemon-reload
 }
 
@@ -334,12 +340,6 @@ install() {
 install-failed() {
     echo "Install interrupted, trying to clean up"
     uninstall
-}
-
-uninstall-service() {
-    systemctl disable --now rmfakecloud-proxy
-    rm -f /var/volatile/etc/systemd/system/rmfakecloud-proxy.service
-    systemctl daemon-reload
 }
 
 # Disable and cleanup rmfakecloud-proxy

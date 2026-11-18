@@ -37,7 +37,7 @@ package() {
 	install -Dm755 "$srcdir"/rmfakecloud-proxy \
 		"$pkgdir/home/root/.vellum/bin/rmfakecloud-proxy"
 	install -Dm644 "$srcdir/rmfakecloud-proxy.service" \
-		"$pkgdir/home/root/.vellum/share/rmfakecloud/rmfakecloud-proxy.service"
+		"$pkgdir/home/root/.vellum/share/rmfakecloud-proxy/rmfakecloud-proxy.service"
 }
 
 postinstall() {
@@ -89,7 +89,7 @@ predeinstall() {
 
 sha512sums='35da4180a5e300b2ced91c7924a9f7383a1a05d41af25b1b864c919882c2476f7f71a536ddf874954cd63f69d352bdcc2c2ff3377649854ed422880f6ab43c1f
 v0.0.11.zip
-a03fa2f3fb9ad74fab83fa7e9af992b48405bfd997a9d96b67f43d92787785739c834cc07a03838eb30c82d6ebd2740971302bdc5028d7054cd011496bd60f09
+7245eb698003a498530ac3757f83ce82c296d241f829bd13a6bf82ed1f7c6a2dd06f4a202b5012b801d1b9334793c05c7f77a2625f862e1ad9a359fc622d8aab
 rmfakecloudctl
 e08796ec55a545b21fd928976baf4a31e89696b62e5e272964deef03fdc15a866a2425023a0bf5691f0de4f0eb5d48be11cc9d4b8780566718072e58166ee306
 rmfakecloud-proxy.service'
