@@ -363,8 +363,9 @@ Manage rmfakecloud-proxy. Available commands:
     help                    Show this help message.
     status                  Check the current status of rmfakecloud-proxy.
     enable                  Enable rmfakecloud-proxy.
-    set-upstream            Set the upstream rmfakecloud server.
-    disable                 Disable rmfakecloud-proxy."
+    set-upstream <url>      Set the upstream rmfakecloud server.
+    disable                 Disable rmfakecloud-proxy.
+    logs [-f|--follow]      Display the proxy logs."
 }
 
 if [[ $0 = "${BASH_SOURCE[0]}" ]]; then
@@ -445,6 +446,23 @@ set the upstream server."
                 if is-enabled; then
                     systemctl restart rmfakecloud-proxy
                 fi
+            fi
+            ;;
+
+        logs)
+             if (($# > 1)); then
+                echo "Too many arguments"
+                exit 1
+             fi
+            if ! is-enabled; then
+                echo "rmfakecloud-proxy is not enabled"
+            elif [ "$1" == "-f" ] || [ "$1" == "--follow" ]; then
+                journalctl -fau rmfakecloud-proxy.service
+            elif (($# > 0)); then
+                echo "Unknown argument $1"
+                exit 1
+            else
+                journalctl -eau rmfakecloud-proxy.service
             fi
             ;;
 

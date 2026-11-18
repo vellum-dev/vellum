@@ -79,17 +79,17 @@ postosupgrade() {
     rmfakecloudctl enable
 
   To check the current status run:
-    rmfakecloudclt status
+    rmfakecloudctl status
 EOF
 }
 
 predeinstall() {
-	rmfakecloudctl disable
+	/home/root/.vellum/bin/rmfakecloudctl disable
 }
 
 sha512sums='35da4180a5e300b2ced91c7924a9f7383a1a05d41af25b1b864c919882c2476f7f71a536ddf874954cd63f69d352bdcc2c2ff3377649854ed422880f6ab43c1f
 v0.0.11.zip
-7245eb698003a498530ac3757f83ce82c296d241f829bd13a6bf82ed1f7c6a2dd06f4a202b5012b801d1b9334793c05c7f77a2625f862e1ad9a359fc622d8aab
+b44550f60325b981d31c306f8d68272090eca8dac7392797a7b18028318a8837468ebb8fb22087b58e548caac1acb9a8d95c05b698288f22353eabf3092b31da
 rmfakecloudctl
 e08796ec55a545b21fd928976baf4a31e89696b62e5e272964deef03fdc15a866a2425023a0bf5691f0de4f0eb5d48be11cc9d4b8780566718072e58166ee306
 rmfakecloud-proxy.service'
