@@ -63,7 +63,7 @@ postosupgrade() {
 		install-hosts
 	else
 		uninstall-certificates
-		disable-unit rmfakecloud-proxy.service
+		systemctl disable rmfakecloud-proxy.service
 		uninstall-hosts
 	fi
 	'
