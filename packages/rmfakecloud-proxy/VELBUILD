@@ -54,6 +54,7 @@ postupgrade() {
 
 postosupgrade() {
 	set -e
+	bash -ec '
 	source /home/root/.vellum/bin/rmfakecloudctl
 	install-service
 	if systemctl is-enabled -q rmfakecloud-proxy.service; then
@@ -65,6 +66,7 @@ postosupgrade() {
 		disable-unit rmfakecloud-proxy.service
 		uninstall-hosts
 	fi
+	'
 	rmfakecloudctl status
 	cat <<'EOF'
 
