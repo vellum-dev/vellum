@@ -1,0 +1,94 @@
+maintainer="Tung Le <levuxuantung@gmail.com>"
+pkgname=rm2manga
+pkgver=1.0.3
+_rakuyomi_ver=1.22.2
+pkgrel=0
+upstream_author="tle2721"
+category="apps"
+pkgdesc="Manga reader and downloader"
+url="https://github.com/tle2721/remarkable2.MangaReader"
+arch="aarch64 armv7"
+license="GPL-3.0-only AND AGPL-3.0-only"
+depends="appload curl"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable2.MangaReader/v$pkgver/README.md"
+donateurl="https://ko-fi.com/tle2721"
+
+source="
+$pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/remarkable2.MangaReader/archive/refs/tags/v$pkgver.tar.gz
+rakuyomi-$_rakuyomi_ver.tar.gz::https://github.com/hanatsumi/rakuyomi/archive/refs/tags/v$_rakuyomi_ver.tar.gz
+"
+options="strip"
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qt6-base-dev
+	ln -sf /usr/lib/qt6/libexec/rcc /usr/local/bin/rcc
+
+	case "$CARCH" in
+	aarch64)
+		. /opt/x-tools/switch-aarch64.sh
+		export CC_aarch64_unknown_linux_gnu="${CROSS_COMPILE}gcc"
+		export AR_aarch64_unknown_linux_gnu="${CROSS_COMPILE}ar"
+		;;
+	armv7)
+		. /opt/x-tools/switch-arm.sh
+		export CC_armv7_unknown_linux_gnueabihf="${CROSS_COMPILE}gcc"
+		export AR_armv7_unknown_linux_gnueabihf="${CROSS_COMPILE}ar"
+		;;
+	*)
+		echo "Invalid CARCH: $CARCH"
+		exit 1
+		;;
+	esac
+
+	cd "$srcdir"/remarkable2.MangaReader-"$pkgver"
+	mkdir -p dist/rm2manga/backend
+	"${CROSS_COMPILE}g++" -std=c++17 -O2 -Wall -Wextra -pthread -ldl \
+		-Ibackend/src backend/src/main.cpp \
+		-o dist/rm2manga/backend/entry
+	rcc --binary --no-compress --format-version 2 \
+		-o dist/rm2manga/resources.rcc application.qrc
+
+	rm -f "$srcdir"/rakuyomi-"$_rakuyomi_ver"/rust-toolchain.toml
+	cd "$srcdir"/rakuyomi-"$_rakuyomi_ver"/backend
+	SQLX_OFFLINE=true cargo build --release --locked --package server --bin server
+	cp target/"$CARGO_BUILD_TARGET"/release/server \
+		"$srcdir"/remarkable2.MangaReader-"$pkgver"/dist/rm2manga/backend/aidoku-server
+}
+
+package() {
+	set -e
+	cd "$srcdir"/remarkable2.MangaReader-"$pkgver"
+	install -Dm755 dist/rm2manga/backend/entry \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/backend/entry
+	install -Dm755 dist/rm2manga/backend/aidoku-server \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/backend/aidoku-server
+	install -Dm644 dist/rm2manga/resources.rcc \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/resources.rcc
+	install -Dm644 manifest.json \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/manifest.json
+	install -Dm644 icon.png \
+		"$pkgdir"/home/root/xovi/exthome/appload/rm2manga/icon.png
+
+	install -Dm644 LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	install -Dm644 "$srcdir"/rakuyomi-"$_rakuyomi_ver"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE.rakuyomi
+	printf '%s\n%s\n' \
+		"$url" \
+		"https://github.com/hanatsumi/rakuyomi" \
+		> "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+predeinstall() {
+	if [ "$VELLUM_PURGE" = "1" ]; then
+		rm -rf /home/root/xovi/exthome/appload/rm2manga/data
+	fi
+}
+
+sha512sums='47862029464901e78fec0281af207a980092a0e0fc93ba07e72f5507250bd507d57b0445c028beea807c5382e5a06279cfb175dc18fe91eae95974ce93f8f72b
+rm2manga-1.0.3.tar.gz
+ce80ce58cda9e123f1520dbe92d984f07db857a049ad5954e95295bf0a842293b8ad77c34161117c94e86c433725238a56108c4341c58944a65fc93cda121eb2
+rakuyomi-1.22.2.tar.gz'
