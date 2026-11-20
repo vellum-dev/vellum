@@ -4,11 +4,11 @@ pkgver=0.1.0
 pkgrel=0
 upstream_author="method-marco"
 category="apps"
-pkgdesc="Distraction-free reader-mode web browser for AppLoad: DuckDuckGo search, paged text, Save as PDF (with librarian)"
+pkgdesc="Distraction-free reader-mode web browser"
 url="https://github.com/$upstream_author/rm-browser"
 arch="aarch64"
-license="MIT AND OFL-1.1"
-depends="appload remarkable-os>=3.29 remarkable-os<3.30"
+license="MIT"
+depends="appload librarian remarkable-os>=3.29 remarkable-os<3.30"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/rm-browser/v$pkgver/README.md"
 
 source="
@@ -16,13 +16,11 @@ $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/rm-browser/archive/
 "
 builddir="$srcdir/rm-browser-$pkgver"
 
-image="ghcr.io/toltec-dev/golang:v4.0"
+image() {
+	echo "eeems/vellum-toolchain:6.0.112-$CARCH"
+}
 
 build() {
-	apt-get update
-	apt-get install -y --no-install-recommends qt6-base-dev
-
-	# go.mod needs Go 1.26; the image has 1.24 (GOTOOLCHAIN=auto fetches it)
 	cd "$builddir"/backend
 	GOTOOLCHAIN=auto GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build \
 		-buildvcs=false -trimpath -ldflags="-s -w -X main.version=$pkgver" \
@@ -35,28 +33,33 @@ build() {
 
 package() {
 	_appdir="$pkgdir"/home/root/xovi/exthome/appload/rm-browser
+	_licdir="$pkgdir"/home/root/.vellum/licenses/$pkgname
 
 	install -Dm755 build/backend/entry "$_appdir"/backend/entry
 	install -Dm644 build/resources.rcc "$_appdir"/resources.rcc
 	install -Dm644 app/browser/manifest.json "$_appdir"/manifest.json
 	install -Dm644 app/browser/icon.png "$_appdir"/icon.png
 
-	install -Dm644 LICENSE \
-		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
-	# the bundled fonts (SIL Open Font License)
-	for _f in backend/fonts/OFL-*.txt; do
-		install -Dm644 "$_f" "$pkgdir"/home/root/.vellum/licenses/$pkgname/"$(basename "$_f")"
-	done
-	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+	install -Dm644 backend/fonts/OFL-AtkinsonHyperlegible.txt "$_licdir"/OFL-AtkinsonHyperlegible.txt
+	install -Dm644 backend/fonts/OFL-Bitter.txt "$_licdir"/OFL-Bitter.txt
+	install -Dm644 backend/fonts/OFL-CrimsonPro.txt "$_licdir"/OFL-CrimsonPro.txt
+	install -Dm644 backend/fonts/OFL-EBGaramond.txt "$_licdir"/OFL-EBGaramond.txt
+	install -Dm644 backend/fonts/OFL-IBMPlexMono.txt "$_licdir"/OFL-IBMPlexMono.txt
+	install -Dm644 backend/fonts/OFL-IBMPlexSans.txt "$_licdir"/OFL-IBMPlexSans.txt
+	install -Dm644 backend/fonts/OFL-Inter.txt "$_licdir"/OFL-Inter.txt
+	install -Dm644 backend/fonts/OFL-Literata.txt "$_licdir"/OFL-Literata.txt
+	install -Dm644 backend/fonts/OFL-Lora.txt "$_licdir"/OFL-Lora.txt
+	install -Dm644 backend/fonts/OFL-Merriweather.txt "$_licdir"/OFL-Merriweather.txt
+	install -Dm644 backend/fonts/OFL-NotoSans.txt "$_licdir"/OFL-NotoSans.txt
+	install -Dm644 backend/fonts/OFL-SourceSerif4.txt "$_licdir"/OFL-SourceSerif4.txt
 }
 
 postdeinstall() {
 	if [ "$VELLUM_PURGE" = "1" ]; then
-		# history and settings
-		rm -rf /home/root/.config/rm-browser
-		# cached images
-		rm -rf /home/root/.cache/rm-browser
-		rm -rf /home/root/.cache/rm-browser-jail
+		rm -rf \
+			/home/root/.config/rm-browser \
+			/home/root/.cache/rm-browser \
+			/home/root/.cache/rm-browser-jail
 	fi
 }
 
