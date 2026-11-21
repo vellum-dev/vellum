@@ -1,6 +1,6 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-diagonal-selection
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 upstream_author="FouzR"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Adds a diagonal-up gesture on the left/right edge to switch between sel
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.28 remarkable-os<3.29"
-_commit="f6e17d50441e18519c81769f0a4dae443d87fba7"
+depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.29 remarkable-os<3.30"
+_commit="5951652cf51f40a6ad872e3a7bc228cbafe86f39"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/diagonalselection.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.29/diagonalselection.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 
@@ -23,7 +23,7 @@ package() {
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/diagonalselection.qmd
 }
 
-sha512sums='24aed109d0e60399a7f1beaf92761e3bd9c1bbdecbdf1d3de14a3387dbcd49c7f0a25458ed660dde8f02555ec269fb43a552f901e14983e1923b3e4b184b1f65
+sha512sums='24AED109D0E60399A7F1BEAF92761E3BD9C1BBDECBDF1D3DE14A3387DBCD49C7F0A25458ED660DDE8F02555EC269FB43A552F901E14983E1923B3E4B184B1F65
 diagonalselection.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
