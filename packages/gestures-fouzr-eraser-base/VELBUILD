@@ -1,6 +1,6 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-fouzr-eraser-base
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 upstream_author="FouzR"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Function to add eraser swapping. Not standalone"
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.28 remarkable-os<3.29"
-_commit="f6e17d50441e18519c81769f0a4dae443d87fba7"
+depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.29 remarkable-os<3.30"
+_commit="5951652cf51f40a6ad872e3a7bc228cbafe86f39"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/swap_erase.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.29/swap_erase.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 

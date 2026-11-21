@@ -1,6 +1,6 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=gestures-2-finger-edge-selection
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 upstream_author="FouzR"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Adds a 2 finger swipe from the right-half of the bottom edge to switch 
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.28 remarkable-os<3.29"
-_commit="f6e17d50441e18519c81769f0a4dae443d87fba7"
+depends="qt-resource-rebuilder gestures-fouzr-base remarkable-os>=3.29 remarkable-os<3.30"
+_commit="5951652cf51f40a6ad872e3a7bc228cbafe86f39"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/swipe_edge_for_selection.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.29/swipe_edge_for_selection.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 
@@ -24,7 +24,7 @@ package() {
 }
 
 
-sha512sums='78ffb5197a4bbd54b78d80faf43b152a606e92c911a46cdf524433d032eb8ebabdc70c3cbd7cc952337a9894dcbe5bc615a45b96f01affc0a85be0c1991fbd78
+sha512sums='f9a6936f51db5ada33e2a598c632355c4f2b4cb59ea7ec45315d5d4a358c8b1621bdf7a8260af9055c86d046e6e03e9e4dc7ed03b44445bbb9e62d4cea79de0b
 swipe_edge_for_selection.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'

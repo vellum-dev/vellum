@@ -1,6 +1,6 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=selection-stuff
-pkgver=1.0.4
+pkgver=1.1.0
 pkgrel=1
 upstream_author="FouzR"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Adds the ability to select everything above the line."
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
-_commit="a0955263ce152e650af41c902d36c17d872b8a00"
+depends="qt-resource-rebuilder remarkable-os>=3.29 remarkable-os<3.30"
+_commit="5951652cf51f40a6ad872e3a7bc228cbafe86f39"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-selectionStuff.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/selectionStuff.qmd
+selectionStuff.qmd::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.29/selectionStuff.qmd
 LICENSE::https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 

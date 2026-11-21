@@ -1,6 +1,6 @@
 maintainer="Fouz Reda <fouz290903@gmail.com>"
 pkgname=fav-tag-button
-pkgver=1.0.8
+pkgver=1.1.0
 pkgrel=1
 upstream_author="FouzR"
 category="ui"
@@ -8,12 +8,12 @@ pkgdesc="Adds buttons to the navigator search/new note button that lets you open
 url="https://github.com/FouzR/xovi-extensions"
 arch="noarch"
 license="GPL-3.0"
-depends="qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
-_commit="5db4cb6d1e5d43f8ea8484c77ab08b8a15f2640a"
+depends="qt-resource-rebuilder remarkable-os>=3.29 remarkable-os<3.30"
+_commit="5951652cf51f40a6ad872e3a7bc228cbafe86f39"
 readmeurl="https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/README.md"
 donateurl="https://ko-fi.com/fouzr"
 source="
-https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.28/favTagButton.qmd
+https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/3.29/favTagButton.qmd
 https://raw.githubusercontent.com/$upstream_author/xovi-extensions/$_commit/LICENSE
 "
 options='strip tracedeps'
@@ -22,7 +22,7 @@ package() {
 	install -Dm644 "$srcdir"/favTagButton.qmd \
 		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/favTagButton.qmd
 }
-sha512sums='395a7d15b0829174dbe4db3fbb8e54d13d285d3fb2725e292747e85afbe621e08ded21b0750d86a2e9fa9e788646d0458f5c4ecccad209329c39ba14a4dc2ac3
+sha512sums='fd02b13a49be26734ec14fad259856af6104ddc6ef3d32ba2e816c6ad31a169ae5eaffc3a72595cb3d7007d06c1c0cfafedd2ae936bb3dc223a641e3c2e69048
 favTagButton.qmd
 d361e5e8201481c6346ee6a886592c51265112be550d5224f1a7a6e116255c2f1ab8788df579d9b8372ed7bfd19bac4b6e70e00b472642966ab5b319b99a2686
 LICENSE'
