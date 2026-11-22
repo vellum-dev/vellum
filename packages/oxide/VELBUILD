@@ -50,7 +50,7 @@ image() {
 
 build() {
     set -e
-    cd "$srcdir"/oxide-"$pkgver"
+    cd "$builddir"
     . "$ENVIRONMENT_SETUP"
     make FEATURES=sentry release
     find . -type d -name .zig-cache | sort -r | xargs -r rm -r
@@ -58,7 +58,7 @@ build() {
 
 package() {
     set -e
-    cd "$srcdir"/oxide-"$pkgver"/release
+    cd "$builddir"/release
     # System service
     install -o root -g root -Dm644 -t "$pkgdir"/home/root/.vellum/share/oxide/dbus-1/system.d \
         etc/dbus-1/system.d/codes.eeems.oxide.conf
@@ -167,7 +167,7 @@ oxide_display() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         # Display server
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/share/oxide/dbus-1/system.d \
             etc/dbus-1/system.d/codes.eeems.blight.conf
@@ -246,7 +246,7 @@ oxide_display_dev() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib/pkgconfig \
             home/root/.vellum/lib/pkgconfig/blight.pc
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib/pkgconfig \
@@ -272,7 +272,7 @@ oxide_extra() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         # Screenshot viewer
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/anxiety
@@ -305,7 +305,7 @@ oxide_utils() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/desktop-file-validate
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
@@ -350,7 +350,7 @@ inject_evdev() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/inject_evdev
     }
@@ -362,7 +362,7 @@ fbinfo() {
     depends=""
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/fbinfo
     }
@@ -374,7 +374,7 @@ liboxide() {
     depends=""
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         mkdir -p "$subpkgdir"/home/root/.vellum/lib
         cp -a home/root/.vellum/lib/liboxide.so* \
             home/root/.vellum/lib/libblight.so* \
@@ -398,7 +398,7 @@ liboxide_dev() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/lib/pkgconfig \
             home/root/.vellum/lib/pkgconfig/oxide.pc
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/include \
@@ -419,7 +419,7 @@ oxide_tests() {
     "
 
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.local/share/tests \
             home/root/.local/share/tests/libblight
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.local/share/tests \
@@ -441,7 +441,7 @@ oxide_xovi() {
     xovi
     "
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.local/share/applications \
             home/root/.local/share/applications/xovi.oxide
     }
@@ -455,7 +455,7 @@ lockscreen_hook() {
     remarkable-os<3.29
     '
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         mkdir -p "$subpkgdir"/home/root/.vellum/usr/lib
         cp -a usr/lib/liblockscreen_hook.so* \
             "$subpkgdir"/home/root/.vellum/usr/lib/
@@ -517,7 +517,7 @@ launcherctl() {
     !tripletap
     "
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/bin \
             home/root/.vellum/bin/launcherctl
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/sbin \
@@ -578,7 +578,7 @@ launcherctl_oxide() {
     launcherctl
     "
     package() {
-        cd "$srcdir"/oxide-"$pkgver"/release
+        cd "$builddir"/release
         install -o root -g root -Dm755 -t "$subpkgdir"/home/root/.vellum/share/launcherctl \
             home/root/.vellum/share/launcherctl/oxide
     }
@@ -598,7 +598,7 @@ libghostty_vt() {
     depends="
     "
     package() {
-        cd "$srcdir"/release
+        cd "$builddir"/release
         mkdir -p "$subpkgdir"/home/root/.vellum/lib
         cp -a home/root/.vellum/lib/libghostty-vt.so* \
             "$subpkgdir"/home/root/.vellum/lib/
@@ -615,7 +615,7 @@ libghostty_vt_dev() {
     libghostty-vt
     "
     package() {
-        cd "$srcdir"/release
+        cd "$builddir"/release
         cp -ar home/root/.vellum/include/ghostty \
             "$subpkgdir"/home/root/.vellum/include/
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/lib/pkgconfig \
