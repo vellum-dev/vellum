@@ -1,0 +1,32 @@
+maintainer="Viktor Ivanov <18232879+vivimage@users.noreply.github.com>"
+pkgname=keyboard-quick-language-switch
+pkgver=1.0.0
+pkgrel=0
+upstream_author="vivimage"
+category="ui"
+pkgdesc="Tap the globe key to switch between the last two keyboard languages, hold it for the full list."
+url="https://github.com/vivimage/remarkable-russian-keyboard"
+arch="noarch"
+license="MIT"
+depends="!rm1 !rm2 !rmpp !rmppm qt-resource-rebuilder remarkable-os>=3.28 remarkable-os<3.29"
+_commit="91951c2c093f5444536c7fe1f6137ee77a412faa"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/README.md"
+source="
+https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/keyboardQuickSwitch.qmd
+https://raw.githubusercontent.com/$upstream_author/remarkable-russian-keyboard/$_commit/LICENSE
+"
+options="strip tracedeps"
+
+package() {
+	install -Dm644 "$srcdir"/keyboardQuickSwitch.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/keyboardQuickSwitch.qmd
+
+	install -Dm644 "$srcdir"/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "https://github.com/vivimage/remarkable-russian-keyboard" > \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+sha512sums='
+f0fa2ae0a7ece69b3d33a2456fa18f02ee5c6a752bbed5e6d127ac1d4e4a21c87241a8914fc75bafa78768c79a969539c79f5b5c926266292bcc0973b37d459c  keyboardQuickSwitch.qmd
+7b2b3a477d1eb0b88dc410e19a568d7889025fb6175994bdadc055261a704f4d1c93f4eac98d234f22a9bf814504de61f8f2719f860b2d3ba0cecbb0fb30e4d4  LICENSE
+'
