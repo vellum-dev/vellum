@@ -602,7 +602,7 @@ libghostty_vt() {
         mkdir -p "$subpkgdir"/home/root/.vellum/lib
         cp -a home/root/.vellum/lib/libghostty-vt.so* \
             "$subpkgdir"/home/root/.vellum/lib/
-        install -Dm644 "$srcdir/shared/libghostty-vt/src/LICENSE" \
+        install -Dm644 "$builddir/shared/libghostty-vt/src/LICENSE" \
             "$subpkgdir/home/root/.vellum/licenses/libghostty-vt/LICENSE"
     }
 }
@@ -625,6 +625,8 @@ libghostty_vt_dev() {
         install -o root -g root -Dm644 -t "$subpkgdir"/home/root/.vellum/lib/cmake/ghostty-vt \
             home/root/.vellum/lib/cmake/ghostty-vt/ghostty-vt-config.cmake \
             home/root/.vellum/lib/cmake/ghostty-vt/ghostty-vt-config-version.cmake
+        install -Dm644 "$builddir/shared/libghostty-vt/src/LICENSE" \
+            "$subpkgdir/home/root/.vellum/licenses/libghostty-vt-dev/LICENSE"
     }
 }
 sha512sums='cfdf0de1fb25fe1106852dd717bb182ec4f0f2a6c11e2ae16e23bf0fbf9062eee9c8ad86b1f13b952a876614bbc16bd0cd5c5e73889f4ccedd6c8d3bc81fa4f5
