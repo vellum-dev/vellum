@@ -15,12 +15,12 @@ source="
 $pkgname-$pkgver.tar.gz::https://github.com/$upstream_author/$pkgname/archive/refs/tags/v$pkgver.tar.gz
 "
 
-image="ghcr.io/toltec-dev/golang:v4.0"
+image(){
+	echo "eeems/vellum-toolchain:6.0.112-$CARCH"
+}
 
 build() {
-	apt-get update
-	apt-get install -y --no-install-recommends qt6-base-dev
-
+	PATH="$PATH:/usr/local/bin"
 	case "$CARCH" in
 	aarch64) _goarch="arm64" _goarm="" ;;
 	armv7) _goarch="arm" _goarm="7" ;;
@@ -36,8 +36,7 @@ build() {
 		-o build/backend/entry ./backend/cmd/trmnl-remarkable
 
 	cd "$builddir"/app
-	/usr/lib/qt6/libexec/rcc --binary \
-		-o "$builddir"/build/resources.rcc application.qrc
+	rcc --binary -o "$builddir"/build/resources.rcc application.qrc
 }
 
 package() {
