@@ -1,0 +1,41 @@
+maintainer="astafan8 <astafan8@users.noreply.github.com>"
+pkgname=remarkable-calendar-notes-sidebar
+pkgver=0.1.26
+pkgrel=0
+upstream_author="astafan8"
+category="ui"
+pkgdesc="Sidebar launcher for remarkable-calendar-notes"
+url="https://github.com/astafan8/remarkable-calendar-notes"
+arch="noarch"
+license="GPL-3.0-only"
+depends="remarkable-calendar-notes qt-resource-rebuilder appload>=0.5.3 remarkable-os>=3.27 remarkable-os<3.28"
+_commit="94983f2081b6b16d875a40411ca4666497ee3db5"
+readmeurl="https://raw.githubusercontent.com/$upstream_author/remarkable-calendar-notes/v$pkgver/sidebar/README.md"
+source="remarkable-calendar-notes-$pkgver.tar.gz::https://github.com/$upstream_author/remarkable-calendar-notes/archive/$_commit.tar.gz"
+
+image="ghcr.io/toltec-dev/rust:v4.0"
+
+build() {
+	set -e
+	apt-get update
+	apt-get install -y --no-install-recommends qtbase5-dev-tools
+	cd "$srcdir"/remarkable-calendar-notes-"$_commit"/sidebar/3.27
+	/usr/lib/qt5/bin/rcc --binary -o calendarNotesSidebar.rcc calendarNotesSidebar.qrc
+}
+
+package() {
+	set -e
+	cd "$srcdir"/remarkable-calendar-notes-"$_commit"
+	install -Dm644 sidebar/3.27/calendarNotesSidebar.qmd \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/calendarNotesSidebar.qmd
+	install -Dm644 sidebar/3.27/calendarNotesSidebar.rcc \
+		"$pkgdir"/home/root/xovi/exthome/qt-resource-rebuilder/calendarNotesSidebar.rcc
+
+	install -Dm644 sidebar/LICENSE \
+		"$pkgdir"/home/root/.vellum/licenses/$pkgname/LICENSE
+	echo "$url" > "$pkgdir"/home/root/.vellum/licenses/$pkgname/SOURCES
+}
+
+sha512sums="
+4e8ef28035f6b7e674430f1ed4e10a1f728e8bf8911cd857ab2e9aaeddb3f4f4eb296dc414df9b11299da531e026d359a07ba5dff4ad1ef3cc9a0b10f9d061bb  remarkable-calendar-notes-0.1.26.tar.gz
+"
