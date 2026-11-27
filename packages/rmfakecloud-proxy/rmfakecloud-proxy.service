@@ -1,0 +1,15 @@
+[Unit]
+Description=rmfakecloud reverse proxy
+Documentation=https://github.com/ddvk/rmfakecloud-proxy
+After=home.mount network.target
+Before=xochitl.service launcher.service
+ConditionPathExists=/home/root/.vellum/etc/rmfakecloud-proxy/enabled
+ConditionPathExists=/home/root/.vellum/etc/rmfakecloud-proxy/config
+
+[Service]
+Environment=HOME=/home/root
+ExecStart=/home/root/.vellum/bin/rmfakecloud-proxy -c /home/root/.vellum/etc/rmfakecloud-proxy/config
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
